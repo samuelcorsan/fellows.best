@@ -1,0 +1,167 @@
+'use client';
+
+import { useState } from 'react';
+import { Timeline } from '@/components/Timeline';
+import { mockOpportunities, Opportunity } from '@/lib/data';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { CalendarButton } from '@/components/CalendarButton';
+import { NotificationToggle } from '@/components/NotificationToggle';
+import { Calendar, MapPin, ExternalLink, Share2 } from 'lucide-react';
+import Image from 'next/image';
+import Link from 'next/link';
+
+export default function TimelinePage() {
+  const [selectedOpportunity, setSelectedOpportunity] = useState<Opportunity | null>(null);
+
+  const handleShare = async (opportunity: Opportunity) => {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: opportunity.name,
+          text: opportunity.description,
+          url: window.location.origin + `/opportunity/${opportunity.id}`,
+        });
+      } catch (error) {
+        console.log('Error sharing:', error);
+      }
+    } else {
+      // Fallback: copy to clipboard
+      navigator.clipboard.writeText(window.location.origin + `/opportunity/${opportunity.id}`);
+    }
+  };
+
+  return (
+    <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <Timeline
+        opportunities={mockOpportunities}
+        onItemClick={setSelectedOpportunity}
+      />
+
+      {/* Opportunity Detail Modal */}
+      <Dialog open={!!selectedOpportunity} onOpenChange={() => setSelectedOpportunity(null)}>
+        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+          {selectedOpportunity && (
+            <>
+              <DialogHeader>
+                <div className="flex items-start space-x-4">
+                  <Image
+                    src={selectedOpportunity.logoUrl}
+                    alt={`${selectedOpportunity.name} logo`}
+                    width={80}
+                    height={80}
+                    className="rounded-lg object-cover"
+                  />
+                  <div className="flex-1">
+                    <DialogTitle className="text-2xl font-bold mb-2">
+                      {selectedOpportunity.name}
+                    </DialogTitle>
+                    <p className="text-muted-foreground mb-4">
+                      {selectedOpportunity.organizer}
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      <Badge variant="outline">{selectedOpportunity.category}</Badge>
+                      {selectedOpportunity.tags.map((tag) => (
+                        <Badge key={tag} variant="secondary">
+                          {tag}
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </DialogHeader>
+
+              <div className="space-y-6">
+                {/* Key Information */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 bg-muted/50 rounded-lg">
+                  <div className="flex items-center space-x-2">
+                    <Calendar className="h-4 w-4 text-muted-foreground" />
+                    <span className="text-sm">
+                      <strong>Opens:</strong> {new Date(selectedOpportunity.openDate).toLocaleDateString()}
+                    </span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Calendar className="h-4 w-4 text-muted-foreground" />
+                    <span className="text-sm">
+                      <strong>Closes:</strong> {new Date(selectedOpportunity.closeDate).toLocaleDateString()}
+                    </span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <MapPin className="h-4 w-4 text-muted-foreground" />
+                    <span className="text-sm">
+                      <strong>Region:</strong> {selectedOpportunity.region}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Description */}
+                <div>
+                  <h3 className="font-semibold mb-2">About</h3>
+                  <p className="text-muted-foreground leading-relaxed">
+                    {selectedOpportunity.fullDescription}
+                  </p>
+                </div>
+
+                {/* Benefits */}
+                {selectedOpportunity.benefits.length > 0 && (
+                  <div>
+                    <h3 className="font-semibold mb-2">Benefits</h3>
+                    <ul className="list-disc list-inside space-y-1 text-muted-foreground">
+                      {selectedOpportunity.benefits.map((benefit, index) => (
+                        <li key={index}>{benefit}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {/* Eligibility */}
+                <div>
+                  <h3 className="font-semibold mb-2">Eligibility</h3>
+                  <p className="text-muted-foreground">{selectedOpportunity.eligibility}</p>
+                </div>
+
+                {/* Calendar Integration */}
+                <div>
+                  <h3 className="font-semibold mb-3">Add to Calendar</h3>
+                  <CalendarButton opportunity={selectedOpportunity} />
+                </div>
+
+                {/* Notifications */}
+                <div>
+                  <h3 className="font-semibold mb-3">Notifications</h3>
+                  <NotificationToggle
+                    opportunityId={selectedOpportunity.id}
+                    opportunityName={selectedOpportunity.name}
+                  />
+                </div>
+
+                {/* Action Buttons */}
+                <div className="flex flex-col sm:flex-row gap-3 pt-4">
+                  <Button asChild className="flex-1">
+                    <a href={selectedOpportunity.applyLink} target="_blank" rel="noopener noreferrer">
+                      Apply Now
+                      <ExternalLink className="ml-2 h-4 w-4" />
+                    </a>
+                  </Button>
+                  <Button asChild variant="outline">
+                    <Link href={`/opportunity/${selectedOpportunity.id}`}>
+                      View Full Details
+                    </Link>
+                  </Button>
+                  <Button
+                    variant="outline"
+                    onClick={() => handleShare(selectedOpportunity)}
+                  >
+                    <Share2 className="h-4 w-4 mr-2" />
+                    Share
+                  </Button>
+                </div>
+              </div>
+            </>
+          )}
+        </DialogContent>
+      </Dialog>
+    </div>
+  );
+}
