@@ -33,7 +33,6 @@ export default function TimelinePage() {
         console.log("Error sharing:", error);
       }
     } else {
-      // Fallback: copy to clipboard
       navigator.clipboard.writeText(
         window.location.origin + `/opportunity/${opportunity.id}`
       );
@@ -47,7 +46,6 @@ export default function TimelinePage() {
         onItemClick={setSelectedOpportunity}
       />
 
-      {/* Opportunity Detail Modal */}
       <Dialog
         open={!!selectedOpportunity}
         onOpenChange={() => setSelectedOpportunity(null)}
@@ -86,7 +84,6 @@ export default function TimelinePage() {
               </DialogHeader>
 
               <div className="space-y-6">
-                {/* Key Information */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 bg-muted/50 rounded-lg">
                   <div className="flex items-center space-x-2">
                     <Calendar className="h-4 w-4 text-muted-foreground" />
@@ -116,7 +113,6 @@ export default function TimelinePage() {
                   </div>
                 </div>
 
-                {/* Description */}
                 <div>
                   <h3 className="font-semibold mb-2">About</h3>
                   <p className="text-muted-foreground leading-relaxed">
@@ -124,7 +120,6 @@ export default function TimelinePage() {
                   </p>
                 </div>
 
-                {/* Benefits */}
                 {selectedOpportunity.benefits.length > 0 && (
                   <div>
                     <h3 className="font-semibold mb-2">Benefits</h3>
@@ -150,16 +145,15 @@ export default function TimelinePage() {
                   <CalendarButton opportunity={selectedOpportunity} />
                 </div>
 
-                {/* Notifications */}
                 <div>
                   <h3 className="font-semibold mb-3">Notifications</h3>
                   <NotificationToggle
                     opportunityId={selectedOpportunity.id}
                     opportunityName={selectedOpportunity.name}
+                    closeDate={selectedOpportunity.closeDate}
                   />
                 </div>
 
-                {/* Action Buttons */}
                 <div className="flex flex-col sm:flex-row gap-3 pt-4">
                   <Button asChild className="flex-1">
                     <a

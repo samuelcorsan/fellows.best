@@ -6,11 +6,10 @@ import { OpportunityCard } from "@/components/features/OpportunityCard";
 import { getUpcomingDeadlines } from "@/lib/data";
 
 export default function Home() {
-  const upcomingDeadlines = getUpcomingDeadlines(8); // Show 8 instead of 4
+  const upcomingDeadlines = getUpcomingDeadlines(8);
 
   return (
     <div className="space-y-16">
-      {/* Hero Section - Extended gradient background */}
       <section className="relative overflow-hidden pb-24">
         <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-24 relative">
@@ -45,7 +44,6 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Features Section - Now inside the gradient background */}
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 pb-16">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
@@ -121,7 +119,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Upcoming Deadlines Section */}
       <section className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
@@ -148,7 +145,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CTA Section */}
       <section className="pb-6">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <div className="text-center max-w-3xl mx-auto">

@@ -10,7 +10,7 @@ import { toast } from "sonner";
 interface NotificationToggleProps {
   opportunityId: string;
   opportunityName: string;
-  closeDate: string;
+  closeDate?: string | null;
 }
 
 export function NotificationToggle({
@@ -28,6 +28,11 @@ export function NotificationToggle({
 
       if (!session?.user?.email) {
         toast.error("Please sign in to enable notifications");
+        return;
+      }
+
+      if (!closeDate) {
+        toast.error("No deadline set for this opportunity");
         return;
       }
 
