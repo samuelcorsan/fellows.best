@@ -1,27 +1,40 @@
-import Link from 'next/link';
-import Image from 'next/image';
-import { Calendar, Clock, MapPin, ExternalLink } from 'lucide-react';
-import { Card, CardContent, CardFooter } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Opportunity, getDaysUntilDeadline, getDeadlineUrgency } from '@/lib/data';
+import Link from "next/link";
+import Image from "next/image";
+import { Calendar, MapPin, ExternalLink } from "lucide-react";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import {
+  Opportunity,
+  getDaysUntilDeadline,
+  getDeadlineUrgency,
+} from "@/lib/data";
 
 interface OpportunityCardProps {
   opportunity: Opportunity;
-  variant?: 'default' | 'compact';
+  variant?: "default" | "compact";
 }
 
-export function OpportunityCard({ opportunity, variant = 'default' }: OpportunityCardProps) {
-  const daysUntil = getDaysUntilDeadline(opportunity.closeDate);
-  const urgency = getDeadlineUrgency(opportunity.closeDate);
-  
+export function OpportunityCard({
+  opportunity,
+  variant = "default",
+}: OpportunityCardProps) {
+  const daysUntil = opportunity.closeDate
+    ? getDaysUntilDeadline(opportunity.closeDate)
+    : null;
+  const urgency = opportunity.closeDate
+    ? getDeadlineUrgency(opportunity.closeDate)
+    : "safe";
+
   const urgencyStyles = {
-    safe: 'border-green-200 bg-green-50 text-green-700 dark:border-green-800 dark:bg-green-950 dark:text-green-300',
-    warning: 'border-yellow-200 bg-yellow-50 text-yellow-700 dark:border-yellow-800 dark:bg-yellow-950 dark:text-yellow-300',
-    urgent: 'border-red-200 bg-red-50 text-red-700 dark:border-red-800 dark:bg-red-950 dark:text-red-300'
+    safe: "border-green-200 bg-green-50 text-green-700 dark:border-green-800 dark:bg-green-950 dark:text-green-300",
+    warning:
+      "border-yellow-200 bg-yellow-50 text-yellow-700 dark:border-yellow-800 dark:bg-yellow-950 dark:text-yellow-300",
+    urgent:
+      "border-red-200 bg-red-50 text-red-700 dark:border-red-800 dark:bg-red-950 dark:text-red-300",
   };
 
-  if (variant === 'compact') {
+  if (variant === "compact") {
     return (
       <Card className="hover:shadow-md transition-all duration-200 hover:-translate-y-1">
         <CardContent className="p-4">
@@ -34,7 +47,9 @@ export function OpportunityCard({ opportunity, variant = 'default' }: Opportunit
               className="rounded-lg object-cover"
             />
             <div className="flex-1 min-w-0">
-              <h3 className="font-semibold text-sm truncate">{opportunity.name}</h3>
+              <h3 className="font-semibold text-sm truncate">
+                {opportunity.name}
+              </h3>
               <p className="text-xs text-muted-foreground line-clamp-2 mt-1">
                 {opportunity.description}
               </p>
@@ -44,8 +59,12 @@ export function OpportunityCard({ opportunity, variant = 'default' }: Opportunit
                     {opportunity.category}
                   </Badge>
                 </div>
-                <div className={`px-2 py-1 rounded-full text-xs font-medium border ${urgencyStyles[urgency]}`}>
-                  {daysUntil > 0 ? `${daysUntil} days left` : 'Closed'}
+                <div
+                  className={`px-2 py-1 rounded-full text-xs font-medium border ${urgencyStyles[urgency]}`}
+                >
+                  {daysUntil !== null
+                    ? `${daysUntil} days left`
+                    : "No deadline"}
                 </div>
               </div>
             </div>
@@ -74,26 +93,45 @@ export function OpportunityCard({ opportunity, variant = 'default' }: Opportunit
           <div className="flex-1 min-w-0">
             <div className="flex items-start justify-between mb-2">
               <div className="flex-1 min-w-0">
-                <h3 className="font-semibold text-lg mb-1 line-clamp-1">{opportunity.name}</h3>
+                <h3 className="font-semibold text-lg mb-1 line-clamp-1">
+                  {opportunity.name}
+                </h3>
                 <p className="text-muted-foreground text-sm mb-3 line-clamp-2">
                   {opportunity.description}
                 </p>
               </div>
-              <div className={`px-3 py-1 rounded-full text-sm font-medium border whitespace-nowrap ml-2 ${urgencyStyles[urgency]}`}>
+              <div
+                className={`px-3 py-1 rounded-full text-sm font-medium border whitespace-nowrap ml-2 ${urgencyStyles[urgency]}`}
+              >
                 <span className="hidden sm:inline">
-                  {daysUntil > 0 ? `${daysUntil} days left` : 'Closed'}
+                  {daysUntil !== null
+                    ? `${daysUntil} days left`
+                    : "No deadline"}
                 </span>
                 <span className="sm:hidden">
-                  {daysUntil > 0 ? `${daysUntil}d` : 'Closed'}
+                  {daysUntil !== null ? `${daysUntil}d` : "No deadline"}
                 </span>
               </div>
             </div>
-            
+
             <div className="flex items-center space-x-4 text-sm text-muted-foreground mb-4">
               <div className="flex items-center space-x-1">
                 <Calendar className="h-4 w-4" />
-                <span className="hidden sm:inline">Closes {new Date(opportunity.closeDate).toLocaleDateString()}</span>
-                <span className="sm:hidden">{new Date(opportunity.closeDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</span>
+                <span className="hidden sm:inline">
+                  {opportunity.closeDate
+                    ? `Closes ${new Date(
+                        opportunity.closeDate
+                      ).toLocaleDateString()}`
+                    : "No deadline"}
+                </span>
+                <span className="sm:hidden">
+                  {opportunity.closeDate
+                    ? new Date(opportunity.closeDate).toLocaleDateString(
+                        "en-US",
+                        { month: "short", day: "numeric" }
+                      )
+                    : "No deadline"}
+                </span>
               </div>
               <div className="flex items-center space-x-1">
                 <MapPin className="h-4 w-4" />
@@ -127,7 +165,11 @@ export function OpportunityCard({ opportunity, variant = 'default' }: Opportunit
           </Link>
         </Button>
         <Button asChild>
-          <a href={opportunity.applyLink} target="_blank" rel="noopener noreferrer">
+          <a
+            href={opportunity.applyLink}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <span className="hidden sm:inline">Apply Now</span>
             <span className="sm:hidden">Apply</span>
             <ExternalLink className="ml-2 h-4 w-4" />
