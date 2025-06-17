@@ -1,19 +1,25 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { Timeline } from '@/components/Timeline';
-import { mockOpportunities, Opportunity } from '@/lib/data';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { CalendarButton } from '@/components/CalendarButton';
-import { NotificationToggle } from '@/components/NotificationToggle';
-import { Calendar, MapPin, ExternalLink, Share2 } from 'lucide-react';
-import Image from 'next/image';
-import Link from 'next/link';
+import { useState } from "react";
+import { Timeline } from "@/components/Timeline";
+import { mockOpportunities, Opportunity } from "@/lib/data";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { CalendarButton } from "@/components/CalendarButton";
+import { NotificationToggle } from "@/components/NotificationToggle";
+import { Calendar, MapPin, ExternalLink, Share2 } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
 
 export default function TimelinePage() {
-  const [selectedOpportunity, setSelectedOpportunity] = useState<Opportunity | null>(null);
+  const [selectedOpportunity, setSelectedOpportunity] =
+    useState<Opportunity | null>(null);
 
   const handleShare = async (opportunity: Opportunity) => {
     if (navigator.share) {
@@ -24,11 +30,13 @@ export default function TimelinePage() {
           url: window.location.origin + `/opportunity/${opportunity.id}`,
         });
       } catch (error) {
-        console.log('Error sharing:', error);
+        console.log("Error sharing:", error);
       }
     } else {
       // Fallback: copy to clipboard
-      navigator.clipboard.writeText(window.location.origin + `/opportunity/${opportunity.id}`);
+      navigator.clipboard.writeText(
+        window.location.origin + `/opportunity/${opportunity.id}`
+      );
     }
   };
 
@@ -40,7 +48,10 @@ export default function TimelinePage() {
       />
 
       {/* Opportunity Detail Modal */}
-      <Dialog open={!!selectedOpportunity} onOpenChange={() => setSelectedOpportunity(null)}>
+      <Dialog
+        open={!!selectedOpportunity}
+        onOpenChange={() => setSelectedOpportunity(null)}
+      >
         <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
           {selectedOpportunity && (
             <>
@@ -61,7 +72,9 @@ export default function TimelinePage() {
                       {selectedOpportunity.organizer}
                     </p>
                     <div className="flex flex-wrap gap-2">
-                      <Badge variant="outline">{selectedOpportunity.category}</Badge>
+                      <Badge variant="outline">
+                        {selectedOpportunity.category}
+                      </Badge>
                       {selectedOpportunity.tags.map((tag) => (
                         <Badge key={tag} variant="secondary">
                           {tag}
@@ -78,13 +91,21 @@ export default function TimelinePage() {
                   <div className="flex items-center space-x-2">
                     <Calendar className="h-4 w-4 text-muted-foreground" />
                     <span className="text-sm">
-                      <strong>Opens:</strong> {new Date(selectedOpportunity.openDate).toLocaleDateString()}
+                      <strong>Opens:</strong>{" "}
+                      {new Date(
+                        selectedOpportunity.openDate
+                      ).toLocaleDateString()}
                     </span>
                   </div>
                   <div className="flex items-center space-x-2">
                     <Calendar className="h-4 w-4 text-muted-foreground" />
                     <span className="text-sm">
-                      <strong>Closes:</strong> {new Date(selectedOpportunity.closeDate).toLocaleDateString()}
+                      <strong>Closes:</strong>{" "}
+                      {selectedOpportunity.closeDate
+                        ? new Date(
+                            selectedOpportunity.closeDate
+                          ).toLocaleDateString()
+                        : "N/A"}
                     </span>
                   </div>
                   <div className="flex items-center space-x-2">
@@ -118,7 +139,9 @@ export default function TimelinePage() {
                 {/* Eligibility */}
                 <div>
                   <h3 className="font-semibold mb-2">Eligibility</h3>
-                  <p className="text-muted-foreground">{selectedOpportunity.eligibility}</p>
+                  <p className="text-muted-foreground">
+                    {selectedOpportunity.eligibility}
+                  </p>
                 </div>
 
                 {/* Calendar Integration */}
@@ -139,7 +162,11 @@ export default function TimelinePage() {
                 {/* Action Buttons */}
                 <div className="flex flex-col sm:flex-row gap-3 pt-4">
                   <Button asChild className="flex-1">
-                    <a href={selectedOpportunity.applyLink} target="_blank" rel="noopener noreferrer">
+                    <a
+                      href={selectedOpportunity.applyLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
                       Apply Now
                       <ExternalLink className="ml-2 h-4 w-4" />
                     </a>
