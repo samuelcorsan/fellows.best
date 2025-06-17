@@ -1,14 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { Filter, X } from "lucide-react";
+import { Filter, X, ChevronDown, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { normalizeRegion } from "@/lib/data";
+import { matchRegion } from "@/lib/data";
 
 export interface FilterOptions {
   categories: string[];
@@ -33,13 +33,45 @@ const categoryOptions = [
 ];
 
 const regionOptions = [
-  "Global",
-  "United States",
-  "Europe",
-  "Asia",
-  "India",
-  "Canada",
-  "Australia",
+  {
+    name: "Global",
+    countries: [],
+  },
+  {
+    name: "Europe",
+    countries: [
+      "Spain",
+      "France",
+      "Germany",
+      "United Kingdom",
+      "Switzerland",
+      "Israel",
+    ],
+  },
+  {
+    name: "Asia",
+    countries: ["Japan", "South Korea", "Singapore", "India", "China"],
+  },
+  {
+    name: "North America",
+    countries: ["United States", "Canada", "Mexico"],
+  },
+  {
+    name: "South America",
+    countries: ["Brazil", "Argentina", "Chile", "Colombia"],
+  },
+  {
+    name: "Africa",
+    countries: ["South Africa", "Nigeria", "Kenya", "Egypt"],
+  },
+  {
+    name: "Middle East",
+    countries: ["UAE", "Saudi Arabia", "Qatar"],
+  },
+  {
+    name: "Oceania",
+    countries: ["Australia", "New Zealand"],
+  },
 ];
 
 const tagOptions = [
@@ -60,6 +92,16 @@ export function FilterPanel({
   isOpen,
   onToggle,
 }: FilterPanelProps) {
+  const [expandedRegions, setExpandedRegions] = useState<string[]>([]);
+
+  const toggleRegionExpanded = (region: string) => {
+    setExpandedRegions((prev) =>
+      prev.includes(region)
+        ? prev.filter((r) => r !== region)
+        : [...prev, region]
+    );
+  };
+
   const handleCategoryChange = (category: string, checked: boolean) => {
     const newCategories = checked
       ? [...filters.categories, category]
@@ -69,21 +111,17 @@ export function FilterPanel({
   };
 
   const handleRegionChange = (region: string, checked: boolean) => {
-    const newRegions = checked
+    let newRegions = checked
       ? [...filters.regions, region]
       : filters.regions.filter((r) => r !== region);
 
-    onFiltersChange({ ...filters, regions: newRegions });
-  };
+    // If unchecking a region, also remove its countries
+    const regionData = regionOptions.find((r) => r.name === region);
+    if (!checked && regionData?.countries) {
+      newRegions = newRegions.filter((r) => !regionData.countries.includes(r));
+    }
 
-  const isRegionSelected = (region: string) => {
-    return filters.regions.some((selectedRegion) => {
-      // Check if either the exact region matches or if it's part of a compound region
-      return (
-        selectedRegion === region ||
-        normalizeRegion(selectedRegion).includes(region)
-      );
-    });
+    onFiltersChange({ ...filters, regions: newRegions });
   };
 
   const handleTagChange = (tag: string, checked: boolean) => {
@@ -173,20 +211,69 @@ export function FilterPanel({
               <Label className="text-sm font-medium mb-3 block">Region</Label>
               <div className="space-y-2">
                 {regionOptions.map((region) => (
-                  <div key={region} className="flex items-center space-x-2">
-                    <Checkbox
-                      id={`region-${region}`}
-                      checked={isRegionSelected(region)}
-                      onCheckedChange={(checked) =>
-                        handleRegionChange(region, checked as boolean)
-                      }
-                    />
-                    <Label
-                      htmlFor={`region-${region}`}
-                      className="text-sm cursor-pointer"
-                    >
-                      {region}
-                    </Label>
+                  <div key={region.name} className="space-y-2">
+                    <div className="flex items-center space-x-2">
+                      <Checkbox
+                        id={`region-${region.name}`}
+                        checked={filters.regions.includes(region.name)}
+                        onCheckedChange={(checked) =>
+                          handleRegionChange(region.name, checked as boolean)
+                        }
+                      />
+                      <Label
+                        htmlFor={`region-${region.name}`}
+                        className="text-sm cursor-pointer flex items-center"
+                      >
+                        {region.name}
+                        {region.countries.length > 0 && (
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="ml-2 h-5 w-5 p-0"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              toggleRegionExpanded(region.name);
+                            }}
+                          >
+                            {expandedRegions.includes(region.name) ? (
+                              <ChevronDown className="h-4 w-4" />
+                            ) : (
+                              <ChevronRight className="h-4 w-4" />
+                            )}
+                          </Button>
+                        )}
+                      </Label>
+                    </div>
+
+                    {/* Countries under region */}
+                    {region.countries.length > 0 &&
+                      expandedRegions.includes(region.name) && (
+                        <div className="ml-6 space-y-2">
+                          {region.countries.map((country) => (
+                            <div
+                              key={country}
+                              className="flex items-center space-x-2"
+                            >
+                              <Checkbox
+                                id={`country-${country}`}
+                                checked={filters.regions.includes(country)}
+                                onCheckedChange={(checked) =>
+                                  handleRegionChange(
+                                    country,
+                                    checked as boolean
+                                  )
+                                }
+                              />
+                              <Label
+                                htmlFor={`country-${country}`}
+                                className="text-sm cursor-pointer"
+                              >
+                                {country}
+                              </Label>
+                            </div>
+                          ))}
+                        </div>
+                      )}
                   </div>
                 ))}
               </div>

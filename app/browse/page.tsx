@@ -51,10 +51,11 @@ export default function BrowsePage() {
         filters.categories.length === 0 ||
         filters.categories.includes(opportunity.category);
 
-      // Region filter
+      // Region and country filter
       const matchesRegion =
         filters.regions.length === 0 ||
-        filters.regions.includes(opportunity.region);
+        filters.regions.includes(opportunity.region) ||
+        (opportunity.country && filters.regions.includes(opportunity.country));
 
       // Tags filter
       const matchesTags =
