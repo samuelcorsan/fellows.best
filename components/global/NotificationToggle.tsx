@@ -4,32 +4,62 @@ import { useState } from "react";
 import { Bell, BellOff } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
+import { authClient } from "@/lib/auth-client";
+import { toast } from "sonner";
 
 interface NotificationToggleProps {
   opportunityId: string;
   opportunityName: string;
+  closeDate: string;
 }
 
 export function NotificationToggle({
   opportunityId,
   opportunityName,
+  closeDate,
 }: NotificationToggleProps) {
   const [isEnabled, setIsEnabled] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const { data: session } = authClient.useSession();
 
   const handleToggle = async (enabled: boolean) => {
-    setIsLoading(true);
+    try {
+      setIsLoading(true);
 
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 500));
+      if (!session?.user?.email) {
+        toast.error("Please sign in to enable notifications");
+        return;
+      }
 
-    setIsEnabled(enabled);
-    setIsLoading(false);
+      const response = await fetch("/api/notifications", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          opportunityId,
+          opportunityName,
+          enabled,
+          closeDate,
+        }),
+      });
 
-    // In a real app, you would store this preference and set up notifications
-    console.log(
-      `Notification ${enabled ? "enabled" : "disabled"} for ${opportunityName}`
-    );
+      if (!response.ok) {
+        throw new Error("Failed to update notification settings");
+      }
+
+      setIsEnabled(enabled);
+      toast.success(
+        enabled
+          ? "Reminder notifications enabled"
+          : "Reminder notifications disabled"
+      );
+    } catch (error) {
+      console.error("Error updating notifications:", error);
+      toast.error("Failed to update notification settings");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -56,7 +86,7 @@ export function NotificationToggle({
         id={`notification-${opportunityId}`}
         checked={isEnabled}
         onCheckedChange={handleToggle}
-        disabled={isLoading}
+        disabled={isLoading || !session?.user?.email}
       />
     </div>
   );

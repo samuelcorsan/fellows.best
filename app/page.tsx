@@ -152,7 +152,7 @@ export default function Home() {
       <section className="pb-6">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <div className="text-center max-w-3xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-black dark:text-white mb-4">
               Ready to Discover Your Next Opportunity?
             </h2>
             <p className="text-xl mb-8">

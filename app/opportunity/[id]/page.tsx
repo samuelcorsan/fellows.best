@@ -198,6 +198,7 @@ export default function OpportunityPage({ params }: OpportunityPageProps) {
               <NotificationToggle
                 opportunityId={opportunity.id}
                 opportunityName={opportunity.name}
+                closeDate={opportunity.closeDate}
               />
             </CardContent>
           </Card>
