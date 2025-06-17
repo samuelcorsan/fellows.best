@@ -10,7 +10,7 @@ interface CalendarButtonProps {
 
 export function CalendarButton({ opportunity }: CalendarButtonProps) {
   const generateICS = () => {
-    const startDate = new Date(opportunity.closeDate);
+    const startDate = new Date(opportunity.closeDate || "");
     const endDate = new Date(startDate.getTime() + 60 * 60 * 1000); // 1 hour duration
 
     const formatDate = (date: Date) => {
@@ -49,7 +49,7 @@ export function CalendarButton({ opportunity }: CalendarButtonProps) {
   };
 
   const generateGoogleCalendarLink = () => {
-    const startDate = new Date(opportunity.closeDate);
+    const startDate = new Date(opportunity.closeDate || "");
     const endDate = new Date(startDate.getTime() + 60 * 60 * 1000); // 1 hour duration
 
     const formatDateForGoogle = (date: Date) => {

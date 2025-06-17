@@ -1,31 +1,35 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { Bell, BellOff } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Switch } from '@/components/ui/switch';
-import { Label } from '@/components/ui/label';
+import { useState } from "react";
+import { Bell, BellOff } from "lucide-react";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
 
 interface NotificationToggleProps {
   opportunityId: string;
   opportunityName: string;
 }
 
-export function NotificationToggle({ opportunityId, opportunityName }: NotificationToggleProps) {
+export function NotificationToggle({
+  opportunityId,
+  opportunityName,
+}: NotificationToggleProps) {
   const [isEnabled, setIsEnabled] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleToggle = async (enabled: boolean) => {
     setIsLoading(true);
-    
+
     // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 500));
-    
+    await new Promise((resolve) => setTimeout(resolve, 500));
+
     setIsEnabled(enabled);
     setIsLoading(false);
-    
+
     // In a real app, you would store this preference and set up notifications
-    console.log(`Notification ${enabled ? 'enabled' : 'disabled'} for ${opportunityName}`);
+    console.log(
+      `Notification ${enabled ? "enabled" : "disabled"} for ${opportunityName}`
+    );
   };
 
   return (
@@ -37,7 +41,10 @@ export function NotificationToggle({ opportunityId, opportunityName }: Notificat
           <BellOff className="h-5 w-5 text-muted-foreground" />
         )}
         <div>
-          <Label htmlFor={`notification-${opportunityId}`} className="font-medium">
+          <Label
+            htmlFor={`notification-${opportunityId}`}
+            className="font-medium"
+          >
             Deadline Reminder
           </Label>
           <p className="text-sm text-muted-foreground">

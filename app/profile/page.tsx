@@ -120,7 +120,6 @@ export default function ProfilePage() {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 dark:from-blue-950/20 dark:via-purple-950/20 dark:to-pink-950/20">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="max-w-6xl mx-auto">
-          {/* Profile Header */}
           <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-lg p-6 sm:p-8 mb-8">
             <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-4 sm:space-y-0 sm:space-x-6">
               <div className="h-20 w-20 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center flex-shrink-0">
@@ -177,7 +176,6 @@ export default function ProfilePage() {
               </TabsList>
             </div>
 
-            {/* Bookmarked Opportunities */}
             <TabsContent value="bookmarked" className="space-y-6">
               <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-lg overflow-hidden">
                 <div className="p-6 sm:p-8 border-b border-gray-200 dark:border-gray-700">
@@ -242,7 +240,6 @@ export default function ProfilePage() {
               </div>
             </TabsContent>
 
-            {/* Fellowship Participated */}
             <TabsContent value="participated" className="space-y-6">
               <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-lg overflow-hidden">
                 <div className="p-6 sm:p-8 border-b border-gray-200 dark:border-gray-700">
@@ -347,7 +344,6 @@ export default function ProfilePage() {
                         </div>
                       ))}
 
-                      {/* Add New Achievement */}
                       <div className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-xl p-8 text-center hover:border-blue-400 dark:hover:border-blue-500 transition-colors cursor-pointer">
                         <div className="h-12 w-12 mx-auto mb-4 rounded-full bg-blue-100 dark:bg-blue-900/50 flex items-center justify-center">
                           <Upload className="h-6 w-6 text-blue-600 dark:text-blue-400" />
