@@ -20,6 +20,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { OpportunityCard } from "@/components/features/OpportunityCard";
 import { mockOpportunities } from "@/lib/data";
 import Image from "next/image";
+import { authClient } from "@/lib/auth-client";
 
 interface ParticipatedFellowship {
   id: string;
@@ -69,9 +70,11 @@ const mockParticipatedFellowships: ParticipatedFellowship[] = [
 ];
 
 export default function ProfilePage() {
+  const { data: session, isPending } = authClient.useSession();
+
   const [userProfile, setUserProfile] = useState({
-    name: "Alex Johnson",
-    email: "demo@example.com",
+    name: session?.user?.name || "Guest User",
+    email: session?.user?.email || "demo@example.com",
     location: "San Francisco, CA",
     interests: ["startups", "AI", "sustainability"],
   });
@@ -83,7 +86,6 @@ export default function ProfilePage() {
     weekly: true,
   });
 
-  // Load bookmarked opportunities from localStorage
   useEffect(() => {
     const saved = localStorage.getItem("bookmarked-opportunities");
     if (saved) {
@@ -116,58 +118,60 @@ export default function ProfilePage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 dark:from-blue-950/20 dark:via-purple-950/20 dark:to-pink-950/20">
+    <div className="min-h-screen bg-gradient-to-br from-neutral-50 via-neutral-100 to-neutral-200 dark:from-black dark:via-neutral-900 dark:to-neutral-800">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="max-w-6xl mx-auto">
-          <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-lg p-6 sm:p-8 mb-8">
+          <div className="bg-white dark:bg-black rounded-2xl shadow-lg p-6 sm:p-8 mb-8">
             <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-4 sm:space-y-0 sm:space-x-6">
-              <div className="h-20 w-20 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center flex-shrink-0">
+              <div className="h-20 w-20 rounded-full bg-gradient-to-r from-gray-800 to-black flex items-center justify-center flex-shrink-0">
                 <User className="h-10 w-10 text-white" />
               </div>
               <div className="flex-1">
-                <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-                  Welcome back!
+                <h1 className="text-3xl font-bold text-neutral-900 dark:text-white mb-2">
+                  {isPending
+                    ? "Loading..."
+                    : `Welcome back, ${session?.user?.name || "Guest"}!`}
                 </h1>
-                <p className="text-gray-600 dark:text-gray-300 mb-1">
-                  Logged in as {userProfile.email}
+                <p className="text-neutral-600 dark:text-neutral-300 mb-1">
+                  Logged in as {session?.user?.email || "demo@example.com"}
                 </p>
-                <p className="text-gray-500 dark:text-gray-400 text-sm">
+                <p className="text-neutral-500 dark:text-neutral-400 text-sm">
                   Track your favorite opportunities and never miss a deadline
                 </p>
               </div>
-              <div className="flex items-center space-x-2 text-sm text-gray-500 dark:text-gray-400">
+              <div className="flex items-center space-x-2 text-sm text-neutral-500 dark:text-neutral-400">
                 <span>{bookmarkedOpportunities.length} saved</span>
               </div>
             </div>
           </div>
 
           <Tabs defaultValue="bookmarked" className="space-y-6">
-            <div className="bg-white dark:bg-gray-900 rounded-xl shadow-sm p-1">
+            <div className="bg-white dark:bg-black rounded-xl shadow-sm p-1">
               <TabsList className="grid w-full grid-cols-4 bg-transparent">
                 <TabsTrigger
                   value="bookmarked"
-                  className="flex items-center space-x-2 data-[state=active]:bg-blue-100 data-[state=active]:text-blue-700 dark:data-[state=active]:bg-blue-900/50 dark:data-[state=active]:text-blue-300"
+                  className="flex items-center space-x-2 data-[state=active]:bg-neutral-200 data-[state=active]:text-neutral-900 dark:data-[state=active]:bg-neutral-800 dark:data-[state=active]:text-white"
                 >
                   <Bookmark className="h-4 w-4" />
                   <span className="hidden sm:inline">Bookmarked</span>
                 </TabsTrigger>
                 <TabsTrigger
                   value="participated"
-                  className="flex items-center space-x-2 data-[state=active]:bg-blue-100 data-[state=active]:text-blue-700 dark:data-[state=active]:bg-blue-900/50 dark:data-[state=active]:text-blue-300"
+                  className="flex items-center space-x-2 data-[state=active]:bg-neutral-200 data-[state=active]:text-neutral-900 dark:data-[state=active]:bg-neutral-800 dark:data-[state=active]:text-white"
                 >
                   <Award className="h-4 w-4" />
                   <span className="hidden sm:inline">Participated</span>
                 </TabsTrigger>
                 <TabsTrigger
                   value="notifications"
-                  className="flex items-center space-x-2 data-[state=active]:bg-blue-100 data-[state=active]:text-blue-700 dark:data-[state=active]:bg-blue-900/50 dark:data-[state=active]:text-blue-300"
+                  className="flex items-center space-x-2 data-[state=active]:bg-neutral-200 data-[state=active]:text-neutral-900 dark:data-[state=active]:bg-neutral-800 dark:data-[state=active]:text-white"
                 >
                   <Bell className="h-4 w-4" />
                   <span className="hidden sm:inline">Notifications</span>
                 </TabsTrigger>
                 <TabsTrigger
                   value="settings"
-                  className="flex items-center space-x-2 data-[state=active]:bg-blue-100 data-[state=active]:text-blue-700 dark:data-[state=active]:bg-blue-900/50 dark:data-[state=active]:text-blue-300"
+                  className="flex items-center space-x-2 data-[state=active]:bg-neutral-200 data-[state=active]:text-neutral-900 dark:data-[state=active]:bg-neutral-800 dark:data-[state=active]:text-white"
                 >
                   <Settings className="h-4 w-4" />
                   <span className="hidden sm:inline">Settings</span>
@@ -176,22 +180,22 @@ export default function ProfilePage() {
             </div>
 
             <TabsContent value="bookmarked" className="space-y-6">
-              <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-lg overflow-hidden">
-                <div className="p-6 sm:p-8 border-b border-gray-200 dark:border-gray-700">
+              <div className="bg-white dark:bg-black rounded-2xl shadow-lg overflow-hidden">
+                <div className="p-6 sm:p-8 border-b border-neutral-200 dark:border-neutral-700">
                   <div className="flex items-center justify-between">
                     <div>
-                      <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+                      <h2 className="text-2xl font-bold text-neutral-900 dark:text-white mb-2">
                         Bookmarked Opportunities
                       </h2>
-                      <p className="text-gray-600 dark:text-gray-300">
+                      <p className="text-neutral-600 dark:text-neutral-300">
                         Keep track of opportunities you're interested in
                       </p>
                     </div>
                     <div className="text-right">
-                      <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">
+                      <div className="text-2xl font-bold text-neutral-900 dark:text-neutral-100">
                         {bookmarkedOpportunities.length}
                       </div>
-                      <div className="text-sm text-gray-500 dark:text-gray-400">
+                      <div className="text-sm text-neutral-500 dark:text-neutral-400">
                         saved
                       </div>
                     </div>
@@ -201,17 +205,20 @@ export default function ProfilePage() {
                 <div className="p-6 sm:p-8">
                   {bookmarkedOpportunities.length === 0 ? (
                     <div className="text-center py-16">
-                      <div className="h-24 w-24 mx-auto mb-6 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
-                        <Bookmark className="h-12 w-12 text-gray-400" />
+                      <div className="h-24 w-24 mx-auto mb-6 rounded-full bg-gray-100 dark:bg-gray-900 flex items-center justify-center">
+                        <Bookmark className="h-12 w-12 text-neutral-800 dark:text-neutral-200" />
                       </div>
-                      <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+                      <h3 className="text-xl font-semibold text-neutral-900 dark:text-white mb-2">
                         No bookmarked opportunities yet
                       </h3>
-                      <p className="text-gray-600 dark:text-gray-300 mb-6 max-w-md mx-auto">
+                      <p className="text-neutral-600 dark:text-neutral-300 mb-6 max-w-md mx-auto">
                         Start bookmarking opportunities you're interested in to
                         keep track of them here.
                       </p>
-                      <Button asChild className="bg-blue-600 hover:bg-blue-700">
+                      <Button
+                        asChild
+                        className="bg-gray-900 hover:bg-black text-white"
+                      >
                         <a href="/browse">Browse Opportunities</a>
                       </Button>
                     </div>
@@ -226,10 +233,10 @@ export default function ProfilePage() {
                           <Button
                             variant="ghost"
                             size="sm"
-                            className="absolute top-3 right-3 h-8 w-8 p-0 hover:bg-red-50 dark:hover:bg-red-900/20"
+                            className="absolute top-3 right-3 h-8 w-8 p-0 hover:bg-gray-100 dark:hover:bg-gray-800"
                             onClick={() => toggleBookmark(opportunity.id)}
                           >
-                            <Heart className="h-4 w-4 fill-red-500 text-red-500" />
+                            <Heart className="h-4 w-4 fill-gray-800 text-gray-800 dark:fill-gray-200 dark:text-gray-200" />
                           </Button>
                         </div>
                       ))}
@@ -240,22 +247,22 @@ export default function ProfilePage() {
             </TabsContent>
 
             <TabsContent value="participated" className="space-y-6">
-              <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-lg overflow-hidden">
-                <div className="p-6 sm:p-8 border-b border-gray-200 dark:border-gray-700">
+              <div className="bg-white dark:bg-black rounded-2xl shadow-lg overflow-hidden">
+                <div className="p-6 sm:p-8 border-b border-neutral-200 dark:border-neutral-700">
                   <div className="flex items-center justify-between">
                     <div>
-                      <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+                      <h2 className="text-2xl font-bold text-neutral-900 dark:text-white mb-2">
                         Fellowship Participated
                       </h2>
-                      <p className="text-gray-600 dark:text-gray-300">
+                      <p className="text-neutral-600 dark:text-neutral-300">
                         Your journey through various programs and competitions
                       </p>
                     </div>
                     <div className="text-right">
-                      <div className="text-2xl font-bold text-green-600 dark:text-green-400">
+                      <div className="text-2xl font-bold text-neutral-900 dark:text-neutral-100">
                         {mockParticipatedFellowships.length}
                       </div>
-                      <div className="text-sm text-gray-500 dark:text-gray-400">
+                      <div className="text-sm text-neutral-500 dark:text-neutral-400">
                         programs
                       </div>
                     </div>
@@ -265,17 +272,20 @@ export default function ProfilePage() {
                 <div className="p-6 sm:p-8">
                   {mockParticipatedFellowships.length === 0 ? (
                     <div className="text-center py-16">
-                      <div className="h-24 w-24 mx-auto mb-6 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
-                        <Trophy className="h-12 w-12 text-gray-400" />
+                      <div className="h-24 w-24 mx-auto mb-6 rounded-full bg-gray-100 dark:bg-gray-900 flex items-center justify-center">
+                        <Trophy className="h-12 w-12 text-neutral-800 dark:text-neutral-200" />
                       </div>
-                      <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+                      <h3 className="text-xl font-semibold text-neutral-900 dark:text-white mb-2">
                         No participated programs yet
                       </h3>
-                      <p className="text-gray-600 dark:text-gray-300 mb-6 max-w-md mx-auto">
+                      <p className="text-neutral-600 dark:text-neutral-300 mb-6 max-w-md mx-auto">
                         Once you participate in fellowships or programs, they'll
                         appear here with your achievements.
                       </p>
-                      <Button asChild className="bg-blue-600 hover:bg-blue-700">
+                      <Button
+                        asChild
+                        className="bg-gray-900 hover:bg-black text-white"
+                      >
                         <a href="/browse">Find Opportunities</a>
                       </Button>
                     </div>
@@ -284,10 +294,10 @@ export default function ProfilePage() {
                       {mockParticipatedFellowships.map((fellowship) => (
                         <div
                           key={fellowship.id}
-                          className="bg-gray-50 dark:bg-gray-800 rounded-xl p-6 hover:shadow-md transition-shadow"
+                          className="bg-neutral-50 dark:bg-neutral-900 rounded-xl p-6 hover:shadow-md transition-shadow"
                         >
                           <div className="flex flex-col sm:flex-row gap-6">
-                            <div className="relative w-full sm:w-48 h-32 rounded-lg overflow-hidden bg-gray-200 dark:bg-gray-700 flex-shrink-0">
+                            <div className="relative w-full sm:w-48 h-32 rounded-lg overflow-hidden bg-neutral-200 dark:bg-neutral-800 flex-shrink-0">
                               <Image
                                 src={fellowship.imageUrl}
                                 alt={fellowship.name}
@@ -298,8 +308,8 @@ export default function ProfilePage() {
                                 <span
                                   className={`px-2 py-1 rounded-full text-xs font-medium ${
                                     fellowship.status === "completed"
-                                      ? "bg-green-100 text-green-700 dark:bg-green-900/50 dark:text-green-300"
-                                      : "bg-blue-100 text-blue-700 dark:bg-blue-900/50 dark:text-blue-300"
+                                      ? "bg-neutral-200 text-neutral-900 dark:bg-neutral-800 dark:text-neutral-100"
+                                      : "bg-neutral-200 text-neutral-900 dark:bg-neutral-800 dark:text-neutral-100"
                                   }`}
                                 >
                                   {fellowship.status === "completed"
@@ -311,18 +321,18 @@ export default function ProfilePage() {
                             <div className="flex-1">
                               <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-3">
                                 <div>
-                                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">
+                                  <h3 className="text-lg font-semibold text-neutral-900 dark:text-white mb-1">
                                     {fellowship.name}
                                   </h3>
-                                  <p className="text-gray-600 dark:text-gray-300 text-sm">
+                                  <p className="text-neutral-600 dark:text-neutral-300 text-sm">
                                     {fellowship.organizer} • {fellowship.year}
                                   </p>
                                 </div>
-                                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800 dark:bg-purple-900/50 dark:text-purple-300 mt-2 sm:mt-0">
+                                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-neutral-200 text-neutral-900 dark:bg-neutral-800 dark:text-neutral-100 mt-2 sm:mt-0">
                                   {fellowship.category}
                                 </span>
                               </div>
-                              <p className="text-gray-700 dark:text-gray-300 text-sm mb-4">
+                              <p className="text-neutral-700 dark:text-neutral-300 text-sm mb-4">
                                 {fellowship.description}
                               </p>
                               <div className="flex items-center space-x-4">
@@ -333,7 +343,7 @@ export default function ProfilePage() {
                                 <Button
                                   variant="ghost"
                                   size="sm"
-                                  className="text-blue-600 hover:text-blue-700 dark:text-blue-400"
+                                  className="text-neutral-600 hover:text-neutral-700 dark:text-neutral-400 dark:hover:text-neutral-300"
                                 >
                                   View Certificate
                                 </Button>
@@ -343,20 +353,20 @@ export default function ProfilePage() {
                         </div>
                       ))}
 
-                      <div className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-xl p-8 text-center hover:border-blue-400 dark:hover:border-blue-500 transition-colors cursor-pointer">
-                        <div className="h-12 w-12 mx-auto mb-4 rounded-full bg-blue-100 dark:bg-blue-900/50 flex items-center justify-center">
-                          <Upload className="h-6 w-6 text-blue-600 dark:text-blue-400" />
+                      <div className="border-2 border-dashed border-neutral-300 dark:border-neutral-700 rounded-xl p-8 text-center hover:border-neutral-400 dark:hover:border-neutral-600 transition-colors cursor-pointer">
+                        <div className="h-12 w-12 mx-auto mb-4 rounded-full bg-gray-200 dark:bg-gray-800 flex items-center justify-center">
+                          <Upload className="h-6 w-6 text-neutral-800 dark:text-neutral-200" />
                         </div>
-                        <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
+                        <h3 className="text-lg font-medium text-neutral-900 dark:text-white mb-2">
                           Add New Achievement
                         </h3>
-                        <p className="text-gray-600 dark:text-gray-300 text-sm mb-4">
+                        <p className="text-neutral-600 dark:text-neutral-300 text-sm mb-4">
                           Upload photos and details of your latest fellowship or
                           program participation
                         </p>
                         <Button
                           variant="outline"
-                          className="border-blue-300 text-blue-600 hover:bg-blue-50 dark:border-blue-600 dark:text-blue-400 dark:hover:bg-blue-900/20"
+                          className="border-gray-300 text-gray-600 hover:bg-gray-100 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-800"
                         >
                           Add Achievement
                         </Button>
@@ -368,21 +378,21 @@ export default function ProfilePage() {
             </TabsContent>
 
             <TabsContent value="notifications" className="space-y-6">
-              <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-lg overflow-hidden">
-                <div className="p-6 sm:p-8 border-b border-gray-200 dark:border-gray-700">
-                  <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+              <div className="bg-white dark:bg-black rounded-2xl shadow-lg overflow-hidden">
+                <div className="p-6 sm:p-8 border-b border-neutral-200 dark:border-neutral-700">
+                  <h2 className="text-2xl font-bold text-neutral-900 dark:text-white mb-2">
                     Notification Preferences
                   </h2>
-                  <p className="text-gray-600 dark:text-gray-300">
+                  <p className="text-neutral-600 dark:text-neutral-300">
                     Manage how you receive updates about opportunities
                   </p>
                 </div>
 
                 <div className="p-6 sm:p-8 space-y-8">
-                  <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                  <div className="flex items-center justify-between p-4 bg-neutral-50 dark:bg-neutral-900 rounded-lg">
                     <div className="flex items-center space-x-4">
-                      <div className="h-10 w-10 rounded-full bg-blue-100 dark:bg-blue-900/50 flex items-center justify-center">
-                        <Bell className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+                      <div className="h-10 w-10 rounded-full bg-neutral-200 dark:bg-neutral-800 flex items-center justify-center">
+                        <Bell className="h-5 w-5 text-neutral-800 dark:text-neutral-200" />
                       </div>
                       <div>
                         <Label
@@ -405,10 +415,10 @@ export default function ProfilePage() {
                     />
                   </div>
 
-                  <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                  <div className="flex items-center justify-between p-4 bg-neutral-50 dark:bg-neutral-900 rounded-lg">
                     <div className="flex items-center space-x-4">
-                      <div className="h-10 w-10 rounded-full bg-purple-100 dark:bg-purple-900/50 flex items-center justify-center">
-                        <Bell className="h-5 w-5 text-purple-600 dark:text-purple-400" />
+                      <div className="h-10 w-10 rounded-full bg-neutral-200 dark:bg-neutral-800 flex items-center justify-center">
+                        <Bell className="h-5 w-5 text-neutral-800 dark:text-neutral-200" />
                       </div>
                       <div>
                         <Label
@@ -431,10 +441,10 @@ export default function ProfilePage() {
                     />
                   </div>
 
-                  <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                  <div className="flex items-center justify-between p-4 bg-neutral-50 dark:bg-neutral-900 rounded-lg">
                     <div className="flex items-center space-x-4">
-                      <div className="h-10 w-10 rounded-full bg-green-100 dark:bg-green-900/50 flex items-center justify-center">
-                        <Calendar className="h-5 w-5 text-green-600 dark:text-green-400" />
+                      <div className="h-10 w-10 rounded-full bg-neutral-200 dark:bg-neutral-800 flex items-center justify-center">
+                        <Calendar className="h-5 w-5 text-neutral-800 dark:text-neutral-200" />
                       </div>
                       <div>
                         <Label
@@ -461,12 +471,12 @@ export default function ProfilePage() {
             </TabsContent>
 
             <TabsContent value="settings" className="space-y-6">
-              <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-lg overflow-hidden">
-                <div className="p-6 sm:p-8 border-b border-gray-200 dark:border-gray-700">
-                  <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+              <div className="bg-white dark:bg-black rounded-2xl shadow-lg overflow-hidden">
+                <div className="p-6 sm:p-8 border-b border-neutral-200 dark:border-neutral-700">
+                  <h2 className="text-2xl font-bold text-neutral-900 dark:text-white mb-2">
                     Profile Settings
                   </h2>
-                  <p className="text-gray-600 dark:text-gray-300">
+                  <p className="text-neutral-600 dark:text-neutral-300">
                     Manage your account information and preferences
                   </p>
                 </div>
@@ -527,42 +537,52 @@ export default function ProfilePage() {
                   </div>
 
                   <div className="flex justify-end">
-                    <Button className="bg-blue-600 hover:bg-blue-700">
+                    <Button className="bg-gray-900 hover:bg-black text-white">
                       Save Changes
                     </Button>
                   </div>
                 </div>
               </div>
 
-              <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-lg overflow-hidden">
-                <div className="p-6 sm:p-8 border-b border-gray-200 dark:border-gray-700">
-                  <h2 className="text-xl font-bold text-gray-900 dark:text-white">
+              <div className="bg-white dark:bg-black rounded-2xl shadow-lg overflow-hidden">
+                <div className="p-6 sm:p-8 border-b border-neutral-200 dark:border-neutral-700">
+                  <h2 className="text-xl font-bold text-neutral-900 dark:text-white">
                     Account Actions
                   </h2>
                 </div>
 
                 <div className="p-6 sm:p-8 space-y-4">
-                  <div className="flex items-center justify-between p-4 border border-gray-200 dark:border-gray-700 rounded-lg">
+                  <div className="flex items-center justify-between p-4 border border-neutral-300 dark:border-neutral-700 rounded-lg bg-neutral-50 dark:bg-neutral-900">
                     <div>
-                      <h3 className="font-medium text-gray-900 dark:text-white">
+                      <h3 className="font-medium text-neutral-900 dark:text-neutral-100">
                         Export Data
                       </h3>
-                      <p className="text-sm text-gray-600 dark:text-gray-300">
+                      <p className="text-sm text-neutral-700 dark:text-neutral-300">
                         Download your bookmarks and preferences
                       </p>
                     </div>
-                    <Button variant="outline">Export</Button>
+                    <Button
+                      variant="outline"
+                      className="border-neutral-300 hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-800"
+                    >
+                      Export
+                    </Button>
                   </div>
-                  <div className="flex items-center justify-between p-4 border border-red-200 dark:border-red-800 rounded-lg bg-red-50 dark:bg-red-900/10">
+                  <div className="flex items-center justify-between p-4 border border-neutral-300 dark:border-neutral-700 rounded-lg bg-neutral-50 dark:bg-neutral-900">
                     <div>
-                      <h3 className="font-medium text-red-600 dark:text-red-400">
+                      <h3 className="font-medium text-neutral-900 dark:text-neutral-100">
                         Delete Account
                       </h3>
-                      <p className="text-sm text-red-500 dark:text-red-400">
+                      <p className="text-sm text-neutral-700 dark:text-neutral-300">
                         Permanently delete your account and all data
                       </p>
                     </div>
-                    <Button variant="destructive">Delete</Button>
+                    <Button
+                      variant="outline"
+                      className="border-neutral-300 hover:bg-neutral-100 dark:border-neutral-700 dark:hover:bg-neutral-800"
+                    >
+                      Delete
+                    </Button>
                   </div>
                 </div>
               </div>
