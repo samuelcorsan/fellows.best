@@ -1,14 +1,25 @@
-import { notFound } from 'next/navigation';
-import Image from 'next/image';
-import Link from 'next/link';
-import { Calendar, MapPin, ExternalLink, ArrowLeft, Clock, Users, Award } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Separator } from '@/components/ui/separator';
-import { CalendarButton } from '@/components/CalendarButton';
-import { NotificationToggle } from '@/components/NotificationToggle';
-import { getOpportunityById, getDaysUntilDeadline, getDeadlineUrgency } from '@/lib/data';
+import { notFound } from "next/navigation";
+import Image from "next/image";
+import Link from "next/link";
+import {
+  MapPin,
+  ExternalLink,
+  ArrowLeft,
+  Clock,
+  Users,
+  Award,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
+import { CalendarButton } from "@/components/CalendarButton";
+import { NotificationToggle } from "@/components/NotificationToggle";
+import {
+  getOpportunityById,
+  getDaysUntilDeadline,
+  getDeadlineUrgency,
+} from "@/lib/data";
 
 interface OpportunityPageProps {
   params: {
@@ -19,7 +30,7 @@ interface OpportunityPageProps {
 export default function OpportunityPage({ params }: OpportunityPageProps) {
   const opportunity = getOpportunityById(params.id);
 
-  if (!opportunity) {
+  if (!opportunity || !opportunity.closeDate) {
     notFound();
   }
 
@@ -27,9 +38,11 @@ export default function OpportunityPage({ params }: OpportunityPageProps) {
   const urgency = getDeadlineUrgency(opportunity.closeDate);
 
   const urgencyStyles = {
-    safe: 'border-green-200 bg-green-50 text-green-700 dark:border-green-800 dark:bg-green-950 dark:text-green-300',
-    warning: 'border-yellow-200 bg-yellow-50 text-yellow-700 dark:border-yellow-800 dark:bg-yellow-950 dark:text-yellow-300',
-    urgent: 'border-red-200 bg-red-50 text-red-700 dark:border-red-800 dark:bg-red-950 dark:text-red-300'
+    safe: "border-green-200 bg-green-50 text-green-700 dark:border-green-800 dark:bg-green-950 dark:text-green-300",
+    warning:
+      "border-yellow-200 bg-yellow-50 text-yellow-700 dark:border-yellow-800 dark:bg-yellow-950 dark:text-yellow-300",
+    urgent:
+      "border-red-200 bg-red-50 text-red-700 dark:border-red-800 dark:bg-red-950 dark:text-red-300",
   };
 
   return (
@@ -55,10 +68,16 @@ export default function OpportunityPage({ params }: OpportunityPageProps) {
               className="rounded-xl object-cover"
             />
             <div className="flex-1">
-              <h1 className="text-3xl md:text-4xl font-bold mb-2">{opportunity.name}</h1>
-              <p className="text-xl text-muted-foreground mb-4">{opportunity.organizer}</p>
+              <h1 className="text-3xl md:text-4xl font-bold mb-2">
+                {opportunity.name}
+              </h1>
+              <p className="text-xl text-muted-foreground mb-4">
+                {opportunity.organizer}
+              </p>
               <div className="flex flex-wrap gap-2">
-                <Badge variant="outline" className="text-sm">{opportunity.category}</Badge>
+                <Badge variant="outline" className="text-sm">
+                  {opportunity.category}
+                </Badge>
                 {opportunity.tags.map((tag) => (
                   <Badge key={tag} variant="secondary" className="text-sm">
                     {tag}
@@ -111,7 +130,9 @@ export default function OpportunityPage({ params }: OpportunityPageProps) {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-muted-foreground leading-relaxed">{opportunity.eligibility}</p>
+              <p className="text-muted-foreground leading-relaxed">
+                {opportunity.eligibility}
+              </p>
             </CardContent>
           </Card>
         </div>
@@ -127,21 +148,25 @@ export default function OpportunityPage({ params }: OpportunityPageProps) {
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className={`p-4 rounded-lg border text-center ${urgencyStyles[urgency]}`}>
+              <div
+                className={`p-4 rounded-lg border text-center ${urgencyStyles[urgency]}`}
+              >
                 <div className="text-2xl font-bold">
-                  {daysUntil > 0 ? `${daysUntil} days left` : 'Closed'}
+                  {daysUntil > 0 ? `${daysUntil} days left` : "Closed"}
                 </div>
                 <div className="text-sm opacity-75">
                   Closes {new Date(opportunity.closeDate).toLocaleDateString()}
                 </div>
               </div>
-              
+
               <Separator />
-              
+
               <div className="space-y-2 text-sm">
                 <div className="flex items-center justify-between">
                   <span className="text-muted-foreground">Opens:</span>
-                  <span>{new Date(opportunity.openDate).toLocaleDateString()}</span>
+                  <span>
+                    {new Date(opportunity.openDate).toLocaleDateString()}
+                  </span>
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-muted-foreground">Region:</span>
@@ -181,7 +206,11 @@ export default function OpportunityPage({ params }: OpportunityPageProps) {
           <Card>
             <CardContent className="pt-6">
               <Button asChild size="lg" className="w-full">
-                <a href={opportunity.applyLink} target="_blank" rel="noopener noreferrer">
+                <a
+                  href={opportunity.applyLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   Apply Now
                   <ExternalLink className="ml-2 h-4 w-4" />
                 </a>
