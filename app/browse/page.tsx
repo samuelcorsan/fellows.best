@@ -33,7 +33,6 @@ export default function BrowsePage() {
 
   const filteredAndSortedOpportunities = useMemo(() => {
     let filtered = mockOpportunities.filter((opportunity) => {
-      // Search filter
       const matchesSearch =
         !debouncedSearchQuery ||
         opportunity.name
@@ -46,18 +45,15 @@ export default function BrowsePage() {
           .toLowerCase()
           .includes(debouncedSearchQuery.toLowerCase());
 
-      // Category filter
       const matchesCategory =
         filters.categories.length === 0 ||
         filters.categories.includes(opportunity.category);
 
-      // Region and country filter
       const matchesRegion =
         filters.regions.length === 0 ||
         filters.regions.includes(opportunity.region) ||
         (opportunity.country && filters.regions.includes(opportunity.country));
 
-      // Tags filter
       const matchesTags =
         filters.tags.length === 0 ||
         filters.tags.some((tag) => opportunity.tags.includes(tag));
@@ -65,7 +61,6 @@ export default function BrowsePage() {
       return matchesSearch && matchesCategory && matchesRegion && matchesTags;
     });
 
-    // Sort
     filtered.sort((a, b) => {
       switch (sortBy) {
         case "deadline":
@@ -98,7 +93,6 @@ export default function BrowsePage() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-        {/* Filters Sidebar */}
         <div className="lg:col-span-1">
           <FilterPanel
             filters={filters}
@@ -108,9 +102,7 @@ export default function BrowsePage() {
           />
         </div>
 
-        {/* Main Content */}
         <div className="lg:col-span-3 space-y-6">
-          {/* Search and Controls */}
           <div className="flex flex-col sm:flex-row gap-4">
             <div className="flex-1">
               <SearchInput
@@ -153,14 +145,12 @@ export default function BrowsePage() {
             </div>
           </div>
 
-          {/* Results Count */}
           <div className="flex items-center justify-between">
             <p className="text-muted-foreground">
               {filteredAndSortedOpportunities.length} opportunities found
             </p>
           </div>
 
-          {/* Opportunities Grid/List */}
           {filteredAndSortedOpportunities.length === 0 ? (
             <div className="text-center py-16">
               <div className="text-6xl mb-4">🔍</div>

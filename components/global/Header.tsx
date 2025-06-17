@@ -121,7 +121,6 @@ export function Header() {
       <header className="sticky top-0 z-50 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 items-center justify-between">
-            {/* Logo */}
             <Link href="/" className="flex items-center space-x-2">
               <div className="h-8 w-8 rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 flex items-center justify-center">
                 <Calendar className="h-5 w-5 text-white" />
@@ -129,7 +128,6 @@ export function Header() {
               <span className="text-xl font-bold">ddfellow</span>
             </Link>
 
-            {/* Desktop Navigation */}
             <nav className="hidden md:flex items-center space-x-8">
               {navigation.map((item) => {
                 const Icon = item.icon;
@@ -146,7 +144,6 @@ export function Header() {
               })}
             </nav>
 
-            {/* Desktop Actions */}
             <div className="hidden md:flex items-center space-x-4">
               <Button
                 variant="ghost"
@@ -160,7 +157,6 @@ export function Header() {
               <UserMenu />
             </div>
 
-            {/* Mobile menu button */}
             <Button
               variant="ghost"
               size="sm"
@@ -175,7 +171,6 @@ export function Header() {
             </Button>
           </div>
 
-          {/* Mobile Navigation */}
           {isMenuOpen && (
             <div className="md:hidden py-4 border-t">
               <nav className="flex flex-col space-y-4">

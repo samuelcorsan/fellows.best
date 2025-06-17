@@ -50,7 +50,7 @@ export function CalendarButton({ opportunity }: CalendarButtonProps) {
 
   const generateGoogleCalendarLink = () => {
     const startDate = new Date(opportunity.closeDate || "");
-    const endDate = new Date(startDate.getTime() + 60 * 60 * 1000); // 1 hour duration
+    const endDate = new Date(startDate.getTime() + 60 * 60 * 1000);
 
     const formatDateForGoogle = (date: Date) => {
       return date.toISOString().replace(/[-:]/g, "").split(".")[0] + "Z";

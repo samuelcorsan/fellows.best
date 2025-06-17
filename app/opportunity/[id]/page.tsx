@@ -56,9 +56,7 @@ export default function OpportunityPage({ params }: OpportunityPageProps) {
       </Button>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Main Content */}
         <div className="lg:col-span-2 space-y-8">
-          {/* Header */}
           <div className="flex items-start space-x-6">
             <Image
               src={opportunity.logoUrl}
@@ -87,7 +85,6 @@ export default function OpportunityPage({ params }: OpportunityPageProps) {
             </div>
           </div>
 
-          {/* Description */}
           <Card>
             <CardHeader>
               <CardTitle>About this Opportunity</CardTitle>
@@ -99,7 +96,6 @@ export default function OpportunityPage({ params }: OpportunityPageProps) {
             </CardContent>
           </Card>
 
-          {/* Benefits */}
           {opportunity.benefits.length > 0 && (
             <Card>
               <CardHeader>
@@ -121,7 +117,6 @@ export default function OpportunityPage({ params }: OpportunityPageProps) {
             </Card>
           )}
 
-          {/* Eligibility */}
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center">
@@ -137,9 +132,7 @@ export default function OpportunityPage({ params }: OpportunityPageProps) {
           </Card>
         </div>
 
-        {/* Sidebar */}
         <div className="space-y-6">
-          {/* Deadline Card */}
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center">
@@ -179,7 +172,6 @@ export default function OpportunityPage({ params }: OpportunityPageProps) {
             </CardContent>
           </Card>
 
-          {/* Calendar Integration */}
           <Card>
             <CardHeader>
               <CardTitle>Add to Calendar</CardTitle>
@@ -189,7 +181,6 @@ export default function OpportunityPage({ params }: OpportunityPageProps) {
             </CardContent>
           </Card>
 
-          {/* Notifications */}
           <Card>
             <CardHeader>
               <CardTitle>Reminders</CardTitle>
@@ -203,7 +194,6 @@ export default function OpportunityPage({ params }: OpportunityPageProps) {
             </CardContent>
           </Card>
 
-          {/* Apply Button */}
           <Card>
             <CardContent className="pt-6">
               <Button asChild size="lg" className="w-full">

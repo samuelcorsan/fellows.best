@@ -6,7 +6,6 @@ export function Footer() {
     <footer className="border-t bg-muted/50">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          {/* Logo and Description */}
           <div className="md:col-span-2">
             <Link href="/" className="flex items-center space-x-2 mb-4">
               <div className="h-8 w-8 rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 flex items-center justify-center">
@@ -41,7 +40,6 @@ export function Footer() {
             </div>
           </div>
 
-          {/* Quick Links */}
           <div>
             <h3 className="font-semibold mb-4">Quick Links</h3>
             <ul className="space-y-2">
@@ -80,7 +78,6 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Categories */}
           <div>
             <h3 className="font-semibold mb-4">Categories</h3>
             <ul className="space-y-2">

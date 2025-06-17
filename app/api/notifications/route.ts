@@ -13,24 +13,21 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const { opportunityId, opportunityName, enabled, closeDate } =
-      await request.json();
+    const { opportunityName, enabled, closeDate } = await request.json();
 
     // Store the notification preference in your database here
     // For now, we'll just simulate it
 
     if (enabled) {
-      // Calculate reminder dates
       const deadline = new Date(closeDate);
       const weekBefore = new Date(deadline);
       weekBefore.setDate(deadline.getDate() - 7);
       const dayBefore = new Date(deadline);
       dayBefore.setDate(deadline.getDate() - 1);
 
-      // Schedule emails (in a real app, you'd use a job queue)
       if (new Date() < weekBefore) {
         await resend.emails.send({
-          from: "DDFellow <notifications@ddfellow.com>",
+          from: "DDFellow <notifications@fellows.disam.dev>",
           to: userEmail,
           subject: `Reminder: ${opportunityName} deadline in 1 week`,
           html: `
