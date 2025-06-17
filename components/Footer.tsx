@@ -12,9 +12,7 @@ export function Footer() {
               <div className="h-8 w-8 rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 flex items-center justify-center">
                 <Calendar className="h-5 w-5 text-white" />
               </div>
-              <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                ddfellow
-              </span>
+              <span className="text-xl font-bold">ddfellow</span>
             </Link>
             <p className="text-muted-foreground max-w-md">
               Never miss a deadline again. Discover fellowships, grants,

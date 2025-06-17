@@ -11,7 +11,7 @@ export default function Home() {
   return (
     <div className="space-y-16">
       {/* Hero Section - Extended gradient background */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 dark:from-blue-950/20 dark:via-purple-950/20 dark:to-pink-950/20 pb-24">
+      <section className="relative overflow-hidden pb-24">
         <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-24 relative">
           <div className="text-center max-w-4xl mx-auto">
@@ -149,29 +149,29 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="bg-gradient-to-r from-blue-600 to-purple-600">
+      <section className="pb-6">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <div className="text-center max-w-3xl mx-auto">
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
               Ready to Discover Your Next Opportunity?
             </h2>
-            <p className="text-xl text-blue-100 mb-8">
+            <p className="text-xl mb-8">
               Join thousands of ambitious individuals who never miss a deadline.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button
                 asChild
                 size="lg"
-                variant="secondary"
+                variant="default"
                 className="text-lg px-8 py-4"
               >
                 <Link href="/timeline">Start Exploring</Link>
               </Button>
               <Button
                 asChild
-                variant="outline"
+                variant="secondary"
                 size="lg"
-                className="text-lg px-8 py-4 border-white text-white hover:bg-white hover:text-blue-600"
+                className="text-lg px-8 py-4"
               >
                 <Link href="/submit">Submit an Opportunity</Link>
               </Button>

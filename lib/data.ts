@@ -77,15 +77,15 @@ export const mockOpportunities: Opportunity[] = [
     organizer: "Tenity",
   },
   {
-    id: "google-for-startups-accelerator-ai-energy-europe-2025",
-    name: "Google for Startups Accelerator: AI for Energy (Europe & Israel)",
+    id: "oshaughnessy-ventures",
+    name: "O'Shaughnessy Ventures",
     logoUrl:
-      "https://images.pexels.com/photos/12086412/pexels-photo-12086412.jpeg",
+      "https://cdn.prod.website-files.com/638d58696a8a2739a0b0aa1d/63af51d96c21e6d950ed086b_O%27Shaughnessy%20Ventures%20-%20OpenGraph%20-%20About%20OSV.webp",
     description:
       "12-week equity-free accelerator for AI-driven energy startups, led by Google for Startups.",
     fullDescription:
       "The program (Sept–Nov 2025) offers intensive mentorship, technical project support, Google Cloud credits and workshops to startups using AI to improve grid resilience, energy demand management and industrial efficiency. Applications are open until June 30, 2025.",
-    openDate: "2025-05-12",
+    openDate: "2026-01-01",
     closeDate: "2025-06-30",
     tags: ["AI", "energy", "accelerator", "mentorship", "cloud-credits"],
     category: "accelerator",
@@ -93,7 +93,7 @@ export const mockOpportunities: Opportunity[] = [
     country: "Israel",
     eligibility:
       "Early-stage startups (pre-seed to seed) developing AI/ML solutions for energy sector",
-    applyLink: "https://startup.google.com/programs/accelerator/ai-for-energy",
+    applyLink: "https://www.osv.llc/",
     benefits: [
       "10-week equity-free support",
       "Mentorship from Google teams",
