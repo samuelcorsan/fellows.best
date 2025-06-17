@@ -13,6 +13,7 @@ import {
   Moon,
   Sun,
   LogOut,
+  Home,
 } from "lucide-react";
 import { useTheme } from "next-themes";
 import {
@@ -32,6 +33,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { authClient } from "@/lib/auth-client";
+import { toast } from "sonner";
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -44,6 +46,7 @@ export function Header() {
       await authClient.signIn.social({
         provider: "google",
       });
+      toast.success("Signed in successfully");
       setIsSignInOpen(false);
     } catch (error) {
       console.error("Failed to sign in with Google:", error);
@@ -59,6 +62,7 @@ export function Header() {
   };
 
   const navigation = [
+    { name: "Home", href: "/", icon: Home },
     { name: "Timeline", href: "/timeline", icon: Calendar },
     { name: "Browse", href: "/browse", icon: List },
     { name: "Submit", href: "/submit", icon: Plus },
