@@ -12,14 +12,13 @@ import {
   Award,
   Trophy,
 } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { OpportunityCard } from "@/components/OpportunityCard";
-import { mockOpportunities, Opportunity } from "@/lib/data";
+import { OpportunityCard } from "@/components/features/OpportunityCard";
+import { mockOpportunities } from "@/lib/data";
 import Image from "next/image";
 
 interface ParticipatedFellowship {

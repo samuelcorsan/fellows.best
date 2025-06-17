@@ -1,9 +1,5 @@
-"use client";
-
-import { useState, useRef, useEffect } from "react";
 import { TimelineItem } from "./TimelineItem";
 import { Opportunity } from "@/lib/data";
-import { useWindowSize } from "@/hooks/useWindowSize";
 
 interface TimelineProps {
   opportunities: Opportunity[];

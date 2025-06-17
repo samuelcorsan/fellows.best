@@ -10,9 +10,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { SearchInput } from "@/components/SearchInput";
-import { FilterPanel, FilterOptions } from "@/components/FilterPanel";
-import { OpportunityCard } from "@/components/OpportunityCard";
+import { SearchInput } from "@/components/global/SearchInput";
+import { FilterPanel, FilterOptions } from "@/components/filters/FilterPanel";
+import { OpportunityCard } from "@/components/features/OpportunityCard";
 import { mockOpportunities } from "@/lib/data";
 import { useDebounce } from "@/hooks/useDebounce";
 

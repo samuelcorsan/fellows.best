@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ArrowRight, Calendar, Search, Bell, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { OpportunityCard } from "@/components/OpportunityCard";
+import { OpportunityCard } from "@/components/features/OpportunityCard";
 import { getUpcomingDeadlines } from "@/lib/data";
 
 export default function Home() {
