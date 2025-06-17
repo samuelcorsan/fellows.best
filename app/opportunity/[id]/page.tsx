@@ -47,7 +47,6 @@ export default function OpportunityPage({ params }: OpportunityPageProps) {
 
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      {/* Back Navigation */}
       <Button asChild variant="ghost" className="mb-6">
         <Link href="/browse">
           <ArrowLeft className="mr-2 h-4 w-4" />

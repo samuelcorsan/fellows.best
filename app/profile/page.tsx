@@ -367,7 +367,6 @@ export default function ProfilePage() {
               </div>
             </TabsContent>
 
-            {/* Notification Settings */}
             <TabsContent value="notifications" className="space-y-6">
               <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-lg overflow-hidden">
                 <div className="p-6 sm:p-8 border-b border-gray-200 dark:border-gray-700">
@@ -461,7 +460,6 @@ export default function ProfilePage() {
               </div>
             </TabsContent>
 
-            {/* Profile Settings */}
             <TabsContent value="settings" className="space-y-6">
               <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-lg overflow-hidden">
                 <div className="p-6 sm:p-8 border-b border-gray-200 dark:border-gray-700">

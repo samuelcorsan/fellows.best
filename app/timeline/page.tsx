@@ -131,7 +131,6 @@ export default function TimelinePage() {
                   </div>
                 )}
 
-                {/* Eligibility */}
                 <div>
                   <h3 className="font-semibold mb-2">Eligibility</h3>
                   <p className="text-muted-foreground">
@@ -139,7 +138,6 @@ export default function TimelinePage() {
                   </p>
                 </div>
 
-                {/* Calendar Integration */}
                 <div>
                   <h3 className="font-semibold mb-3">Add to Calendar</h3>
                   <CalendarButton opportunity={selectedOpportunity} />

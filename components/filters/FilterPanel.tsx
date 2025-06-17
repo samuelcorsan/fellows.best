@@ -141,7 +141,6 @@ export function FilterPanel({
 
   return (
     <>
-      {/* Mobile filter toggle */}
       <div className="lg:hidden mb-6">
         <Button
           variant="outline"
@@ -161,7 +160,6 @@ export function FilterPanel({
         </Button>
       </div>
 
-      {/* Filter panel */}
       <div className={`lg:block ${isOpen ? "block" : "hidden"}`}>
         <Card>
           <CardHeader>
@@ -180,7 +178,6 @@ export function FilterPanel({
             </div>
           </CardHeader>
           <CardContent className="space-y-6">
-            {/* Categories */}
             <div>
               <Label className="text-sm font-medium mb-3 block">Category</Label>
               <div className="space-y-2">
@@ -206,7 +203,6 @@ export function FilterPanel({
 
             <Separator />
 
-            {/* Regions */}
             <div>
               <Label className="text-sm font-medium mb-3 block">Region</Label>
               <div className="space-y-2">
@@ -245,7 +241,6 @@ export function FilterPanel({
                       </Label>
                     </div>
 
-                    {/* Countries under region */}
                     {region.countries.length > 0 &&
                       expandedRegions.includes(region.name) && (
                         <div className="ml-6 space-y-2">
@@ -281,7 +276,6 @@ export function FilterPanel({
 
             <Separator />
 
-            {/* Tags */}
             <div>
               <Label className="text-sm font-medium mb-3 block">Tags</Label>
               <div className="space-y-2">

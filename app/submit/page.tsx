@@ -1,103 +1,111 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { Calendar, Upload, Plus, X } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { Label } from '@/components/ui/label';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Badge } from '@/components/ui/badge';
-import { Checkbox } from '@/components/ui/checkbox';
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { Calendar, Upload, Plus, X } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Badge } from "@/components/ui/badge";
+import { Checkbox } from "@/components/ui/checkbox";
 
 const categories = [
-  'fellowship',
-  'accelerator',
-  'grant', 
-  'hackathon',
-  'internship',
-  'competition'
+  "fellowship",
+  "accelerator",
+  "grant",
+  "hackathon",
+  "internship",
+  "competition",
 ];
 
 const regions = [
-  'Global',
-  'United States',
-  'Europe',
-  'Asia',
-  'India',
-  'Canada',
-  'Australia'
+  "Global",
+  "United States",
+  "Europe",
+  "Asia",
+  "India",
+  "Canada",
+  "Australia",
 ];
 
 const availableTags = [
-  'remote',
-  'equity-free', 
-  'mentorship',
-  'funding',
-  'research',
-  'early-stage',
-  'technical-support',
-  'networking',
-  'academic'
+  "remote",
+  "equity-free",
+  "mentorship",
+  "funding",
+  "research",
+  "early-stage",
+  "technical-support",
+  "networking",
+  "academic",
 ];
 
 export default function SubmitPage() {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
-    name: '',
-    organizer: '',
-    description: '',
-    fullDescription: '',
-    openDate: '',
-    closeDate: '',
-    category: '',
-    region: '',
-    eligibility: '',
-    applyLink: '',
+    name: "",
+    organizer: "",
+    description: "",
+    fullDescription: "",
+    openDate: "",
+    closeDate: "",
+    category: "",
+    region: "",
+    eligibility: "",
+    applyLink: "",
     tags: [] as string[],
-    benefits: ['']
+    benefits: [""],
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   const handleInputChange = (field: string, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
+    setFormData((prev) => ({ ...prev, [field]: value }));
     if (errors[field]) {
-      setErrors(prev => ({ ...prev, [field]: '' }));
+      setErrors((prev) => ({ ...prev, [field]: "" }));
     }
   };
 
   const handleTagToggle = (tag: string) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       tags: prev.tags.includes(tag)
-        ? prev.tags.filter(t => t !== tag)
-        : [...prev.tags, tag]
+        ? prev.tags.filter((t) => t !== tag)
+        : [...prev.tags, tag],
     }));
   };
 
   const handleBenefitChange = (index: number, value: string) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      benefits: prev.benefits.map((benefit, i) => i === index ? value : benefit)
+      benefits: prev.benefits.map((benefit, i) =>
+        i === index ? value : benefit
+      ),
     }));
   };
 
   const addBenefit = () => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      benefits: [...prev.benefits, '']
+      benefits: [...prev.benefits, ""],
     }));
   };
 
   const removeBenefit = (index: number) => {
     if (formData.benefits.length > 1) {
-      setFormData(prev => ({
+      setFormData((prev) => ({
         ...prev,
-        benefits: prev.benefits.filter((_, i) => i !== index)
+        benefits: prev.benefits.filter((_, i) => i !== index),
       }));
     }
   };
@@ -105,23 +113,28 @@ export default function SubmitPage() {
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
 
-    if (!formData.name.trim()) newErrors.name = 'Name is required';
-    if (!formData.organizer.trim()) newErrors.organizer = 'Organizer is required';
-    if (!formData.description.trim()) newErrors.description = 'Description is required';
-    if (!formData.fullDescription.trim()) newErrors.fullDescription = 'Full description is required';
-    if (!formData.openDate) newErrors.openDate = 'Open date is required';
-    if (!formData.closeDate) newErrors.closeDate = 'Close date is required';
-    if (!formData.category) newErrors.category = 'Category is required';
-    if (!formData.region) newErrors.region = 'Region is required';
-    if (!formData.eligibility.trim()) newErrors.eligibility = 'Eligibility is required';
-    if (!formData.applyLink.trim()) newErrors.applyLink = 'Application link is required';
+    if (!formData.name.trim()) newErrors.name = "Name is required";
+    if (!formData.organizer.trim())
+      newErrors.organizer = "Organizer is required";
+    if (!formData.description.trim())
+      newErrors.description = "Description is required";
+    if (!formData.fullDescription.trim())
+      newErrors.fullDescription = "Full description is required";
+    if (!formData.openDate) newErrors.openDate = "Open date is required";
+    if (!formData.closeDate) newErrors.closeDate = "Close date is required";
+    if (!formData.category) newErrors.category = "Category is required";
+    if (!formData.region) newErrors.region = "Region is required";
+    if (!formData.eligibility.trim())
+      newErrors.eligibility = "Eligibility is required";
+    if (!formData.applyLink.trim())
+      newErrors.applyLink = "Application link is required";
 
     // Date validation
     if (formData.openDate && formData.closeDate) {
       const openDate = new Date(formData.openDate);
       const closeDate = new Date(formData.closeDate);
       if (closeDate <= openDate) {
-        newErrors.closeDate = 'Close date must be after open date';
+        newErrors.closeDate = "Close date must be after open date";
       }
     }
 
@@ -130,7 +143,7 @@ export default function SubmitPage() {
       try {
         new URL(formData.applyLink);
       } catch {
-        newErrors.applyLink = 'Please enter a valid URL';
+        newErrors.applyLink = "Please enter a valid URL";
       }
     }
 
@@ -140,27 +153,31 @@ export default function SubmitPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!validateForm()) return;
 
     setIsSubmitting(true);
 
     try {
       // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+
       // In a real app, you would send this to your API
-      console.log('Submitting opportunity:', {
+      console.log("Submitting opportunity:", {
         ...formData,
-        benefits: formData.benefits.filter(b => b.trim())
+        benefits: formData.benefits.filter((b) => b.trim()),
       });
 
       // Show success message and redirect
-      alert('Opportunity submitted successfully! It will be reviewed before being published.');
-      router.push('/browse');
+      alert(
+        "Opportunity submitted successfully! It will be reviewed before being published."
+      );
+      router.push("/browse");
     } catch (error) {
-      console.error('Submission error:', error);
-      alert('There was an error submitting your opportunity. Please try again.');
+      console.error("Submission error:", error);
+      alert(
+        "There was an error submitting your opportunity. Please try again."
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -170,14 +187,15 @@ export default function SubmitPage() {
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-8">
-          <h1 className="text-3xl md:text-4xl font-bold mb-4">Submit an Opportunity</h1>
+          <h1 className="text-3xl md:text-4xl font-bold mb-4">
+            Submit an Opportunity
+          </h1>
           <p className="text-xl text-muted-foreground">
             Help others discover amazing opportunities by sharing what you know
           </p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-8">
-          {/* Basic Information */}
           <Card>
             <CardHeader>
               <CardTitle>Basic Information</CardTitle>
@@ -189,22 +207,30 @@ export default function SubmitPage() {
                   <Input
                     id="name"
                     value={formData.name}
-                    onChange={(e) => handleInputChange('name', e.target.value)}
+                    onChange={(e) => handleInputChange("name", e.target.value)}
                     placeholder="e.g., Y Combinator W25"
-                    className={errors.name ? 'border-red-500' : ''}
+                    className={errors.name ? "border-red-500" : ""}
                   />
-                  {errors.name && <p className="text-sm text-red-500 mt-1">{errors.name}</p>}
+                  {errors.name && (
+                    <p className="text-sm text-red-500 mt-1">{errors.name}</p>
+                  )}
                 </div>
                 <div>
                   <Label htmlFor="organizer">Organizer *</Label>
                   <Input
                     id="organizer"
                     value={formData.organizer}
-                    onChange={(e) => handleInputChange('organizer', e.target.value)}
+                    onChange={(e) =>
+                      handleInputChange("organizer", e.target.value)
+                    }
                     placeholder="e.g., Y Combinator"
-                    className={errors.organizer ? 'border-red-500' : ''}
+                    className={errors.organizer ? "border-red-500" : ""}
                   />
-                  {errors.organizer && <p className="text-sm text-red-500 mt-1">{errors.organizer}</p>}
+                  {errors.organizer && (
+                    <p className="text-sm text-red-500 mt-1">
+                      {errors.organizer}
+                    </p>
+                  )}
                 </div>
               </div>
 
@@ -213,12 +239,18 @@ export default function SubmitPage() {
                 <Textarea
                   id="description"
                   value={formData.description}
-                  onChange={(e) => handleInputChange('description', e.target.value)}
+                  onChange={(e) =>
+                    handleInputChange("description", e.target.value)
+                  }
                   placeholder="Brief description of the opportunity (1-2 sentences)"
                   rows={2}
-                  className={errors.description ? 'border-red-500' : ''}
+                  className={errors.description ? "border-red-500" : ""}
                 />
-                {errors.description && <p className="text-sm text-red-500 mt-1">{errors.description}</p>}
+                {errors.description && (
+                  <p className="text-sm text-red-500 mt-1">
+                    {errors.description}
+                  </p>
+                )}
               </div>
 
               <div>
@@ -226,17 +258,22 @@ export default function SubmitPage() {
                 <Textarea
                   id="fullDescription"
                   value={formData.fullDescription}
-                  onChange={(e) => handleInputChange('fullDescription', e.target.value)}
+                  onChange={(e) =>
+                    handleInputChange("fullDescription", e.target.value)
+                  }
                   placeholder="Detailed description of the opportunity, what it offers, and what participants can expect"
                   rows={4}
-                  className={errors.fullDescription ? 'border-red-500' : ''}
+                  className={errors.fullDescription ? "border-red-500" : ""}
                 />
-                {errors.fullDescription && <p className="text-sm text-red-500 mt-1">{errors.fullDescription}</p>}
+                {errors.fullDescription && (
+                  <p className="text-sm text-red-500 mt-1">
+                    {errors.fullDescription}
+                  </p>
+                )}
               </div>
             </CardContent>
           </Card>
 
-          {/* Dates and Classification */}
           <Card>
             <CardHeader>
               <CardTitle>Dates and Classification</CardTitle>
@@ -249,10 +286,16 @@ export default function SubmitPage() {
                     id="openDate"
                     type="date"
                     value={formData.openDate}
-                    onChange={(e) => handleInputChange('openDate', e.target.value)}
-                    className={errors.openDate ? 'border-red-500' : ''}
+                    onChange={(e) =>
+                      handleInputChange("openDate", e.target.value)
+                    }
+                    className={errors.openDate ? "border-red-500" : ""}
                   />
-                  {errors.openDate && <p className="text-sm text-red-500 mt-1">{errors.openDate}</p>}
+                  {errors.openDate && (
+                    <p className="text-sm text-red-500 mt-1">
+                      {errors.openDate}
+                    </p>
+                  )}
                 </div>
                 <div>
                   <Label htmlFor="closeDate">Application Closes *</Label>
@@ -260,18 +303,31 @@ export default function SubmitPage() {
                     id="closeDate"
                     type="date"
                     value={formData.closeDate}
-                    onChange={(e) => handleInputChange('closeDate', e.target.value)}
-                    className={errors.closeDate ? 'border-red-500' : ''}
+                    onChange={(e) =>
+                      handleInputChange("closeDate", e.target.value)
+                    }
+                    className={errors.closeDate ? "border-red-500" : ""}
                   />
-                  {errors.closeDate && <p className="text-sm text-red-500 mt-1">{errors.closeDate}</p>}
+                  {errors.closeDate && (
+                    <p className="text-sm text-red-500 mt-1">
+                      {errors.closeDate}
+                    </p>
+                  )}
                 </div>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <Label htmlFor="category">Category *</Label>
-                  <Select value={formData.category} onValueChange={(value) => handleInputChange('category', value)}>
-                    <SelectTrigger className={errors.category ? 'border-red-500' : ''}>
+                  <Select
+                    value={formData.category}
+                    onValueChange={(value) =>
+                      handleInputChange("category", value)
+                    }
+                  >
+                    <SelectTrigger
+                      className={errors.category ? "border-red-500" : ""}
+                    >
                       <SelectValue placeholder="Select category" />
                     </SelectTrigger>
                     <SelectContent>
@@ -282,12 +338,23 @@ export default function SubmitPage() {
                       ))}
                     </SelectContent>
                   </Select>
-                  {errors.category && <p className="text-sm text-red-500 mt-1">{errors.category}</p>}
+                  {errors.category && (
+                    <p className="text-sm text-red-500 mt-1">
+                      {errors.category}
+                    </p>
+                  )}
                 </div>
                 <div>
                   <Label htmlFor="region">Region *</Label>
-                  <Select value={formData.region} onValueChange={(value) => handleInputChange('region', value)}>
-                    <SelectTrigger className={errors.region ? 'border-red-500' : ''}>
+                  <Select
+                    value={formData.region}
+                    onValueChange={(value) =>
+                      handleInputChange("region", value)
+                    }
+                  >
+                    <SelectTrigger
+                      className={errors.region ? "border-red-500" : ""}
+                    >
                       <SelectValue placeholder="Select region" />
                     </SelectTrigger>
                     <SelectContent>
@@ -298,13 +365,14 @@ export default function SubmitPage() {
                       ))}
                     </SelectContent>
                   </Select>
-                  {errors.region && <p className="text-sm text-red-500 mt-1">{errors.region}</p>}
+                  {errors.region && (
+                    <p className="text-sm text-red-500 mt-1">{errors.region}</p>
+                  )}
                 </div>
               </div>
             </CardContent>
           </Card>
 
-          {/* Tags */}
           <Card>
             <CardHeader>
               <CardTitle>Tags</CardTitle>
@@ -321,7 +389,10 @@ export default function SubmitPage() {
                       checked={formData.tags.includes(tag)}
                       onCheckedChange={() => handleTagToggle(tag)}
                     />
-                    <Label htmlFor={`tag-${tag}`} className="text-sm cursor-pointer">
+                    <Label
+                      htmlFor={`tag-${tag}`}
+                      className="text-sm cursor-pointer"
+                    >
                       {tag}
                     </Label>
                   </div>
@@ -329,7 +400,9 @@ export default function SubmitPage() {
               </div>
               {formData.tags.length > 0 && (
                 <div className="mt-4">
-                  <p className="text-sm text-muted-foreground mb-2">Selected tags:</p>
+                  <p className="text-sm text-muted-foreground mb-2">
+                    Selected tags:
+                  </p>
                   <div className="flex flex-wrap gap-2">
                     {formData.tags.map((tag) => (
                       <Badge key={tag} variant="secondary">
@@ -342,7 +415,6 @@ export default function SubmitPage() {
             </CardContent>
           </Card>
 
-          {/* Benefits */}
           <Card>
             <CardHeader>
               <CardTitle>Benefits</CardTitle>
@@ -382,7 +454,6 @@ export default function SubmitPage() {
             </CardContent>
           </Card>
 
-          {/* Additional Details */}
           <Card>
             <CardHeader>
               <CardTitle>Additional Details</CardTitle>
@@ -393,12 +464,18 @@ export default function SubmitPage() {
                 <Textarea
                   id="eligibility"
                   value={formData.eligibility}
-                  onChange={(e) => handleInputChange('eligibility', e.target.value)}
+                  onChange={(e) =>
+                    handleInputChange("eligibility", e.target.value)
+                  }
                   placeholder="Who is eligible to apply? Include any specific requirements, age limits, location restrictions, etc."
                   rows={3}
-                  className={errors.eligibility ? 'border-red-500' : ''}
+                  className={errors.eligibility ? "border-red-500" : ""}
                 />
-                {errors.eligibility && <p className="text-sm text-red-500 mt-1">{errors.eligibility}</p>}
+                {errors.eligibility && (
+                  <p className="text-sm text-red-500 mt-1">
+                    {errors.eligibility}
+                  </p>
+                )}
               </div>
 
               <div>
@@ -407,22 +484,31 @@ export default function SubmitPage() {
                   id="applyLink"
                   type="url"
                   value={formData.applyLink}
-                  onChange={(e) => handleInputChange('applyLink', e.target.value)}
+                  onChange={(e) =>
+                    handleInputChange("applyLink", e.target.value)
+                  }
                   placeholder="https://example.com/apply"
-                  className={errors.applyLink ? 'border-red-500' : ''}
+                  className={errors.applyLink ? "border-red-500" : ""}
                 />
-                {errors.applyLink && <p className="text-sm text-red-500 mt-1">{errors.applyLink}</p>}
+                {errors.applyLink && (
+                  <p className="text-sm text-red-500 mt-1">
+                    {errors.applyLink}
+                  </p>
+                )}
               </div>
             </CardContent>
           </Card>
 
-          {/* Submit Button */}
           <div className="flex justify-end space-x-4">
-            <Button type="button" variant="outline" onClick={() => router.back()}>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => router.back()}
+            >
               Cancel
             </Button>
             <Button type="submit" disabled={isSubmitting}>
-              {isSubmitting ? 'Submitting...' : 'Submit Opportunity'}
+              {isSubmitting ? "Submitting..." : "Submit Opportunity"}
             </Button>
           </div>
         </form>
