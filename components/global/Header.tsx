@@ -3,7 +3,17 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Calendar, List, Plus, User, Moon, Sun } from "lucide-react";
+import {
+  Menu,
+  X,
+  Calendar,
+  List,
+  Plus,
+  User,
+  Moon,
+  Sun,
+  LogOut,
+} from "lucide-react";
 import { useTheme } from "next-themes";
 import {
   Dialog,
@@ -12,12 +22,22 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { authClient } from "@/lib/auth-client";
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSignInOpen, setIsSignInOpen] = useState(false);
   const { theme, setTheme } = useTheme();
+  const { data: session, isPending } = authClient.useSession();
 
   const handleGoogleSignIn = async () => {
     try {
@@ -30,12 +50,71 @@ export function Header() {
     }
   };
 
+  const handleSignOut = async () => {
+    try {
+      await authClient.signOut();
+    } catch (error) {
+      console.error("Failed to sign out:", error);
+    }
+  };
+
   const navigation = [
     { name: "Timeline", href: "/timeline", icon: Calendar },
     { name: "Browse", href: "/browse", icon: List },
     { name: "Submit", href: "/submit", icon: Plus },
-    { name: "Profile", href: "/profile", icon: User },
   ];
+
+  const UserMenu = () => {
+    if (isPending) return null;
+
+    if (!session) {
+      return <Button onClick={() => setIsSignInOpen(true)}>Get Started</Button>;
+    }
+
+    return (
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button variant="ghost" className="relative h-10 w-10 rounded-full">
+            <Avatar className="h-10 w-10">
+              <AvatarImage
+                src={session.user.image || ""}
+                alt={session.user.name || ""}
+              />
+              <AvatarFallback>
+                {session.user.name?.[0]?.toUpperCase()}
+              </AvatarFallback>
+            </Avatar>
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent className="w-56" align="end" forceMount>
+          <DropdownMenuLabel className="font-normal">
+            <div className="flex flex-col space-y-1">
+              <p className="text-sm font-medium leading-none">
+                {session.user.name}
+              </p>
+              <p className="text-xs leading-none text-muted-foreground">
+                {session.user.email}
+              </p>
+            </div>
+          </DropdownMenuLabel>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem asChild>
+            <Link href="/profile" className="cursor-pointer">
+              <User className="mr-2 h-4 w-4" />
+              Profile
+            </Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={handleSignOut}
+            className="cursor-pointer text-red-600 focus:text-red-600"
+          >
+            <LogOut className="mr-2 h-4 w-4" />
+            Sign out
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    );
+  };
 
   return (
     <>
@@ -78,7 +157,7 @@ export function Header() {
                 <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
                 <span className="sr-only">Toggle theme</span>
               </Button>
-              <Button onClick={() => setIsSignInOpen(true)}>Get Started</Button>
+              <UserMenu />
             </div>
 
             {/* Mobile menu button */}
@@ -126,9 +205,9 @@ export function Header() {
                     <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
                     <span className="ml-2">Toggle theme</span>
                   </Button>
-                  <Button onClick={() => setIsSignInOpen(true)}>
-                    Get Started
-                  </Button>
+                  <div className="flex items-center">
+                    <UserMenu />
+                  </div>
                 </div>
               </nav>
             </div>
@@ -140,7 +219,7 @@ export function Header() {
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
             <DialogTitle className="text-center">
-              Welcome to ddfellow
+              Welcome to DDFellow
             </DialogTitle>
             <DialogDescription className="text-center">
               Continue with Google to access your account
