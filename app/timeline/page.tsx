@@ -21,22 +21,14 @@ export default function TimelinePage() {
   const [selectedOpportunity, setSelectedOpportunity] =
     useState<Opportunity | null>(null);
 
-  const handleShare = async (opportunity: Opportunity) => {
-    if (navigator.share) {
-      try {
-        await navigator.share({
-          title: opportunity.name,
-          text: opportunity.description,
-          url: window.location.origin + `/opportunity/${opportunity.id}`,
-        });
-      } catch (error) {
-        console.log("Error sharing:", error);
-      }
-    } else {
-      navigator.clipboard.writeText(
-        window.location.origin + `/opportunity/${opportunity.id}`
-      );
-    }
+  const handleShare = (opportunity: Opportunity) => {
+    const tweetText = `I'm delighted to share that I've applied to ${opportunity.name} to elevate my startup's trajectory, tap into tailored mentorship, and collaborate with fellow innovators.
+
+Can't wait to dive in and share updates as the journey unfolds.`;
+    const twitterIntentUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+      tweetText
+    )}`;
+    window.open(twitterIntentUrl, "_blank");
   };
 
   return (
@@ -173,7 +165,7 @@ export default function TimelinePage() {
                     onClick={() => handleShare(selectedOpportunity)}
                   >
                     <Share2 className="h-4 w-4 mr-2" />
-                    Share
+                    Share on X
                   </Button>
                 </div>
               </div>

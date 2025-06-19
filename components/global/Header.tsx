@@ -88,6 +88,7 @@ export function Header() {
                 {session.user.name?.[0]?.toUpperCase()}
               </AvatarFallback>
             </Avatar>
+            <span className="sr-only">User menu</span>
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56" align="end" forceMount>
