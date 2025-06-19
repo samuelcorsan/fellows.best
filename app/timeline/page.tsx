@@ -81,9 +81,11 @@ Can't wait to dive in and share updates as the journey unfolds.`;
                     <Calendar className="h-4 w-4 text-muted-foreground" />
                     <span className="text-sm">
                       <strong>Opens:</strong>{" "}
-                      {new Date(
-                        selectedOpportunity.openDate
-                      ).toLocaleDateString()}
+                      {selectedOpportunity.openDate
+                        ? new Date(
+                            selectedOpportunity.openDate
+                          ).toLocaleDateString()
+                        : "N/A"}
                     </span>
                   </div>
                   <div className="flex items-center space-x-2">
@@ -94,7 +96,7 @@ Can't wait to dive in and share updates as the journey unfolds.`;
                         ? new Date(
                             selectedOpportunity.closeDate
                           ).toLocaleDateString()
-                        : "N/A"}
+                        : "Rolling"}
                     </span>
                   </div>
                   <div className="flex items-center space-x-2">
@@ -130,19 +132,23 @@ Can't wait to dive in and share updates as the journey unfolds.`;
                   </p>
                 </div>
 
-                <div>
-                  <h3 className="font-semibold mb-3">Add to Calendar</h3>
-                  <CalendarButton opportunity={selectedOpportunity} />
-                </div>
+                {selectedOpportunity.closeDate && (
+                  <>
+                    <div>
+                      <h3 className="font-semibold mb-3">Add to Calendar</h3>
+                      <CalendarButton opportunity={selectedOpportunity} />
+                    </div>
 
-                <div>
-                  <h3 className="font-semibold mb-3">Notifications</h3>
-                  <NotificationToggle
-                    opportunityId={selectedOpportunity.id}
-                    opportunityName={selectedOpportunity.name}
-                    closeDate={selectedOpportunity.closeDate}
-                  />
-                </div>
+                    <div>
+                      <h3 className="font-semibold mb-3">Notifications</h3>
+                      <NotificationToggle
+                        opportunityId={selectedOpportunity.id}
+                        opportunityName={selectedOpportunity.name}
+                        closeDate={selectedOpportunity.closeDate}
+                      />
+                    </div>
+                  </>
+                )}
 
                 <div className="flex flex-col sm:flex-row gap-3 pt-4">
                   <Button asChild className="flex-1">

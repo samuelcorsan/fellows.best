@@ -4,7 +4,7 @@ export interface Opportunity {
   logoUrl: string;
   description: string;
   fullDescription: string;
-  openDate: string;
+  openDate: string | null;
   closeDate: string | null;
   tags: string[];
   category:
@@ -24,6 +24,287 @@ export interface Opportunity {
 }
 
 export const mockOpportunities: Opportunity[] = [
+  {
+    id: "ewor-fellowship",
+    name: "EWOR Fellowship",
+    logoUrl: "https://i.ibb.co/sJDKj0MD/image.png",
+    description:
+      "A highly selective, virtual-first fellowship offering early-stage founders up to €500,000 in capital and 1:1 mentorship from unicorn founders to build global-impact ventures.",
+    fullDescription:
+      "The EWOR Fellowship is a rigorous program targeting the top 0.1% of founders worldwide. Founded in 2021 and based in Berlin, EWOR supports exceptional entrepreneurs through a virtual-first model that adapts to non-linear founder journeys. Fellows (just ~35 selected from over 35,000 applicants annually) receive up to €500,000 in capital (including €110,000 from EWOR GmbH plus €390,000 via an uncapped convertible instrument), intensive 1:1 mentorship (1–5 hours weekly) from unicorn founders, bespoke learning modules, and access to a curated network of over 2,000 mentors, VCs, and subject matter experts. The program embraces borderless participation—founders can be based anywhere—and focuses on those with the potential to build companies valued at €1B+ by combining scientific insight, real-world experience, and deep empathy for the founder’s path. EWOR alumni typically raise €1–11M during the fellowship period and have achieved record-breaking funding rounds and exits. The selection uses ML-driven pattern recognition, intensive partner interviews, and evidence-based testing to identify visionaries, technical prodigies, and driven operators committed to solving significant global challenges.",
+    openDate: null,
+    closeDate: null,
+    tags: [
+      "entrepreneurship",
+      "funding-opportunity",
+      "mentorship",
+      "virtual-program",
+      "early-stage",
+      "capital",
+    ],
+    category: "fellowship",
+    region: "Global",
+    country: "",
+    eligibility:
+      "Exceptional early-stage founders worldwide (visionaries, technical prodigies, serial entrepreneurs) with demonstrated potential or traction; typically applicants who can benefit from intensive 1:1 mentorship and significant capital to scale ventures. Selection is highly competitive, with only ~35 fellows chosen from over 35,000 applicants annually.",
+    applyLink: "https://ewor.com/apply",
+    benefits: [
+      "Up to €500,000 in capital (€110K from EWOR GmbH plus €390K via investment fund)",
+      "1:1 mentorship (1–5 hours per week) with unicorn founders and seasoned entrepreneurs",
+      "Bespoke learning modules tailored to each founder’s needs",
+      "Access to a curated network of over 2,000 mentors, VCs, and subject matter experts",
+      "Virtual-first, borderless participation enabling founders to work from anywhere",
+      "Support in fundraising, pitch refinement, and strategic guidance",
+      "Introductions to potential investors, partners, and service discounts (e.g., cloud credits)",
+      "Community of elite founders and ongoing network beyond the fellowship",
+    ],
+    organizer: "EWOR",
+  },
+  {
+    id: "thiel-fellowship-2026",
+    name: "Thiel Fellowship",
+    logoUrl:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQID1xMTmAZzfe1EBazgth2MBqA_dZa77DQuQ&s",
+    description:
+      "A two-year, $200,000 grant program for innovators aged 22 or younger to pursue full-time projects instead of attending college.",
+    fullDescription:
+      "The Thiel Fellowship, founded by Peter Thiel through the Thiel Foundation in 2010, awards up to 20–30 fellows annually with $200,000 disbursed over two years and access to a global network of mentors, investors, and peers. Eligible applicants are individuals aged 22 or younger working on a concrete project—such as a startup, scientific research, social movement, or creative endeavor—and willing to drop out of or pause formal education to pursue it full-time. The program does not take equity in fellows’ ventures. Applications are accepted on a rolling basis without fixed deadlines. Fellows receive guidance, networking opportunities, and support but are based globally and need not relocate to a specific location.",
+    openDate: null,
+    closeDate: null,
+    tags: [
+      "fellowship",
+      "entrepreneurship",
+      "grant",
+      "innovation",
+      "mentorship",
+      "rolling-application",
+    ],
+    category: "fellowship",
+    region: "Global",
+    country: "",
+    eligibility:
+      "Applicants must be aged 22 or younger at the time of application, have not yet received an undergraduate degree, and must be willing to drop out of or pause college if selected. Candidates should demonstrate meaningful progress on a concrete vision (e.g., startup, research, social initiative) and commitment to work full-time on it. No requirement for a team or prior incorporation, though evidence of traction or progress strengthens the application.",
+    applyLink: "https://thielfellowship.org",
+    benefits: [
+      "US$200,000 grant disbursed over two years",
+      "No equity taken in fellows’ projects",
+      "Access to a global network of mentors, investors, and fellow entrepreneurs",
+      "Guidance and support for project development and scaling",
+      "Opportunities for introductions to potential partners and funders",
+      "Flexibility to remain based anywhere in the world",
+      "Prestige and visibility through association with the Thiel Foundation",
+    ],
+    organizer: "Thiel Foundation",
+  },
+  {
+    id: "global-good-fund-fellowship-2026",
+    name: "Global Good Fund Fellowship 2026",
+    logoUrl:
+      "https://i0.wp.com/www.scholarshipsinindia.com/wp-content/uploads/global-good-fund-fellowship.jpg?fit=200%2C200&ssl=1",
+    description:
+      "A 12-month hybrid leadership program for social entrepreneurs worldwide, offering executive coaching, business mentorship, and a targeted $10,000 leadership development grant.",
+    fullDescription:
+      "The Global Good Fund Fellowship is a year-long hybrid leadership development program for social entrepreneurs and leaders of social enterprises globally. Fellows receive a comprehensive 360° leadership assessment, one-on-one executive coaching, and C-suite business mentorship, along with a $10,000 grant to invest in their leadership growth. Over 12 months, participants connect virtually with coaches and mentors, join a global cohort for peer learning, and convene at an annual in-person summit. The program is designed for founders or primary decision-makers running social enterprises that have been operational for at least two years with at least two full-time employees, fully committed to scaling impact. The Fellowship focuses on developing resilient, competent leaders who can tackle pressing social issues and drive sustainable growth for their organizations.",
+    openDate: "2025-06-01",
+    closeDate: "2025-07-01",
+    tags: [
+      "leadership",
+      "social-impact",
+      "grant",
+      "mentorship",
+      "executive-coaching",
+      "hybrid-program",
+    ],
+    category: "fellowship",
+    region: "Global",
+    country: "",
+    eligibility:
+      "Emerging leaders of social enterprises (for-profit, non-profit, or hybrid) operating for at least two years with a minimum of two full-time employees. Applicants must hold a primary decision-making role (e.g., CEO, Co-Founder, Executive Director), be fully committed full-time to their enterprise, and demonstrate coachability and potential to scale impact.",
+    applyLink: "https://globalgoodfund.org/apply",
+    benefits: [
+      "360° leadership assessment",
+      "Dedicated professional executive coaching (virtual)",
+      "C-suite business mentorship (virtual)",
+      "$10,000 leadership development grant",
+      "Annual Global Good Fund Summit (4-day in-person event)",
+      "Customized tools, resources, training, and networking opportunities",
+      "Peer and subject matter expert network",
+      "Global cohort community and ongoing support",
+    ],
+    organizer: "Global Good Fund",
+  },
+  {
+    id: "localhost-japan",
+    name: "LocalHost - Japan",
+    logoUrl:
+      "https://pbs.twimg.com/profile_images/1904750912540991488/R5CIeeW3_400x400.jpg",
+    description:
+      "A global, travelling fellowship with a hub in Tokyo for exceptional young builders to pursue full-time projects.",
+    fullDescription:
+      "LocalHost Fellowship offers free housing, travel grants, and support in Tokyo, Japan, as part of its global program backing founders, researchers, and creators to work full-time on ideas. Fellows in Japan benefit from co-working spaces, lab access, computing credits, mentorship, and community events, backed by LocalHost Ventures.",
+    openDate: null,
+    closeDate: null,
+    tags: [
+      "residency",
+      "funding-opportunity",
+      "housing",
+      "mentorship",
+      "community",
+    ],
+    category: "fellowship",
+    region: "Asia",
+    country: "Japan",
+    eligibility:
+      "Exceptional young founders, researchers, engineers, artists, and other builders worldwide; open to those who can relocate to Tokyo for the residency period.",
+    applyLink: "https://localhosthq.com/apply",
+    benefits: [
+      "Free housing in Tokyo",
+      "Sponsored travel and visa assistance",
+      "R&D grants ($1K–$5K)",
+      "Access to co-working offices and lab facilities in Tokyo",
+      "Computing credits and infrastructure support",
+      "Mentorship from experienced operators",
+      "Community events, workshops, and networking locally and globally",
+      "Ongoing backing beyond initial support",
+    ],
+    organizer: "LocalHost Ventures",
+  },
+  {
+    id: "localhost-india",
+    name: "LocalHost - India",
+    logoUrl:
+      "https://pbs.twimg.com/profile_images/1904750912540991488/R5CIeeW3_400x400.jpg",
+    description:
+      "A global fellowship with hubs in Bangalore and New Delhi, supporting builders to pursue full-time projects.",
+    fullDescription:
+      "LocalHost Fellowship provides free housing and travel support in Bangalore and New Delhi, India, as part of its global program. Fellows gain access to co-working spaces, labs, computing credits, R&D grants, mentorship, and community events, backed by LocalHost Ventures to help turn ideas into real projects.",
+    openDate: null,
+    closeDate: null,
+    tags: [
+      "residency",
+      "funding-opportunity",
+      "housing",
+      "mentorship",
+      "community",
+    ],
+    category: "fellowship",
+    region: "Asia",
+    country: "India",
+    eligibility:
+      "Exceptional young founders, researchers, engineers, artists, and other builders worldwide; open to those who can relocate to Bangalore or New Delhi for the residency period.",
+    applyLink: "https://localhosthq.com/apply",
+    benefits: [
+      "Free housing in Bangalore or New Delhi",
+      "Sponsored travel and visa assistance",
+      "R&D grants ($1K–$5K)",
+      "Access to co-working offices and lab facilities in these hubs",
+      "Computing credits and infrastructure support",
+      "Mentorship from experienced operators",
+      "Community events, workshops, and networking locally and globally",
+      "Ongoing backing beyond initial support",
+    ],
+    organizer: "LocalHost Ventures",
+  },
+  {
+    id: "localhost-romania",
+    name: "LocalHost - Romania",
+    logoUrl:
+      "https://pbs.twimg.com/profile_images/1904750912540991488/R5CIeeW3_400x400.jpg",
+    description:
+      "A global fellowship with a hub in Cluj-Napoca, Romania, for exceptional builders.",
+    fullDescription:
+      "LocalHost Fellowship offers free housing and support in Cluj-Napoca, Romania, as part of its global network. Fellows receive co-working access, lab facilities, computing credits, travel grants, mentorship, and community events, backed by LocalHost Ventures to help advance their projects.",
+    openDate: null,
+    closeDate: null,
+    tags: [
+      "residency",
+      "funding-opportunity",
+      "housing",
+      "mentorship",
+      "community",
+    ],
+    category: "fellowship",
+    region: "Europe",
+    country: "Romania",
+    eligibility:
+      "Exceptional young founders, researchers, engineers, artists, and other builders worldwide; open to those who can relocate to Cluj-Napoca for the residency period.",
+    applyLink: "https://localhosthq.com/apply",
+    benefits: [
+      "Free housing in Cluj-Napoca",
+      "Sponsored travel and visa assistance",
+      "R&D grants ($1K–$5K)",
+      "Access to co-working offices and lab facilities in Cluj-Napoca",
+      "Computing credits and infrastructure support",
+      "Mentorship from experienced operators",
+      "Community events, workshops, and networking locally and globally",
+      "Ongoing backing beyond initial support",
+    ],
+    organizer: "LocalHost Ventures",
+  },
+  {
+    id: "localhost-france",
+    name: "LocalHost - France",
+    logoUrl:
+      "https://pbs.twimg.com/profile_images/1904750912540991488/R5CIeeW3_400x400.jpg",
+    description:
+      "A global fellowship with activities and events in Paris, France, supporting exceptional builders.",
+    fullDescription:
+      "LocalHost Fellowship hosts events and may offer residencies or travel grants for fellows to participate in Paris, France, as part of its global program. Participants benefit from co-working spaces, potential housing opportunities, computing credits, R&D grants, mentorship, and community events backed by LocalHost Ventures.",
+    openDate: null,
+    closeDate: null,
+    tags: [
+      "residency",
+      "funding-opportunity",
+      "travel-grants",
+      "mentorship",
+      "community",
+    ],
+    category: "fellowship",
+    region: "Europe",
+    country: "France",
+    eligibility:
+      "Exceptional young founders, researchers, engineers, artists, and other builders worldwide; open to those who can travel to Paris for events or residencies.",
+    applyLink: "https://localhosthq.com/apply",
+    benefits: [
+      "Potential free housing or travel support for Paris events",
+      "Sponsored travel and visa assistance",
+      "R&D grants ($1K–$5K)",
+      "Access to co-working spaces and labs when in Paris",
+      "Computing credits and infrastructure support",
+      "Mentorship from experienced operators",
+      "Community events, workshops, and networking locally and globally",
+      "Ongoing backing beyond initial support",
+    ],
+    organizer: "LocalHost Ventures",
+  },
+  {
+    id: "founders-inc-off-season",
+    name: "Founders Inc Off Season",
+    logoUrl:
+      "https://pbs.twimg.com/profile_images/1934781639198167040/24emfYDA_400x400.jpg",
+    description:
+      "6-week equity-free summer residency at Fort Mason for ambitious builders to obsess and build, ending in Demo Day with up to $250K funding opportunity.",
+    fullDescription:
+      "Off Season is a six-week intensive residency (June 23–August 1, 2025) at Founders Inc's 42,000 sq ft campus in Fort Mason, San Francisco. Instead of vacation, participants join ~50 peers in a no-curriculum, obsession-driven environment with workspace, prototyping facilities, mentorship from experienced founders, community events and workshops. The program culminates in a Demo Day where top teams may receive funding up to $250K. Applications are open until June 12, 2025 (late applications accepted until June 18, 2025).",
+    openDate: "2026-06-01",
+    closeDate: "2025-06-18",
+    tags: ["residency", "funding-opportunity", "community"],
+    category: "accelerator",
+    region: "North America",
+    country: "United States",
+    eligibility:
+      "University students, recent graduates, and ambitious builders (including dropouts) who want to dedicate six weeks (June 23–August 1, 2025) to build projects in software, hardware, AI, robotics, etc.",
+    applyLink: "https://f.inc/offseason",
+    benefits: [
+      "6-week equity-free residency at Fort Mason, San Francisco",
+      "Access to 42,000 sq ft workspace and prototyping facilities",
+      "Mentorship from experienced founders and experts",
+      "Community of ~50 ambitious peers",
+      "Demo Day with opportunity for funding up to $250K",
+      "Access to community events, workshops and informal office hours",
+    ],
+    organizer: "Founders, Inc.",
+  },
   {
     id: "startup-community-partnership-founder-catalyst-fall-2025",
     name: "Startup Community Partnership Founder Catalyst (Fall 2025)",
@@ -50,59 +331,6 @@ export const mockOpportunities: Opportunity[] = [
       "Pitch coaching and strategic partner sessions",
     ],
     organizer: "Techstars",
-  },
-  {
-    id: "tenity-european-fintech-accelerator-2025",
-    name: "Tenity European Fin/Tech Accelerator",
-    logoUrl: "https://images.pexels.com/photos/955395/pexels-photo-955395.jpeg",
-    description:
-      "10-week hybrid accelerator for fintech/insurtech startups, offering office space in Zurich and London and up to €300,000 co-investment.",
-    fullDescription:
-      "The program (Aug–Dec 2025) provides expert mentorship, networking and office workspace, and co-invests up to EUR 300K (CHF/EUR 300K) in selected teams. It focuses on FinTech, InsurTech, RegTech, Web3 and related sectors.",
-    openDate: "2025-06-16",
-    closeDate: null,
-    tags: ["fintech", "accelerator", "co-investment", "mentorship", "hybrid"],
-    category: "accelerator",
-    region: "Europe",
-    country: "Switzerland",
-    eligibility:
-      "Seed to Series A startups in FinTech, InsurTech, RegTech, Web3, etc.",
-    applyLink: "https://airtable.com/apply/european-fintech-accelerator",
-    benefits: [
-      "Up to €300K co-investment",
-      "Access to Tenity network and mentors",
-      "Work space in Zurich/London",
-      "Intensive business coaching",
-    ],
-    organizer: "Tenity",
-  },
-  {
-    id: "founders-inc-off-season",
-    name: "Founders Inc Off Season",
-    logoUrl:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4koYHccHewh96t9IuvW85ndTdbparUxFg0w&s",
-    description:
-      "6-week equity-free summer residency at Fort Mason for ambitious builders to obsess and build, ending in Demo Day with up to $250K funding opportunity.",
-    fullDescription:
-      "Off Season is a six-week intensive residency (June 23–August 1, 2025) at Founders Inc’s 42,000 sq ft campus in Fort Mason, San Francisco. Instead of vacation, participants join ~50 peers in a no-curriculum, obsession-driven environment with workspace, prototyping facilities, mentorship from experienced founders, community events and workshops. The program culminates in a Demo Day where top teams may receive funding up to $250K. Applications are open until June 12, 2025 (late applications accepted until June 18, 2025).",
-    openDate: "2026-06-01",
-    closeDate: "2025-06-18",
-    tags: ["residency", "funding-opportunity", "community"],
-    category: "accelerator",
-    region: "North America",
-    country: "United States",
-    eligibility:
-      "University students, recent graduates, and ambitious builders (including dropouts) who want to dedicate six weeks (June 23–August 1, 2025) to build projects in software, hardware, AI, robotics, etc.",
-    applyLink: "https://f.inc/offseason",
-    benefits: [
-      "6-week equity-free residency at Fort Mason, San Francisco",
-      "Access to 42,000 sq ft workspace and prototyping facilities",
-      "Mentorship from experienced founders and experts",
-      "Community of ~50 ambitious peers",
-      "Demo Day with opportunity for funding up to $250K",
-      "Access to community events, workshops and informal office hours",
-    ],
-    organizer: "Founders, Inc.",
   },
   {
     id: "eu-lac-digital-accelerator-open-call-2025",

@@ -30,12 +30,16 @@ interface OpportunityPageProps {
 export default function OpportunityPage({ params }: OpportunityPageProps) {
   const opportunity = getOpportunityById(params.id);
 
-  if (!opportunity || !opportunity.closeDate) {
+  if (!opportunity) {
     notFound();
   }
 
-  const daysUntil = getDaysUntilDeadline(opportunity.closeDate);
-  const urgency = getDeadlineUrgency(opportunity.closeDate);
+  const daysUntil = opportunity.closeDate
+    ? getDaysUntilDeadline(opportunity.closeDate)
+    : null;
+  const urgency = opportunity.closeDate
+    ? getDeadlineUrgency(opportunity.closeDate)
+    : "safe";
 
   const urgencyStyles = {
     safe: "border-green-200 bg-green-50 text-green-700 dark:border-green-800 dark:bg-green-950 dark:text-green-300",
@@ -140,16 +144,28 @@ export default function OpportunityPage({ params }: OpportunityPageProps) {
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div
-                className={`p-4 rounded-lg border text-center ${urgencyStyles[urgency]}`}
-              >
-                <div className="text-2xl font-bold">
-                  {daysUntil > 0 ? `${daysUntil} days left` : "Closed"}
+              {opportunity.closeDate ? (
+                <div
+                  className={`p-4 rounded-lg border text-center ${urgencyStyles[urgency]}`}
+                >
+                  <div className="text-2xl font-bold">
+                    {daysUntil !== null && daysUntil >= 0
+                      ? `${daysUntil} days left`
+                      : "Closed"}
+                  </div>
+                  <div className="text-sm opacity-75">
+                    Closes{" "}
+                    {new Date(opportunity.closeDate).toLocaleDateString()}
+                  </div>
                 </div>
-                <div className="text-sm opacity-75">
-                  Closes {new Date(opportunity.closeDate).toLocaleDateString()}
+              ) : (
+                <div
+                  className={`p-4 rounded-lg border text-center ${urgencyStyles.safe}`}
+                >
+                  <div className="text-2xl font-bold">Rolling Application</div>
+                  <div className="text-sm opacity-75">Apply anytime</div>
                 </div>
-              </div>
+              )}
 
               <Separator />
 
@@ -157,7 +173,9 @@ export default function OpportunityPage({ params }: OpportunityPageProps) {
                 <div className="flex items-center justify-between">
                   <span className="text-muted-foreground">Opens:</span>
                   <span>
-                    {new Date(opportunity.openDate).toLocaleDateString()}
+                    {opportunity.openDate
+                      ? new Date(opportunity.openDate).toLocaleDateString()
+                      : "N/A"}
                   </span>
                 </div>
                 <div className="flex items-center justify-between">
@@ -171,27 +189,31 @@ export default function OpportunityPage({ params }: OpportunityPageProps) {
             </CardContent>
           </Card>
 
-          <Card>
-            <CardHeader>
-              <CardTitle>Add to Calendar</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <CalendarButton opportunity={opportunity} />
-            </CardContent>
-          </Card>
+          {opportunity.closeDate && (
+            <Card>
+              <CardHeader>
+                <CardTitle>Add to Calendar</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <CalendarButton opportunity={opportunity} />
+              </CardContent>
+            </Card>
+          )}
 
-          <Card>
-            <CardHeader>
-              <CardTitle>Reminders</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <NotificationToggle
-                opportunityId={opportunity.id}
-                opportunityName={opportunity.name}
-                closeDate={opportunity.closeDate}
-              />
-            </CardContent>
-          </Card>
+          {opportunity.closeDate && (
+            <Card>
+              <CardHeader>
+                <CardTitle>Reminders</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <NotificationToggle
+                  opportunityId={opportunity.id}
+                  opportunityName={opportunity.name}
+                  closeDate={opportunity.closeDate}
+                />
+              </CardContent>
+            </Card>
+          )}
 
           <Card>
             <CardContent className="pt-6">

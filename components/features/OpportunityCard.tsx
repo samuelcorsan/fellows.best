@@ -11,7 +11,7 @@ import {
 } from "@/lib/data";
 
 const getDeadlineText = (days: number | null): string => {
-  if (days === null) return "No deadline";
+  if (days === null) return "Apply anytime";
   if (days > 1) return `${days} days left`;
   if (days === 1) return "1 day left";
   if (days === 0) return "Closed today";
@@ -34,7 +34,7 @@ const getDeadlineText = (days: number | null): string => {
 };
 
 const getShortDeadlineText = (days: number | null): string => {
-  if (days === null) return "No deadline";
+  if (days === null) return "Rolling";
   if (days > 1) return `${days}d left`;
   if (days === 1) return `1d left`;
   return "Closed";
@@ -148,7 +148,7 @@ export function OpportunityCard({
                     ? `Closes ${new Date(
                         opportunity.closeDate
                       ).toLocaleDateString()}`
-                    : "No deadline"}
+                    : "Rolling deadline"}
                 </span>
                 <span className="sm:hidden">
                   {opportunity.closeDate
@@ -156,7 +156,7 @@ export function OpportunityCard({
                         "en-US",
                         { month: "short", day: "numeric" }
                       )
-                    : "No deadline"}
+                    : "Rolling"}
                 </span>
               </div>
               <div className="flex items-center space-x-1">
