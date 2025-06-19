@@ -19,7 +19,9 @@ export default function SubmissionSuccessPage() {
         tweenDuration={10000}
       />
       <div className="space-y-6">
-        <h1 className="text-5xl md:text-6xl font-bold">You're a star! ✨</h1>
+        <h1 className="text-5xl md:text-6xl font-bold">
+          You&apos;re a star! ✨
+        </h1>
         <p className="text-lg text-muted-foreground max-w-md mx-auto">
           Thanks for sharing. Our team of highly-trained squirrels is now
           reviewing your submission.

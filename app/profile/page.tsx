@@ -188,7 +188,7 @@ export default function ProfilePage() {
                         Bookmarked Opportunities
                       </h2>
                       <p className="text-neutral-600 dark:text-neutral-300">
-                        Keep track of opportunities you're interested in
+                        Keep track of opportunities you&apos;re interested in
                       </p>
                     </div>
                     <div className="text-right">
@@ -212,8 +212,8 @@ export default function ProfilePage() {
                         No bookmarked opportunities yet
                       </h3>
                       <p className="text-neutral-600 dark:text-neutral-300 mb-6 max-w-md mx-auto">
-                        Start bookmarking opportunities you're interested in to
-                        keep track of them here.
+                        Start bookmarking opportunities you&apos;re interested
+                        in to keep track of them here.
                       </p>
                       <Button
                         asChild
@@ -279,8 +279,8 @@ export default function ProfilePage() {
                         No participated programs yet
                       </h3>
                       <p className="text-neutral-600 dark:text-neutral-300 mb-6 max-w-md mx-auto">
-                        Once you participate in fellowships or programs, they'll
-                        appear here with your achievements.
+                        Once you participate in fellowships or programs,
+                        they&apos;ll appear here with your achievements.
                       </p>
                       <Button
                         asChild

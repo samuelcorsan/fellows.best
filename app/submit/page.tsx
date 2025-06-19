@@ -221,8 +221,8 @@ export default function SubmitPage() {
           </CardHeader>
           <CardContent>
             <p className="text-muted-foreground mb-4">
-              Just paste the URL to the opportunity page and we'll handle the
-              rest.
+              Just paste the URL to the opportunity page and we&apos;ll handle
+              the rest.
             </p>
             <form onSubmit={handleUrlSubmit} className="space-y-2">
               <div className="flex gap-2">
