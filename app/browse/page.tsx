@@ -88,7 +88,7 @@ export default function BrowsePage() {
           Browse Opportunities
         </h1>
         <p className="text-xl text-muted-foreground">
-          Discover {mockOpportunities.length} fellowships, grants, and more
+          Discover fellowships, grants, and more
         </p>
       </div>
 

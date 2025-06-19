@@ -34,11 +34,11 @@ export default function Home() {
     <div className="space-y-8 py-12">
       <section className="relative overflow-hidden">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-8 relative">
-          <div className="text-center max-w-4xl mx-auto">
+          <div className="text-center max-w-3xl mx-auto">
             <h1 className="text-4xl md:text-6xl font-bold mb-6">
-              Never Miss a{" "}
+              Discover Your Next{" "}
               <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                Fellowship Deadline
+                Fellowship Opportunity
               </span>
             </h1>
             <p className="text-xl md:text-2xl text-muted-foreground mb-8 leading-relaxed">
