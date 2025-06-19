@@ -10,6 +10,36 @@ import {
   getDeadlineUrgency,
 } from "@/lib/data";
 
+const getDeadlineText = (days: number | null): string => {
+  if (days === null) return "No deadline";
+  if (days > 1) return `${days} days left`;
+  if (days === 1) return "1 day left";
+  if (days === 0) return "Closed today";
+
+  const daysAgo = Math.abs(days);
+  if (daysAgo === 1) return "Closed yesterday";
+  if (daysAgo < 7) return `Closed ${daysAgo} days ago`;
+
+  const weeksAgo = Math.floor(daysAgo / 7);
+  if (weeksAgo === 1) return "Closed 1 week ago";
+  if (weeksAgo < 5) return `Closed ${weeksAgo} weeks ago`;
+
+  const monthsAgo = Math.floor(daysAgo / 30.44);
+  if (monthsAgo === 1) return `Closed 1 month ago`;
+  if (monthsAgo < 12) return `Closed ${monthsAgo} months ago`;
+
+  const yearsAgo = Math.floor(daysAgo / 365.25);
+  if (yearsAgo === 1) return `Closed 1 year ago`;
+  return `Closed ${yearsAgo} years ago`;
+};
+
+const getShortDeadlineText = (days: number | null): string => {
+  if (days === null) return "No deadline";
+  if (days > 1) return `${days}d left`;
+  if (days === 1) return `1d left`;
+  return "Closed";
+};
+
 interface OpportunityCardProps {
   opportunity: Opportunity;
   variant?: "default" | "compact";
@@ -62,9 +92,7 @@ export function OpportunityCard({
                 <div
                   className={`px-2 py-1 rounded-full text-xs font-medium border ${urgencyStyles[urgency]}`}
                 >
-                  {daysUntil !== null
-                    ? `${daysUntil} days left`
-                    : "No deadline"}
+                  {getDeadlineText(daysUntil)}
                 </div>
               </div>
             </div>
@@ -104,12 +132,10 @@ export function OpportunityCard({
                 className={`px-3 py-1 rounded-full text-sm font-medium border whitespace-nowrap ml-2 ${urgencyStyles[urgency]}`}
               >
                 <span className="hidden sm:inline">
-                  {daysUntil !== null
-                    ? `${daysUntil} days left`
-                    : "No deadline"}
+                  {getDeadlineText(daysUntil)}
                 </span>
                 <span className="sm:hidden">
-                  {daysUntil !== null ? `${daysUntil}d` : "No deadline"}
+                  {getShortDeadlineText(daysUntil)}
                 </span>
               </div>
             </div>
