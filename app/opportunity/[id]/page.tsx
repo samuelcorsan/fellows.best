@@ -104,7 +104,7 @@ export default function OpportunityPage({ params }: OpportunityPageProps) {
               <CardHeader>
                 <CardTitle className="flex items-center">
                   <Award className="mr-2 h-5 w-5" />
-                  What You'll Get
+                  What You&apos;ll Get
                 </CardTitle>
               </CardHeader>
               <CardContent>
