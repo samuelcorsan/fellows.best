@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { Bell, BellOff } from "lucide-react";
-import { Switch } from "@/components/ui/switch";
+import { BellOff } from "lucide-react";
 import { Label } from "@/components/ui/label";
+import { Badge } from "@/components/ui/badge";
 import { authClient } from "@/lib/auth-client";
 import { toast } from "sonner";
 
@@ -70,11 +70,7 @@ export function NotificationToggle({
   return (
     <div className="flex items-center space-x-3 p-4 border rounded-lg">
       <div className="flex items-center space-x-2">
-        {isEnabled ? (
-          <Bell className="h-5 w-5 text-blue-600" />
-        ) : (
-          <BellOff className="h-5 w-5 text-muted-foreground" />
-        )}
+        <BellOff className="h-5 w-5 text-muted-foreground" />
         <div>
           <Label
             htmlFor={`notification-${opportunityId}`}
@@ -87,12 +83,9 @@ export function NotificationToggle({
           </p>
         </div>
       </div>
-      <Switch
-        id={`notification-${opportunityId}`}
-        checked={isEnabled}
-        onCheckedChange={handleToggle}
-        disabled={isLoading || !session?.user?.email}
-      />
+      <Badge variant="secondary" className="ml-auto">
+        Soon
+      </Badge>
     </div>
   );
 }
