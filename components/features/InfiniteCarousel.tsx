@@ -39,6 +39,7 @@ export function InfiniteCarousel({
             key={`${opportunity.id}-${idx}`}
             opportunity={opportunity}
             className="w-[350px] shrink-0"
+            isCarousel
           />
         ))}
         {opportunities.map((opportunity, idx) => (
@@ -46,6 +47,7 @@ export function InfiniteCarousel({
             key={`${opportunity.id}-${idx}-clone`}
             opportunity={opportunity}
             className="w-[350px] shrink-0"
+            isCarousel
             aria-hidden="true"
           />
         ))}

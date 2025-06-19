@@ -45,12 +45,14 @@ interface OpportunityCardProps {
   opportunity: Opportunity;
   variant?: "default" | "compact";
   className?: string;
+  isCarousel?: boolean;
 }
 
 export function OpportunityCard({
   opportunity,
   variant = "default",
   className,
+  isCarousel = false,
 }: OpportunityCardProps) {
   const daysUntil = opportunity.closeDate
     ? getDaysUntilDeadline(opportunity.closeDate)
@@ -197,23 +199,31 @@ export function OpportunityCard({
         </div>
       </CardContent>
       <CardFooter className="px-6 py-4 bg-muted/50 flex items-center justify-between">
-        <Button asChild variant="outline">
-          <Link href={`/opportunity/${opportunity.id}`}>
-            <span className="hidden sm:inline">View Details</span>
-            <span className="sm:hidden">Details</span>
-          </Link>
-        </Button>
-        <Button asChild>
-          <a
-            href={opportunity.applyLink}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <span className="hidden sm:inline">Apply Now</span>
-            <span className="sm:hidden">Apply</span>
-            <ExternalLink className="ml-2 h-4 w-4" />
-          </a>
-        </Button>
+        {isCarousel ? (
+          <Button asChild className="w-full">
+            <Link href={`/opportunity/${opportunity.id}`}>View Details</Link>
+          </Button>
+        ) : (
+          <>
+            <Button asChild variant="outline">
+              <Link href={`/opportunity/${opportunity.id}`}>
+                <span className="hidden sm:inline">View Details</span>
+                <span className="sm:hidden">Details</span>
+              </Link>
+            </Button>
+            <Button asChild>
+              <a
+                href={opportunity.applyLink}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <span className="hidden sm:inline">Apply Now</span>
+                <span className="sm:hidden">Apply</span>
+                <ExternalLink className="ml-2 h-4 w-4" />
+              </a>
+            </Button>
+          </>
+        )}
       </CardFooter>
     </Card>
   );
