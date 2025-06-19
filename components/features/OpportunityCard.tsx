@@ -9,6 +9,7 @@ import {
   getDaysUntilDeadline,
   getDeadlineUrgency,
 } from "@/lib/data";
+import { cn } from "@/lib/utils";
 
 const getDeadlineText = (days: number | null): string => {
   if (days === null) return "Apply anytime";
@@ -43,11 +44,13 @@ const getShortDeadlineText = (days: number | null): string => {
 interface OpportunityCardProps {
   opportunity: Opportunity;
   variant?: "default" | "compact";
+  className?: string;
 }
 
 export function OpportunityCard({
   opportunity,
   variant = "default",
+  className,
 }: OpportunityCardProps) {
   const daysUntil = opportunity.closeDate
     ? getDaysUntilDeadline(opportunity.closeDate)
@@ -66,7 +69,12 @@ export function OpportunityCard({
 
   if (variant === "compact") {
     return (
-      <Card className="hover:shadow-md transition-all duration-200 hover:-translate-y-1">
+      <Card
+        className={cn(
+          "hover:shadow-md transition-all duration-200 hover:-translate-y-1",
+          className
+        )}
+      >
         <CardContent className="p-4">
           <div className="flex items-start space-x-3">
             <Image
@@ -108,7 +116,12 @@ export function OpportunityCard({
   }
 
   return (
-    <Card className="hover:shadow-lg transition-all duration-200 hover:-translate-y-1">
+    <Card
+      className={cn(
+        "hover:shadow-lg transition-all duration-200 hover:-translate-y-1",
+        className
+      )}
+    >
       <CardContent className="p-6">
         <div className="flex items-start space-x-4">
           <Image
