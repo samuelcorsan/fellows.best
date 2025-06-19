@@ -130,7 +130,7 @@ export function Header() {
               <div className="h-8 w-8 rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 flex items-center justify-center">
                 <Calendar className="h-5 w-5 text-white" />
               </div>
-              <span className="text-xl font-bold">ddfellow</span>
+              <span className="text-xl font-bold">ddfellows</span>
             </Link>
 
             <nav className="hidden md:flex items-center space-x-8">
@@ -219,10 +219,10 @@ export function Header() {
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
             <DialogTitle className="text-center">
-              Welcome to DDFellow
+              Welcome to ddfellows
             </DialogTitle>
             <DialogDescription className="text-center">
-              Continue with Google to access your account
+              Continue with Google to access more fellowships
             </DialogDescription>
           </DialogHeader>
           <div className="flex items-center space-x-2 justify-center py-6">

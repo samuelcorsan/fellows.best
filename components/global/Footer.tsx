@@ -11,7 +11,7 @@ export function Footer() {
               <div className="h-8 w-8 rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 flex items-center justify-center">
                 <Calendar className="h-5 w-5 text-white" />
               </div>
-              <span className="text-xl font-bold">ddfellow</span>
+              <span className="text-xl font-bold">ddfellows</span>
             </Link>
             <p className="text-muted-foreground max-w-md">
               Never miss a deadline again. Discover fellowships, grants,
@@ -118,7 +118,7 @@ export function Footer() {
         </div>
 
         <div className="border-t mt-12 pt-8 text-center text-muted-foreground">
-          <p>&copy; 2025 ddfellow. All rights reserved.</p>
+          <p>&copy; 2025 ddfellows. All rights reserved.</p>
         </div>
       </div>
     </footer>

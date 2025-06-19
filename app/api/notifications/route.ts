@@ -27,7 +27,7 @@ export async function POST(request: Request) {
 
       if (new Date() < weekBefore) {
         await resend.emails.send({
-          from: "DDFellow <notifications@fellows.disam.dev>",
+          from: "ddfellows <notifications@fellows.disam.dev>",
           to: userEmail,
           subject: `Reminder: ${opportunityName} deadline in 1 week`,
           html: `
@@ -40,7 +40,7 @@ export async function POST(request: Request) {
 
       if (new Date() < dayBefore) {
         await resend.emails.send({
-          from: "DDFellow <notifications@ddfellow.com>",
+          from: "ddfellows <notifications@fellows.disam.dev>",
           to: userEmail,
           subject: `Reminder: ${opportunityName} deadline tomorrow`,
           html: `
