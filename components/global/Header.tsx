@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
   Menu,
@@ -40,6 +41,7 @@ export function Header() {
   const [isSignInOpen, setIsSignInOpen] = useState(false);
   const { theme, setTheme } = useTheme();
   const { data: session, isPending } = authClient.useSession();
+  const pathname = usePathname();
 
   const handleGoogleSignIn = async () => {
     try {
@@ -136,11 +138,14 @@ export function Header() {
             <nav className="hidden md:flex items-center space-x-8">
               {navigation.map((item) => {
                 const Icon = item.icon;
+                const isActive = pathname === item.href;
                 return (
                   <Link
                     key={item.name}
                     href={item.href}
-                    className="flex items-center space-x-1 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+                    className={`flex items-center space-x-1 text-sm font-medium transition-colors hover:text-foreground ${
+                      isActive ? "text-foreground" : "text-muted-foreground"
+                    }`}
                   >
                     <Icon className="h-4 w-4" />
                     <span>{item.name}</span>
@@ -181,11 +186,14 @@ export function Header() {
               <nav className="flex flex-col space-y-4">
                 {navigation.map((item) => {
                   const Icon = item.icon;
+                  const isActive = pathname === item.href;
                   return (
                     <Link
                       key={item.name}
                       href={item.href}
-                      className="flex items-center space-x-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+                      className={`flex items-center space-x-2 text-sm font-medium transition-colors hover:text-foreground ${
+                        isActive ? "text-foreground" : "text-muted-foreground"
+                      }`}
                       onClick={() => setIsMenuOpen(false)}
                     >
                       <Icon className="h-4 w-4" />

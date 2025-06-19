@@ -71,11 +71,11 @@ export function OpportunityCard({
     return (
       <Card
         className={cn(
-          "hover:shadow-md transition-all duration-200 hover:-translate-y-1",
+          "hover:shadow-md transition-all duration-200 hover:-translate-y-1 flex flex-col",
           className
         )}
       >
-        <CardContent className="p-4">
+        <CardContent className="p-4 flex-grow">
           <div className="flex items-start space-x-3">
             <Image
               src={opportunity.logoUrl}
@@ -118,11 +118,11 @@ export function OpportunityCard({
   return (
     <Card
       className={cn(
-        "hover:shadow-lg transition-all duration-200 hover:-translate-y-1",
+        "hover:shadow-lg transition-all duration-200 hover:-translate-y-1 flex flex-col",
         className
       )}
     >
-      <CardContent className="p-6">
+      <CardContent className="p-6 flex-grow">
         <div className="flex items-start space-x-4">
           <Image
             src={opportunity.logoUrl}

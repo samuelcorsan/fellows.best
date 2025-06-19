@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
+import { toast } from "sonner";
 
 const categories = [
   "fellowship",
@@ -52,6 +53,9 @@ const availableTags = [
 export default function SubmitPage() {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [urlOnly, setUrlOnly] = useState("");
+  const [isSubmittingUrl, setIsSubmittingUrl] = useState(false);
+  const [urlError, setUrlError] = useState("");
   const [formData, setFormData] = useState({
     name: "",
     organizer: "",
@@ -110,6 +114,35 @@ export default function SubmitPage() {
     }
   };
 
+  const handleUrlSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setUrlError("");
+
+    if (!urlOnly.trim()) {
+      setUrlError("Please enter a URL.");
+      return;
+    }
+
+    try {
+      new URL(urlOnly);
+    } catch {
+      setUrlError("Please enter a valid URL.");
+      return;
+    }
+
+    setIsSubmittingUrl(true);
+    try {
+      // TODO: Submit form to database
+
+      router.push("/submit/success");
+    } catch (error) {
+      console.error("URL Submission error:", error);
+      toast.error("There was an error submitting the URL. Please try again.");
+    } finally {
+      setIsSubmittingUrl(false);
+    }
+  };
+
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
 
@@ -129,7 +162,6 @@ export default function SubmitPage() {
     if (!formData.applyLink.trim())
       newErrors.applyLink = "Application link is required";
 
-    // Date validation
     if (formData.openDate && formData.closeDate) {
       const openDate = new Date(formData.openDate);
       const closeDate = new Date(formData.closeDate);
@@ -138,7 +170,6 @@ export default function SubmitPage() {
       }
     }
 
-    // URL validation
     if (formData.applyLink) {
       try {
         new URL(formData.applyLink);
@@ -159,23 +190,12 @@ export default function SubmitPage() {
     setIsSubmitting(true);
 
     try {
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+      // TODO: Submit form to database
 
-      // In a real app, you would send this to your API
-      console.log("Submitting opportunity:", {
-        ...formData,
-        benefits: formData.benefits.filter((b) => b.trim()),
-      });
-
-      // Show success message and redirect
-      alert(
-        "Opportunity submitted successfully! It will be reviewed before being published."
-      );
-      router.push("/browse");
+      router.push("/submit/success");
     } catch (error) {
       console.error("Submission error:", error);
-      alert(
+      toast.error(
         "There was an error submitting your opportunity. Please try again."
       );
     } finally {
@@ -193,6 +213,52 @@ export default function SubmitPage() {
           <p className="text-xl text-muted-foreground">
             Help others discover amazing opportunities by sharing what you know
           </p>
+        </div>
+
+        <Card className="mb-8">
+          <CardHeader>
+            <CardTitle>Short on time?</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-muted-foreground mb-4">
+              Just paste the URL to the opportunity page and we'll handle the
+              rest.
+            </p>
+            <form onSubmit={handleUrlSubmit} className="space-y-2">
+              <div className="flex gap-2">
+                <Input
+                  placeholder="https://example.com/opportunity"
+                  value={urlOnly}
+                  onChange={(e) => {
+                    setUrlOnly(e.target.value);
+                    if (urlError) setUrlError("");
+                  }}
+                  disabled={isSubmitting || isSubmittingUrl}
+                  className={urlError ? "border-red-500" : ""}
+                />
+                <Button
+                  type="submit"
+                  disabled={isSubmittingUrl || isSubmitting || !urlOnly.trim()}
+                >
+                  {isSubmittingUrl ? "Submitting..." : "Submit URL"}
+                </Button>
+              </div>
+              {urlError && (
+                <p className="text-sm text-red-500 mt-1">{urlError}</p>
+              )}
+            </form>
+          </CardContent>
+        </Card>
+
+        <div className="relative mb-8">
+          <div className="absolute inset-0 flex items-center">
+            <span className="w-full border-t" />
+          </div>
+          <div className="relative flex justify-center text-xs uppercase">
+            <span className="bg-background px-2 text-muted-foreground">
+              Or fill out the full form
+            </span>
+          </div>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-8">
@@ -507,7 +573,7 @@ export default function SubmitPage() {
             >
               Cancel
             </Button>
-            <Button type="submit" disabled={isSubmitting}>
+            <Button type="submit" disabled={isSubmitting || isSubmittingUrl}>
               {isSubmitting ? "Submitting..." : "Submit Opportunity"}
             </Button>
           </div>
