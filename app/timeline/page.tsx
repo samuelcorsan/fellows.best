@@ -26,6 +26,11 @@ export default function TimelinePage() {
     useState<Opportunity | null>(null);
   const [isSignInOpen, setIsSignInOpen] = useState(false);
 
+  const activeOpportunities = mockOpportunities.filter((opp) => {
+    if (!opp.closeDate) return true;
+    return new Date(opp.closeDate) > new Date();
+  });
+
   const handleShare = (opportunity: Opportunity) => {
     const tweetText = `I'm delighted to share that I've applied to ${opportunity.name} to elevate my startup's trajectory, tap into tailored mentorship, and collaborate with fellow innovators.
 
@@ -123,7 +128,7 @@ Can't wait to dive in and share updates as the journey unfolds.`;
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <Timeline
-        opportunities={mockOpportunities}
+        opportunities={activeOpportunities}
         onItemClick={setSelectedOpportunity}
       />
 
