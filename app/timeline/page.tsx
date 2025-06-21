@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Timeline } from "@/components/features/timeline-temp";
+import { Timeline } from "@/components/features/timeline";
 import { mockOpportunities, Opportunity } from "@/lib/data";
 import {
   Dialog,
