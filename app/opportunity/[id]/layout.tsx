@@ -44,6 +44,7 @@ export async function generateMetadata({
       description: opportunity.description,
       card: "summary_large_image",
       images: [`https://fellows.disam.dev/api/og?id=${params.id}`],
+      creator: "@disamdev",
     },
     robots: {
       index: true,
