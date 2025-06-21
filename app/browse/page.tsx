@@ -187,11 +187,6 @@ export default function BrowsePage() {
           <div className="lg:col-span-3 space-y-6">
             <div className="flex flex-col sm:flex-row gap-4">
               <div className="flex-1 flex gap-2">
-                <SearchInput
-                  value={searchQuery}
-                  onChange={setSearchQuery}
-                  placeholder="Search by name, description, or organizer..."
-                />
                 <Button
                   variant="outline"
                   size="icon"
@@ -200,6 +195,13 @@ export default function BrowsePage() {
                 >
                   <Lightbulb className="h-5 w-5" />
                 </Button>
+                <div className="flex-1">
+                  <SearchInput
+                    value={searchQuery}
+                    onChange={setSearchQuery}
+                    placeholder="Search by name, description, or organizer..."
+                  />
+                </div>
               </div>
               <div className="flex gap-2">
                 <Select
