@@ -8,7 +8,7 @@ export default function ProfilePage() {
         </h1>
         <p className="text-gray-600 dark:text-gray-200 text-xl">
           Our digital construction crew is still working here... <br />
-          They're fueled by coffee and bad jokes ☕
+          They&apos;re fueled by coffee and bad jokes ☕
         </p>
       </div>
     </div>
