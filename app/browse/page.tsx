@@ -21,7 +21,7 @@ import { SearchInput } from "@/components/global/search-input";
 import { FilterPanel, FilterOptions } from "@/components/filters/filter-panel";
 import { OpportunityCard } from "@/components/features/opportunity-card";
 import { mockOpportunities } from "@/lib/data";
-import { useDebounce } from "@/hooks/useDebounce";
+import { useDebounce } from "@/hooks/use-debounce";
 import { authClient } from "@/lib/auth-client";
 import { toast } from "sonner";
 import { AIInputDialog } from "@/components/ai/ai-input-dialog";
