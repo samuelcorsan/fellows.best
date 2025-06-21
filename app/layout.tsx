@@ -5,7 +5,7 @@ import { Header } from "@/components/global/header";
 import { Footer } from "@/components/global/footer";
 import { ThemeProvider } from "@/providers/theme-provider";
 import { Toaster } from "sonner";
-
+import { Analytics } from "@vercel/analytics/react";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -30,6 +30,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <Analytics />
           <div className="min-h-screen flex flex-col">
             <Header />
             <main className="flex-1">{children}</main>

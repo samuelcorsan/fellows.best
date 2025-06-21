@@ -24,9 +24,9 @@ import { mockOpportunities } from "@/lib/data";
 import { useDebounce } from "@/hooks/use-debounce";
 import { authClient } from "@/lib/auth-client";
 import { toast } from "sonner";
-import { AIInputDialog } from "@/components/ai/ai-input-dialog";
-import { AIResponseDialog } from "@/components/ai/ai-response-dialog";
-import { AILoadingCard } from "@/components/ai/ai-loading-card";
+import { AIInputDialog } from "@/components/ai/input-dialog";
+import { AIResponseDialog } from "@/components/ai/response-dialog";
+import { AILoadingCard } from "@/components/ai/loading-card";
 import { AiResponse } from "@/lib/types";
 
 export default function BrowsePage() {

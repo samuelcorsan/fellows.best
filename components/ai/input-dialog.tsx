@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import { KeyboardEvent } from "react";
 
 interface AIInputDialogProps {
   isOpen: boolean;
@@ -18,6 +19,32 @@ export function AIInputDialog({
   onSubmit,
   onClose,
 }: AIInputDialogProps) {
+  const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === "Enter") {
+      if (e.ctrlKey) {
+        const textarea = e.currentTarget;
+        const start = textarea.selectionStart;
+        const end = textarea.selectionEnd;
+        const value = textarea.value;
+
+        const newValue =
+          value.substring(0, start) + "\n" + value.substring(end);
+        onQueryChange(newValue);
+
+        setTimeout(() => {
+          textarea.selectionStart = textarea.selectionEnd = start + 1;
+        }, 0);
+
+        e.preventDefault();
+      } else {
+        e.preventDefault();
+        if (!isLoading) {
+          onSubmit();
+        }
+      }
+    }
+  };
+
   return (
     <div
       className={`fixed bottom-8 left-1/2 -translate-x-1/2 transform transition-all duration-300 ease-in-out z-40 ${
@@ -36,6 +63,7 @@ export function AIInputDialog({
         <Textarea
           value={aiQuery}
           onChange={(e) => onQueryChange(e.target.value)}
+          onKeyDown={handleKeyDown}
           placeholder="Tell me your situation and I will find the best fellowships..."
           className="border-0 focus-visible:ring-0 focus-visible:ring-offset-0 resize-none bg-transparent min-h-[50px]"
           autoFocus
@@ -60,10 +88,10 @@ export function AIInputDialog({
             {isLoading ? (
               <div className="flex items-center gap-2">
                 <div className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
-                Finding Matches...
+                Finding Fellowships...
               </div>
             ) : (
-              "Find Matches"
+              "Find Fellowships"
             )}
           </Button>
         </div>
