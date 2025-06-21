@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { mockOpportunities } from "@/lib/data";
-import { InfiniteCarousel } from "@/components/features/InfiniteCarousel";
+import { InfiniteCarousel } from "@/components/features/infinite-carousel";
 
 function shuffle<T>(array: T[]): T[] {
   let currentIndex = array.length,

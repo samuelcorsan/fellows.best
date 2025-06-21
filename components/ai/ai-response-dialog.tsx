@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { AIResponseCard } from "./AIResponseCard";
+import { AIResponseCard } from "./ai-response-card";
 import { AiResponse } from "../../lib/types";
 
 interface AIResponseDialogProps {

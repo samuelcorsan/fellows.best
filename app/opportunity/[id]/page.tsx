@@ -13,8 +13,8 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { CalendarButton } from "@/components/global/CalendarButton";
-import { NotificationToggle } from "@/components/global/NotificationToggle";
+import { CalendarButton } from "@/components/global/calendar-button";
+import { NotificationToggle } from "@/components/global/notification-toggle";
 import {
   getOpportunityById,
   getDaysUntilDeadline,

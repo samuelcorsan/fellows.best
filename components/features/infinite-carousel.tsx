@@ -1,5 +1,5 @@
 import { Opportunity } from "@/lib/data";
-import { OpportunityCard } from "./OpportunityCard";
+import { OpportunityCard } from "./opportunity-card";
 import { cn } from "@/lib/utils";
 
 interface InfiniteCarouselProps {

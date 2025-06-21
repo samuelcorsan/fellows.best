@@ -17,16 +17,16 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { SearchInput } from "@/components/global/SearchInput";
-import { FilterPanel, FilterOptions } from "@/components/filters/FilterPanel";
-import { OpportunityCard } from "@/components/features/OpportunityCard";
+import { SearchInput } from "@/components/global/search-input";
+import { FilterPanel, FilterOptions } from "@/components/filters/filter-panel";
+import { OpportunityCard } from "@/components/features/opportunity-card";
 import { mockOpportunities } from "@/lib/data";
 import { useDebounce } from "@/hooks/useDebounce";
 import { authClient } from "@/lib/auth-client";
 import { toast } from "sonner";
-import { AIInputDialog } from "@/components/ai/AIInputDialog";
-import { AIResponseDialog } from "@/components/ai/AIResponseDialog";
-import { AILoadingCard } from "@/components/ai/AILoadingCard";
+import { AIInputDialog } from "@/components/ai/ai-input-dialog";
+import { AIResponseDialog } from "@/components/ai/ai-response-dialog";
+import { AILoadingCard } from "@/components/ai/ai-loading-card";
 import { AiResponse } from "@/lib/types";
 
 export default function BrowsePage() {

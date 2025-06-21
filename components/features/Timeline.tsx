@@ -1,4 +1,4 @@
-import { TimelineItem } from "./TimelineItem";
+import { TimelineItem } from "./timeline-item";
 import { Opportunity } from "@/lib/data";
 
 interface TimelineProps {

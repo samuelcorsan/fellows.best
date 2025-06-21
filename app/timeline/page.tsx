@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Timeline } from "@/components/features/Timeline";
+import { Timeline } from "@/components/features/timeline";
 import { mockOpportunities, Opportunity } from "@/lib/data";
 import {
   Dialog,
@@ -12,8 +12,8 @@ import {
 } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { CalendarButton } from "@/components/global/CalendarButton";
-import { NotificationToggle } from "@/components/global/NotificationToggle";
+import { CalendarButton } from "@/components/global/calendar-button";
+import { NotificationToggle } from "@/components/global/notification-toggle";
 import { Calendar, MapPin, ExternalLink, Share2, Lock } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
