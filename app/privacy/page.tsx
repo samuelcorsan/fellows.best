@@ -13,10 +13,10 @@ export default function PrivacyPage() {
         <section className="mb-8">
           <h2 className="text-2xl font-semibold mb-4">1. Introduction</h2>
           <p>
-            This Privacy Policy explains how ddfellows ("we," "our," or "us")
-            collects, uses, and protects your personal data in accordance with
-            the General Data Protection Regulation (GDPR) and other applicable
-            privacy laws.
+            This Privacy Policy explains how ddfellows (&quot;we,&quot;
+            &quot;our,&quot; or &quot;us&quot;) collects, uses, and protects
+            your personal data in accordance with the General Data Protection
+            Regulation (GDPR) and other applicable privacy laws.
           </p>
         </section>
 
@@ -60,8 +60,8 @@ export default function PrivacyPage() {
             </li>
             <li>
               <strong>Groq:</strong> For AI-powered opportunity recommendations.
-              When you use our AI features, your queries are processed by Groq's
-              AI models.
+              When you use our AI features, your queries are processed by
+              Groq&apos;s AI models.
             </li>
             <li>
               <strong>Better Auth:</strong> For secure authentication services.
@@ -89,7 +89,7 @@ export default function PrivacyPage() {
           <ul className="list-disc pl-6 mt-2">
             <li>Right to access your personal data</li>
             <li>Right to rectification of inaccurate data</li>
-            <li>Right to erasure ("right to be forgotten")</li>
+            <li>Right to erasure (&quot;right to be forgotten&quot;)</li>
             <li>Right to restrict processing</li>
             <li>Right to data portability</li>
             <li>Right to object to processing</li>

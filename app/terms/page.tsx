@@ -13,9 +13,9 @@ export default function TermsPage() {
         <section className="mb-8">
           <h2 className="text-2xl font-semibold mb-4">1. Introduction</h2>
           <p>
-            Welcome to ddfellows ("we," "our," or "us"). By accessing or using
-            our website at fellows.disam.dev, you agree to these Terms of
-            Service.
+            Welcome to ddfellows (&quot;we,&quot; &quot;our,&quot; or
+            &quot;us&quot;). By accessing or using our website at
+            fellows.disam.dev, you agree to these Terms of Service.
           </p>
         </section>
 
