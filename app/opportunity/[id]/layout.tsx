@@ -30,11 +30,20 @@ export async function generateMetadata({
       type: "article",
       url: `https://ddfellows.com/opportunity/${params.id}`,
       siteName: "ddfellows",
+      images: [
+        {
+          url: `https://fellows.disam.dev/api/og?id=${params.id}`,
+          width: 1200,
+          height: 630,
+          alt: opportunity.name,
+        },
+      ],
     },
     twitter: {
       title: `${opportunity.name} - Deadlines, Requirements & How to Apply`,
       description: opportunity.description,
       card: "summary_large_image",
+      images: [`https://fellows.disam.dev/api/og?id=${params.id}`],
     },
     robots: {
       index: true,
