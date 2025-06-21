@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useMemo } from "react";
-import { ArrowUpDown, Grid, List } from "lucide-react";
+import { useState, useMemo, useEffect } from "react";
+import { ArrowUpDown, Grid, List, Lightbulb } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Select,
@@ -24,10 +24,19 @@ import { mockOpportunities } from "@/lib/data";
 import { useDebounce } from "@/hooks/useDebounce";
 import { authClient } from "@/lib/auth-client";
 import { toast } from "sonner";
+import { AIInputDialog } from "@/components/ai/AIInputDialog";
+import { AIResponseDialog } from "@/components/ai/AIResponseDialog";
+import { AILoadingCard } from "@/components/ai/AILoadingCard";
+import { AiResponse } from "@/lib/types";
 
 export default function BrowsePage() {
-  const { data: session, isPending } = authClient.useSession();
+  const { data: session } = authClient.useSession();
   const [isSignInOpen, setIsSignInOpen] = useState(false);
+  const [isAIInputOpen, setIsAIInputOpen] = useState(false);
+  const [aiQuery, setAiQuery] = useState("");
+  const [isAiLoading, setIsAiLoading] = useState(false);
+  const [aiResponse, setAiResponse] = useState<AiResponse | null>(null);
+  const [currentCardIndex, setCurrentCardIndex] = useState(0);
   const [searchQuery, setSearchQuery] = useState("");
   const [filters, setFilters] = useState<FilterOptions>({
     categories: [],
@@ -42,6 +51,10 @@ export default function BrowsePage() {
 
   const debouncedSearchQuery = useDebounce(searchQuery, 300);
 
+  useEffect(() => {
+    setCurrentCardIndex(0);
+  }, [aiResponse]);
+
   const handleGoogleSignIn = async () => {
     try {
       await authClient.signIn.social({
@@ -52,6 +65,47 @@ export default function BrowsePage() {
     } catch (error) {
       console.error("Failed to sign in with Google:", error);
     }
+  };
+
+  const handleAiQuery = async () => {
+    if (!aiQuery.trim()) {
+      toast.error("Please enter your situation first");
+      return;
+    }
+
+    setIsAiLoading(true);
+    setAiResponse(null);
+
+    try {
+      const response = await fetch("/api/ai-match", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ query: aiQuery }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to get AI recommendations");
+      }
+
+      const data = await response.json();
+      if (data.error) {
+        throw new Error(data.error);
+      }
+      setAiResponse(data);
+      setAiQuery("");
+    } catch (error) {
+      console.error("Error getting AI recommendations:", error);
+      toast.error("Failed to get recommendations. Please try again.");
+    } finally {
+      setIsAiLoading(false);
+    }
+  };
+
+  const closeAiDialog = () => {
+    setIsAIInputOpen(false);
+    setAiQuery("");
   };
 
   const filteredAndSortedOpportunities = useMemo(() => {
@@ -101,7 +155,6 @@ export default function BrowsePage() {
       }
     });
 
-    // Limit to 4 items if user is not signed in
     if (!session) {
       filtered = filtered.slice(0, 4);
     }
@@ -133,12 +186,20 @@ export default function BrowsePage() {
 
           <div className="lg:col-span-3 space-y-6">
             <div className="flex flex-col sm:flex-row gap-4">
-              <div className="flex-1">
+              <div className="flex-1 flex gap-2">
                 <SearchInput
                   value={searchQuery}
                   onChange={setSearchQuery}
                   placeholder="Search by name, description, or organizer..."
                 />
+                <Button
+                  variant="outline"
+                  size="icon"
+                  onClick={() => setIsAIInputOpen(true)}
+                  className="shrink-0"
+                >
+                  <Lightbulb className="h-5 w-5" />
+                </Button>
               </div>
               <div className="flex gap-2">
                 <Select
@@ -235,6 +296,32 @@ export default function BrowsePage() {
           </div>
         </div>
       </div>
+
+      {/* Overlay */}
+      <div
+        className={`fixed inset-0 bg-background/80 backdrop-blur-sm transition-all duration-300 ${
+          isAIInputOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+        }`}
+        onClick={closeAiDialog}
+      />
+
+      <AIInputDialog
+        isOpen={isAIInputOpen}
+        aiQuery={aiQuery}
+        isLoading={isAiLoading}
+        onQueryChange={setAiQuery}
+        onSubmit={handleAiQuery}
+        onClose={closeAiDialog}
+      />
+
+      <AIResponseDialog
+        isOpen={isAIInputOpen}
+        response={aiResponse}
+        currentIndex={currentCardIndex}
+        onIndexChange={setCurrentCardIndex}
+      />
+
+      <AILoadingCard isOpen={isAIInputOpen && isAiLoading} />
 
       <Dialog open={isSignInOpen} onOpenChange={setIsSignInOpen}>
         <DialogContent className="sm:max-w-md">
