@@ -176,7 +176,7 @@ export function Header() {
               {isMenuOpen ? (
                 <X className="h-5 w-5" />
               ) : (
-                <Menu className="h-5 w-5" />
+                <Menu className="h-5 w-5" aria-label="Menu" />
               )}
             </Button>
           </div>
@@ -210,7 +210,7 @@ export function Header() {
                     }
                   >
                     <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-                    <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+                    <Moon className="h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
                     <span className="ml-2">Toggle theme</span>
                   </Button>
                   <div className="flex items-center">

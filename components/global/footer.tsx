@@ -23,13 +23,13 @@ export function Footer() {
                 href="https://x.com/disamdev"
                 className="text-muted-foreground hover:text-foreground transition-colors"
               >
-                <Twitter className="h-5 w-5" />
+                <Twitter className="h-5 w-5" aria-label="Twitter" />
               </Link>
               <Link
                 href="https://github.com/samuelcorsan/ddfellows"
                 className="text-muted-foreground hover:text-foreground transition-colors"
               >
-                <Github className="h-5 w-5" />
+                <Github className="h-5 w-5" aria-label="GitHub" />
               </Link>
             </div>
           </div>

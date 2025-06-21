@@ -41,11 +41,11 @@ export default function Home() {
                 Fellowship Opportunity
               </span>
             </h1>
-            <p className="text-xl md:text-2xl text-muted-foreground mb-8 leading-relaxed">
+            <h2 className="text-xl md:text-2xl text-muted-foreground mb-8 leading-relaxed">
               Discover fellowships, grants, accelerators, and competitions.
               Track deadlines, get reminders, and turn opportunities into
               achievements.
-            </p>
+            </h2>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button asChild size="lg" className="text-lg px-8 py-5">
                 <Link href="/browse">
