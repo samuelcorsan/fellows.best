@@ -9,7 +9,7 @@ import { Toaster } from "sonner";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "ddfellows - Never Miss a Fellowship Deadline",
+  title: "ddfellows - Discover Your Next Fellowship Opportunity",
   description:
     "Discover fellowships, grants, accelerators, and competitions. Track deadlines, get reminders, and never miss an opportunity.",
   keywords:
