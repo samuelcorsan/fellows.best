@@ -22,6 +22,7 @@ A centralized platform to discover, track, and receive reminders for fellowships
 - **Backend**: Node.js with Express
 - **Database**: PostgreSQL for storing users, settings and more
 - **Email/Notifications**: Resend
+- **AI**: Groq
 - **Authentication**: Better Auth
 - **Deployment**: Vercel
 

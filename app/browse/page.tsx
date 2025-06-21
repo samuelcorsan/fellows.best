@@ -189,11 +189,12 @@ export default function BrowsePage() {
               <div className="flex-1 flex gap-2">
                 <Button
                   variant="outline"
-                  size="icon"
                   onClick={() => setIsAIInputOpen(true)}
-                  className="shrink-0"
+                  className="shrink-0 relative group"
                 >
-                  <Lightbulb className="h-5 w-5" />
+                  <div className="absolute inset-0 rounded-md bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-pink-500/20 blur-md transition-all duration-300 group-hover:blur-lg -z-10" />
+                  <Lightbulb className="h-5 w-5 text-purple-500" />
+                  <span className="text-sm font-medium ml-2">Ask AI</span>
                 </Button>
                 <div className="flex-1">
                   <SearchInput
