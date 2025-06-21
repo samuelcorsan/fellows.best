@@ -1,22 +1,47 @@
 import { MetadataRoute } from "next";
+import { mockOpportunities } from "@/lib/data";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  return [
+  const baseUrl = "https://fellows.disam.dev";
+  const currentDate = new Date().toISOString().split("T")[0];
+
+  const staticRoutes: MetadataRoute.Sitemap = [
     {
-      url: "https://fellows.disam.dev",
-      lastModified: new Date("2025-06-19"),
+      url: baseUrl,
+      lastModified: new Date(currentDate),
+      changeFrequency: "daily",
+      priority: 1,
     },
     {
-      url: "https://fellows.disam.dev/timeline",
-      lastModified: new Date("2025-06-19"),
+      url: `${baseUrl}/timeline`,
+      lastModified: new Date(currentDate),
+      changeFrequency: "weekly",
+      priority: 0.8,
     },
     {
-      url: "https://fellows.disam.dev/browse",
-      lastModified: new Date("2025-06-19"),
+      url: `${baseUrl}/browse`,
+      lastModified: new Date(currentDate),
+      changeFrequency: "weekly",
+      priority: 0.8,
     },
     {
-      url: "https://fellows.disam.dev/submit",
-      lastModified: new Date("2025-06-19"),
+      url: `${baseUrl}/submit`,
+      lastModified: new Date(currentDate),
+      changeFrequency: "monthly",
+      priority: 0.8,
     },
   ];
+
+  const opportunityRoutes: MetadataRoute.Sitemap = mockOpportunities.map(
+    (opportunity) => ({
+      url: `${baseUrl}/opportunity/${opportunity.id}`,
+      lastModified: opportunity.openDate
+        ? new Date(opportunity.openDate)
+        : new Date(currentDate),
+      changeFrequency: "monthly",
+      priority: 0.9,
+    })
+  );
+
+  return [...staticRoutes, ...opportunityRoutes];
 }

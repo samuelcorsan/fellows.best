@@ -25,6 +25,34 @@ export interface Opportunity {
 
 export const mockOpportunities: Opportunity[] = [
   {
+    id: "a16z-crypto-startup-accelerator",
+    name: "a16z Crypto Startup Accelerator",
+    logoUrl:
+      "https://pbs.twimg.com/profile_images/1582168997134422016/HcmVyKwV_400x400.jpg",
+    description:
+      "An intensive accelerator for early-stage blockchain and web3 startups, providing capital, mentorship, and network support.",
+    fullDescription:
+      "The a16z Crypto Startup Accelerator (CSX) is a cohort-based program for early-stage crypto/web3 startups. It connects founders with capital, industry experts, and a cohort of leading teams. Across locations like New York and London, it offers funding (historically up to ~$500K in exchange for equity), 10-week intensive curriculum on product-market fit, token design, go-to-market, legal/regulatory, and access to a16z’s network of mentors, customers, and investors. Application windows vary by cohort—interested founders should subscribe for updates and check the accelerator page.",
+    openDate: null,
+    closeDate: null,
+    tags: ["crypto", "web3", "funding-opportunity", "mentorship", "blockchain"],
+    category: "accelerator",
+    region: "Global",
+    country: "Multiple",
+    eligibility:
+      "Early-stage startups building with blockchain/web3 technologies, willing to join in-person or remote cohort activities as specified.",
+    applyLink: "https://a16zcrypto.com/accelerator",
+    benefits: [
+      "Cohort-based accelerator (e.g., 10 weeks) in hubs like New York or London",
+      "Funding (historically up to ~$500K for selected teams)",
+      "Curriculum covering product-market fit, tokenomics, go-to-market, legal/regulatory for crypto",
+      "1:1 mentorship from a16z crypto partners and network of experts",
+      "Access to a16z’s broader network of advisors, potential customers, and investors",
+      "Community events, workshops, and demo day to pitch to investors",
+    ],
+    organizer: "Andreessen Horowitz (a16z Crypto)",
+  },
+  {
     id: "ewor-fellowship",
     name: "EWOR Fellowship",
     logoUrl: "https://i.ibb.co/sJDKj0MD/image.png",
