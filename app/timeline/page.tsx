@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Timeline } from "@/components/features/timeline";
-import { mockOpportunities, Opportunity } from "@/lib/data";
+import { fellowshipOpportunities, Opportunity } from "@/lib/data";
 import {
   Dialog,
   DialogContent,
@@ -25,7 +25,7 @@ export default function TimelinePage() {
     useState<Opportunity | null>(null);
   const [isSignInOpen, setIsSignInOpen] = useState(false);
 
-  const activeOpportunities = mockOpportunities.filter((opp) => {
+  const activeOpportunities = fellowshipOpportunities.filter((opp) => {
     if (!opp.closeDate) return true;
     return new Date(opp.closeDate) > new Date();
   });

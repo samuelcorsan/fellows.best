@@ -1,5 +1,5 @@
 import { MetadataRoute } from "next";
-import { mockOpportunities } from "@/lib/data";
+import { fellowshipOpportunities } from "@/lib/data";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = "https://fellows.disam.dev";
@@ -32,7 +32,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ];
 
-  const opportunityRoutes: MetadataRoute.Sitemap = mockOpportunities.map(
+  const opportunityRoutes: MetadataRoute.Sitemap = fellowshipOpportunities.map(
     (opportunity) => ({
       url: `${baseUrl}/opportunity/${opportunity.id}`,
       lastModified: opportunity.openDate

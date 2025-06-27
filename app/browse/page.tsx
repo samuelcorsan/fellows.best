@@ -13,7 +13,7 @@ import {
 import { SearchInput } from "@/components/global/search-input";
 import { FilterPanel, FilterOptions } from "@/components/filters/filter-panel";
 import { OpportunityCard } from "@/components/features/opportunity-card";
-import { mockOpportunities } from "@/lib/data";
+import { fellowshipOpportunities } from "@/lib/data";
 import { useDebounce } from "@/hooks/use-debounce";
 import { authClient } from "@/lib/auth-client";
 import { toast } from "sonner";
@@ -93,7 +93,7 @@ export default function BrowsePage() {
   const filteredAndSortedOpportunities = useMemo(() => {
     const currentDate = new Date();
 
-    let filtered = mockOpportunities.filter((opportunity) => {
+    let filtered = fellowshipOpportunities.filter((opportunity) => {
       const isOpen =
         !opportunity.closeDate || new Date(opportunity.closeDate) > currentDate;
       if (!isOpen) return false;
@@ -235,7 +235,8 @@ export default function BrowsePage() {
             <div className="flex items-center justify-between">
               <p className="text-muted-foreground">
                 {filteredAndSortedOpportunities.length} opportunities found
-                {!session && " (showing 4 of " + mockOpportunities.length + ")"}
+                {!session &&
+                  " (showing 4 of " + fellowshipOpportunities.length + ")"}
               </p>
             </div>
 

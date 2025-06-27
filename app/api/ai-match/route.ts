@@ -1,5 +1,5 @@
 import { Groq } from "groq-sdk";
-import { mockOpportunities, SYSTEM_PROMPT } from "@/lib/data";
+import { fellowshipOpportunities, SYSTEM_PROMPT } from "@/lib/data";
 import { NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
@@ -9,7 +9,7 @@ const groq = new Groq({
   apiKey: process.env.GROQ_API_KEY,
 });
 
-const opportunitiesForAI = mockOpportunities.map((opp) => ({
+const opportunitiesForAI = fellowshipOpportunities.map((opp) => ({
   id: opp.id,
   name: opp.name,
   description: opp.description,
@@ -99,12 +99,14 @@ export async function POST(req: Request) {
           if (!rec.id || typeof rec.matchScore !== "number" || !rec.reason) {
             return false;
           }
-          const fellowship = mockOpportunities.find((opp) => opp.id === rec.id);
+          const fellowship = fellowshipOpportunities.find(
+            (opp) => opp.id === rec.id
+          );
           return fellowship !== undefined;
         })
         .map((rec: any) => ({
           ...rec,
-          ...mockOpportunities.find((opp) => opp.id === rec.id),
+          ...fellowshipOpportunities.find((opp) => opp.id === rec.id),
         }))
         .sort((a: any, b: any) => b.matchScore - a.matchScore)
         .slice(0, 3);

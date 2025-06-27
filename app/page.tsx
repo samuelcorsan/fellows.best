@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { mockOpportunities } from "@/lib/data";
+import { fellowshipOpportunities } from "@/lib/data";
 import { InfiniteCarousel } from "@/components/features/infinite-carousel";
 
 function shuffle<T>(array: T[]): T[] {
@@ -21,7 +21,7 @@ function shuffle<T>(array: T[]): T[] {
 }
 
 export default function Home() {
-  const shuffledOpportunities = shuffle([...mockOpportunities]);
+  const shuffledOpportunities = shuffle([...fellowshipOpportunities]);
   const carousel1 = shuffledOpportunities.slice(
     0,
     Math.floor(shuffledOpportunities.length / 2)
