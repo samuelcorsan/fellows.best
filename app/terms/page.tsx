@@ -15,35 +15,59 @@ export default function TermsPage() {
           <p>
             Welcome to ddfellows (&quot;we,&quot; &quot;our,&quot; or
             &quot;us&quot;). By accessing or using our website at
-            fellows.disam.dev, you agree to these Terms of Service.
+            fellows.disam.dev, you agree to be bound by these Terms of Service.
+            ddfellows is a centralized platform for discovering and tracking
+            fellowships, grants, accelerators, and competitions.
           </p>
         </section>
 
         <section className="mb-8">
           <h2 className="text-2xl font-semibold mb-4">2. Services</h2>
-          <p>
-            ddfellows is a platform that aggregates and provides information
-            about fellowships, grants, accelerators, and competitions. We help
-            users discover opportunities and manage their applications.
-          </p>
+          <p>ddfellows provides the following services:</p>
+          <ul className="list-disc pl-6 mt-2">
+            <li>
+              Aggregation of fellowships, grants, accelerators, hackathons,
+              residencies, and funding opportunities
+            </li>
+            <li>Search and filtering functionality for opportunities</li>
+            <li>Timeline visualization of deadlines</li>
+            <li>Community-driven opportunity submission system</li>
+          </ul>
         </section>
 
         <section className="mb-8">
           <h2 className="text-2xl font-semibold mb-4">3. User Accounts</h2>
           <p>
-            When you create an account, you must provide accurate information
-            and keep it updated. You are responsible for maintaining the
-            security of your account credentials.
+            When you create an account, you must provide accurate and complete
+            information. You are responsible for:
           </p>
+          <ul className="list-disc pl-6 mt-2">
+            <li>Maintaining the security of your account credentials</li>
+            <li>All activities that occur under your account</li>
+            <li>Keeping your contact information and preferences up to date</li>
+          </ul>
         </section>
 
         <section className="mb-8">
-          <h2 className="text-2xl font-semibold mb-4">4. User Content</h2>
+          <h2 className="text-2xl font-semibold mb-4">
+            4. User Content and Submissions
+          </h2>
           <p>
-            Users may submit opportunities to our platform. You retain ownership
-            of your content but grant us a license to display and use it on our
-            platform.
+            Users may submit opportunities to our platform. By submitting
+            content, you:
           </p>
+          <ul className="list-disc pl-6 mt-2">
+            <li>Confirm that the information is accurate and complete</li>
+            <li>
+              Grant us a license to display and use the content on our platform
+            </li>
+            <li>
+              Understand that submissions may be moderated or edited by our team
+            </li>
+            <li>
+              Agree not to submit false, misleading, or fraudulent opportunities
+            </li>
+          </ul>
         </section>
 
         <section className="mb-8">
@@ -51,35 +75,68 @@ export default function TermsPage() {
             5. Intellectual Property
           </h2>
           <p>
-            The ddfellows platform, including its design, logos, and content
-            created by us, is protected by copyright and other intellectual
-            property rights.
+            The ddfellows platform, including its design, logos, features, and
+            content created by us, is protected by copyright and other
+            intellectual property rights. This includes:
           </p>
+          <ul className="list-disc pl-6 mt-2">
+            <li>The timeline visualization system</li>
+            <li>Our filtering and search functionality</li>
+            <li>The user interface and design</li>
+            <li>Our database of aggregated opportunities</li>
+          </ul>
         </section>
 
         <section className="mb-8">
           <h2 className="text-2xl font-semibold mb-4">
             6. Limitation of Liability
           </h2>
+          <p>While we strive to maintain accurate information, ddfellows:</p>
+          <ul className="list-disc pl-6 mt-2">
+            <li>
+              Is not responsible for the accuracy of third-party opportunity
+              listings
+            </li>
+            <li>Does not guarantee the outcome of any applications</li>
+            <li>Cannot verify all details of submitted opportunities</li>
+          </ul>
+        </section>
+
+        <section className="mb-8">
+          <h2 className="text-2xl font-semibold mb-4">
+            7. Data Usage and Privacy
+          </h2>
           <p>
-            ddfellows provides information about opportunities but is not
-            responsible for the accuracy of third-party content or the outcome
-            of any applications.
+            We collect and process data in accordance with our Privacy Policy.
+            This includes:
+          </p>
+          <ul className="list-disc pl-6 mt-2">
+            <li>User account information</li>
+            <li>Usage analytics to improve our service</li>
+            <li>Information submitted through the platform</li>
+          </ul>
+        </section>
+
+        <section className="mb-8">
+          <h2 className="text-2xl font-semibold mb-4">8. Changes to Terms</h2>
+          <p>
+            We may modify these terms at any time. We will notify users of
+            significant changes through:
+          </p>
+          <ul className="list-disc pl-6 mt-2">
+            <li>Platform announcements</li>
+            <li>Updates to the Last Updated date</li>
+          </ul>
+          <p className="mt-2">
+            Continued use of the platform after changes constitutes acceptance
+            of the new terms.
           </p>
         </section>
 
         <section className="mb-8">
-          <h2 className="text-2xl font-semibold mb-4">7. Changes to Terms</h2>
+          <h2 className="text-2xl font-semibold mb-4">9. Contact</h2>
           <p>
-            We may modify these terms at any time. Continued use of the platform
-            after changes constitutes acceptance of the new terms.
-          </p>
-        </section>
-
-        <section className="mb-8">
-          <h2 className="text-2xl font-semibold mb-4">8. Contact</h2>
-          <p>
-            For questions about these terms, contact us at{" "}
+            For questions about these terms or the platform, contact us at{" "}
             <a
               href="mailto:samuel@disam.dev"
               className="text-primary hover:underline"

@@ -14,7 +14,6 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { CalendarButton } from "@/components/global/calendar-button";
-import { NotificationToggle } from "@/components/global/notification-toggle";
 import {
   getOpportunityById,
   getDaysUntilDeadline,
@@ -58,36 +57,60 @@ export default function OpportunityPage({ params }: OpportunityPageProps) {
         </Link>
       </Button>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <div className="lg:col-span-2 space-y-8">
-          <div className="flex items-start space-x-6">
-            <Image
-              src={opportunity.logoUrl}
-              alt={`${opportunity.name} logo`}
-              width={100}
-              height={100}
-              className="rounded-xl object-cover"
-            />
-            <div className="flex-1">
-              <h1 className="text-3xl md:text-4xl font-bold mb-2">
+      <div className="flex items-start justify-between space-x-6 mb-8">
+        <div className="flex items-start space-x-6">
+          <Image
+            src={opportunity.logoUrl}
+            alt={`${opportunity.name} logo`}
+            width={100}
+            height={100}
+            className="rounded-xl object-cover"
+          />
+          <div className="flex-1">
+            <div className="flex items-center gap-3 mb-2">
+              <h1 className="text-3xl md:text-4xl font-bold">
                 {opportunity.name}
               </h1>
-              <p className="text-xl text-muted-foreground mb-4">
-                {opportunity.organizer}
-              </p>
-              <div className="flex flex-wrap gap-2">
-                <Badge variant="outline" className="text-sm">
-                  {opportunity.category}
-                </Badge>
-                {opportunity.tags.map((tag) => (
-                  <Badge key={tag} variant="secondary" className="text-sm">
-                    {tag}
+              {opportunity.closeDate &&
+                getDaysUntilDeadline(opportunity.closeDate) < 0 && (
+                  <Badge className="text-sm" variant="destructive">
+                    Closed
                   </Badge>
-                ))}
-              </div>
+                )}
+            </div>
+            <p className="text-xl text-muted-foreground mb-4">
+              {opportunity.organizer}
+            </p>
+            <div className="flex flex-wrap gap-2">
+              <Badge variant="outline" className="text-sm">
+                {opportunity.category}
+              </Badge>
+              {opportunity.tags.map((tag) => (
+                <Badge key={tag} variant="secondary" className="text-sm">
+                  {tag}
+                </Badge>
+              ))}
             </div>
           </div>
+        </div>
+        {opportunity.closeDate &&
+          getDaysUntilDeadline(opportunity.closeDate) >= 0 && (
+            <Button asChild size="lg" className="shrink-0">
+              <a
+                href={opportunity.applyLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center"
+              >
+                Apply Now
+                <ExternalLink className="ml-2 h-4 w-4" />
+              </a>
+            </Button>
+          )}
+      </div>
 
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="lg:col-span-2 space-y-8">
           <Card>
             <CardHeader>
               <CardTitle>About this Opportunity</CardTitle>
@@ -199,39 +222,6 @@ export default function OpportunityPage({ params }: OpportunityPageProps) {
               </CardContent>
             </Card>
           )}
-
-          {opportunity.closeDate && (
-            <Card>
-              <CardHeader>
-                <CardTitle>Reminders</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <NotificationToggle
-                  opportunityId={opportunity.id}
-                  opportunityName={opportunity.name}
-                  closeDate={opportunity.closeDate}
-                />
-              </CardContent>
-            </Card>
-          )}
-
-          <Card>
-            <CardContent className="pt-6">
-              <Button asChild size="lg" className="w-full">
-                <a
-                  href={opportunity.applyLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Apply Now
-                  <ExternalLink className="ml-2 h-4 w-4" />
-                </a>
-              </Button>
-              <p className="text-xs text-muted-foreground text-center mt-2">
-                This will take you to the official application page
-              </p>
-            </CardContent>
-          </Card>
         </div>
       </div>
     </div>

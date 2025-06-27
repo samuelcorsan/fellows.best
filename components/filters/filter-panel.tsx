@@ -24,13 +24,34 @@ interface FilterPanelProps {
 }
 
 const categoryOptions = [
-  "fellowship",
   "accelerator",
+  "fellowship",
   "grant",
-  "hackathon",
-  "internship",
+  "residency",
   "competition",
+  "research",
 ];
+
+const tagGroups = {
+  programType: {
+    label: "Program Type",
+    options: [
+      "equity-free",
+      "equity-based",
+      "stipend",
+      "mentorship",
+      "funding",
+    ],
+  },
+  stage: {
+    label: "Stage",
+    options: ["early-stage", "pre-seed", "seed-stage", "growth-stage"],
+  },
+  duration: {
+    label: "Duration",
+    options: ["short-term", "medium-term", "long-term"],
+  },
+};
 
 const regionOptions = [
   {
@@ -276,28 +297,34 @@ export function FilterPanel({
 
             <Separator />
 
-            <div>
-              <Label className="text-sm font-medium mb-3 block">Tags</Label>
-              <div className="space-y-2">
-                {tagOptions.map((tag) => (
-                  <div key={tag} className="flex items-center space-x-2">
-                    <Checkbox
-                      id={`tag-${tag}`}
-                      checked={filters.tags.includes(tag)}
-                      onCheckedChange={(checked) =>
-                        handleTagChange(tag, checked as boolean)
-                      }
-                    />
-                    <Label
-                      htmlFor={`tag-${tag}`}
-                      className="text-sm cursor-pointer"
-                    >
-                      {tag}
-                    </Label>
-                  </div>
-                ))}
+            {/* New organized tag groups */}
+            {Object.entries(tagGroups).map(([groupKey, group]) => (
+              <div key={groupKey}>
+                <Label className="text-sm font-medium mb-3 block">
+                  {group.label}
+                </Label>
+                <div className="space-y-2">
+                  {group.options.map((tag) => (
+                    <div key={tag} className="flex items-center space-x-2">
+                      <Checkbox
+                        id={`tag-${tag}`}
+                        checked={filters.tags.includes(tag)}
+                        onCheckedChange={(checked) =>
+                          handleTagChange(tag, checked as boolean)
+                        }
+                      />
+                      <Label
+                        htmlFor={`tag-${tag}`}
+                        className="text-sm capitalize cursor-pointer"
+                      >
+                        {tag.replace(/-/g, " ")}
+                      </Label>
+                    </div>
+                  ))}
+                </div>
+                <Separator className="my-4" />
               </div>
-            </div>
+            ))}
           </CardContent>
         </Card>
       </div>

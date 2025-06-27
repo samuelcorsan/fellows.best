@@ -9,7 +9,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     {
       url: baseUrl,
       lastModified: new Date(currentDate),
-      changeFrequency: "daily",
+      changeFrequency: "monthly",
       priority: 1,
     },
     {
@@ -27,18 +27,23 @@ export default function sitemap(): MetadataRoute.Sitemap {
     {
       url: `${baseUrl}/submit`,
       lastModified: new Date(currentDate),
-      changeFrequency: "monthly",
+      changeFrequency: "yearly",
       priority: 0.8,
     },
   ];
 
-  const opportunityRoutes: MetadataRoute.Sitemap = fellowshipOpportunities.map(
+  const activeOpportunities = fellowshipOpportunities.filter((opportunity) => {
+    if (!opportunity.closeDate) return true;
+    return new Date(opportunity.closeDate) >= new Date(currentDate);
+  });
+
+  const opportunityRoutes: MetadataRoute.Sitemap = activeOpportunities.map(
     (opportunity) => ({
       url: `${baseUrl}/opportunity/${opportunity.id}`,
       lastModified: opportunity.openDate
         ? new Date(opportunity.openDate)
         : new Date(currentDate),
-      changeFrequency: "monthly",
+      changeFrequency: "weekly",
       priority: 0.9,
     })
   );

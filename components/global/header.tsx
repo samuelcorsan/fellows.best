@@ -109,11 +109,17 @@ export function Header() {
       <header className="sticky top-0 z-50 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 items-center justify-between">
-            <Link href="/" className="flex items-center space-x-2">
-              <div className="h-8 w-8 rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 flex items-center justify-center">
-                <Calendar className="h-5 w-5 text-white" />
+            <Link href="/" className="flex items-center space-x-3 group">
+              <div className="relative h-8 w-8 flex items-center justify-center">
+                <div className="absolute inset-0 rounded-lg opacity-20 group-hover:opacity-100 transition-opacity duration-300 bg-foreground/10" />
+                <Calendar
+                  className="h-5 w-5 transform group-hover:scale-110 transition-transform duration-300"
+                  strokeWidth={1.5}
+                />
               </div>
-              <span className="text-xl font-bold">ddfellows</span>
+              <span className="text-xl font-medium tracking-tight">
+                ddfellows
+              </span>
             </Link>
 
             <nav className="hidden md:flex items-center space-x-8">

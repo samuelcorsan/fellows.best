@@ -3,16 +3,23 @@ import { Calendar, Twitter, Github } from "lucide-react";
 
 export function Footer() {
   return (
-    <footer className="border-t bg-muted/50">
+    <footer className="border-t bg-muted/40">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
           <div className="md:col-span-2">
-            <Link href="/" className="flex items-center space-x-2 mb-4">
-              <div className="h-8 w-8 rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 flex items-center justify-center">
-                <Calendar className="h-5 w-5 text-white" />
+            <Link href="/" className="flex items-center space-x-3 group mb-4">
+              <div className="relative h-8 w-8 flex items-center justify-center">
+                <div className="absolute inset-0 rounded-lg opacity-20 group-hover:opacity-100 transition-opacity duration-300 bg-foreground/10" />
+                <Calendar
+                  className="h-5 w-5 transform group-hover:scale-110 transition-transform duration-300"
+                  strokeWidth={1.5}
+                />
               </div>
-              <span className="text-xl font-bold">ddfellows</span>
+              <span className="text-xl font-medium tracking-tight">
+                ddfellows
+              </span>
             </Link>
+
             <p className="text-muted-foreground max-w-md">
               Never miss a deadline again. Discover fellowships, grants,
               accelerators, and competitions tailored to your interests and
