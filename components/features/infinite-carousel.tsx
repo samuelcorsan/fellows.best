@@ -15,6 +15,11 @@ export function InfiniteCarousel({
   speed = "normal",
   className,
 }: InfiniteCarouselProps) {
+  const openOpportunities = opportunities.filter((opp) => {
+    if (!opp.closeDate) return true;
+    return new Date(opp.closeDate) > new Date();
+  });
+
   return (
     <div
       className={cn(
@@ -34,7 +39,7 @@ export function InfiniteCarousel({
             speed === "normal" ? "40s" : speed === "slow" ? "80s" : "20s",
         }}
       >
-        {opportunities.map((opportunity, idx) => (
+        {openOpportunities.map((opportunity, idx) => (
           <OpportunityCard
             key={`${opportunity.id}-${idx}`}
             opportunity={opportunity}
@@ -42,7 +47,7 @@ export function InfiniteCarousel({
             isCarousel
           />
         ))}
-        {opportunities.map((opportunity, idx) => (
+        {openOpportunities.map((opportunity, idx) => (
           <OpportunityCard
             key={`${opportunity.id}-${idx}-clone`}
             opportunity={opportunity}

@@ -18,13 +18,6 @@ import {
 } from "lucide-react";
 import { useTheme } from "next-themes";
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
@@ -34,7 +27,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { authClient } from "@/lib/auth-client";
-import { toast } from "sonner";
 import { SignInDialog } from "./sign-in-dialog";
 
 export function Header() {
@@ -43,18 +35,6 @@ export function Header() {
   const { theme, setTheme } = useTheme();
   const { data: session, isPending } = authClient.useSession();
   const pathname = usePathname();
-
-  const handleGoogleSignIn = async () => {
-    try {
-      await authClient.signIn.social({
-        provider: "google",
-      });
-      toast.success("Signed in successfully");
-      setIsSignInOpen(false);
-    } catch (error) {
-      console.error("Failed to sign in with Google:", error);
-    }
-  };
 
   const handleSignOut = async () => {
     try {
@@ -66,8 +46,8 @@ export function Header() {
 
   const navigation = [
     { name: "Home", href: "/", icon: Home },
-    { name: "Timeline", href: "/timeline", icon: Calendar },
     { name: "Browse", href: "/browse", icon: List },
+    { name: "Timeline", href: "/timeline", icon: Calendar },
     { name: "Submit", href: "/submit", icon: Plus },
   ];
 
@@ -224,11 +204,7 @@ export function Header() {
         </div>
       </header>
 
-      <SignInDialog
-        isOpen={isSignInOpen}
-        onOpenChange={setIsSignInOpen}
-        description="Continue with Google to access more fellowships"
-      />
+      <SignInDialog isOpen={isSignInOpen} onOpenChange={setIsSignInOpen} />
     </>
   );
 }

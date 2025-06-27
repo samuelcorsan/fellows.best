@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useMemo, useEffect } from "react";
-import { ArrowUpDown, Grid, List, Lightbulb } from "lucide-react";
+import { ArrowUpDown, Grid, List } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Select,
@@ -10,13 +10,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
 import { SearchInput } from "@/components/global/search-input";
 import { FilterPanel, FilterOptions } from "@/components/filters/filter-panel";
 import { OpportunityCard } from "@/components/features/opportunity-card";
@@ -55,18 +48,6 @@ export default function BrowsePage() {
   useEffect(() => {
     setCurrentCardIndex(0);
   }, [aiResponse]);
-
-  const handleGoogleSignIn = async () => {
-    try {
-      await authClient.signIn.social({
-        provider: "google",
-      });
-      toast.success("Signed in successfully");
-      setIsSignInOpen(false);
-    } catch (error) {
-      console.error("Failed to sign in with Google:", error);
-    }
-  };
 
   const handleAiQuery = async () => {
     if (!aiQuery.trim()) {
@@ -110,7 +91,13 @@ export default function BrowsePage() {
   };
 
   const filteredAndSortedOpportunities = useMemo(() => {
+    const currentDate = new Date();
+
     let filtered = mockOpportunities.filter((opportunity) => {
+      const isOpen =
+        !opportunity.closeDate || new Date(opportunity.closeDate) > currentDate;
+      if (!isOpen) return false;
+
       const matchesSearch =
         !debouncedSearchQuery ||
         opportunity.name
@@ -188,7 +175,7 @@ export default function BrowsePage() {
           <div className="lg:col-span-3 space-y-6">
             <div className="flex flex-col sm:flex-row gap-4">
               <div className="flex-1 flex gap-2">
-                <Button
+                {/* <Button
                   variant="outline"
                   onClick={() => {
                     if (!session) {
@@ -202,7 +189,7 @@ export default function BrowsePage() {
                   <div className="absolute inset-0 rounded-md bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-pink-500/20 blur-md transition-all duration-300 group-hover:blur-lg -z-10" />
                   <Lightbulb className="h-5 w-5 text-purple-500" />
                   <span className="text-sm font-medium ml-2">Ask AI</span>
-                </Button>
+                </Button> */}
                 <div className="flex-1">
                   <SearchInput
                     value={searchQuery}
@@ -333,11 +320,7 @@ export default function BrowsePage() {
 
       <AILoadingCard isOpen={isAIInputOpen && isAiLoading} />
 
-      <SignInDialog
-        isOpen={isSignInOpen}
-        onOpenChange={setIsSignInOpen}
-        description="Continue with Google to access more fellowships"
-      />
+      <SignInDialog isOpen={isSignInOpen} onOpenChange={setIsSignInOpen} />
     </>
   );
 }

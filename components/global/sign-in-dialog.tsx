@@ -12,16 +12,9 @@ import { Button } from "@/components/ui/button";
 interface SignInDialogProps {
   isOpen: boolean;
   onOpenChange: (open: boolean) => void;
-  title?: string;
-  description?: string;
 }
 
-export function SignInDialog({
-  isOpen,
-  onOpenChange,
-  title = "Welcome to ddfellows",
-  description = "Continue with Google or GitHub to access more fellowships",
-}: SignInDialogProps) {
+export function SignInDialog({ isOpen, onOpenChange }: SignInDialogProps) {
   const handleSignIn = async (provider: "google" | "github") => {
     try {
       await authClient.signIn.social({
@@ -38,9 +31,11 @@ export function SignInDialog({
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle className="text-center">{title}</DialogTitle>
+          <DialogTitle className="text-center">
+            Welcome to ddfellows
+          </DialogTitle>
           <DialogDescription className="text-center">
-            {description}
+            Log in to explore more opportunities
           </DialogDescription>
         </DialogHeader>
         <div className="flex flex-col space-y-3 py-6">

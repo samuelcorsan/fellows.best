@@ -6,7 +6,6 @@ import { mockOpportunities, Opportunity } from "@/lib/data";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
@@ -19,7 +18,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { authClient } from "@/lib/auth-client";
 import { SignInDialog } from "@/components/global/sign-in-dialog";
-import { toast } from "sonner";
 
 export default function TimelinePage() {
   const { data: session, isPending } = authClient.useSession();
@@ -40,18 +38,6 @@ Can't wait to dive in and share updates as the journey unfolds.`;
       tweetText
     )}`;
     window.open(twitterIntentUrl, "_blank");
-  };
-
-  const handleGoogleSignIn = async () => {
-    try {
-      await authClient.signIn.social({
-        provider: "google",
-      });
-      toast.success("Signed in successfully");
-      setIsSignInOpen(false);
-    } catch (error) {
-      console.error("Failed to sign in with Google:", error);
-    }
   };
 
   if (isPending) {
@@ -83,11 +69,7 @@ Can't wait to dive in and share updates as the journey unfolds.`;
           </div>
         </div>
 
-        <SignInDialog
-          isOpen={isSignInOpen}
-          onOpenChange={setIsSignInOpen}
-          description="Continue with Google to access the timeline view"
-        />
+        <SignInDialog isOpen={isSignInOpen} onOpenChange={setIsSignInOpen} />
       </>
     );
   }
