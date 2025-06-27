@@ -43,7 +43,7 @@ export async function generateMetadata({
       title: `${opportunity.name} - Deadlines, Requirements & How to Apply`,
       description: opportunity.description,
       card: "summary_large_image",
-      images: [`https://fellows.disam.dev/api/og?id=${params.id}`],
+      images: `https://fellows.disam.dev/api/og?id=${params.id}`,
       creator: "@disamdev",
     },
     robots: {

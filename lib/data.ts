@@ -2,6 +2,7 @@ export interface Opportunity {
   id: string;
   name: string;
   logoUrl: string;
+  shareImageUrl?: string;
   description: string;
   fullDescription: string;
   openDate: string | null;
@@ -354,6 +355,8 @@ export const fellowshipOpportunities: Opportunity[] = [
     name: "Y Combinator",
     logoUrl:
       "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Y_Combinator_logo.svg/1200px-Y_Combinator_logo.svg.png",
+    shareImageUrl:
+      "https://www.startupjournal.io/_next/image?url=https%3A%2F%2F3yn03ejeua.ufs.sh%2Ff%2FPGO84Vt2L1OXwMZgRgbPPypcg5GIlV3LT8FH7RBtreasdmWz&w=3840&q=75",
     description:
       "Seed-stage accelerator providing $500 000 in funding and mentorship for early-stage startups.",
     fullDescription:
