@@ -26,7 +26,8 @@ export const fellowshipOpportunities: Opportunity[] = [
   {
     id: "vercel-open-source-program",
     name: "Vercel Open Source Program",
-    logoUrl: "https://vercel.com/favicon.ico",
+    logoUrl:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFggf9yNRN9xCYku8XMEkSE0LU9uMhkYbehQ&s",
     description:
       "Seasonal cohort-based program offering impactful open source projects up to $3,600 in Vercel credits, third-party OSS starter-pack credits, and prioritized support.",
     fullDescription:
@@ -51,7 +52,8 @@ export const fellowshipOpportunities: Opportunity[] = [
   {
     id: "afore-grants",
     name: "Afore Grants",
-    logoUrl: "https://grants.afore.vc/favicon.ico",
+    logoUrl:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVIZtjevkGlPattYIUlcpxkTvbz8EcZifXqQ&s",
     description:
       "100% non‐dilutive microgrants of $1,000 for high‐agency builders aged 21 or younger in North America, paired with mentorship and program support.",
     fullDescription:
@@ -77,7 +79,8 @@ export const fellowshipOpportunities: Opportunity[] = [
   {
     id: "776-foundation-2025",
     name: "776 Foundation Fellowship",
-    logoUrl: "https://www.776.org/favicon.ico",
+    logoUrl:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-rE_hcajytWETqX5IyNz6-7dVwxiuwa2qtQ&s",
     description:
       "Two-year full-time fellowship offering a $100,000 grant to young innovators aged 18–24 working on high-impact climate change projects; open globally and requires fellows to take a leave from or forgo university.",
     fullDescription:

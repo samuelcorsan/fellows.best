@@ -8,7 +8,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { matchRegion } from "@/lib/data";
+import { authClient } from "@/lib/auth-client";
 
 export interface FilterOptions {
   categories: string[];
@@ -114,6 +114,7 @@ export function FilterPanel({
   onToggle,
 }: FilterPanelProps) {
   const [expandedRegions, setExpandedRegions] = useState<string[]>([]);
+  const { data: session } = authClient.useSession();
 
   const toggleRegionExpanded = (region: string) => {
     setExpandedRegions((prev) =>
@@ -181,7 +182,19 @@ export function FilterPanel({
         </Button>
       </div>
 
-      <div className={`lg:block ${isOpen ? "block" : "hidden"}`}>
+      <div className={`lg:block ${isOpen ? "block" : "hidden"} relative`}>
+        {!session && (
+          <div className="absolute inset-0 bg-background/60 backdrop-blur-[2px] z-10 flex items-start justify-center pt-20">
+            <div className="text-center p-4">
+              <h3 className="font-semibold mb-2">
+                Discover Your Perfect Fellowship
+              </h3>
+              <p className="text-muted-foreground">
+                Sign in to unlock powerful filtering options
+              </p>
+            </div>
+          </div>
+        )}
         <Card>
           <CardHeader>
             <div className="flex items-center justify-between">

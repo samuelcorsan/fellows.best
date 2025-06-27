@@ -1,3 +1,5 @@
+"use client";
+
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
@@ -8,6 +10,7 @@ import {
   Clock,
   Users,
   Award,
+  Share2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -46,6 +49,16 @@ export default function OpportunityPage({ params }: OpportunityPageProps) {
       "border-yellow-200 bg-yellow-50 text-yellow-700 dark:border-yellow-800 dark:bg-yellow-950 dark:text-yellow-300",
     urgent:
       "border-red-200 bg-red-50 text-red-700 dark:border-red-800 dark:bg-red-950 dark:text-red-300",
+  };
+
+  const handleShare = () => {
+    const tweetText = `I'm delighted to share that I've applied to ${opportunity.name} to elevate my startup's trajectory, tap into tailored mentorship, and collaborate with fellow innovators.
+
+Can't wait to dive in and share updates as the journey unfolds!`;
+    const twitterIntentUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+      tweetText
+    )}`;
+    window.open(twitterIntentUrl, "_blank");
   };
 
   return (
@@ -93,20 +106,31 @@ export default function OpportunityPage({ params }: OpportunityPageProps) {
             </div>
           </div>
         </div>
-        {opportunity.closeDate &&
-          getDaysUntilDeadline(opportunity.closeDate) >= 0 && (
-            <Button asChild size="lg" className="shrink-0">
-              <a
-                href={opportunity.applyLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center"
-              >
-                Apply Now
-                <ExternalLink className="ml-2 h-4 w-4" />
-              </a>
-            </Button>
-          )}
+        <div className="flex items-center gap-3 shrink-0">
+          {opportunity.closeDate &&
+            getDaysUntilDeadline(opportunity.closeDate) >= 0 && (
+              <Button asChild size="lg">
+                <a
+                  href={opportunity.applyLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center"
+                >
+                  Apply Now
+                  <ExternalLink className="ml-2 h-4 w-4" />
+                </a>
+              </Button>
+            )}
+          <Button
+            variant="outline"
+            size="lg"
+            onClick={handleShare}
+            className="flex items-center"
+          >
+            <Share2 className="h-4 w-4 mr-2" />
+            Share on X
+          </Button>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
