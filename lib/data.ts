@@ -419,21 +419,18 @@ export function getDeadlineUrgency(
 }
 
 export function normalizeRegion(region: string): string[] {
-  // Split by common separators and clean up
   const parts = region
     .split(/[–—,&()]/)
     .map((part) => part.trim())
     .filter(Boolean);
 
-  // Extract main regions and normalize them
   const normalizedRegions = parts.map((part) => {
     if (part.toLowerCase().includes("latin america")) return "Latin America";
     if (part.toLowerCase().includes("caribbean")) return "Caribbean";
-    // Add more specific cases as needed
     return part;
   });
 
-  return Array.from(new Set(normalizedRegions)); // Remove duplicates using Array.from()
+  return Array.from(new Set(normalizedRegions));
 }
 
 export function matchRegion(
