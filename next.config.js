@@ -8,14 +8,6 @@ const nextConfig = {
       },
     ],
   },
-  async rewrites() {
-    return process.env.DISABLE_AI_MATCH === 'true' ? [
-      {
-        source: '/api/ai-match',
-        destination: '/api/not-found',
-      },
-    ] : [];
-  },
 };
 
 module.exports = nextConfig;
