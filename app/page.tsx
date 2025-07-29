@@ -49,11 +49,11 @@ export default function Home() {
               Discover Your Next <br />
               <span className="text-foreground">Fellowship Opportunity</span>
             </h1>
-            <p className="text-lg md:text-xl text-muted-foreground mb-8 leading-relaxed max-w-2xl mx-auto">
+            <h2 className="text-lg md:text-xl text-muted-foreground mb-8 leading-relaxed max-w-2xl mx-auto">
               Discover fellowships, grants, accelerators, and competitions.
               Track deadlines, get reminders, and turn opportunities into
               achievements.
-            </p>
+            </h2>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Button asChild size="lg" className="text-lg px-8 py-3">
                 <Link href="/browse">

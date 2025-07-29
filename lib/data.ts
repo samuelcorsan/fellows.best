@@ -25,6 +25,689 @@ export interface Opportunity {
 
 export const fellowshipOpportunities: Opportunity[] = [
   {
+    id: "antler-2025",
+    name: "Antler",
+    logoUrl:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlw1SR_n3ElASD6T-_OnBNMule8y1BPSsy3g&s",
+    shareImageUrl: "https://scandasia.com/wp-content/uploads/2021/02/ANTL.jpg",
+    description:
+      "Global early-stage investor providing $200–$250K for ~8–9% equity in a 6-week residency.",
+    fullDescription:
+      "Antler is a 'day-zero' global investor and accelerator. It hosts a 6-week in-person residency (in 30+ cities worldwide) where solo founders meet co-founders, validate ideas, and raise capital. After the program, Antler invests roughly $200–$250K per team for about 8–9% equity, plus living stipends. Applications are rolling for multiple city cohorts.",
+    openDate: null,
+    closeDate: null,
+    tags: [
+      "equity-based",
+      "accelerator",
+      "global",
+      "co-founder matching",
+      "short-term",
+    ],
+    category: "accelerator",
+    region: "Global",
+    country: "Various",
+    eligibility:
+      "Early-stage founders (solo or teams) from any background; must commit full-time to the 6-week residency and be open to international relocation for the program.",
+    applyLink: "https://www.antler.co/apply",
+    benefits: [
+      "$200–$250K investment (post-program)",
+      "6-week global residency with co-founder matching",
+      "Living stipend during residency",
+      "Follow-on support from Antler's global network",
+    ],
+    organizer: "Antler",
+  },
+  {
+    id: "techstars-2025",
+    name: "Techstars",
+    logoUrl:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6XO5KwwWObYn7hMTtE2XjospgfBRs8j0t3A&s",
+    shareImageUrl:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT1DYSUKVdiwd_Kk8yX12qVXqNY4HAyJokCmA&s",
+    description:
+      "Global accelerator offering $220,000 in funding for ~5–7% total equity.",
+    fullDescription:
+      "Techstars runs 3-month, mentorship-driven accelerator programs in 40+ locations worldwide. Starting Fall 2025, accepted companies receive a $220,000 investment: $20K for 5% common stock and $200K as an uncapped MFN SAFE (total 5% plus SAFE conversion). The program includes intensive mentorship, partner perks, and a Demo Day at the end. Applications open early 2025 for various global cohorts.",
+    openDate: "2025-04-08",
+    closeDate: "2025-06-11",
+    tags: ["equity-based", "accelerator", "mentorship", "global", "in-person"],
+    category: "accelerator",
+    region: "Global",
+    country: "Various",
+    eligibility:
+      "Early-stage tech startups worldwide; open to any sector with prototype or early traction. Must be prepared for a 3-month commitment and to relocate for the program.",
+    applyLink: "https://www.techstars.com/apply",
+    benefits: [
+      "$220,000 total investment ($20K for 5% equity + $200K SAFE)",
+      "3-month intensive accelerator with mentorship",
+      "Access to Techstars global network of mentors and investors",
+      "$120K in partner perks (e.g. cloud credits, etc.)",
+    ],
+    organizer: "Techstars",
+  },
+  {
+    id: "500-global-flagship-2025",
+    name: "500 Global Flagship Accelerator",
+    logoUrl:
+      "https://upload.wikimedia.org/wikipedia/commons/2/20/500_Startups_-_logo.svg",
+    shareImageUrl:
+      "https://cdn.techinasia.com/wp-content/uploads/2016/04/500-startups-accelerator.jpeg",
+    description:
+      "Early-stage accelerator by 500 Global offering $150,000 for 6% SAFE (plus fees).",
+    fullDescription:
+      "500 Global (formerly 500 Startups) runs the flagship accelerator in Palo Alto focused on early-stage tech startups. The program invests $150,000 for 6% equity via a SAFE, plus a $37,500 program fee. The 4-month program includes mentorship, workshops, and Demo Day. Batch 36 starts Q1 2025 (deadline Oct 11, 2025). The accelerator emphasizes global market reach, with 30–40% of participants coming from outside the US.",
+    openDate: null,
+    closeDate: "2025-10-11",
+    tags: ["equity-based", "accelerator", "tech", "mentorship", "global"],
+    category: "accelerator",
+    region: "Global",
+    country: "United States",
+    eligibility:
+      "Pre-seed to early-seed tech startups worldwide with a working product; teams must commit to the full 4-month in-person program in Palo Alto.",
+    applyLink: "https://flagship.aplica.500.co",
+    benefits: [
+      "$150,000 seed investment (SAFE) for 6% equity",
+      "4-month accelerator program with mentorship",
+      "Access to 500 Global's investor network and resources",
+      "Promotion to global markets (significant international cohort)",
+    ],
+    organizer: "500 Global",
+  },
+  {
+    id: "south-park-commons-2025",
+    name: "South Park Commons Fellowship",
+    logoUrl:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwtO3ehSzooj_FQt19mQm147BrMDc1XLH_rA&s",
+    shareImageUrl:
+      "https://blog.southparkcommons.com/content/images/2025/07/F25-blog-hero-1.jpg",
+    description:
+      "Fellowship-style community program investing $400,000 for 7% equity + $600K follow-on.",
+    fullDescription:
+      "South Park Commons (SPC) offers a 1-year fellowship and early-stage accelerator for builders (not just idea stage). The fellowship provides community, mentorship, and resources instead of a fixed curriculum or Demo Day. SPC invests $400,000 for 7% equity in participating startups, with an additional $600K guaranteed follow-on investment from its fund. Applications are rolling and cohorts are small, led by partners one-on-one.",
+    openDate: null,
+    closeDate: null,
+    tags: [
+      "equity-based",
+      "fellowship",
+      "community",
+      "mentorship",
+      "in-person",
+    ],
+    category: "fellowship",
+    region: "North America",
+    country: "United States",
+    eligibility:
+      "Founders (often technical) in exploratory phases, typically in hard tech, infra, or web3. Ideal for teams wanting a community-driven, unstructured fellowship rather than a formal accelerator.",
+    applyLink: "https://www.southparkcommons.com/apply",
+    benefits: [
+      "$400,000 initial investment for 7% equity",
+      "$600,000 guaranteed follow-on funding",
+      "Community workspace in SF and weekly dinners",
+      "1:1 partner mentorship and networking",
+    ],
+    organizer: "South Park Commons",
+  },
+  {
+    id: "hf0-residency-2025",
+    name: "HF0 Residency",
+    logoUrl:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCY1QBVYto4FCIaaNZaIJ2v_0AW7U9l90ppw&s",
+    shareImageUrl: "https://i.imgur.com/c43UnNR.jpeg",
+    description:
+      "Intensive 12-week live-in accelerator writing a $1M SAFE for 5% (or $500K + 3%).",
+    fullDescription:
+      "HF0 (previously Hacking the Future Observatory) runs a 12-week live-in residency ('hacker monastery') in San Francisco for repeat technical founders. Participants receive $1,000,000 via an uncapped SAFE for 5% of the company (or an alternative $500K + 3% equity). The program is highly intensive, culture-focused, and invite-only. Only experienced startup builders are typically admitted.",
+    openDate: null,
+    closeDate: null,
+    tags: ["equity-based", "accelerator", "immersive", "tech", "in-person"],
+    category: "accelerator",
+    region: "North America",
+    country: "United States",
+    eligibility:
+      "Repeat technical founders with prior startup experience; applicants must be ready for an all-in living program in SF and have a strong prototype or traction.",
+    applyLink: "https://www.hf0.com",
+    benefits: [
+      "$1,000,000 funding (uncapped SAFE) for 5% (or $500K + 3%)",
+      "12-week live-in residency in San Francisco",
+      "Very hands-on technical and strategy support",
+      "Access to private investor network for follow-on rounds",
+    ],
+    organizer: "HF0 (Residency)",
+  },
+  {
+    id: "neo-accelerator-2025",
+    name: "NEO Accelerator",
+    logoUrl:
+      "https://pbs.twimg.com/profile_images/1263180829355737088/yzf9DSV6_400x400.jpg",
+    shareImageUrl:
+      "https://xraise.ai/blog/wp-content/uploads/2025/02/Winning-Neo-Application-1024x683.jpg",
+    description:
+      "3-month hybrid accelerator offering $600K via uncapped SAFE (with $10M floor) + equity.",
+    fullDescription:
+      "NEO runs a 3-month program starting with an Oregon bootcamp and continuing with Bay Area co-working. It invests $600K via an uncapped SAFE note (with a $10M valuation floor) plus 1.5% common stock. The program includes technical and business mentorship, plus priority access to GPU/AI resources. The next cohort's deadline is March 14, 2025.",
+    openDate: null,
+    closeDate: "2025-03-14",
+    tags: ["equity-based", "accelerator", "AI", "retreat", "in-person"],
+    category: "accelerator",
+    region: "North America",
+    country: "United States",
+    eligibility:
+      "Startup teams (particularly AI/ML) with technical founders; program requires relocation to Oregon/SF for 3 months and has an application deadline.",
+    applyLink: "https://neo.com",
+    benefits: [
+      "$600,000 uncapped SAFE investment (with $10M floor) + 1.5% equity",
+      "3-month intensive program (Oregon bootcamp + SF office)",
+      "Priority GPU credits and enterprise partnerships (e.g. Azure, OpenAI)",
+      "Dedicated mentorship and Demo Day",
+    ],
+    organizer: "NEO (Global)",
+  },
+  {
+    id: "pearx-2025",
+    name: "PearX",
+    logoUrl:
+      "https://pbs.twimg.com/profile_images/1826032501669900289/2-3uAuhc_400x400.jpg",
+    shareImageUrl: "https://pbs.twimg.com/media/GY1JFrgbQAElYne.jpg",
+    description:
+      "12-week accelerator by Pear VC investing $250K–$2M in each startup.",
+    fullDescription:
+      "PearX is Pear VC's accelerator in Menlo Park for ambitious startups. It provides $250,000 to $2,000,000 in funding via a SAFE (no fixed equity %) and a 12-week program. Cohorts are limited (~20 teams), and graduates get 6 months of free office space in San Francisco. PearX is staffed by hands-on partners who were founders themselves.",
+    openDate: null,
+    closeDate: null,
+    tags: ["equity-based", "accelerator", "tech", "mentorship", "in-person"],
+    category: "accelerator",
+    region: "North America",
+    country: "United States",
+    eligibility:
+      "Early-stage startups (pre-seed to seed) typically in tech; teams should be prepared for intensive mentorship in SF. Applications are interviewed on a rolling basis.",
+    applyLink: "https://pear.vc/pearx",
+    benefits: [
+      "$250K–$2M SAFE funding (terms negotiated per startup)",
+      "12-week accelerator program",
+      "Free office space in San Francisco for 6 months",
+      "Intensive mentoring by former startup founders at Pear VC",
+    ],
+    organizer: "Pear VC",
+  },
+  {
+    id: "pioneer-2025",
+    name: "Pioneer",
+    logoUrl:
+      "https://pbs.twimg.com/profile_images/1027408115900116992/6NwB_C4E_400x400.jpg",
+    shareImageUrl:
+      "https://d1zhjck9imo0be.cloudfront.net/assets/twitter-image-4-a2925a5571d50fafc69a0ce371d901e25653aa6472cc9085183a99236995e203.png",
+    description:
+      "$20K for 1% equity (or advisory only); virtual startup contest with mentors.",
+    fullDescription:
+      "Pioneer is a global online startup competition/accelerator. Founders join for a multi-week 'tournament' where they report progress weekly. High-performing teams earn a $20,000 investment for 1–2% equity (or optionally only advisory support). The program is fully remote with optional summit in SF. Progress is quantified by points, and the top finalists can receive funding and other support.",
+    openDate: null,
+    closeDate: null,
+    tags: ["equity-based", "accelerator", "online", "remote", "global"],
+    category: "accelerator",
+    region: "Global",
+    country: "Various",
+    eligibility:
+      "Startup founders at any stage worldwide; need to commit to weekly tasks and the online format. Solo or team entrants welcomed.",
+    applyLink: "https://pioneer.app",
+    benefits: [
+      "$20,000 investment for 1% equity (for top participants)",
+      "Remote program with mentorship",
+      "Option to attend an SF summit",
+      "Access to Pioneer alumni network",
+    ],
+    organizer: "Pioneer",
+  },
+  {
+    id: "launch-accelerator-2025",
+    name: "LAUNCH Accelerator",
+    logoUrl:
+      "https://cdn.prod.website-files.com/62bb99283ae5a82092305431/65eb284defd44d9e3bd6545e_LAUNCH%20Logo.png",
+    shareImageUrl:
+      "https://cdn.prod.website-files.com/62bb99283ae5a870d6305429/63596f5f885ef9732af7d29e_Add%20a%20heading%20(47).png",
+    description:
+      "$125K for 6–7% equity; 14-week accelerator founded by Jason Calacanis.",
+    fullDescription:
+      "LAUNCH is a San Francisco accelerator by Jason Calacanis that runs twice yearly. It invests $125,000 in exchange for roughly 6–7% equity. The 14-week program focuses heavily on fundraising, with intensive mentoring and exposure to 700+ angel investors. It is suited for startups with initial traction (e.g. >$2K MRR or >3K DAU).",
+    openDate: null,
+    closeDate: null,
+    tags: ["equity-based", "accelerator", "tech", "mentorship", "in-person"],
+    category: "accelerator",
+    region: "North America",
+    country: "United States",
+    eligibility:
+      "Early-stage startups with some traction (e.g. existing users or revenue); teams should be prepared for a 14-week in-person program and active fundraising focus.",
+    applyLink: "https://launchaccelerator.co/",
+    benefits: [
+      "$125,000 seed investment for ~6–7% equity",
+      "14-week program with hands-on mentorship",
+      "Access to a network of 700+ angel investors",
+      "Personal coaching from experienced startup investors",
+    ],
+    organizer: "LAUNCH",
+  },
+  {
+    id: "the-mint-2025",
+    name: "The Mint (BTV)",
+    logoUrl:
+      "https://pbs.twimg.com/profile_images/1410218406478024706/fPTKFVnj_200x200.png",
+    shareImageUrl:
+      "https://cdn.prod.website-files.com/679b35165919d4462044e4cc/67ab051ed5af1c42b3542fbd_opengraph.png",
+    description: "10-week fintech accelerator; invests $500K for 10% SAFE.",
+    fullDescription:
+      "The Mint (run by BTV Capital) is a 10-week accelerator focused on fintech startups in NYC and SF. It provides $500,000 in exchange for 10% of the company via a SAFE agreement. The program includes intensive mentoring from fintech experts and a founder retreat. The next cohort opens in Q4 2025 (application period to be announced).",
+    openDate: null,
+    closeDate: null,
+    tags: [
+      "equity-based",
+      "accelerator",
+      "fintech",
+      "mentorship",
+      "short-term",
+    ],
+    category: "accelerator",
+    region: "North America",
+    country: "United States",
+    eligibility:
+      "Early-stage fintech startups (no fixed revenue requirement), with a founding team capable of tackling financial technology challenges.",
+    applyLink: "https://btv.vc/the-mint",
+    benefits: [
+      "$500,000 investment (SAFE) for 10% equity",
+      "10-week fintech-focused accelerator",
+      "Mentorship from fintech and banking leaders",
+      "Annual founder retreat and network access",
+    ],
+    organizer: "BTV Capital (The Mint)",
+  },
+  {
+    id: "angelpad-2025",
+    name: "AngelPad",
+    logoUrl:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBK4BtCLrLD_GxTah405PncrpOJzpCcpPLEA&s",
+    shareImageUrl:
+      "https://www.crowdfundinsider.com/wp-content/uploads/2014/05/AngelPad-Eleven-companies.png",
+    description: "10-week accelerator (NYC/SF) offering $120K for 7% equity.",
+    fullDescription:
+      "AngelPad is a seed-stage accelerator in NYC and San Francisco, accepting only ~15 startups per batch. It provides $120,000 for about 7% equity. The intensive 10-week program emphasizes company-building and has a highly competitive admission rate (<1%). Applications open twice a year and require a concise pitch deck and video.",
+    openDate: null,
+    closeDate: null,
+    tags: ["equity-based", "accelerator", "tech", "mentorship", "intensive"],
+    category: "accelerator",
+    region: "North America",
+    country: "United States",
+    eligibility:
+      "Early-stage tech startups; teams should have some initial product or traction. Strong teams are emphasized over the idea itself.",
+    applyLink: "https://angelpad.org",
+    benefits: [
+      "$120,000 seed investment for ~7% equity",
+      "10-week intensive accelerator",
+      "Mentorship by experienced entrepreneurs",
+      "Demo Day with major investors",
+    ],
+    organizer: "AngelPad",
+  },
+  {
+    id: "betaworks-ai-camp-2026",
+    name: "Betaworks AI Camp",
+    logoUrl:
+      "https://cdn.prod.website-files.com/604f786ed522e2678a3bfa51/625b42de6f4d6ed79626beac_betaworksventures.png",
+    shareImageUrl:
+      "https://miro.medium.com/v2/resize:fit:1400/1*DUFwdkoJRI0_k1pggHwGmg.png",
+    description:
+      "$500K investment from a Betaworks-led syndicate for AI startups.",
+    fullDescription:
+      "Betaworks AI Camp is a 12-week program in New York City for early-stage AI startups (with focuses like agentic B2B, personalized AI, etc.). Participating teams receive a $500,000 investment from a syndicate led by Betaworks. The program runs cohort-based, culminating in a Demo Day. (Next application cycle opens in Q1 2026.)",
+    openDate: null,
+    closeDate: null,
+    tags: ["equity-based", "accelerator", "AI", "technology", "mentorship"],
+    category: "accelerator",
+    region: "North America",
+    country: "United States",
+    eligibility:
+      "AI-native startups at idea or prototype stage; teams must be prepared to work in NYC for 12 weeks and focus on one of the program's AI tracks.",
+    applyLink: "https://betaworks.com/camp",
+    benefits: [
+      "$500,000 funding (via syndicate)",
+      "12-week AI-focused accelerator program",
+      "Guidance from Betaworks and AI experts",
+      "Demo Day exposure",
+    ],
+    organizer: "Betaworks",
+  },
+  {
+    id: "greylock-edge-2025",
+    name: "Greylock Edge",
+    logoUrl:
+      "https://greylock.com/wp-content/uploads/2023/10/footer-logo-3.png",
+    shareImageUrl:
+      "https://images.lumacdn.com/cdn-cgi/image/format=auto,fit=cover,dpr=2,anim=false,background=white,quality=75,width=1000,height=500/event-covers/zq/ab274f7b-d242-4678-8007-2305f08d839e",
+    description:
+      "3-month program with custom SAFE or priced terms + $500K+ in partner credits.",
+    fullDescription:
+      "Greylock Edge is a year-round early-stage program for pre-idea to seed founders, especially in enterprise and AI. It provides capital on custom terms (often a SAFE or note) plus $500,000+ worth of partner credits (cloud, engineering, etc.). The 3-month program is flexible and tailored, with no fixed deadline (referral or direct application). Participants get mentorship and access to Greylock's AI and enterprise network.",
+    openDate: null,
+    closeDate: null,
+    tags: ["equity-based", "accelerator", "AI", "enterprise", "remote"],
+    category: "accelerator",
+    region: "North America",
+    country: "United States",
+    eligibility:
+      "Technical founders (especially enterprise/AI) at idea or seed stage; application is invite-preferred (referrals valued).",
+    applyLink: "https://greylock.com/edge",
+    benefits: [
+      "Custom convertible SAFE or priced investment",
+      "$500K+ in partner credits (cloud, dev tools, etc.)",
+      "3-month tailored advisory program",
+      "Access to Greylock's network (AI experts, customers)",
+    ],
+    organizer: "Greylock",
+  },
+  {
+    id: "conviction-embed-2025",
+    name: "Conviction Embed",
+    logoUrl: "https://embed.conviction.com/applogo.png",
+    shareImageUrl: "",
+    description:
+      "Hands-on embedded partner program offering a $150K uncapped SAFE (MFN).",
+    fullDescription:
+      "Conviction Embed is a remote-first accelerator that provides $150,000 via an uncapped SAFE (with MFN clause). Over 90 days, Conviction's partners work 'embedded' with the founding team to build the product and business. The focus is on B2B SaaS and developer tools. Cohorts are very small and invite-only (warm intros recommended).",
+    openDate: null,
+    closeDate: null,
+    tags: ["equity-based", "accelerator", "SaaS", "software", "mentorship"],
+    category: "accelerator",
+    region: "Global",
+    country: "United States",
+    eligibility:
+      "Founders building B2B SaaS or infrastructure software; program is by referral/direct application, with a focus on execution during the cohort.",
+    applyLink: "https://conviction.com/embed",
+    benefits: [
+      "$150,000 investment (uncapped SAFE, MFN) ",
+      "90-day embedded support from Conviction's investor-partners",
+      "Hands-on product and business coaching",
+      "Access to Conviction's network",
+    ],
+    organizer: "Conviction",
+  },
+  {
+    id: "openai-converge-2024",
+    name: "OpenAI Converge",
+    logoUrl: "https://github.com/openai.png",
+    shareImageUrl:
+      "https://framerusercontent.com/images/3QoIJiw9cgCCDzhvxAaCxtdw80w.png",
+    description:
+      "6-week AI startup summit with $1M equity investment from OpenAI's Startup Fund.",
+    fullDescription:
+      "OpenAI Converge is an intensive 6-week program (in San Francisco) for AI-first startups. Selected teams receive a $1,000,000 equity investment from the OpenAI Startup Fund. The program includes deep technical sessions, researcher office hours, and mentorship with OpenAI engineers. The next cohort dates are TBA (Converge 2 applications closed Jan 26 2024).",
+    openDate: null,
+    closeDate: null,
+    tags: ["equity-based", "accelerator", "AI", "summit", "mentorship"],
+    category: "accelerator",
+    region: "North America",
+    country: "United States",
+    eligibility:
+      "Founders building ambitious AI applications with working prototypes; program is invitation-only (OpenAI may reach out to promising teams).",
+    applyLink: "https://openai.fund",
+    benefits: [
+      "$1,000,000 equity investment from OpenAI Fund",
+      "6-week intensive program with early access to models",
+      "Mentorship and office hours with OpenAI researchers",
+      "Networking with AI startup peers and investors",
+    ],
+    organizer: "OpenAI Startup Fund",
+  },
+  {
+    id: "startup-wise-guys-2025",
+    name: "Startup Wise Guys",
+    logoUrl:
+      "https://yt3.googleusercontent.com/76rqwEbyJwe1C0gjwLXTOQb71lCGKUlBfpwBhQZlYf88no6m8mmmMRkFSiHI1hEUTO1zr6B-SA=s900-c-k-c0x00ffffff-no-rj",
+    shareImageUrl:
+      "https://www.polodigital.eu/wp-content/uploads/https___cdn.evbuc_.com_images_645927159_1211321175083_1_original.jpeg",
+    description:
+      "Europe-wide accelerator (HQ Tallinn) providing up to €65K seed funding plus follow-on up to €300K.",
+    fullDescription:
+      "Startup Wise Guys is a European accelerator headquartered in Tallinn, Estonia, with programs across Europe. It invests up to €65,000 in each pre-seed startup for equity (size varies by cohort), and can follow on with up to €300,000. The program is ~5 months hybrid (online + on-site), with tracks like SaaS, cybersecurity, and sustainability. Multiple cohorts run each year.",
+    openDate: null,
+    closeDate: null,
+    tags: ["equity-based", "accelerator", "tech", "mentorship", "Europe"],
+    category: "accelerator",
+    region: "Europe",
+    country: "Estonia",
+    eligibility:
+      "Early-stage tech startups based in Europe (or global with EU ties); focus on SaaS, cybersecurity, sustainability, etc. The accelerator seeks teams ready for a 5-month program across locations.",
+    applyLink: "https://startupwiseguys.com/all-programs/",
+    benefits: [
+      "Up to €65,000 equity investment",
+      "5-month hybrid accelerator program",
+      "Mentorship and training by startup experts",
+      "Access to Startup Wise Guys investor network",
+    ],
+    organizer: "Startup Wise Guys",
+  },
+  {
+    id: "apx-2025",
+    name: "APX by Porsche & Axel Springer",
+    logoUrl: "https://apx.vc/app/uploads/2021/08/APX_Logo-1.png",
+    shareImageUrl:
+      "https://www.axelspringer.com/data/uploads/2021/01/1920_apx-kopie.jpg",
+    description:
+      "Berlin-based accelerator with up to €50K for 5% (and follow-on up to €500K).",
+    fullDescription:
+      "APX is an early-stage accelerator based in Berlin, backed by Porsche and Axel Springer. It offers a 100-day program plus optional follow-on funding. The initial investment is €50,000 for about 5% equity, with the option of up to €500,000 total invested per startup. APX focuses on consumer tech and provides corporate pilot access and rolling applications.",
+    openDate: null,
+    closeDate: null,
+    tags: ["equity-based", "accelerator", "corporate-backed", "tech", "Europe"],
+    category: "accelerator",
+    region: "Europe",
+    country: "Germany",
+    eligibility:
+      "Early-stage startups (pre-seed/seed) in consumer or B2B tech; teams should be based in or willing to relocate to Berlin. Notable for corporate partnership access and startup support.",
+    applyLink: "https://apx.vc/looking-for-funding",
+    benefits: [
+      "€50,000 investment for ~5% equity (initial round)",
+      "100-day accelerator program with mentorship",
+      "Access to pilot opportunities with Porsche/Axel Springer",
+      "Up to €500,000 total funding potential",
+    ],
+    organizer: "APX (Porsche & Axel Springer)",
+  },
+  {
+    id: "seedcamp-2025",
+    name: "Seedcamp",
+    logoUrl:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTxuf36fKBQICe2ebAFesSyL9S5qCbe5rCnig&s",
+    shareImageUrl: "https://cdn.wamda.com/feature-images/2b6b59be02008b0.jpg",
+    description: "Europe's flagship seed fund; invests €100–€200K for ~7–7.5%.",
+    fullDescription:
+      "Seedcamp is Europe's first seed accelerator and fund, based in London. It provides €100,000–€200,000 investment in exchange for roughly 7–7.5% equity. Unlike a fixed cohort model, Seedcamp runs rolling applications and periodic 'Seedcamp Weeks' where selected companies join workshops and pitch events. Seedcamp places emphasis on global scaling and has built a vast mentor network.",
+    openDate: null,
+    closeDate: null,
+    tags: ["equity-based", "accelerator", "venture", "Europe", "mentorship"],
+    category: "accelerator",
+    region: "Europe",
+    country: "United Kingdom",
+    eligibility:
+      "European (and global) startups at the seed stage; typically tech-focused with a global ambition. Teams must be willing to engage in Seedcamp's workshops and events in Europe.",
+    applyLink: "https://seedcamp.com",
+    benefits: [
+      "€100,000–€200,000 seed investment (7–7.5% equity)",
+      "Year-long platform with rolling admissions",
+      "Access to Seedcamp's mentor and investor network",
+      "Participation in Seedcamp Week events",
+    ],
+    organizer: "Seedcamp",
+  },
+  {
+    id: "google-for-startups-2025",
+    name: "Google for Startups Accelerator",
+    logoUrl:
+      "https://yt3.googleusercontent.com/ytc/AIdro_n3anK0o7gAPPtCy5WX5RF6Io_tcZsIPcsqEwK8XmPvSWw=s900-c-k-c0x00ffffff-no-rj",
+    shareImageUrl:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSm3HXY4KnW1jXTyq340bUl274IYrvWLn9Erw&s",
+    description:
+      "Equity-free accelerator: no cash funding, but up to $100K GCP credits.",
+    fullDescription:
+      "Google for Startups runs various accelerator programs globally (e.g. AI, Women Founders, Climate). These are equity-free. Startups receive up to $100,000 in Google Cloud Platform credits (plus $350,000 in related support credits), and intensive mentorship from Google and partner experts. Programs run 3 times/year by region and support companies from seed to Series A with traction.",
+    openDate: null,
+    closeDate: null,
+    tags: ["equity-free", "accelerator", "cloud", "global", "partnership"],
+    category: "accelerator",
+    region: "Global",
+    country: "United States",
+    eligibility:
+      "High-growth startups (seed to Series A) with demonstrated traction; program tracks vary by region and focus (AI, fintech, etc.).",
+    applyLink: "https://startup.google.com/intl/en/programs/directory/",
+    benefits: [
+      "Up to $100,000 in Google Cloud credits",
+      "Equity-free structured mentorship program",
+      "Access to Google's startup community and events",
+      "Specialized tracks (AI, climate, etc.)",
+    ],
+    organizer: "Google for Startups",
+  },
+  {
+    id: "accel-atoms-2025",
+    name: "Accel Atoms",
+    logoUrl:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRPg0vG-pPmjZSc12TTbTY605teHhOuu23HHQ&s",
+    shareImageUrl:
+      "https://cdn.prod.website-files.com/6410c4927a4ae326761f2b26/643ba7164cc0824fbd954929_613ee3b796c6e1ab56a3d34d_612c8c15c15c0101f1f195fc_atoms.webp",
+    description:
+      "$500K–$1M seed participation by Accel for India-first startups.",
+    fullDescription:
+      "Accel Atoms is an India-focused initiative by VC firm Accel. It supports early-stage Indian startups by participating in their $500K–$1M seed rounds. There isn't a fixed curriculum; instead, companies join an ongoing founder network and benefit from Accel's mentorship and resources. The program cohorts begin annually, focusing on India's tech ecosystem.",
+    openDate: null,
+    closeDate: null,
+    tags: ["equity-based", "accelerator", "India", "tech", "network"],
+    category: "accelerator",
+    region: "Asia",
+    country: "India",
+    eligibility:
+      "India-based startup founders in tech sectors; should be at pre-seed/seed stage looking for a lead investor. Selection is competitive and annual.",
+    applyLink: "https://apply.accel-atoms.com",
+    benefits: [
+      "$500K–$1M investment participation",
+      "Entry into Accel's exclusive startup network",
+      "Mentorship from Accel's partners",
+      "Ongoing cohort programming (not time-limited batch)",
+    ],
+    organizer: "Accel",
+  },
+  {
+    id: "ai2-incubator-2025",
+    name: "AI2 Incubator",
+    logoUrl: "https://images.0xw.app/images/AI2%20Incubator.png",
+    shareImageUrl:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRRqApv52NhzgACeKfilgf-a6K_S0zNpP6yIg&s",
+    description:
+      "$50K–$150K seed funding in exchange for equity for AI startups.",
+    fullDescription:
+      "The Allen Institute for AI runs an incubator (Seattle-based) that provides $50,000–$150,000 in pre-seed funding to AI startups. Participant teams work alongside AI researchers at AI2's campus and have access to academic AI resources and labs. The program is hybrid (6-month residency in Seattle) and teams must relocate during the program. Rolling applications are accepted.",
+    openDate: null,
+    closeDate: null,
+    tags: ["equity-based", "incubator", "AI", "research", "Washington"],
+    category: "accelerator",
+    region: "North America",
+    country: "United States",
+    eligibility:
+      "Early-stage AI startups (often deep tech or spinoffs) required to relocate to Seattle for 6 months. Teams get mentorship from AI2 researchers and legal funding.",
+    applyLink: "https://www.ai2incubator.com/apply",
+    benefits: [
+      "$50,000–$150,000 investment",
+      "6-month residency at AI2's Seattle campus",
+      "Mentoring by leading AI researchers",
+      "Access to AI2's compute resources and labs",
+    ],
+    organizer: "Allen Institute for AI (Incubator)",
+  },
+  {
+    id: "soma-capital-fellowship-2025",
+    name: "Soma Capital Fellowship",
+    logoUrl:
+      "https://cdn.theorg.com/26b973bd-f0e1-425c-941e-a5cd2475693f_thumb.jpg",
+    shareImageUrl:
+      "https://framerusercontent.com/images/VHRYnHguTbDzYmLy5JeLGhtyRI.png",
+    description:
+      "Semi-annual fellowship investing $100K SAFE (<1% equity) in founders.",
+    fullDescription:
+      "Soma Capital Fellowship is a virtual fellowship for ambitious early-stage founders, especially in AI or tech. Soma provides a $100,000 SAFE investment (with founders usually keeping <1% dilution). Accepted founders join a remote Slack community and receive workshops and potential follow-on funding up to $1M later. Applications are by referral or a short form.",
+    openDate: null,
+    closeDate: null,
+    tags: ["equity-based", "fellowship", "seed", "remote", "mentorship"],
+    category: "fellowship",
+    region: "Global",
+    country: "United States",
+    eligibility:
+      "Tech founders at pre-seed stage (idea or early prototype), especially in AI/ML. Open to global applicants; admission is competitive and network-driven.",
+    applyLink: "https://programs.somacap.com/fellows",
+    benefits: [
+      "$100,000 SAFE investment (minimal equity stake)",
+      "Membership in a global founder community",
+      "Workshops on product, tech, and fundraising",
+      "Possibility of follow-on funding up to $1M",
+    ],
+    organizer: "Soma Capital",
+  },
+  {
+    id: "founder-institute-2025",
+    name: "Founder Institute",
+    logoUrl:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTGm3J8oIHtjXoLgAxshGTMXTfWVzvr6QdaB87jRiAzM_4BxM16fOC6-t78rUFF3ZzY00&usqp=CAU",
+    shareImageUrl:
+      "https://fi-hatchbox-production-uploads.s3.amazonaws.com/posts/FI_Backdrop_5.png",
+    description:
+      "16-week pre-seed accelerator/education program; participants share equity, often receive $10–$20K each.",
+    fullDescription:
+      "Founder Institute is a global idea-to-IPO accelerator operating in 200+ cities. It is equity-based: founders join cohorts and share equity in a central fund (each company typically gives ~4–5% to FI). The program lasts 16 weeks, guiding founders to develop a minimum viable product and company structure. Founders pay tuition by giving equity (~4–6%) or a small cash fee.",
+    openDate: null,
+    closeDate: null,
+    tags: ["equity-based", "accelerator", "education", "pre-seed", "global"],
+    category: "accelerator",
+    region: "Global",
+    country: "Various",
+    eligibility:
+      "Idea-stage or pre-seed entrepreneurs; no requirement for a prototype or co-founder. Founder commitments include weekly meetings and an aptitude test. Operating across many cities and virtually.",
+    applyLink: "https://fi.co/join/home",
+    benefits: [
+      "$10,000+ in initial funding per founder (via collective equity pool)",
+      "16-week structured curriculum",
+      "Mentorship from global entrepreneurs and investors",
+      "Network of 20,000+ Founder Institute alumni",
+    ],
+    organizer: "Founder Institute",
+  },
+  {
+    id: "boost-vc-2025",
+    name: "Boost VC",
+    logoUrl: "https://www.capboard.io/cms/assets/investor_listing/805.png",
+    shareImageUrl:
+      "https://substackcdn.com/image/fetch/$s_!CsWN!,w_1200,h_600,c_fill,f_jpg,q_auto:good,fl_progressive:steep,g_auto/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F59b65ce7-f2c7-43f7-b118-155768aeb3e8_600x334.gif",
+    description:
+      "Deep tech accelerator investing $500,000 for ~15% equity:contentReference[oaicite:0]{index=0}.",
+    fullDescription:
+      "Boost VC runs a 3-month accelerator program in Silicon Valley (its ‘Tribes’) focused on sci-fi and frontier technologies. It leads pre-seed rounds with $500,000 checks (typically ~15% equity):contentReference[oaicite:1]{index=1}. Founders get mentorship, weekly dinners and a Demo Day, with optional housing and office space provided in San Mateo during the program:contentReference[oaicite:2]{index=2}:contentReference[oaicite:3]{index=3}.",
+    openDate: null,
+    closeDate: null,
+    tags: [
+      "equity-based",
+      "accelerator",
+      "deep-tech",
+      "mentorship",
+      "in-person",
+    ],
+    category: "accelerator",
+    region: "North America",
+    country: "United States",
+    eligibility:
+      "Early-stage sci-fi tech founders; full-time commitment required and readiness to relocate to the Bay Area:contentReference[oaicite:4]{index=4}:contentReference[oaicite:5]{index=5}.",
+    applyLink: "https://www.boost.vc",
+    benefits: [
+      "$500,000 seed investment (pre-seed)",
+      "Three-month accelerator program in San Mateo, CA",
+      "Office space and optional housing provided",
+      "Weekly dinners, mentorship, and Demo Day",
+    ],
+    organizer: "Boost VC",
+  },
+  {
     id: "vercel-open-source-program",
     name: "Vercel Open Source Program",
     logoUrl:
