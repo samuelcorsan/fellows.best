@@ -6,14 +6,12 @@ export default function PrivacyPage() {
       <h1 className="text-3xl font-bold mb-8">Privacy Policy</h1>
 
       <div className="prose prose-slate max-w-none">
-        <p className="text-muted-foreground mb-6">
-          Last updated: {new Date().toLocaleDateString()}
-        </p>
+        <p className="text-muted-foreground mb-6">Last updated: 07/29/2025</p>
 
         <section className="mb-8">
           <h2 className="text-2xl font-semibold mb-4">1. Introduction</h2>
           <p>
-            This Privacy Policy explains how ddfellows (&quot;we,&quot;
+            This Privacy Policy explains how fellows.best (&quot;we,&quot;
             &quot;our,&quot; or &quot;us&quot;) collects, uses, and protects
             your personal data in accordance with the General Data Protection
             Regulation (GDPR) and other applicable privacy laws.

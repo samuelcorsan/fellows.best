@@ -2,7 +2,7 @@ import { MetadataRoute } from "next";
 import { fellowshipOpportunities } from "@/lib/data";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://fellows.disam.dev";
+  const baseUrl = "https://fellows.best";
   const currentDate = new Date().toISOString().split("T")[0];
 
   const staticRoutes: MetadataRoute.Sitemap = [

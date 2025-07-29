@@ -6,24 +6,22 @@ export default function TermsPage() {
       <h1 className="text-3xl font-bold mb-8">Terms of Service</h1>
 
       <div className="prose prose-slate max-w-none">
-        <p className="text-muted-foreground mb-6">
-          Last updated: {new Date().toLocaleDateString()}
-        </p>
+        <p className="text-muted-foreground mb-6">Last updated: 07/29/2025</p>
 
         <section className="mb-8">
           <h2 className="text-2xl font-semibold mb-4">1. Introduction</h2>
           <p>
-            Welcome to ddfellows (&quot;we,&quot; &quot;our,&quot; or
-            &quot;us&quot;). By accessing or using our website at
-            fellows.disam.dev, you agree to be bound by these Terms of Service.
-            ddfellows is a centralized platform for discovering and tracking
-            fellowships, grants, accelerators, and competitions.
+            Welcome to fellows.best (&quot;we,&quot; &quot;our,&quot; or
+            &quot;us&quot;). By accessing or using our website at fellows.best,
+            you agree to be bound by these Terms of Service. fellows.best is a
+            centralized platform for discovering and tracking fellowships,
+            grants, accelerators, and competitions.
           </p>
         </section>
 
         <section className="mb-8">
           <h2 className="text-2xl font-semibold mb-4">2. Services</h2>
-          <p>ddfellows provides the following services:</p>
+          <p>fellows.best provides the following services:</p>
           <ul className="list-disc pl-6 mt-2">
             <li>
               Aggregation of fellowships, grants, accelerators, hackathons,
@@ -75,8 +73,8 @@ export default function TermsPage() {
             5. Intellectual Property
           </h2>
           <p>
-            The ddfellows platform, including its design, logos, features, and
-            content created by us, is protected by copyright and other
+            The fellows.best platform, including its design, logos, features,
+            and content created by us, is protected by copyright and other
             intellectual property rights. This includes:
           </p>
           <ul className="list-disc pl-6 mt-2">
@@ -91,7 +89,7 @@ export default function TermsPage() {
           <h2 className="text-2xl font-semibold mb-4">
             6. Limitation of Liability
           </h2>
-          <p>While we strive to maintain accurate information, ddfellows:</p>
+          <p>While we strive to maintain accurate information, fellows.best:</p>
           <ul className="list-disc pl-6 mt-2">
             <li>
               Is not responsible for the accuracy of third-party opportunity

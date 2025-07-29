@@ -9,7 +9,7 @@ import { Analytics } from "@vercel/analytics/react";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "ddfellows - Discover Your Next Fellowship Opportunity",
+  title: "fellows.best - Discover Your Next Fellowship Opportunity",
   description:
     "Discover fellowships, grants, accelerators, and competitions. Track deadlines, get reminders, and never miss an opportunity.",
   keywords:

@@ -118,7 +118,7 @@ export function Header() {
                 />
               </div>
               <span className="text-xl font-medium tracking-tight">
-                ddfellows
+                fellows.best
               </span>
             </Link>
 

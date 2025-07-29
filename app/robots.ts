@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: "/",
       disallow: ["/_next", "/api/*"],
     },
-    sitemap: "https://fellows.disam.dev/sitemap.xml",
+    sitemap: "https://fellows.best/sitemap.xml",
   };
 }

@@ -133,8 +133,9 @@ export default function SubmitPage() {
     setIsSubmittingUrl(true);
     try {
       // TODO: Submit form to database
-
-      router.push("/submit/success");
+      
+      toast.success("URL submitted successfully! We'll review it and add it to our database.");
+      setUrlOnly("");
     } catch (error) {
       console.error("URL Submission error:", error);
       toast.error("There was an error submitting the URL. Please try again.");
@@ -191,8 +192,24 @@ export default function SubmitPage() {
 
     try {
       // TODO: Submit form to database
-
-      router.push("/submit/success");
+      
+      toast.success("Opportunity submitted successfully! We'll review it and add it to our database.");
+      
+      // Reset form
+      setFormData({
+        name: "",
+        organizer: "",
+        description: "",
+        fullDescription: "",
+        openDate: "",
+        closeDate: "",
+        category: "",
+        region: "",
+        eligibility: "",
+        applyLink: "",
+        tags: [],
+        benefits: [""],
+      });
     } catch (error) {
       console.error("Submission error:", error);
       toast.error(

@@ -16,7 +16,7 @@ export function Footer() {
                 />
               </div>
               <span className="text-xl font-medium tracking-tight">
-                ddfellows
+                fellows.best
               </span>
             </Link>
 
@@ -33,7 +33,7 @@ export function Footer() {
                 <Twitter className="h-5 w-5" aria-label="Twitter" />
               </Link>
               <Link
-                href="https://github.com/samuelcorsan/ddfellows"
+                href="https://github.com/samuelcorsan/fellows.best"
                 className="text-muted-foreground hover:text-foreground transition-colors"
               >
                 <Github className="h-5 w-5" aria-label="GitHub" />
@@ -141,7 +141,7 @@ export function Footer() {
         </div>
 
         <div className="border-t mt-12 pt-8 text-center text-muted-foreground">
-          <p>&copy; 2025 ddfellows. All rights reserved.</p>
+          <p>&copy; 2025 fellows.best. All rights reserved.</p>
         </div>
       </div>
     </footer>

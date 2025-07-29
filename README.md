@@ -1,6 +1,6 @@
-# ddfellows
+# fellows.best
 
-A centralized platform to discover, track, and receive reminders for fellowships, grants, accelerators, and competitions. ddfellows aggregates opportunities from diverse sources, visualizes upcoming deadlines, and helps you stay organized so you never miss an application window.
+A centralized platform to discover, track, and receive reminders for fellowships, grants, accelerators, and competitions. fellows.best aggregates opportunities from diverse sources, visualizes upcoming deadlines, and helps you stay organized so you never miss an application window.
 
 ## Features
 
@@ -29,5 +29,5 @@ A centralized platform to discover, track, and receive reminders for fellowships
 ## Contact
 
 - **Project Maintainer**: disamdev ([samuel@disam.dev](mailto:samuel@disam.dev))
-- **Repository**: [https://github.com/samuelcorsan/ddfellows](https://github.com/samuelcorsan/ddfellows)
-- **Website**: [https://fellows.disam.dev](https://fellows.disam.dev)
+- **Repository**: [https://github.com/samuelcorsan/fellows.best](https://github.com/samuelcorsan/fellows.best)
+- **Website**: [https://fellows.best](https://fellows.best)

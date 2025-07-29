@@ -26,7 +26,7 @@ export async function GET(req: NextRequest) {
               fontSize: 100,
             }}
           >
-            ddfellows
+            fellows.best
           </div>
         ),
         {
@@ -174,7 +174,7 @@ export async function GET(req: NextRequest) {
                 margin: 0,
               }}
             >
-              ddfellows
+              fellows.best
             </p>
           </div>
         </div>

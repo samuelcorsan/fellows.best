@@ -32,10 +32,10 @@ export function CalendarButton({ opportunity }: CalendarButtonProps) {
     const icsContent = [
       "BEGIN:VCALENDAR",
       "VERSION:2.0",
-      "PRODID:-//ddfellows//Calendar//EN",
+      "PRODID:-//fellows.best//Calendar//EN",
       "METHOD:PUBLISH",
       "BEGIN:VEVENT",
-      `UID:${opportunity.id}@fellows.disam.dev`,
+      `UID:${opportunity.id}@fellows.best`,
       `DTSTART:${formatDateForCalendar(startDate)}`,
       `DTEND:${formatDateForCalendar(endDate)}`,
       `SUMMARY:${opportunity.name} - Application Deadline`,

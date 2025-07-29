@@ -10,7 +10,7 @@ export async function generateMetadata({
 
   if (!opportunity) {
     return {
-      title: "Opportunity Not Found - ddfellows",
+      title: "Opportunity Not Found - fellows.best",
       description: "The requested opportunity could not be found.",
     };
   }
@@ -22,17 +22,17 @@ export async function generateMetadata({
     description: opportunity.fullDescription || opportunity.description,
     keywords: [...opportunity.tags].join(", "),
     alternates: {
-      canonical: `https://ddfellows.com/opportunity/${params.id}`,
+      canonical: `https://fellows.best/opportunity/${params.id}`,
     },
     openGraph: {
       title: `${opportunity.name} - Deadlines, Requirements & How to Apply`,
       description: opportunity.description,
       type: "article",
-      url: `https://ddfellows.com/opportunity/${params.id}`,
-      siteName: "ddfellows",
+      url: `https://fellows.best/opportunity/${params.id}`,
+      siteName: "fellows.best",
       images: [
         {
-          url: `https://fellows.disam.dev/api/og?id=${params.id}`,
+          url: `https://fellows.best/api/og?id=${params.id}`,
           width: 1200,
           height: 630,
           alt: opportunity.name,
@@ -43,7 +43,7 @@ export async function generateMetadata({
       title: `${opportunity.name} - Deadlines, Requirements & How to Apply`,
       description: opportunity.description,
       card: "summary_large_image",
-      images: `https://fellows.disam.dev/api/og?id=${params.id}`,
+      images: `https://fellows.best/api/og?id=${params.id}`,
       creator: "@disamdev",
     },
     robots: {

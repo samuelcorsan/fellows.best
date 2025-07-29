@@ -32,10 +32,10 @@ export function SignInDialog({ isOpen, onOpenChange }: SignInDialogProps) {
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle className="text-center">
-            Welcome to ddfellows
+            Welcome to fellows.best
           </DialogTitle>
           <DialogDescription className="text-center">
-            Log in to explore more opportunities
+            Log in to explore more fellowships, grants, accelerators...
           </DialogDescription>
         </DialogHeader>
         <div className="flex flex-col space-y-3 py-6">
