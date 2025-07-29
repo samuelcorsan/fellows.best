@@ -46,6 +46,7 @@ interface OpportunityCardProps {
   variant?: "default" | "compact";
   className?: string;
   isCarousel?: boolean;
+  from?: string;
 }
 
 export function OpportunityCard({
@@ -53,6 +54,7 @@ export function OpportunityCard({
   variant = "default",
   className,
   isCarousel = false,
+  from,
 }: OpportunityCardProps) {
   const daysUntil = opportunity.closeDate
     ? getDaysUntilDeadline(opportunity.closeDate)
@@ -67,6 +69,11 @@ export function OpportunityCard({
       "border-yellow-200 bg-yellow-50 text-yellow-700 dark:border-yellow-800 dark:bg-yellow-950 dark:text-yellow-300",
     urgent:
       "border-orange-200 bg-orange-50 text-orange-700 dark:border-orange-800 dark:bg-orange-950 dark:text-orange-300",
+  };
+
+  const getOpportunityUrl = () => {
+    const baseUrl = `/opportunity/${opportunity.id}`;
+    return from ? `${baseUrl}?from=${from}` : baseUrl;
   };
 
   if (variant === "compact") {
@@ -110,7 +117,7 @@ export function OpportunityCard({
         </CardContent>
         <CardFooter className="p-4 pt-0">
           <Button asChild size="sm" className="w-full">
-            <Link href={`/opportunity/${opportunity.id}`}>View Details</Link>
+            <Link href={getOpportunityUrl()}>View Details</Link>
           </Button>
         </CardFooter>
       </Card>
@@ -201,12 +208,12 @@ export function OpportunityCard({
       <CardFooter className="px-6 py-4 bg-muted/50 flex items-center justify-between">
         {isCarousel ? (
           <Button asChild className="w-full">
-            <Link href={`/opportunity/${opportunity.id}`}>View Details</Link>
+            <Link href={getOpportunityUrl()}>View Details</Link>
           </Button>
         ) : (
           <>
             <Button asChild variant="outline">
-              <Link href={`/opportunity/${opportunity.id}`}>
+              <Link href={getOpportunityUrl()}>
                 <span className="hidden sm:inline">View Details</span>
                 <span className="sm:hidden">Details</span>
               </Link>

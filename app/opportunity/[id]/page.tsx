@@ -27,9 +27,12 @@ interface OpportunityPageProps {
   params: {
     id: string;
   };
+  searchParams: {
+    from?: string;
+  };
 }
 
-export default function OpportunityPage({ params }: OpportunityPageProps) {
+export default function OpportunityPage({ params, searchParams }: OpportunityPageProps) {
   const opportunity = getOpportunityById(params.id);
 
   if (!opportunity) {
@@ -61,12 +64,26 @@ Can't wait to dive in and share updates as the journey unfolds!`;
     window.open(twitterIntentUrl, "_blank");
   };
 
+  const getBackNavigation = () => {
+    switch (searchParams.from) {
+      case 'timeline':
+        return { url: '/browse?view=timeline', text: 'Back to Timeline' };
+      case 'home':
+        return { url: '/', text: 'Back to Home' };
+      case 'browse':
+      default:
+        return { url: '/browse', text: 'Back to Browse' };
+    }
+  };
+
+  const { url: backUrl, text: backText } = getBackNavigation();
+
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <Button asChild variant="ghost" className="mb-6">
-        <Link href="/browse">
+        <Link href={backUrl}>
           <ArrowLeft className="mr-2 h-4 w-4" />
-          Back to Browse
+          {backText}
         </Link>
       </Button>
 

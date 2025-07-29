@@ -212,11 +212,11 @@ export default function Home() {
 
               <div className="group relative p-8 bg-card hover:bg-card/80 transition-all duration-300 overflow-hidden border-b border-border/30">
                 <div className="relative">
-                  <h3 className="text-xl font-semibold mb-4">Smart Tracking</h3>
+                  <h3 className="text-xl font-semibold mb-4">Timeline & Calendar</h3>
                   <p className="text-muted-foreground leading-relaxed">
-                    Never miss a deadline with intelligent reminders and progress
-                    tracking. Monitor your applications and stay organized
-                    throughout your journey.
+                    Visualize all application deadlines in an interactive timeline 
+                    view and export important dates directly to your calendar. 
+                    Track opening and closing dates across time to plan your applications strategically.
                   </p>
                 </div>
               </div>
@@ -278,8 +278,8 @@ export default function Home() {
       </section>
 
       <div className="space-y-4">
-        <InfiniteCarousel opportunities={distributedCarousel1} direction="right" speed="slow" />
-        <InfiniteCarousel opportunities={distributedCarousel2} direction="left" speed="slow" />
+        <InfiniteCarousel opportunities={distributedCarousel1} direction="right" speed="slow" from="home" />
+        <InfiniteCarousel opportunities={distributedCarousel2} direction="left" speed="slow" from="home" />
       </div>
 
       <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">

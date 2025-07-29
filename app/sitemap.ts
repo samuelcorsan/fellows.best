@@ -9,14 +9,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     {
       url: baseUrl,
       lastModified: new Date(currentDate),
-      changeFrequency: "monthly",
-      priority: 1,
-    },
-    {
-      url: `${baseUrl}/timeline`,
-      lastModified: new Date(currentDate),
       changeFrequency: "weekly",
-      priority: 0.8,
+      priority: 1,
     },
     {
       url: `${baseUrl}/browse`,

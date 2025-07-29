@@ -7,6 +7,7 @@ interface InfiniteCarouselProps {
   direction?: "left" | "right";
   speed?: "normal" | "slow" | "fast";
   className?: string;
+  from?: string;
 }
 
 export function InfiniteCarousel({
@@ -14,6 +15,7 @@ export function InfiniteCarousel({
   direction = "left",
   speed = "normal",
   className,
+  from,
 }: InfiniteCarouselProps) {
   const openOpportunities = opportunities.filter((opp) => {
     if (!opp.closeDate) return true;
@@ -32,7 +34,8 @@ export function InfiniteCarousel({
           "flex min-w-full shrink-0 gap-4 py-4 w-max flex-nowrap",
           direction === "left" ? "animate-scroll" : "animate-scroll-reverse",
           speed === "slow" && "animation-duration-slow",
-          speed === "fast" && "animation-duration-fast"
+          speed === "fast" && "animation-duration-fast",
+          "hover:[animation-play-state:paused]"
         )}
         style={{
           animationDuration:
@@ -45,6 +48,7 @@ export function InfiniteCarousel({
             opportunity={opportunity}
             className="w-[350px] shrink-0"
             isCarousel
+            from={from}
           />
         ))}
         {openOpportunities.map((opportunity, idx) => (
@@ -53,6 +57,7 @@ export function InfiniteCarousel({
             opportunity={opportunity}
             className="w-[350px] shrink-0"
             isCarousel
+            from={from}
             aria-hidden="true"
           />
         ))}

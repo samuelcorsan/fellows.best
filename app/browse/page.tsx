@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useMemo, useEffect } from "react";
-import { ArrowUpDown, Grid, List } from "lucide-react";
+import { useState, useMemo, useEffect, useRef } from "react";
+import { useSearchParams } from "next/navigation";
+import { ArrowUpDown, Grid, List, Calendar, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Select,
@@ -13,6 +14,7 @@ import {
 import { SearchInput } from "@/components/global/search-input";
 import { FilterPanel, FilterOptions } from "@/components/filters/filter-panel";
 import { OpportunityCard } from "@/components/features/opportunity-card";
+import { Timeline, TimelineRef } from "@/components/features/timeline";
 import { fellowshipOpportunities } from "@/lib/data";
 import { useDebounce } from "@/hooks/use-debounce";
 import { authClient } from "@/lib/auth-client";
@@ -25,6 +27,7 @@ import { AiResponse } from "@/lib/types";
 
 export default function BrowsePage() {
   const { data: session } = authClient.useSession();
+  const searchParams = useSearchParams();
   const [isSignInOpen, setIsSignInOpen] = useState(false);
   const [isAIInputOpen, setIsAIInputOpen] = useState(false);
   const [aiQuery, setAiQuery] = useState("");
@@ -40,9 +43,15 @@ export default function BrowsePage() {
   const [sortBy, setSortBy] = useState<"deadline" | "name" | "category">(
     "deadline"
   );
-  const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
+  const [viewMode, setViewMode] = useState<"grid" | "list" | "timeline">(() => {
+    const viewParam = searchParams.get('view');
+    return viewParam === 'timeline' ? 'timeline' : 'grid';
+  });
   const [isFilterOpen, setIsFilterOpen] = useState(false);
-
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(false);
+  
+  const timelineRef = useRef<TimelineRef>(null);
   const debouncedSearchQuery = useDebounce(searchQuery, 300);
 
   useEffect(() => {
@@ -150,6 +159,16 @@ export default function BrowsePage() {
     return filtered;
   }, [debouncedSearchQuery, filters, sortBy, session]);
 
+  const handleItemClick = (opportunity: any) => {
+    const fromParam = viewMode === 'timeline' ? 'timeline' : 'browse';
+    window.location.href = `/opportunity/${opportunity.id}?from=${fromParam}`;
+  };
+
+  const handleScrollStateChange = (canLeft: boolean, canRight: boolean) => {
+    setCanScrollLeft(canLeft);
+    setCanScrollRight(canRight);
+  };
+
   return (
     <>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -228,16 +247,45 @@ export default function BrowsePage() {
                   >
                     <List className="h-4 w-4" />
                   </Button>
+                  <Button
+                    variant={viewMode === "timeline" ? "default" : "ghost"}
+                    size="sm"
+                    onClick={() => setViewMode("timeline")}
+                  >
+                    <Calendar className="h-4 w-4" />
+                  </Button>
                 </div>
               </div>
             </div>
 
             <div className="flex items-center justify-between">
-              <p className="text-muted-foreground">
-                {filteredAndSortedOpportunities.length} opportunities found
-                {!session &&
-                  " (showing 4 of " + fellowshipOpportunities.length + ")"}
-              </p>
+              {session && (
+                <p className="text-muted-foreground">
+                  {filteredAndSortedOpportunities.length} opportunities found
+                </p>
+              )}
+              {!session && <div />}
+              
+              {viewMode === "timeline" && (
+                <div className="flex items-center gap-1">
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    onClick={() => timelineRef.current?.scrollLeft()}
+                    disabled={!canScrollLeft}
+                  >
+                    <ChevronLeft className="h-4 w-4" />
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    onClick={() => timelineRef.current?.scrollRight()}
+                    disabled={!canScrollRight}
+                  >
+                    <ChevronRight className="h-4 w-4" />
+                  </Button>
+                </div>
+              )}
             </div>
 
             {filteredAndSortedOpportunities.length === 0 ? (
@@ -258,6 +306,30 @@ export default function BrowsePage() {
                   Clear all filters
                 </Button>
               </div>
+            ) : viewMode === "timeline" ? (
+              <div className="relative">
+                <div className={!session ? "blur-sm pointer-events-none" : ""}>
+                  <Timeline
+                    ref={timelineRef}
+                    opportunities={filteredAndSortedOpportunities}
+                    onItemClick={handleItemClick}
+                    onScrollStateChange={handleScrollStateChange}
+                  />
+                </div>
+                {!session && (
+                  <div className="absolute inset-0 bg-background/60 flex items-center justify-center">
+                    <div className="text-center p-8 bg-card border rounded-lg shadow-lg max-w-md">
+                      <h3 className="text-xl font-semibold mb-3">Timeline View Locked</h3>
+                      <p className="text-muted-foreground mb-6">
+                        Sign in to access the timeline view and visualize application deadlines across time.
+                      </p>
+                      <Button onClick={() => setIsSignInOpen(true)} size="lg">
+                        Sign in to View Timeline
+                      </Button>
+                    </div>
+                  </div>
+                )}
+              </div>
             ) : (
               <>
                 <div
@@ -272,6 +344,7 @@ export default function BrowsePage() {
                       key={opportunity.id}
                       opportunity={opportunity}
                       variant={viewMode === "list" ? "default" : "default"}
+                      from="browse"
                     />
                   ))}
                 </div>

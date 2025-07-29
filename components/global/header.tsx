@@ -47,7 +47,6 @@ export function Header() {
   const navigation = [
     { name: "Home", href: "/", icon: Home },
     { name: "Browse", href: "/browse", icon: List },
-    { name: "Timeline", href: "/timeline", icon: Calendar },
     { name: "Submit", href: "/submit", icon: Plus },
   ];
 

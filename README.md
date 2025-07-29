@@ -18,16 +18,14 @@ A centralized platform to discover, track, and receive reminders for fellowships
 
 > **Note:** Adjust as needed based on your implementation choices.
 
-- **Frontend**: Next.js, React, TypeScript, TailwindCSS, Shadcn UI
+- **Frontend**: Next.js, React, TypeScript, TailwindCSS, shadcn/ui
 - **Backend**: Node.js with Express
 - **Database**: PostgreSQL for storing users, settings and more
-- **Email/Notifications**: Resend
-- **AI**: Groq
 - **Authentication**: Better Auth
 - **Deployment**: Vercel
 
 ## Contact
 
 - **Project Maintainer**: disamdev ([samuel@disam.dev](mailto:samuel@disam.dev))
-- **Repository**: [https://github.com/samuelcorsan/fellows.best](https://github.com/samuelcorsan/fellows.best)
+- **Repository**: [https://github.com/samuelcorsan/fellows.best](https://github.com/samuelcorsan/ddfellows)
 - **Website**: [https://fellows.best](https://fellows.best)

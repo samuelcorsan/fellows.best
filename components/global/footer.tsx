@@ -28,12 +28,14 @@ export function Footer() {
             <div className="flex space-x-4 mt-6">
               <Link
                 href="https://x.com/disamdev"
+                target="_blank"
                 className="text-muted-foreground hover:text-foreground transition-colors"
               >
                 <Twitter className="h-5 w-5" aria-label="Twitter" />
               </Link>
               <Link
-                href="https://github.com/samuelcorsan/fellows.best"
+                href="https://github.com/samuelcorsan/ddfellows"
+                target="_blank"
                 className="text-muted-foreground hover:text-foreground transition-colors"
               >
                 <Github className="h-5 w-5" aria-label="GitHub" />
