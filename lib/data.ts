@@ -531,7 +531,7 @@ export const fellowshipOpportunities: Opportunity[] = [
     id: "localhost-japan",
     name: "LocalHost - Japan",
     logoUrl:
-      "https://pbs.twimg.com/profile_images/1904750912540991488/R5CIeeW3_400x400.jpg",
+      "https://pbs.twimg.com/profile_images/1947195504883892224/eK8WwG9R_400x400.jpg",
     description:
       "A global, travelling fellowship with a hub in Tokyo for exceptional young builders to pursue full-time projects.",
     fullDescription:
@@ -567,7 +567,7 @@ export const fellowshipOpportunities: Opportunity[] = [
     id: "localhost-india",
     name: "LocalHost - India",
     logoUrl:
-      "https://pbs.twimg.com/profile_images/1904750912540991488/R5CIeeW3_400x400.jpg",
+      "https://pbs.twimg.com/profile_images/1947195504883892224/eK8WwG9R_400x400.jpg",
     description:
       "A global fellowship with hubs in Bangalore and New Delhi, supporting builders to pursue full-time projects.",
     fullDescription:
@@ -603,7 +603,7 @@ export const fellowshipOpportunities: Opportunity[] = [
     id: "localhost-romania",
     name: "LocalHost - Romania",
     logoUrl:
-      "https://pbs.twimg.com/profile_images/1904750912540991488/R5CIeeW3_400x400.jpg",
+      "https://pbs.twimg.com/profile_images/1947195504883892224/eK8WwG9R_400x400.jpg",
     description:
       "A global fellowship with a hub in Cluj-Napoca, Romania, for exceptional builders.",
     fullDescription:
@@ -639,7 +639,7 @@ export const fellowshipOpportunities: Opportunity[] = [
     id: "localhost-france",
     name: "LocalHost - France",
     logoUrl:
-      "https://pbs.twimg.com/profile_images/1904750912540991488/R5CIeeW3_400x400.jpg",
+      "https://pbs.twimg.com/profile_images/1947195504883892224/eK8WwG9R_400x400.jpg",
     description:
       "A global fellowship with activities and events in Paris, France, supporting exceptional builders.",
     fullDescription:
