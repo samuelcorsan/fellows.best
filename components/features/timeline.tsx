@@ -95,8 +95,6 @@ export const Timeline = forwardRef<TimelineRef, TimelineProps>(({ opportunities,
   
   const [viewStart] = useState(() => dateRange.start);
   const [viewEnd] = useState(() => dateRange.end);
-  
-  if (validOpportunities.length === 0) return null;
 
   const PIXELS_PER_DAY = 2;
   const MONTH_WIDTH = 150;
@@ -246,6 +244,18 @@ export const Timeline = forwardRef<TimelineRef, TimelineProps>(({ opportunities,
       return () => scrollElement.removeEventListener('scroll', handleScroll);
     }
   }, [updateScrollButtons]);
+
+  if (validOpportunities.length === 0) {
+    return (
+      <div className="text-center py-16">
+        <div className="text-6xl mb-4">📅</div>
+        <h3 className="text-xl font-semibold mb-2">No timeline data available</h3>
+        <p className="text-muted-foreground">
+          No opportunities with close dates found to display in timeline view.
+        </p>
+      </div>
+    );
+  }
 
   return (
     <TooltipProvider>
