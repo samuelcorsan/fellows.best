@@ -43,23 +43,25 @@ export function InfiniteCarousel({
         }}
       >
         {openOpportunities.map((opportunity, idx) => (
-          <OpportunityCard
-            key={`${opportunity.id}-${idx}`}
-            opportunity={opportunity}
-            className="w-[350px] shrink-0"
-            isCarousel
-            from={from}
-          />
+          <div key={`${opportunity.id}-${idx}`} className="w-[350px] shrink-0">
+            <OpportunityCard
+              opportunity={opportunity}
+              className="w-full"
+              isCarousel
+              from={from}
+            />
+          </div>
         ))}
         {openOpportunities.map((opportunity, idx) => (
-          <OpportunityCard
-            key={`${opportunity.id}-${idx}-clone`}
-            opportunity={opportunity}
-            className="w-[350px] shrink-0"
-            isCarousel
-            from={from}
-            aria-hidden="true"
-          />
+          <div key={`${opportunity.id}-${idx}-clone`} className="w-[350px] shrink-0">
+            <OpportunityCard
+              opportunity={opportunity}
+              className="w-full"
+              isCarousel
+              from={from}
+              aria-hidden="true"
+            />
+          </div>
         ))}
       </div>
     </div>

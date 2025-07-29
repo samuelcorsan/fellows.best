@@ -87,7 +87,7 @@ export async function GET(req: NextRequest) {
             {opportunity.logoUrl && (
               <img
                 src={opportunity.logoUrl}
-                alt={opportunity.name}
+                alt={`${opportunity.name} logo`}
                 width="120"
                 height="120"
                 style={{

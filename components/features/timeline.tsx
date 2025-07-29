@@ -45,8 +45,10 @@ export const Timeline = forwardRef<TimelineRef, TimelineProps>(({ opportunities,
   const scrollRef = useRef<HTMLDivElement>(null);
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
   const [selectedDate, setSelectedDate] = useState<string>("");
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(false);
   
-  const today = new Date();
+  const today = useMemo(() => new Date(), []);
   const currentYear = today.getFullYear();
   const currentMonth = today.getMonth();
   
@@ -190,9 +192,6 @@ export const Timeline = forwardRef<TimelineRef, TimelineProps>(({ opportunities,
     });
   }, [viewStart, today]);
 
-  const [canScrollLeft, setCanScrollLeft] = useState(false);
-  const [canScrollRight, setCanScrollRight] = useState(false);
-  
   const updateScrollButtons = useCallback(() => {
     if (!scrollRef.current) return;
     
@@ -375,3 +374,5 @@ export const Timeline = forwardRef<TimelineRef, TimelineProps>(({ opportunities,
     </TooltipProvider>
   );
 });
+
+Timeline.displayName = 'Timeline';

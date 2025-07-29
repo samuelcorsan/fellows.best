@@ -2,7 +2,14 @@
 
 import { useState, useMemo, useEffect, useRef } from "react";
 import { useSearchParams } from "next/navigation";
-import { ArrowUpDown, Grid, List, Calendar, ChevronLeft, ChevronRight } from "lucide-react";
+import {
+  ArrowUpDown,
+  Grid,
+  List,
+  Calendar,
+  ChevronLeft,
+  ChevronRight,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Select,
@@ -20,9 +27,6 @@ import { useDebounce } from "@/hooks/use-debounce";
 import { authClient } from "@/lib/auth-client";
 import { toast } from "sonner";
 import { SignInDialog } from "@/components/global/sign-in-dialog";
-import { AIInputDialog } from "@/components/ai/input-dialog";
-import { AIResponseDialog } from "@/components/ai/response-dialog";
-import { AILoadingCard } from "@/components/ai/loading-card";
 import { AiResponse } from "@/lib/types";
 
 export default function BrowsePage() {
@@ -44,13 +48,13 @@ export default function BrowsePage() {
     "deadline"
   );
   const [viewMode, setViewMode] = useState<"grid" | "list" | "timeline">(() => {
-    const viewParam = searchParams.get('view');
-    return viewParam === 'timeline' ? 'timeline' : 'grid';
+    const viewParam = searchParams.get("view");
+    return viewParam === "timeline" ? "timeline" : "grid";
   });
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(false);
-  
+
   const timelineRef = useRef<TimelineRef>(null);
   const debouncedSearchQuery = useDebounce(searchQuery, 300);
 
@@ -160,7 +164,7 @@ export default function BrowsePage() {
   }, [debouncedSearchQuery, filters, sortBy, session]);
 
   const handleItemClick = (opportunity: any) => {
-    const fromParam = viewMode === 'timeline' ? 'timeline' : 'browse';
+    const fromParam = viewMode === "timeline" ? "timeline" : "browse";
     window.location.href = `/opportunity/${opportunity.id}?from=${fromParam}`;
   };
 
@@ -265,19 +269,19 @@ export default function BrowsePage() {
                 </p>
               )}
               {!session && <div />}
-              
+
               {viewMode === "timeline" && (
                 <div className="flex items-center gap-1">
-                  <Button 
-                    variant="outline" 
+                  <Button
+                    variant="outline"
                     size="sm"
                     onClick={() => timelineRef.current?.scrollLeft()}
                     disabled={!canScrollLeft}
                   >
                     <ChevronLeft className="h-4 w-4" />
                   </Button>
-                  <Button 
-                    variant="outline" 
+                  <Button
+                    variant="outline"
                     size="sm"
                     onClick={() => timelineRef.current?.scrollRight()}
                     disabled={!canScrollRight}
@@ -319,9 +323,12 @@ export default function BrowsePage() {
                 {!session && (
                   <div className="absolute inset-0 bg-background/60 flex items-center justify-center">
                     <div className="text-center p-8 bg-card border rounded-lg shadow-lg max-w-md">
-                      <h3 className="text-xl font-semibold mb-3">Timeline View Locked</h3>
+                      <h3 className="text-xl font-semibold mb-3">
+                        Timeline View Locked
+                      </h3>
                       <p className="text-muted-foreground mb-6">
-                        Sign in to access the timeline view and visualize application deadlines across time.
+                        Sign in to access the timeline view and visualize
+                        application deadlines across time.
                       </p>
                       <Button onClick={() => setIsSignInOpen(true)} size="lg">
                         Sign in to View Timeline
@@ -368,31 +375,12 @@ export default function BrowsePage() {
         </div>
       </div>
 
-      {/* Overlay */}
       <div
         className={`fixed inset-0 bg-background/80 backdrop-blur-sm transition-all duration-300 ${
           isAIInputOpen ? "opacity-100" : "opacity-0 pointer-events-none"
         }`}
         onClick={closeAiDialog}
       />
-
-      <AIInputDialog
-        isOpen={isAIInputOpen}
-        aiQuery={aiQuery}
-        isLoading={isAiLoading}
-        onQueryChange={setAiQuery}
-        onSubmit={handleAiQuery}
-        onClose={closeAiDialog}
-      />
-
-      <AIResponseDialog
-        isOpen={isAIInputOpen}
-        response={aiResponse}
-        currentIndex={currentCardIndex}
-        onIndexChange={setCurrentCardIndex}
-      />
-
-      <AILoadingCard isOpen={isAIInputOpen && isAiLoading} />
 
       <SignInDialog isOpen={isSignInOpen} onOpenChange={setIsSignInOpen} />
     </>

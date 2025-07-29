@@ -92,6 +92,9 @@ export function OpportunityCard({
               width={40}
               height={40}
               className="rounded-lg object-cover"
+              loading="lazy"
+              placeholder="blur"
+              blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAoACgDASIAAhEBAxEB/8QAFwABAQEBAAAAAAAAAAAAAAAABgAHA//EACUQAAIBAwMEAgMBAAAAAAAAAAECAwAEEQUSITFBUWFxBhMiMpH/xAAXAQADAQAAAAAAAAAAAAAAAAABAgME/8QAHhEAAgICAwEBAAAAAAAAAAAAAAECEQMhEjFBUWH/2gAMAwEAAhEDEQA/AO5ooor0HFFFFFAFFFFABRRRQAUUUUAf/9k="
             />
             <div className="flex-1 min-w-0">
               <h3 className="font-semibold text-sm truncate">
@@ -128,6 +131,7 @@ export function OpportunityCard({
     <Card
       className={cn(
         "hover:shadow-lg transition-all duration-200 hover:-translate-y-1 flex flex-col",
+        isCarousel ? "h-[320px]" : "",
         className
       )}
     >
@@ -139,6 +143,9 @@ export function OpportunityCard({
             width={60}
             height={60}
             className="rounded-lg object-cover"
+            loading="lazy"
+            placeholder="blur"
+            blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAoACgDASIAAhEBAxEB/8QAFwABAQEBAAAAAAAAAAAAAAAABgAHA//EACUQAAIBAwMEAgMBAAAAAAAAAAECAwAEEQUSITFBUWFxBhMiMpH/xAAXAQADAQAAAAAAAAAAAAAAAAABAgME/8QAHhEAAgICAwEBAAAAAAAAAAAAAAECEQMhEjFBUWH/2gAMAwEAAhEDEQA/AO5ooor0HFFFFFAFFFFABRRRQAUUUUAf/9k="
           />
           <div className="flex-1 min-w-0">
             <div className="flex items-start justify-between mb-2">
