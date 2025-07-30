@@ -116,7 +116,7 @@ export function OpportunityCard({
                 </div>
               </div>
               
-              {opportunity.funding && (
+              {opportunity.funding && !isCarousel && (
                 <div className="mt-2 pt-2 border-t border-border/50">
                   <div className="flex items-center justify-between text-xs">
                     <span className="font-medium text-green-600">
@@ -225,7 +225,7 @@ export function OpportunityCard({
               </div>
             </div>
             
-            {opportunity.funding && (
+            {opportunity.funding && !isCarousel && (
               <div className="mt-3 pt-3 border-t border-border/50">
                 <div className="flex items-center justify-between text-sm">
                   <div className="flex items-center gap-2">
