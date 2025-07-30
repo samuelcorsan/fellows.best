@@ -46,6 +46,11 @@ export default function BrowsePage() {
     fundingAmount: { min: 0, max: 2000000 },
     equityPercentage: { min: 0, max: 20 },
   });
+
+  const handleFiltersChange = (newFilters: FilterOptions) => {
+    setFilters(newFilters);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
   const [sortBy, setSortBy] = useState<"deadline" | "name" | "category">(
     "deadline"
   );
@@ -180,7 +185,7 @@ export default function BrowsePage() {
           <div className="lg:col-span-1">
             <FilterPanel
               filters={filters}
-              onFiltersChange={setFilters}
+              onFiltersChange={handleFiltersChange}
               isOpen={isFilterOpen}
               onToggle={() => setIsFilterOpen(!isFilterOpen)}
             />
@@ -295,7 +300,7 @@ export default function BrowsePage() {
                 <Button
                   onClick={() => {
                     setSearchQuery("");
-                    setFilters({
+                    handleFiltersChange({
                       categories: [],
                       regions: [],
                       tags: [],

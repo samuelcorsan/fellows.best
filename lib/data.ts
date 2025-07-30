@@ -21,6 +21,12 @@ export interface Opportunity {
   applyLink: string;
   benefits: string[];
   organizer: string;
+  funding?: {
+    amount: number;
+    currency: string;
+    equityPercentage: number;
+    fundingType: "equity-based" | "equity-free" | "mixed";
+  };
 }
 
 export const fellowshipOpportunities: Opportunity[] = [
@@ -1497,7 +1503,13 @@ export function matchRegion(
 
 export function filterOpportunities(
   opportunities: Opportunity[],
-  filters: { categories: string[]; regions: string[]; tags: string[] }
+  filters: { 
+    categories: string[]; 
+    regions: string[]; 
+    tags: string[];
+    fundingAmount?: { min: number; max: number };
+    equityPercentage?: { min: number; max: number };
+  }
 ): Opportunity[] {
   return opportunities.filter((opp) => {
     // If no filters are selected in a category, don't filter by that category
@@ -1512,7 +1524,17 @@ export function filterOpportunities(
       filters.tags.length === 0 ||
       filters.tags.every((tag) => opp.tags.includes(tag));
 
-    return categoryMatch && regionMatch && tagMatch;
+    // Funding amount filter
+    const fundingMatch = !filters.fundingAmount || !opp.funding || 
+      (opp.funding.amount >= filters.fundingAmount.min && 
+       opp.funding.amount <= filters.fundingAmount.max);
+
+    // Equity percentage filter
+    const equityMatch = !filters.equityPercentage || !opp.funding || 
+      (opp.funding.equityPercentage >= filters.equityPercentage.min && 
+       opp.funding.equityPercentage <= filters.equityPercentage.max);
+
+    return categoryMatch && regionMatch && tagMatch && fundingMatch && equityMatch;
   });
 }
 
