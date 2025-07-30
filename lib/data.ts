@@ -26,6 +26,7 @@ export interface Opportunity {
     currency: string;
     equityPercentage: number;
     fundingType: "equity-based" | "equity-free" | "mixed";
+    isApproximate?: boolean;
   };
 }
 
@@ -276,6 +277,7 @@ export const fellowshipOpportunities: Opportunity[] = [
       currency: "USD",
       equityPercentage: 0,
       fundingType: "equity-based",
+      isApproximate: true,
     },
   },
   {
@@ -340,10 +342,11 @@ export const fellowshipOpportunities: Opportunity[] = [
     ],
     organizer: "LAUNCH",
     funding: {
-      amount: 125000,
+      amount: 125000,  
       currency: "USD",
       equityPercentage: 6.5,
       fundingType: "equity-based",
+      isApproximate: true,
     },
   },
   {

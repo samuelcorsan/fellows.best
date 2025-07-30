@@ -120,11 +120,11 @@ export function OpportunityCard({
                 <div className="mt-2 pt-2 border-t border-border/50">
                   <div className="flex items-center justify-between text-xs">
                     <span className="font-medium text-green-600">
-                      ${opportunity.funding.amount.toLocaleString()}
+                      {opportunity.funding.isApproximate ? "~" : ""}${opportunity.funding.amount.toLocaleString()}
                     </span>
                     {opportunity.funding.equityPercentage > 0 && (
                       <span className="font-medium text-orange-600">
-                        {opportunity.funding.equityPercentage}% equity
+                        {opportunity.funding.isApproximate && opportunity.funding.equityPercentage % 1 !== 0 ? "~" : ""}{opportunity.funding.equityPercentage}% equity
                       </span>
                     )}
                   </div>
@@ -229,7 +229,9 @@ export function OpportunityCard({
               <div className="mt-3 pt-3 border-t border-border/50">
                 <div className="flex items-center justify-between text-sm">
                   <div className="flex items-center gap-2">
-                    <span className="text-muted-foreground">Funding:</span>
+                    <span className="text-muted-foreground">
+                      {opportunity.funding.isApproximate ? "Avg Funding:" : "Funding:"}
+                    </span>
                     <span className="font-medium text-green-600">
                       ${opportunity.funding.amount.toLocaleString()}
                     </span>
