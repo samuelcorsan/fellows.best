@@ -105,7 +105,7 @@ export function OpportunityCard({
               </p>
               <div className="flex items-center justify-between mt-3">
                 <div className="flex items-center space-x-2">
-                  <Badge variant="secondary" className="text-xs">
+                  <Badge variant="secondary" className="text-xs rounded-lg">
                     {opportunity.category}
                   </Badge>
                 </div>
@@ -196,14 +196,14 @@ export function OpportunityCard({
 
             <div className="flex items-center justify-between">
               <div className="flex flex-wrap gap-2">
-                <Badge variant="outline">{opportunity.category}</Badge>
+                <Badge variant="outline" className="rounded-lg">{opportunity.category}</Badge>
                 {opportunity.tags.slice(0, 2).map((tag) => (
-                  <Badge key={tag} variant="secondary" className="text-xs">
+                  <Badge key={tag} variant="secondary" className="text-xs rounded-lg">
                     {tag}
                   </Badge>
                 ))}
                 {opportunity.tags.length > 2 && (
-                  <Badge variant="secondary" className="text-xs">
+                  <Badge variant="secondary" className="text-xs rounded-lg">
                     +{opportunity.tags.length - 2} more
                   </Badge>
                 )}

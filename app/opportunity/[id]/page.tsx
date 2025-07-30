@@ -1,6 +1,5 @@
-"use client";
-
 import { notFound } from "next/navigation";
+import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -10,13 +9,13 @@ import {
   Clock,
   Users,
   Award,
-  Share2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { CalendarButton } from "@/components/global/calendar-button";
+import { ShareButton } from "@/components/global/share-button";
 import {
   getOpportunityById,
   getDaysUntilDeadline,
@@ -29,6 +28,44 @@ interface OpportunityPageProps {
   };
   searchParams: {
     from?: string;
+  };
+}
+
+export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
+  const opportunity = getOpportunityById(params.id);
+  
+  if (!opportunity) {
+    return {
+      title: 'Opportunity Not Found',
+    };
+  }
+
+  const ogImageUrl = opportunity.shareImageUrl || `/api/og?id=${opportunity.id}`;
+  
+  return {
+    title: `${opportunity.name} - ${opportunity.organizer} | fellows.best`,
+    description: opportunity.description,
+    openGraph: {
+      title: `${opportunity.name} - ${opportunity.organizer}`,
+      description: opportunity.description,
+      url: `/opportunity/${opportunity.id}`,
+      siteName: 'fellows.best',
+      images: [
+        {
+          url: ogImageUrl,
+          width: 1200,
+          height: 630,
+          alt: `${opportunity.name} opportunity details`,
+        },
+      ],
+      type: 'website',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${opportunity.name} - ${opportunity.organizer}`,
+      description: opportunity.description,
+      images: [ogImageUrl],
+    },
   };
 }
 
@@ -54,15 +91,6 @@ export default function OpportunityPage({ params, searchParams }: OpportunityPag
       "border-red-200 bg-red-50 text-red-700 dark:border-red-800 dark:bg-red-950 dark:text-red-300",
   };
 
-  const handleShare = () => {
-    const tweetText = `I'm delighted to share that I've applied to ${opportunity.name} to elevate my startup's trajectory, tap into tailored mentorship, and collaborate with fellow innovators.
-
-Can't wait to dive in and share updates as the journey unfolds!`;
-    const twitterIntentUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
-      tweetText
-    )}`;
-    window.open(twitterIntentUrl, "_blank");
-  };
 
   const getBackNavigation = () => {
     switch (searchParams.from) {
@@ -112,11 +140,11 @@ Can't wait to dive in and share updates as the journey unfolds!`;
               {opportunity.organizer}
             </p>
             <div className="flex flex-wrap gap-2">
-              <Badge variant="outline" className="text-sm">
+              <Badge variant="outline" className="text-sm rounded-lg">
                 {opportunity.category}
               </Badge>
               {opportunity.tags.map((tag) => (
-                <Badge key={tag} variant="secondary" className="text-sm">
+                <Badge key={tag} variant="secondary" className="text-sm rounded-lg">
                   {tag}
                 </Badge>
               ))}
@@ -138,15 +166,7 @@ Can't wait to dive in and share updates as the journey unfolds!`;
                 </a>
               </Button>
             )}
-          <Button
-            variant="outline"
-            size="lg"
-            onClick={handleShare}
-            className="flex items-center"
-          >
-            <Share2 className="h-4 w-4 mr-2" />
-            Share on X
-          </Button>
+          <ShareButton opportunity={opportunity} />
         </div>
       </div>
 
