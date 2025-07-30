@@ -8,12 +8,21 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
+import { Slider } from "@/components/ui/slider";
 import { authClient } from "@/lib/auth-client";
 
 export interface FilterOptions {
   categories: string[];
   regions: string[];
   tags: string[];
+  fundingAmount: {
+    min: number;
+    max: number;
+  };
+  equityPercentage: {
+    min: number;
+    max: number;
+  };
 }
 
 interface FilterPanelProps {
@@ -154,12 +163,36 @@ export function FilterPanel({
     onFiltersChange({ ...filters, tags: newTags });
   };
 
+  const handleFundingAmountChange = (values: number[]) => {
+    onFiltersChange({
+      ...filters,
+      fundingAmount: { min: values[0], max: values[1] },
+    });
+  };
+
+  const handleEquityPercentageChange = (values: number[]) => {
+    onFiltersChange({
+      ...filters,
+      equityPercentage: { min: values[0], max: values[1] },
+    });
+  };
+
   const clearAllFilters = () => {
-    onFiltersChange({ categories: [], regions: [], tags: [] });
+    onFiltersChange({
+      categories: [],
+      regions: [],
+      tags: [],
+      fundingAmount: { min: 0, max: 2000000 },
+      equityPercentage: { min: 0, max: 20 },
+    });
   };
 
   const totalActiveFilters =
-    filters.categories.length + filters.regions.length + filters.tags.length;
+    filters.categories.length +
+    filters.regions.length +
+    filters.tags.length +
+    (filters.fundingAmount.min > 0 || filters.fundingAmount.max < 2000000 ? 1 : 0) +
+    (filters.equityPercentage.min > 0 || filters.equityPercentage.max < 20 ? 1 : 0);
 
   return (
     <>
@@ -212,6 +245,50 @@ export function FilterPanel({
             </div>
           </CardHeader>
           <CardContent className="space-y-6">
+            <div>
+              <Label className="text-sm font-medium mb-3 block">
+                Funding Amount (USD)
+              </Label>
+              <div className="space-y-4">
+                <Slider
+                  value={[filters.fundingAmount.min, filters.fundingAmount.max]}
+                  onValueChange={handleFundingAmountChange}
+                  max={2000000}
+                  min={0}
+                  step={10000}
+                  className="w-full"
+                />
+                <div className="flex items-center justify-between text-sm text-muted-foreground">
+                  <span>${filters.fundingAmount.min.toLocaleString()}</span>
+                  <span>${filters.fundingAmount.max.toLocaleString()}</span>
+                </div>
+              </div>
+            </div>
+
+            <Separator />
+
+            <div>
+              <Label className="text-sm font-medium mb-3 block">
+                Equity Percentage (%)
+              </Label>
+              <div className="space-y-4">
+                <Slider
+                  value={[filters.equityPercentage.min, filters.equityPercentage.max]}
+                  onValueChange={handleEquityPercentageChange}
+                  max={20}
+                  min={0}
+                  step={0.5}
+                  className="w-full"
+                />
+                <div className="flex items-center justify-between text-sm text-muted-foreground">
+                  <span>{filters.equityPercentage.min}%</span>
+                  <span>{filters.equityPercentage.max}%</span>
+                </div>
+              </div>
+            </div>
+
+            <Separator />
+
             <div>
               <Label className="text-sm font-medium mb-3 block">Category</Label>
               <div className="space-y-2">

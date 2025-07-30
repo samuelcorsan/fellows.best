@@ -22,7 +22,7 @@ import { SearchInput } from "@/components/global/search-input";
 import { FilterPanel, FilterOptions } from "@/components/filters/filter-panel";
 import { OpportunityCard } from "@/components/features/opportunity-card";
 import { Timeline, TimelineRef } from "@/components/features/timeline";
-import { fellowshipOpportunities } from "@/lib/data";
+import { fellowshipOpportunities, filterOpportunities } from "@/lib/data";
 import { useDebounce } from "@/hooks/use-debounce";
 import { authClient } from "@/lib/auth-client";
 import { toast } from "sonner";
@@ -43,6 +43,8 @@ export default function BrowsePage() {
     categories: [],
     regions: [],
     tags: [],
+    fundingAmount: { min: 0, max: 2000000 },
+    equityPercentage: { min: 0, max: 20 },
   });
   const [sortBy, setSortBy] = useState<"deadline" | "name" | "category">(
     "deadline"
@@ -123,21 +125,10 @@ export default function BrowsePage() {
           .toLowerCase()
           .includes(debouncedSearchQuery.toLowerCase());
 
-      const matchesCategory =
-        filters.categories.length === 0 ||
-        filters.categories.includes(opportunity.category);
-
-      const matchesRegion =
-        filters.regions.length === 0 ||
-        filters.regions.includes(opportunity.region) ||
-        (opportunity.country && filters.regions.includes(opportunity.country));
-
-      const matchesTags =
-        filters.tags.length === 0 ||
-        filters.tags.some((tag) => opportunity.tags.includes(tag));
-
-      return matchesSearch && matchesCategory && matchesRegion && matchesTags;
+      return matchesSearch;
     });
+
+    filtered = filterOpportunities(filtered, filters);
 
     filtered.sort((a, b) => {
       switch (sortBy) {
@@ -304,7 +295,13 @@ export default function BrowsePage() {
                 <Button
                   onClick={() => {
                     setSearchQuery("");
-                    setFilters({ categories: [], regions: [], tags: [] });
+                    setFilters({
+                      categories: [],
+                      regions: [],
+                      tags: [],
+                      fundingAmount: { min: 0, max: 2000000 },
+                      equityPercentage: { min: 0, max: 20 },
+                    });
                   }}
                 >
                   Clear all filters
