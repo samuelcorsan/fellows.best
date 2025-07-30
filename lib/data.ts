@@ -63,6 +63,12 @@ export const fellowshipOpportunities: Opportunity[] = [
       "Follow-on support from Antler's global network",
     ],
     organizer: "Antler",
+    funding: {
+      amount: 225000,
+      currency: "USD",
+      equityPercentage: 8.5,
+      fundingType: "equity-based",
+    },
   },
   {
     id: "techstars-2025",
@@ -91,6 +97,12 @@ export const fellowshipOpportunities: Opportunity[] = [
       "$120K in partner perks (e.g. cloud credits, etc.)",
     ],
     organizer: "Techstars",
+    funding: {
+      amount: 220000,
+      currency: "USD",
+      equityPercentage: 6,
+      fundingType: "equity-based",
+    },
   },
   {
     id: "500-global-flagship-2025",
@@ -119,6 +131,12 @@ export const fellowshipOpportunities: Opportunity[] = [
       "Promotion to global markets (significant international cohort)",
     ],
     organizer: "500 Global",
+    funding: {
+      amount: 150000,
+      currency: "USD",
+      equityPercentage: 6,
+      fundingType: "equity-based",
+    },
   },
   {
     id: "south-park-commons-2025",
@@ -153,6 +171,12 @@ export const fellowshipOpportunities: Opportunity[] = [
       "1:1 partner mentorship and networking",
     ],
     organizer: "South Park Commons",
+    funding: {
+      amount: 400000,
+      currency: "USD",
+      equityPercentage: 7,
+      fundingType: "equity-based",
+    },
   },
   {
     id: "hf0-residency-2025",
@@ -180,6 +204,12 @@ export const fellowshipOpportunities: Opportunity[] = [
       "Access to private investor network for follow-on rounds",
     ],
     organizer: "HF0 (Residency)",
+    funding: {
+      amount: 1000000,
+      currency: "USD",
+      equityPercentage: 5,
+      fundingType: "equity-based",
+    },
   },
   {
     id: "neo-accelerator-2025",
@@ -208,6 +238,12 @@ export const fellowshipOpportunities: Opportunity[] = [
       "Dedicated mentorship and Demo Day",
     ],
     organizer: "NEO (Global)",
+    funding: {
+      amount: 600000,
+      currency: "USD",
+      equityPercentage: 1.5,
+      fundingType: "equity-based",
+    },
   },
   {
     id: "pearx-2025",
@@ -235,6 +271,12 @@ export const fellowshipOpportunities: Opportunity[] = [
       "Intensive mentoring by former startup founders at Pear VC",
     ],
     organizer: "Pear VC",
+    funding: {
+      amount: 1125000,
+      currency: "USD",
+      equityPercentage: 0,
+      fundingType: "equity-based",
+    },
   },
   {
     id: "pioneer-2025",
@@ -263,6 +305,12 @@ export const fellowshipOpportunities: Opportunity[] = [
       "Access to Pioneer alumni network",
     ],
     organizer: "Pioneer",
+    funding: {
+      amount: 20000,
+      currency: "USD",
+      equityPercentage: 1,
+      fundingType: "equity-based",
+    },
   },
   {
     id: "launch-accelerator-2025",
@@ -291,6 +339,12 @@ export const fellowshipOpportunities: Opportunity[] = [
       "Personal coaching from experienced startup investors",
     ],
     organizer: "LAUNCH",
+    funding: {
+      amount: 125000,
+      currency: "USD",
+      equityPercentage: 6.5,
+      fundingType: "equity-based",
+    },
   },
   {
     id: "the-mint-2025",
@@ -324,6 +378,12 @@ export const fellowshipOpportunities: Opportunity[] = [
       "Annual founder retreat and network access",
     ],
     organizer: "BTV Capital (The Mint)",
+    funding: {
+      amount: 500000,
+      currency: "USD",
+      equityPercentage: 10,
+      fundingType: "equity-based",
+    },
   },
   {
     id: "angelpad-2025",
@@ -351,6 +411,12 @@ export const fellowshipOpportunities: Opportunity[] = [
       "Demo Day with major investors",
     ],
     organizer: "AngelPad",
+    funding: {
+      amount: 120000,
+      currency: "USD",
+      equityPercentage: 7,
+      fundingType: "equity-based",
+    },
   },
   {
     id: "betaworks-ai-camp-2026",
@@ -713,6 +779,12 @@ export const fellowshipOpportunities: Opportunity[] = [
       "Weekly dinners, mentorship, and Demo Day",
     ],
     organizer: "Boost VC",
+    funding: {
+      amount: 500000,
+      currency: "USD",
+      equityPercentage: 15,
+      fundingType: "equity-based",
+    },
   },
   {
     id: "vercel-open-source-program",
@@ -766,6 +838,12 @@ export const fellowshipOpportunities: Opportunity[] = [
       "Option to join a demo day",
     ],
     organizer: "Afore Capital",
+    funding: {
+      amount: 1000,
+      currency: "USD",
+      equityPercentage: 0,
+      fundingType: "equity-free",
+    },
   },
   {
     id: "776-foundation-2025",
@@ -793,6 +871,12 @@ export const fellowshipOpportunities: Opportunity[] = [
       "Community of peers tackling climate change",
     ],
     organizer: "776 Foundation",
+    funding: {
+      amount: 100000,
+      currency: "USD",
+      equityPercentage: 0,
+      fundingType: "equity-free",
+    },
   },
   {
     id: "angelpad",
@@ -1039,6 +1123,12 @@ export const fellowshipOpportunities: Opportunity[] = [
       "Flexible use of funds for salary, research expenses, or travel",
     ],
     organizer: "Mercatus Center",
+    funding: {
+      amount: 100000,
+      currency: "USD",
+      equityPercentage: 0,
+      fundingType: "equity-free",
+    },
   },
   {
     id: "y-combinator-fall-2025",
@@ -1067,6 +1157,12 @@ export const fellowshipOpportunities: Opportunity[] = [
       "Access to YC network and Demo Day",
     ],
     organizer: "Y Combinator",
+    funding: {
+      amount: 500000,
+      currency: "USD",
+      equityPercentage: 7,
+      fundingType: "equity-based",
+    },
   },
   {
     id: "zfellows",
@@ -1094,6 +1190,12 @@ export const fellowshipOpportunities: Opportunity[] = [
       "Optional $10K investment at a $1B valuation cap",
     ],
     organizer: "Z Fellows",
+    funding: {
+      amount: 10000,
+      currency: "USD",
+      equityPercentage: 0,
+      fundingType: "mixed",
+    },
   },
   {
     id: "a16z-crypto-startup-accelerator",
