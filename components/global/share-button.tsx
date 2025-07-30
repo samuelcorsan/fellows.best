@@ -11,9 +11,9 @@ interface ShareButtonProps {
 
 export function ShareButton({ opportunity, className }: ShareButtonProps) {
   const handleShare = () => {
-    const tweetText = `I'm delighted to share that I've applied to ${opportunity.name} to elevate my startup's trajectory, tap into tailored mentorship, and collaborate with fellow innovators.
+    const tweetText = `Excited to share that I'm applying to ${opportunity.name}! This could be the start of an incredible new chapter.
 
-Can't wait to dive in and share updates as the journey unfolds!`;
+Working toward my goals and grateful for the amazing community that keeps me motivated. Will definitely share updates as the journey unfolds!`;
     const twitterIntentUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
       tweetText
     )}`;
