@@ -115,6 +115,21 @@ export function OpportunityCard({
                   {getDeadlineText(daysUntil)}
                 </div>
               </div>
+              
+              {opportunity.funding && (
+                <div className="mt-2 pt-2 border-t border-border/50">
+                  <div className="flex items-center justify-between text-xs">
+                    <span className="font-medium text-green-600">
+                      ${opportunity.funding.amount.toLocaleString()}
+                    </span>
+                    {opportunity.funding.equityPercentage > 0 && (
+                      <span className="font-medium text-orange-600">
+                        {opportunity.funding.equityPercentage}% equity
+                      </span>
+                    )}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </CardContent>
@@ -209,6 +224,27 @@ export function OpportunityCard({
                 )}
               </div>
             </div>
+            
+            {opportunity.funding && (
+              <div className="mt-3 pt-3 border-t border-border/50">
+                <div className="flex items-center justify-between text-sm">
+                  <div className="flex items-center gap-2">
+                    <span className="text-muted-foreground">Funding:</span>
+                    <span className="font-medium text-green-600">
+                      ${opportunity.funding.amount.toLocaleString()}
+                    </span>
+                  </div>
+                  {opportunity.funding.equityPercentage > 0 && (
+                    <div className="flex items-center gap-1">
+                      <span className="text-muted-foreground">Equity:</span>
+                      <span className="font-medium text-orange-600">
+                        {opportunity.funding.equityPercentage}%
+                      </span>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </CardContent>

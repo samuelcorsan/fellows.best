@@ -1627,13 +1627,21 @@ export function filterOpportunities(
       filters.tags.every((tag) => opp.tags.includes(tag));
 
     // Funding amount filter
-    const fundingMatch = !filters.fundingAmount || !opp.funding || 
-      (opp.funding.amount >= filters.fundingAmount.min && 
+    const isDefaultFundingRange = !filters.fundingAmount || 
+      (filters.fundingAmount.min === 0 && filters.fundingAmount.max === 2000000);
+    
+    const fundingMatch = isDefaultFundingRange || 
+      (opp.funding && filters.fundingAmount &&
+       opp.funding.amount >= filters.fundingAmount.min && 
        opp.funding.amount <= filters.fundingAmount.max);
 
     // Equity percentage filter
-    const equityMatch = !filters.equityPercentage || !opp.funding || 
-      (opp.funding.equityPercentage >= filters.equityPercentage.min && 
+    const isDefaultEquityRange = !filters.equityPercentage || 
+      (filters.equityPercentage.min === 0 && filters.equityPercentage.max === 20);
+    
+    const equityMatch = isDefaultEquityRange || 
+      (opp.funding && filters.equityPercentage &&
+       opp.funding.equityPercentage >= filters.equityPercentage.min && 
        opp.funding.equityPercentage <= filters.equityPercentage.max);
 
     return categoryMatch && regionMatch && tagMatch && fundingMatch && equityMatch;
