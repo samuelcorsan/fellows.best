@@ -4,9 +4,10 @@ import { getOpportunityById } from "@/lib/data";
 export async function generateMetadata({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }): Promise<Metadata> {
-  const opportunity = await getOpportunityById(params.id);
+  const { id } = await params;
+  const opportunity = await getOpportunityById(id);
 
   if (!opportunity) {
     return {
@@ -22,17 +23,17 @@ export async function generateMetadata({
     description: opportunity.fullDescription || opportunity.description,
     keywords: [...opportunity.tags].join(", "),
     alternates: {
-      canonical: `https://fellows.best/opportunity/${params.id}`,
+      canonical: `https://fellows.best/opportunity/${id}`,
     },
     openGraph: {
       title: `${opportunity.name} - Deadlines, Requirements & How to Apply`,
       description: opportunity.description,
       type: "article",
-      url: `https://fellows.best/opportunity/${params.id}`,
+      url: `https://fellows.best/opportunity/${id}`,
       siteName: "fellows.best",
       images: [
         {
-          url: `https://fellows.best/api/og?id=${params.id}`,
+          url: `https://fellows.best/api/og?id=${id}`,
           width: 1200,
           height: 630,
           alt: opportunity.name,
@@ -43,7 +44,7 @@ export async function generateMetadata({
       title: `${opportunity.name} - Deadlines, Requirements & How to Apply`,
       description: opportunity.description,
       card: "summary_large_image",
-      images: `https://fellows.best/api/og?id=${params.id}`,
+      images: `https://fellows.best/api/og?id=${id}`,
       creator: "@disamdev",
     },
     robots: {
