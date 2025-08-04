@@ -6,7 +6,7 @@ export async function generateMetadata({
 }: {
   params: { id: string };
 }): Promise<Metadata> {
-  const opportunity = getOpportunityById(params.id);
+  const opportunity = await getOpportunityById(params.id);
 
   if (!opportunity) {
     return {
