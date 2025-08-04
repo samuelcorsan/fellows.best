@@ -23,25 +23,31 @@ import {
 } from "@/lib/data";
 
 interface OpportunityPageProps {
-  params: {
+  params: Promise<{
     id: string;
-  };
-  searchParams: {
+  }>;
+  searchParams: Promise<{
     from?: string;
-  };
+  }>;
 }
 
-export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
-  const opportunity = getOpportunityById(params.id);
-  
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}): Promise<Metadata> {
+  const { id } = await params;
+  const opportunity = await getOpportunityById(id);
+
   if (!opportunity) {
     return {
-      title: 'Opportunity Not Found',
+      title: "Opportunity Not Found",
     };
   }
 
-  const ogImageUrl = opportunity.shareImageUrl || `/api/og?id=${opportunity.id}`;
-  
+  const ogImageUrl =
+    opportunity.shareImageUrl || `/api/og?id=${opportunity.id}`;
+
   return {
     title: `${opportunity.name} - ${opportunity.organizer} | fellows.best`,
     description: opportunity.description,
@@ -49,7 +55,7 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
       title: `${opportunity.name} - ${opportunity.organizer}`,
       description: opportunity.description,
       url: `/opportunity/${opportunity.id}`,
-      siteName: 'fellows.best',
+      siteName: "fellows.best",
       images: [
         {
           url: ogImageUrl,
@@ -58,10 +64,10 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
           alt: `${opportunity.name} opportunity details`,
         },
       ],
-      type: 'website',
+      type: "website",
     },
     twitter: {
-      card: 'summary_large_image',
+      card: "summary_large_image",
       title: `${opportunity.name} - ${opportunity.organizer}`,
       description: opportunity.description,
       images: [ogImageUrl],
@@ -69,8 +75,13 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
   };
 }
 
-export default function OpportunityPage({ params, searchParams }: OpportunityPageProps) {
-  const opportunity = getOpportunityById(params.id);
+export default async function OpportunityPage({
+  params,
+  searchParams,
+}: OpportunityPageProps) {
+  const { id } = await params;
+  const resolvedSearchParams = await searchParams;
+  const opportunity = await getOpportunityById(id);
 
   if (!opportunity) {
     notFound();
@@ -91,16 +102,15 @@ export default function OpportunityPage({ params, searchParams }: OpportunityPag
       "border-red-200 bg-red-50 text-red-700 dark:border-red-800 dark:bg-red-950 dark:text-red-300",
   };
 
-
   const getBackNavigation = () => {
-    switch (searchParams.from) {
-      case 'timeline':
-        return { url: '/browse?view=timeline', text: 'Back to Timeline' };
-      case 'home':
-        return { url: '/', text: 'Back to Home' };
-      case 'browse':
+    switch (resolvedSearchParams.from) {
+      case "timeline":
+        return { url: "/browse?view=timeline", text: "Back to Timeline" };
+      case "home":
+        return { url: "/", text: "Back to Home" };
+      case "browse":
       default:
-        return { url: '/browse', text: 'Back to Browse' };
+        return { url: "/browse", text: "Back to Browse" };
     }
   };
 
@@ -144,7 +154,11 @@ export default function OpportunityPage({ params, searchParams }: OpportunityPag
                 {opportunity.category}
               </Badge>
               {opportunity.tags.map((tag) => (
-                <Badge key={tag} variant="secondary" className="text-sm rounded-lg">
+                <Badge
+                  key={tag}
+                  variant="secondary"
+                  className="text-sm rounded-lg"
+                >
                   {tag}
                 </Badge>
               ))}
