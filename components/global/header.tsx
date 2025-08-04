@@ -204,8 +204,8 @@ export function Header() {
 
           {isMenuOpen && (
             <div className="fixed inset-0 top-16 z-50 bg-background/95 backdrop-blur-sm md:hidden">
-              <div className="flex flex-col h-full p-8">
-                <nav className="flex flex-col space-y-8 flex-grow justify-center">
+              <div className="flex flex-col h-full p-4">
+                <nav className="flex flex-col space-y-4 flex-grow justify-center items-start ml-4">
                   {navigation.map((item) => {
                     const Icon = item.icon;
                     const isActive = pathname === item.href;
@@ -213,7 +213,7 @@ export function Header() {
                       <Link
                         key={item.name}
                         href={item.href}
-                        className={`flex items-center space-x-4 text-lg font-medium transition-colors hover:text-muted-foreground ${
+                        className={`flex items-center space-x-3 text-base font-medium transition-colors hover:text-muted-foreground ${
                           isActive ? "text-foreground" : "text-foreground/90"
                         }`}
                         onClick={() => setIsMenuOpen(false)}
@@ -229,7 +229,7 @@ export function Header() {
                         setIsSignInOpen(true);
                         setIsMenuOpen(false);
                       }}
-                      className="flex items-center space-x-4 text-lg font-medium text-foreground/90 transition-colors hover:text-muted-foreground text-left"
+                      className="flex items-center space-x-3 text-base font-medium text-foreground/90 transition-colors hover:text-muted-foreground text-left"
                     >
                       <User className="h-6 w-6" />
                       <span>Get Started</span>
@@ -239,14 +239,14 @@ export function Header() {
                       <Link
                         href="/profile"
                         onClick={() => setIsMenuOpen(false)}
-                        className="flex items-center space-x-4 text-lg font-medium text-foreground/90 transition-colors hover:text-muted-foreground text-left"
+                        className="flex items-center space-x-3 text-base font-medium text-foreground/90 transition-colors hover:text-muted-foreground text-left"
                       >
                         <User className="h-6 w-6" />
                         <span>Profile</span>
                       </Link>
                       <button
                         onClick={handleSignOut}
-                        className="flex items-center space-x-4 text-lg font-medium text-foreground/90 transition-colors hover:text-muted-foreground text-left"
+                        className="flex items-center space-x-3 text-base font-medium text-foreground/90 transition-colors hover:text-muted-foreground text-left"
                       >
                         <LogOut className="h-6 w-6" />
                         <span>Sign Out</span>
