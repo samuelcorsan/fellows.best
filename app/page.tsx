@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Calendar, Filter, Bell, Clock, Search, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { fellowshipOpportunities } from "@/lib/data";
 import { InfiniteCarousel } from "@/components/features/infinite-carousel";
@@ -188,65 +188,243 @@ export default function Home() {
 
         <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <div className="text-center mb-16">
-            <h2 className="text-2xl md:text-3xl font-bold mb-4">What We Offer</h2>
+            <h2 className="text-2xl md:text-3xl font-bold mb-4">What You Get</h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Everything you need to discover, track, and succeed in your next
-              opportunity
+              Everything you need to understand your users:
             </p>
           </div>
 
-          <div className="max-w-4xl mx-auto mb-16">
-            <div className="grid grid-cols-1 md:grid-cols-2 border border-border/50 rounded-lg overflow-hidden shadow-lg relative">
-              <div className="group relative p-8 bg-card hover:bg-card/80 transition-all duration-300 overflow-hidden border-r border-b border-border/30">
+          <div className="max-w-6xl mx-auto mb-16">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 border border-stone-800 rounded-lg overflow-hidden shadow-lg relative">
+              <div 
+                className="group relative px-8 py-10 bg-card hover:bg-card/80 transition-all duration-300 overflow-hidden border-r border-b border-stone-800 lg:border-b-0"
+                onMouseMove={(e) => {
+                  const rect = e.currentTarget.getBoundingClientRect();
+                  const x = e.clientX - rect.left;
+                  const y = e.clientY - rect.top;
+                  e.currentTarget.style.setProperty("--mouse-x", `${x}px`);
+                  e.currentTarget.style.setProperty("--mouse-y", `${y}px`);
+                }}
+              >
+                <div
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 hidden dark:block"
+                  style={{
+                    background: `radial-gradient(400px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), rgba(255,255,255,0.1), transparent 70%)`,
+                  }}
+                />
+                <div
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 dark:hidden"
+                  style={{
+                    background: `radial-gradient(400px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), rgba(0,0,0,0.05), transparent 70%)`,
+                  }}
+                />
                 <div className="relative">
-                  <h3 className="text-xl font-semibold mb-4">
-                    Discover Opportunities
+                  <div className="flex items-center mb-5">
+                    <Search className="h-5 w-5 text-primary mr-3" />
+                    <span className="text-sm font-medium text-primary">Discovery</span>
+                  </div>
+                  <h3 className="text-xl mb-2">
+                    Opportunity Aggregation
                   </h3>
-                  <p className="text-muted-foreground leading-relaxed">
-                    Find fellowships, grants, accelerators, and competitions from
-                    around the world. Our comprehensive database is updated daily
-                    with new opportunities.
+                  <p className="text-xs text-muted-foreground leading-relaxed">
+                    Browse fellowships, grants, accelerators, hackathons, and funding opportunities from diverse sources all in one centralized platform.
                   </p>
                 </div>
               </div>
 
-              <div className="group relative p-8 bg-card hover:bg-card/80 transition-all duration-300 overflow-hidden border-b border-border/30">
+              <div 
+                className="group relative px-8 py-10 bg-card hover:bg-card/80 transition-all duration-300 overflow-hidden border-r border-b border-stone-800 md:border-r-0 lg:border-r lg:border-b-0"
+                onMouseMove={(e) => {
+                  const rect = e.currentTarget.getBoundingClientRect();
+                  const x = e.clientX - rect.left;
+                  const y = e.clientY - rect.top;
+                  e.currentTarget.style.setProperty("--mouse-x", `${x}px`);
+                  e.currentTarget.style.setProperty("--mouse-y", `${y}px`);
+                }}
+              >
+                <div
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 hidden dark:block"
+                  style={{
+                    background: `radial-gradient(400px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), rgba(255,255,255,0.1), transparent 70%)`,
+                  }}
+                />
+                <div
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 dark:hidden"
+                  style={{
+                    background: `radial-gradient(400px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), rgba(0,0,0,0.05), transparent 70%)`,
+                  }}
+                />
                 <div className="relative">
-                  <h3 className="text-xl font-semibold mb-4">Timeline & Calendar</h3>
-                  <p className="text-muted-foreground leading-relaxed">
-                    Visualize all application deadlines in an interactive timeline 
-                    view and export important dates directly to your calendar. 
-                    Track opening and closing dates across time to plan your applications strategically.
-                  </p>
-                </div>
-              </div>
-
-              <div className="group relative p-8 bg-card hover:bg-card/80 transition-all duration-300 overflow-hidden border-r border-border/30 md:border-b-0 border-b">
-                <div className="relative">
-                  <h3 className="text-xl font-semibold mb-4">
-                    Advanced Filtering
+                  <div className="flex items-center mb-5">
+                    <Filter className="h-5 w-5 text-primary mr-3" />
+                    <span className="text-sm font-medium text-primary">Filtering</span>
+                  </div>
+                  <h3 className="text-xl mb-2">
+                    Advanced Search
                   </h3>
-                  <p className="text-muted-foreground leading-relaxed">
-                    Filter by category, region, eligibility requirements, and tags
-                    to find opportunities that perfectly match your profile and
-                    interests.
+                  <p className="text-xs text-muted-foreground leading-relaxed">
+                    Filter opportunities by region, category, deadline status, keywords, and tags to find exactly what matches your interests and profile.
                   </p>
                 </div>
               </div>
 
-              <div className="group relative p-8 bg-card hover:bg-card/80 transition-all duration-300 overflow-hidden">
+              <div 
+                className="group relative px-8 py-10 bg-card hover:bg-card/80 transition-all duration-300 overflow-hidden border-b border-stone-800 md:border-r lg:border-r-0 lg:border-b-0"
+                onMouseMove={(e) => {
+                  const rect = e.currentTarget.getBoundingClientRect();
+                  const x = e.clientX - rect.left;
+                  const y = e.clientY - rect.top;
+                  e.currentTarget.style.setProperty("--mouse-x", `${x}px`);
+                  e.currentTarget.style.setProperty("--mouse-y", `${y}px`);
+                }}
+              >
+                <div
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 hidden dark:block"
+                  style={{
+                    background: `radial-gradient(400px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), rgba(255,255,255,0.1), transparent 70%)`,
+                  }}
+                />
+                <div
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 dark:hidden"
+                  style={{
+                    background: `radial-gradient(400px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), rgba(0,0,0,0.05), transparent 70%)`,
+                  }}
+                />
                 <div className="relative">
-                  <h3 className="text-xl font-semibold mb-4">Curated Quality</h3>
-                  <p className="text-muted-foreground leading-relaxed">
-                    Every opportunity is carefully reviewed and verified for
-                    authenticity. Focus on applying rather than searching through
-                    unreliable sources.
+                  <div className="flex items-center mb-5">
+                    <Calendar className="h-5 w-5 text-primary mr-3" />
+                    <span className="text-sm font-medium text-primary">Timeline</span>
+                  </div>
+                  <h3 className="text-xl mb-2">
+                    Deadline Visualization
+                  </h3>
+                  <p className="text-xs text-muted-foreground leading-relaxed">
+                    Visualize upcoming deadlines over weeks and months in an interactive timeline view to plan your applications strategically.
                   </p>
                 </div>
               </div>
+
+              <div 
+                className="group relative px-8 py-10 bg-card hover:bg-card/80 transition-all duration-300 overflow-hidden border-r border-b border-stone-800 md:border-b-0 lg:border-b"
+                onMouseMove={(e) => {
+                  const rect = e.currentTarget.getBoundingClientRect();
+                  const x = e.clientX - rect.left;
+                  const y = e.clientY - rect.top;
+                  e.currentTarget.style.setProperty("--mouse-x", `${x}px`);
+                  e.currentTarget.style.setProperty("--mouse-y", `${y}px`);
+                }}
+              >
+                <div
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 hidden dark:block"
+                  style={{
+                    background: `radial-gradient(400px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), rgba(255,255,255,0.1), transparent 70%)`,
+                  }}
+                />
+                <div
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 dark:hidden"
+                  style={{
+                    background: `radial-gradient(400px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), rgba(0,0,0,0.05), transparent 70%)`,
+                  }}
+                />
+                <div className="relative">
+                  <div className="flex items-center mb-5">
+                    <Bell className="h-5 w-5 text-primary mr-3" />
+                    <span className="text-sm font-medium text-primary">Reminders</span>
+                  </div>
+                  <h3 className="text-xl mb-2">
+                    Smart Alerts
+                  </h3>
+                  <p className="text-xs text-muted-foreground leading-relaxed">
+                    Save opportunity deadlines directly to your calendar and never miss an application window with integrated calendar exports.
+                  </p>
+                </div>
+              </div>
+
+              <div 
+                className="group relative px-8 py-10 bg-card hover:bg-card/80 transition-all duration-300 overflow-hidden border-r border-b border-stone-800 md:border-r-0 md:border-b-0 lg:border-r lg:border-b"
+                onMouseMove={(e) => {
+                  const rect = e.currentTarget.getBoundingClientRect();
+                  const x = e.clientX - rect.left;
+                  const y = e.clientY - rect.top;
+                  e.currentTarget.style.setProperty("--mouse-x", `${x}px`);
+                  e.currentTarget.style.setProperty("--mouse-y", `${y}px`);
+                }}
+              >
+                <div
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 hidden dark:block"
+                  style={{
+                    background: `radial-gradient(400px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), rgba(255,255,255,0.1), transparent 70%)`,
+                  }}
+                />
+                <div
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 dark:hidden"
+                  style={{
+                    background: `radial-gradient(400px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), rgba(0,0,0,0.05), transparent 70%)`,
+                  }}
+                />
+                <div className="relative">
+                  <div className="flex items-center justify-between mb-5">
+                    <div className="flex items-center">
+                      <Users className="h-5 w-5 text-primary mr-3" />
+                      <span className="text-sm font-medium text-primary">Dashboard</span>
+                    </div>
+                    <span className="text-xs bg-gray-700 text-white px-3 py-1 rounded-lg font-medium">Soon</span>
+                  </div>
+                  <h3 className="text-xl mb-2">
+                    Personal Tracking
+                  </h3>
+                  <p className="text-xs text-muted-foreground leading-relaxed">
+                    Save fellowships you've attended in your profile, ask alumni for recommendations to join, and build your fellowship network.
+                  </p>
+                </div>
+              </div>
+
+              <div 
+                className="group relative px-8 py-10 bg-card hover:bg-card/80 transition-all duration-300 overflow-hidden"
+                onMouseMove={(e) => {
+                  const rect = e.currentTarget.getBoundingClientRect();
+                  const x = e.clientX - rect.left;
+                  const y = e.clientY - rect.top;
+                  e.currentTarget.style.setProperty("--mouse-x", `${x}px`);
+                  e.currentTarget.style.setProperty("--mouse-y", `${y}px`);
+                }}
+              >
+                <div
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 hidden dark:block"
+                  style={{
+                    background: `radial-gradient(400px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), rgba(255,255,255,0.1), transparent 70%)`,
+                  }}
+                />
+                <div
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 dark:hidden"
+                  style={{
+                    background: `radial-gradient(400px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), rgba(0,0,0,0.05), transparent 70%)`,
+                  }}
+                />
+                <div className="relative">
+                  <div className="flex items-center mb-5">
+                    <Clock className="h-5 w-5 text-primary mr-3" />
+                    <span className="text-sm font-medium text-primary">Community</span>
+                  </div>
+                  <h3 className="text-xl mb-2">
+                    Community Driven
+                  </h3>
+                  <p className="text-xs text-muted-foreground leading-relaxed">
+                    Submit new opportunities through our community-driven platform. Help others discover amazing fellowships and funding opportunities.
+                  </p>
+                </div>
+              </div>
+
+              <div className="absolute hidden md:block w-full h-px bg-stone-800" style={{left: '0', top: '50%', transform: 'translateY(-50%)'}}></div>
+              <div className="absolute hidden lg:block w-3 h-px bg-white" style={{left: '33.333%', top: '50%', transform: 'translate(-50%, -50%)'}}></div>
+              <div className="absolute hidden lg:block w-px h-3 bg-white" style={{left: '33.333%', top: '50%', transform: 'translate(-50%, -50%)'}}></div>
+              
+              <div className="absolute hidden lg:block w-3 h-px bg-white" style={{left: '66.666%', top: '50%', transform: 'translate(-50%, -50%)'}}></div>
+              <div className="absolute hidden lg:block w-px h-3 bg-white" style={{left: '66.666%', top: '50%', transform: 'translate(-50%, -50%)'}}></div>
             </div>
           </div>
         </section>
+
       </div>
     );
   }
@@ -295,17 +473,16 @@ export default function Home() {
 
       <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="text-center mb-16">
-          <h2 className="text-2xl md:text-3xl font-bold mb-4">What We Offer</h2>
+          <h2 className="text-2xl md:text-3xl font-bold mb-4">What You Get</h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Everything you need to discover, track, and succeed in your next
-            opportunity
+            Everything you need to understand your users:
           </p>
         </div>
 
-        <div className="max-w-4xl mx-auto mb-16">
-          <div className="grid grid-cols-1 md:grid-cols-2 border border-border/50 rounded-lg overflow-hidden shadow-lg relative">
-            <div
-              className="group relative p-8 bg-card hover:bg-card/80 transition-all duration-300 overflow-hidden border-r border-b border-border/30"
+        <div className="max-w-6xl mx-auto mb-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 border border-stone-800 rounded-lg overflow-hidden shadow-lg relative">
+            <div 
+              className="group relative px-8 py-10 bg-card hover:bg-card/80 transition-all duration-300 overflow-hidden border-r border-b border-stone-800 lg:border-b-0"
               onMouseMove={(e) => {
                 const rect = e.currentTarget.getBoundingClientRect();
                 const x = e.clientX - rect.left;
@@ -327,19 +504,20 @@ export default function Home() {
                 }}
               />
               <div className="relative">
-                <h3 className="text-xl font-semibold mb-4">
-                  Discover Opportunities
+                <div className="flex items-center mb-5">
+                  <Search className="h-5 w-5 text-primary mr-3" />
+                  <span className="text-sm font-medium text-primary">Discovery</span>
+                </div>
+                <h3 className="text-xl mb-2">Opportunity Aggregation
                 </h3>
-                <p className="text-muted-foreground leading-relaxed">
-                  Find fellowships, grants, accelerators, and competitions from
-                  around the world. Our comprehensive database is updated daily
-                  with new opportunities.
+                <p className="text-xs text-muted-foreground leading-relaxed">
+                  Browse fellowships, grants, accelerators, hackathons, and funding opportunities from diverse sources all in one centralized platform.
                 </p>
               </div>
             </div>
 
-            <div
-              className="group relative p-8 bg-card hover:bg-card/80 transition-all duration-300 overflow-hidden border-b border-border/30"
+            <div 
+              className="group relative px-8 py-10 bg-card hover:bg-card/80 transition-all duration-300 overflow-hidden border-r border-b border-stone-800 md:border-r-0 lg:border-r lg:border-b-0"
               onMouseMove={(e) => {
                 const rect = e.currentTarget.getBoundingClientRect();
                 const x = e.clientX - rect.left;
@@ -361,51 +539,20 @@ export default function Home() {
                 }}
               />
               <div className="relative">
-                <h3 className="text-xl font-semibold mb-4">Smart Tracking</h3>
-                <p className="text-muted-foreground leading-relaxed">
-                  Never miss a deadline with intelligent reminders and progress
-                  tracking. Monitor your applications and stay organized
-                  throughout your journey.
-                </p>
-              </div>
-            </div>
-
-            <div
-              className="group relative p-8 bg-card hover:bg-card/80 transition-all duration-300 overflow-hidden border-r border-border/30 md:border-b-0 border-b"
-              onMouseMove={(e) => {
-                const rect = e.currentTarget.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                e.currentTarget.style.setProperty("--mouse-x", `${x}px`);
-                e.currentTarget.style.setProperty("--mouse-y", `${y}px`);
-              }}
-            >
-              <div
-                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 hidden dark:block"
-                style={{
-                  background: `radial-gradient(400px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), rgba(255,255,255,0.1), transparent 70%)`,
-                }}
-              />
-              <div
-                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 dark:hidden"
-                style={{
-                  background: `radial-gradient(400px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), rgba(0,0,0,0.05), transparent 70%)`,
-                }}
-              />
-              <div className="relative">
-                <h3 className="text-xl font-semibold mb-4">
-                  Advanced Filtering
+                <div className="flex items-center mb-5">
+                  <Filter className="h-5 w-5 text-primary mr-3" />
+                  <span className="text-sm font-medium text-primary">Filtering</span>
+                </div>
+                <h3 className="text-xl mb-2">Advanced Search
                 </h3>
-                <p className="text-muted-foreground leading-relaxed">
-                  Filter by category, region, eligibility requirements, and tags
-                  to find opportunities that perfectly match your profile and
-                  interests.
+                <p className="text-xs text-muted-foreground leading-relaxed">
+                  Filter opportunities by region, category, deadline status, keywords, and tags to find exactly what matches your interests and profile.
                 </p>
               </div>
             </div>
 
-            <div
-              className="group relative p-8 bg-card hover:bg-card/80 transition-all duration-300 overflow-hidden"
+            <div 
+              className="group relative px-8 py-10 bg-card hover:bg-card/80 transition-all duration-300 overflow-hidden border-b border-stone-800 md:border-r lg:border-r-0 lg:border-b-0"
               onMouseMove={(e) => {
                 const rect = e.currentTarget.getBoundingClientRect();
                 const x = e.clientX - rect.left;
@@ -427,14 +574,132 @@ export default function Home() {
                 }}
               />
               <div className="relative">
-                <h3 className="text-xl font-semibold mb-4">Curated Quality</h3>
-                <p className="text-muted-foreground leading-relaxed">
-                  Every opportunity is carefully reviewed and verified for
-                  authenticity. Focus on applying rather than searching through
-                  unreliable sources.
+                <div className="flex items-center mb-5">
+                  <Calendar className="h-5 w-5 text-primary mr-3" />
+                  <span className="text-sm font-medium text-primary">Timeline</span>
+                </div>
+                <h3 className="text-xl mb-2">Deadline Visualization
+                </h3>
+                <p className="text-xs text-muted-foreground leading-relaxed">
+                  Visualize upcoming deadlines over weeks and months in an interactive timeline view to plan your applications strategically.
                 </p>
               </div>
             </div>
+
+            <div 
+              className="group relative px-8 py-10 bg-card hover:bg-card/80 transition-all duration-300 overflow-hidden border-r border-b border-stone-800 md:border-b-0 lg:border-b"
+              onMouseMove={(e) => {
+                const rect = e.currentTarget.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                e.currentTarget.style.setProperty("--mouse-x", `${x}px`);
+                e.currentTarget.style.setProperty("--mouse-y", `${y}px`);
+              }}
+            >
+              <div
+                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 hidden dark:block"
+                style={{
+                  background: `radial-gradient(400px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), rgba(255,255,255,0.1), transparent 70%)`,
+                }}
+              />
+              <div
+                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 dark:hidden"
+                style={{
+                  background: `radial-gradient(400px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), rgba(0,0,0,0.05), transparent 70%)`,
+                }}
+              />
+              <div className="relative">
+                <div className="flex items-center mb-5">
+                  <Bell className="h-5 w-5 text-primary mr-3" />
+                  <span className="text-sm font-medium text-primary">Reminders</span>
+                </div>
+                <h3 className="text-xl mb-2">Smart Alerts
+                </h3>
+                <p className="text-xs text-muted-foreground leading-relaxed">
+                  Save opportunity deadlines directly to your calendar and never miss an application window with integrated calendar exports.
+                </p>
+              </div>
+            </div>
+
+            <div 
+              className="group relative px-8 py-10 bg-card hover:bg-card/80 transition-all duration-300 overflow-hidden border-r border-b border-stone-800 md:border-r-0 md:border-b-0 lg:border-r lg:border-b"
+              onMouseMove={(e) => {
+                const rect = e.currentTarget.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                e.currentTarget.style.setProperty("--mouse-x", `${x}px`);
+                e.currentTarget.style.setProperty("--mouse-y", `${y}px`);
+              }}
+            >
+              <div
+                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 hidden dark:block"
+                style={{
+                  background: `radial-gradient(400px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), rgba(255,255,255,0.1), transparent 70%)`,
+                }}
+              />
+              <div
+                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 dark:hidden"
+                style={{
+                  background: `radial-gradient(400px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), rgba(0,0,0,0.05), transparent 70%)`,
+                }}
+              />
+              <div className="relative">
+                <div className="flex items-center justify-between mb-5">
+                  <div className="flex items-center">
+                    <Users className="h-5 w-5 text-primary mr-3" />
+                    <span className="text-sm font-medium text-primary">Dashboard</span>
+                  </div>
+                  <span className="text-xs bg-gray-700 text-white px-3 py-1 rounded-lg font-medium">Soon</span>
+                </div>
+                <h3 className="text-xl mb-2">Personal Tracking
+                </h3>
+                <p className="text-xs text-muted-foreground leading-relaxed">
+                  Save fellowships you've attended in your profile, ask alumni for recommendations to join, and build your fellowship network.
+                </p>
+              </div>
+            </div>
+
+            <div 
+              className="group relative px-8 py-10 bg-card hover:bg-card/80 transition-all duration-300 overflow-hidden"
+              onMouseMove={(e) => {
+                const rect = e.currentTarget.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                e.currentTarget.style.setProperty("--mouse-x", `${x}px`);
+                e.currentTarget.style.setProperty("--mouse-y", `${y}px`);
+              }}
+            >
+              <div
+                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 hidden dark:block"
+                style={{
+                  background: `radial-gradient(400px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), rgba(255,255,255,0.1), transparent 70%)`,
+                }}
+              />
+              <div
+                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 dark:hidden"
+                style={{
+                  background: `radial-gradient(400px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), rgba(0,0,0,0.05), transparent 70%)`,
+                }}
+              />
+              <div className="relative">
+                <div className="flex items-center mb-5">
+                  <Clock className="h-5 w-5 text-primary mr-3" />
+                  <span className="text-sm font-medium text-primary">Community</span>
+                </div>
+                <h3 className="text-xl mb-2">Community Driven
+                </h3>
+                <p className="text-xs text-muted-foreground leading-relaxed">
+                  Submit new opportunities through our community-driven platform. Help others discover amazing fellowships and funding opportunities.
+                </p>
+              </div>
+            </div>
+
+            <div className="absolute hidden md:block w-full h-px bg-stone-800" style={{left: '0', top: '50%', transform: 'translateY(-50%)'}}></div>
+            <div className="absolute hidden lg:block w-3 h-px bg-white" style={{left: '33.333%', top: '50%', transform: 'translate(-50%, -50%)'}}></div>
+            <div className="absolute hidden lg:block w-px h-3 bg-white" style={{left: '33.333%', top: '50%', transform: 'translate(-50%, -50%)'}}></div>
+            
+            <div className="absolute hidden lg:block w-3 h-px bg-white" style={{left: '66.666%', top: '50%', transform: 'translate(-50%, -50%)'}}></div>
+            <div className="absolute hidden lg:block w-px h-3 bg-white" style={{left: '66.666%', top: '50%', transform: 'translate(-50%, -50%)'}}></div>
           </div>
         </div>
       </section>
