@@ -80,3 +80,10 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer utilities {
+  .mobile-menu-blur {
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+}

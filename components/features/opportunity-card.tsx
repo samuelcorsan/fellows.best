@@ -146,34 +146,34 @@ export function OpportunityCard({
     <Card
       className={cn(
         "hover:shadow-lg transition-all duration-200 hover:-translate-y-1 flex flex-col",
-        isCarousel ? "h-[320px]" : "",
+        isCarousel ? "h-[280px] sm:h-[320px]" : "",
         className
       )}
     >
-      <CardContent className="p-6 flex-grow">
-        <div className="flex items-start space-x-4">
+      <CardContent className="p-4 sm:p-6 flex-grow flex flex-col">
+        <div className="flex items-start space-x-3 sm:space-x-4 flex-grow">
           <Image
             src={opportunity.logoUrl}
             alt={`${opportunity.name} logo`}
-            width={60}
-            height={60}
-            className="rounded-lg object-cover"
+            width={50}
+            height={50}
+            className="w-[50px] h-[50px] sm:w-[60px] sm:h-[60px] rounded-lg object-cover flex-shrink-0"
             loading="lazy"
             placeholder="blur"
             blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAoACgDASIAAhEBAxEB/8QAFwABAQEBAAAAAAAAAAAAAAAABgAHA//EACUQAAIBAwMEAgMBAAAAAAAAAAECAwAEEQUSITFBUWFxBhMiMpH/xAAXAQADAQAAAAAAAAAAAAAAAAABAgME/8QAHhEAAgICAwEBAAAAAAAAAAAAAAECEQMhEjFBUWH/2gAMAwEAAhEDEQA/AO5ooor0HFFFFFAFFFFABRRRQAUUUUAf/9k="
           />
-          <div className="flex-1 min-w-0">
+          <div className="flex-1 min-w-0 flex flex-col h-full">
             <div className="flex items-start justify-between mb-2">
               <div className="flex-1 min-w-0">
-                <h3 className="font-semibold text-lg mb-1 line-clamp-1">
+                <h3 className="font-semibold text-base sm:text-lg mb-1 line-clamp-1">
                   {opportunity.name}
                 </h3>
-                <p className="text-muted-foreground text-sm mb-3 line-clamp-2">
+                <p className="text-muted-foreground text-xs sm:text-sm mb-2 sm:mb-3 line-clamp-2">
                   {opportunity.description}
                 </p>
               </div>
               <div
-                className={`px-3 py-1 rounded-full text-sm font-medium border whitespace-nowrap ml-2 ${urgencyStyles[urgency]}`}
+                className={`px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-medium border whitespace-nowrap ml-2 flex-shrink-0 ${urgencyStyles[urgency]}`}
               >
                 <span className="hidden sm:inline">
                   {getDeadlineText(daysUntil)}
@@ -184,9 +184,9 @@ export function OpportunityCard({
               </div>
             </div>
 
-            <div className="flex items-center space-x-4 text-sm text-muted-foreground mb-4">
+            <div className="flex items-center space-x-2 sm:space-x-4 text-xs sm:text-sm text-muted-foreground mb-3">
               <div className="flex items-center space-x-1">
-                <Calendar className="h-4 w-4" />
+                <Calendar className="h-3 w-3 sm:h-4 sm:w-4" />
                 <span className="hidden sm:inline">
                   {opportunity.closeDate
                     ? `Closes ${new Date(
@@ -204,53 +204,30 @@ export function OpportunityCard({
                 </span>
               </div>
               <div className="flex items-center space-x-1">
-                <MapPin className="h-4 w-4" />
-                <span>{opportunity.region}</span>
+                <MapPin className="h-3 w-3 sm:h-4 sm:w-4" />
+                <span className="truncate">{opportunity.region}</span>
               </div>
             </div>
 
-            <div className="flex items-center justify-between">
-              <div className="flex flex-wrap gap-2">
-                <Badge variant="outline" className="rounded-lg">{opportunity.category}</Badge>
-                {opportunity.tags.slice(0, 2).map((tag) => (
+            <div className="mt-auto">
+              <div className="flex flex-wrap gap-1 sm:gap-2">
+                <Badge variant="outline" className="rounded-lg text-xs">{opportunity.category}</Badge>
+                {opportunity.tags.slice(0, isCarousel ? 1 : 2).map((tag) => (
                   <Badge key={tag} variant="secondary" className="text-xs rounded-lg">
                     {tag}
                   </Badge>
                 ))}
-                {opportunity.tags.length > 2 && (
+                {opportunity.tags.length > (isCarousel ? 1 : 2) && (
                   <Badge variant="secondary" className="text-xs rounded-lg">
-                    +{opportunity.tags.length - 2} more
+                    +{opportunity.tags.length - (isCarousel ? 1 : 2)} more
                   </Badge>
                 )}
               </div>
             </div>
-            
-            {opportunity.funding && !isCarousel && (
-              <div className="mt-3 pt-3 border-t border-border/50">
-                <div className="flex items-center justify-between text-sm">
-                  <div className="flex items-center gap-2">
-                    <span className="text-muted-foreground">
-                      {opportunity.funding.isApproximate ? "Avg Funding:" : "Funding:"}
-                    </span>
-                    <span className="font-medium text-green-600">
-                      ${opportunity.funding.amount.toLocaleString()}
-                    </span>
-                  </div>
-                  {opportunity.funding.equityPercentage > 0 && (
-                    <div className="flex items-center gap-1">
-                      <span className="text-muted-foreground">Equity:</span>
-                      <span className="font-medium text-orange-600">
-                        {opportunity.funding.equityPercentage}%
-                      </span>
-                    </div>
-                  )}
-                </div>
-              </div>
-            )}
           </div>
         </div>
       </CardContent>
-      <CardFooter className="px-6 py-4 bg-muted/50 flex items-center justify-between">
+      <CardFooter className="px-4 sm:px-6 py-3 sm:py-4 bg-muted/50 flex items-center justify-between">
         {isCarousel ? (
           <Button asChild className="w-full">
             <Link href={getOpportunityUrl()}>View Details</Link>

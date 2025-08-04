@@ -97,11 +97,11 @@ export default function Home() {
           </div>
         </section>
         
-        <div className="space-y-4">
-          <div className="w-full overflow-hidden [mask-image:linear-gradient(to_right,transparent,white_20%,white_80%,transparent)]">
-            <div className="flex min-w-full shrink-0 gap-4 py-4 w-max flex-nowrap animate-scroll-reverse" style={{ animationDuration: "80s" }}>
+        <div className="space-y-2 sm:space-y-4">
+          <div className="w-full overflow-hidden [mask-image:linear-gradient(to_right,transparent,white_10%,white_90%,transparent)] sm:[mask-image:linear-gradient(to_right,transparent,white_20%,white_80%,transparent)]">
+            <div className="flex min-w-full shrink-0 gap-2 sm:gap-3 lg:gap-4 py-2 sm:py-4 w-max flex-nowrap animate-scroll-reverse" style={{ animationDuration: "80s" }}>
               {Array.from({ length: 12 }, (_, i) => (
-                <div key={`skeleton-1-${i}`} className="w-[320px] h-[320px] shrink-0 bg-card border rounded-lg flex flex-col animate-pulse">
+                <div key={`skeleton-1-${i}`} className="w-[280px] sm:w-[320px] lg:w-[350px] h-[280px] sm:h-[320px] shrink-0 bg-card border rounded-lg flex flex-col animate-pulse">
                   <div className="p-6 flex-grow">
                     <div className="flex items-start space-x-4">
                       <div className="w-[60px] h-[60px] bg-muted rounded-lg" />
@@ -136,10 +136,10 @@ export default function Home() {
             </div>
           </div>
           
-          <div className="w-full overflow-hidden [mask-image:linear-gradient(to_right,transparent,white_20%,white_80%,transparent)]">
-            <div className="flex min-w-full shrink-0 gap-4 py-4 w-max flex-nowrap animate-scroll" style={{ animationDuration: "80s" }}>
+          <div className="w-full overflow-hidden [mask-image:linear-gradient(to_right,transparent,white_10%,white_90%,transparent)] sm:[mask-image:linear-gradient(to_right,transparent,white_20%,white_80%,transparent)]">
+            <div className="flex min-w-full shrink-0 gap-2 sm:gap-3 lg:gap-4 py-2 sm:py-4 w-max flex-nowrap animate-scroll" style={{ animationDuration: "80s" }}>
               {Array.from({ length: 12 }, (_, i) => (
-                <div key={`skeleton-2-${i}`} className="w-[320px] h-[320px] shrink-0 bg-card border rounded-lg flex flex-col animate-pulse">
+                <div key={`skeleton-2-${i}`} className="w-[280px] sm:w-[320px] lg:w-[350px] h-[280px] sm:h-[320px] shrink-0 bg-card border rounded-lg flex flex-col animate-pulse">
                   <div className="p-6 flex-grow">
                     <div className="flex items-start space-x-4">
                       <div className="w-[60px] h-[60px] bg-muted rounded-lg" />
@@ -277,7 +277,7 @@ export default function Home() {
         </div>
       </section>
 
-      <div className="space-y-4">
+      <div className="space-y-2 sm:space-y-4">
         <InfiniteCarousel opportunities={distributedCarousel1} direction="right" speed="slow" from="home" />
         <InfiniteCarousel opportunities={distributedCarousel2} direction="left" speed="slow" from="home" />
       </div>

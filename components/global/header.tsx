@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
@@ -31,6 +31,31 @@ import { SignInDialog } from "./sign-in-dialog";
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  
+  // Add blur effect to main content when menu is open
+  React.useEffect(() => {
+    if (isMenuOpen) {
+      const mainElement = document.querySelector('main');
+      const footerElement = document.querySelector('footer');
+      if (mainElement) mainElement.style.filter = 'blur(8px)';
+      if (footerElement) footerElement.style.filter = 'blur(8px)';
+      document.body.style.overflow = 'hidden';
+    } else {
+      const mainElement = document.querySelector('main');
+      const footerElement = document.querySelector('footer');
+      if (mainElement) mainElement.style.filter = '';
+      if (footerElement) footerElement.style.filter = '';
+      document.body.style.overflow = '';
+    }
+    
+    return () => {
+      const mainElement = document.querySelector('main');
+      const footerElement = document.querySelector('footer');
+      if (mainElement) mainElement.style.filter = '';
+      if (footerElement) footerElement.style.filter = '';
+      document.body.style.overflow = '';
+    };
+  }, [isMenuOpen]);
   const [isSignInOpen, setIsSignInOpen] = useState(false);
   const { theme, setTheme } = useTheme();
   const { data: session, isPending } = authClient.useSession();
@@ -168,42 +193,69 @@ export function Header() {
           </div>
 
           {isMenuOpen && (
-            <div className="md:hidden py-4 border-t">
-              <nav className="flex flex-col space-y-4">
-                {navigation.map((item) => {
-                  const Icon = item.icon;
-                  const isActive = pathname === item.href;
-                  return (
-                    <Link
-                      key={item.name}
-                      href={item.href}
-                      className={`flex items-center space-x-2 text-sm font-medium transition-colors hover:text-foreground ${
-                        isActive ? "text-foreground" : "text-muted-foreground"
-                      }`}
-                      onClick={() => setIsMenuOpen(false)}
-                    >
-                      <Icon className="h-4 w-4" />
-                      <span>{item.name}</span>
-                    </Link>
-                  );
-                })}
-                <div className="flex items-center justify-between pt-4 border-t">
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() =>
-                      setTheme(theme === "dark" ? "light" : "dark")
-                    }
+            <div className="fixed inset-0 top-16 z-50 bg-black/90 md:hidden">
+              <div className="flex flex-col h-full p-8">
+                <nav className="flex flex-col space-y-8 flex-grow justify-center">
+                  {navigation.map((item) => {
+                    const Icon = item.icon;
+                    const isActive = pathname === item.href;
+                    return (
+                      <Link
+                        key={item.name}
+                        href={item.href}
+                        className={`flex items-center space-x-4 text-2xl font-medium text-white transition-colors hover:text-white/80 drop-shadow-lg ${
+                          isActive ? "text-white" : "text-white/90"
+                        }`}
+                        onClick={() => setIsMenuOpen(false)}
+                      >
+                        <Icon className="h-6 w-6" />
+                        <span>{item.name}</span>
+                      </Link>
+                    );
+                  })}
+                  <button
+                    onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                    className="flex items-center space-x-4 text-2xl font-medium text-white/90 transition-colors hover:text-white/80 text-left drop-shadow-lg"
                   >
-                    <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-                    <Moon className="h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-                    <span className="ml-2">Toggle theme</span>
-                  </Button>
-                  <div className="flex items-center">
-                    <UserMenu />
-                  </div>
-                </div>
-              </nav>
+                    {theme === "dark" ? (
+                      <Sun className="h-6 w-6" />
+                    ) : (
+                      <Moon className="h-6 w-6" />
+                    )}
+                    <span>{theme === "dark" ? "Light Mode" : "Dark Mode"}</span>
+                  </button>
+                  {!session ? (
+                    <button
+                      onClick={() => {
+                        setIsSignInOpen(true);
+                        setIsMenuOpen(false);
+                      }}
+                      className="flex items-center space-x-4 text-2xl font-medium text-white/90 transition-colors hover:text-white/80 text-left drop-shadow-lg"
+                    >
+                      <User className="h-6 w-6" />
+                      <span>Get Started</span>
+                    </button>
+                  ) : (
+                    <>
+                      <Link
+                        href="/profile"
+                        onClick={() => setIsMenuOpen(false)}
+                        className="flex items-center space-x-4 text-2xl font-medium text-white/90 transition-colors hover:text-white/80 text-left drop-shadow-lg"
+                      >
+                        <User className="h-6 w-6" />
+                        <span>Profile</span>
+                      </Link>
+                      <button
+                        onClick={handleSignOut}
+                        className="flex items-center space-x-4 text-2xl font-medium text-white/90 transition-colors hover:text-white/80 text-left drop-shadow-lg"
+                      >
+                        <LogOut className="h-6 w-6" />
+                        <span>Sign Out</span>
+                      </button>
+                    </>
+                  )}
+                </nav>
+              </div>
             </div>
           )}
         </div>

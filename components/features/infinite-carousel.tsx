@@ -25,13 +25,13 @@ export function InfiniteCarousel({
   return (
     <div
       className={cn(
-        "w-full overflow-hidden [mask-image:linear-gradient(to_right,transparent,white_20%,white_80%,transparent)]",
+        "w-full overflow-hidden [mask-image:linear-gradient(to_right,transparent,white_10%,white_90%,transparent)] sm:[mask-image:linear-gradient(to_right,transparent,white_20%,white_80%,transparent)]",
         className
       )}
     >
       <div
         className={cn(
-          "flex min-w-full shrink-0 gap-4 py-4 w-max flex-nowrap",
+          "flex min-w-full shrink-0 gap-2 sm:gap-3 lg:gap-4 py-2 sm:py-4 w-max flex-nowrap",
           direction === "left" ? "animate-scroll" : "animate-scroll-reverse",
           speed === "slow" && "animation-duration-slow",
           speed === "fast" && "animation-duration-fast",
@@ -43,7 +43,7 @@ export function InfiniteCarousel({
         }}
       >
         {openOpportunities.map((opportunity, idx) => (
-          <div key={`${opportunity.id}-${idx}`} className="w-[350px] shrink-0">
+          <div key={`${opportunity.id}-${idx}`} className="w-[280px] sm:w-[320px] lg:w-[350px] shrink-0">
             <OpportunityCard
               opportunity={opportunity}
               className="w-full"
@@ -53,7 +53,7 @@ export function InfiniteCarousel({
           </div>
         ))}
         {openOpportunities.map((opportunity, idx) => (
-          <div key={`${opportunity.id}-${idx}-clone`} className="w-[350px] shrink-0">
+          <div key={`${opportunity.id}-${idx}-clone`} className="w-[280px] sm:w-[320px] lg:w-[350px] shrink-0">
             <OpportunityCard
               opportunity={opportunity}
               className="w-full"
