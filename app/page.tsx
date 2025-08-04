@@ -1,7 +1,15 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, Calendar, Filter, Bell, Clock, Search, Users } from "lucide-react";
+import {
+  ArrowRight,
+  Calendar,
+  Filter,
+  Bell,
+  Clock,
+  Search,
+  Users,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { fellowshipOpportunities } from "@/lib/data";
 import { InfiniteCarousel } from "@/components/features/infinite-carousel";
@@ -25,7 +33,7 @@ function shuffle<T>(array: T[]): T[] {
 
 function distributeEvenly<T extends { organizer: string }>(array: T[]): T[] {
   const organizerGroups: { [key: string]: T[] } = {};
-  array.forEach(item => {
+  array.forEach((item) => {
     if (!organizerGroups[item.organizer]) {
       organizerGroups[item.organizer] = [];
     }
@@ -34,14 +42,16 @@ function distributeEvenly<T extends { organizer: string }>(array: T[]): T[] {
 
   const organizers = Object.keys(organizerGroups);
   const shuffledOrganizers = shuffle([...organizers]);
-  
-  Object.keys(organizerGroups).forEach(org => {
+
+  Object.keys(organizerGroups).forEach((org) => {
     organizerGroups[org] = shuffle(organizerGroups[org]);
   });
-  
+
   const result: T[] = [];
-  let maxItemsPerOrg = Math.max(...Object.values(organizerGroups).map(group => group.length));
-  
+  let maxItemsPerOrg = Math.max(
+    ...Object.values(organizerGroups).map((group) => group.length)
+  );
+
   for (let round = 0; round < maxItemsPerOrg; round++) {
     for (const org of shuffledOrganizers) {
       if (organizerGroups[org].length > round) {
@@ -49,23 +59,27 @@ function distributeEvenly<T extends { organizer: string }>(array: T[]): T[] {
       }
     }
   }
-  
+
   return result;
 }
 
 export default function Home() {
-  const [distributedCarousel1, setDistributedCarousel1] = useState<typeof fellowshipOpportunities>([]);
-  const [distributedCarousel2, setDistributedCarousel2] = useState<typeof fellowshipOpportunities>([]);
+  const [distributedCarousel1, setDistributedCarousel1] = useState<
+    typeof fellowshipOpportunities
+  >([]);
+  const [distributedCarousel2, setDistributedCarousel2] = useState<
+    typeof fellowshipOpportunities
+  >([]);
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
     setIsClient(true);
-    
+
     const distributed = distributeEvenly([...fellowshipOpportunities]);
     const midpoint = Math.floor(distributed.length / 2);
     const carousel1 = distributed.slice(0, midpoint);
     const carousel2 = distributed.slice(midpoint);
-    
+
     setDistributedCarousel1(distributeEvenly([...carousel1]));
     setDistributedCarousel2(distributeEvenly([...carousel2]));
   }, []);
@@ -96,12 +110,18 @@ export default function Home() {
             </div>
           </div>
         </section>
-        
+
         <div className="space-y-2 sm:space-y-4">
           <div className="w-full overflow-hidden [mask-image:linear-gradient(to_right,transparent,white_10%,white_90%,transparent)] sm:[mask-image:linear-gradient(to_right,transparent,white_20%,white_80%,transparent)]">
-            <div className="flex min-w-full shrink-0 gap-2 sm:gap-3 lg:gap-4 py-2 sm:py-4 w-max flex-nowrap animate-scroll-reverse" style={{ animationDuration: "80s" }}>
+            <div
+              className="flex min-w-full shrink-0 gap-2 sm:gap-3 lg:gap-4 py-2 sm:py-4 w-max flex-nowrap animate-scroll-reverse"
+              style={{ animationDuration: "80s" }}
+            >
               {Array.from({ length: 12 }, (_, i) => (
-                <div key={`skeleton-1-${i}`} className="w-[280px] sm:w-[320px] lg:w-[350px] h-[280px] sm:h-[320px] shrink-0 bg-card border rounded-lg flex flex-col animate-pulse">
+                <div
+                  key={`skeleton-1-${i}`}
+                  className="w-[280px] sm:w-[320px] lg:w-[350px] h-[280px] sm:h-[320px] shrink-0 bg-card border rounded-lg flex flex-col animate-pulse"
+                >
                   <div className="p-6 flex-grow">
                     <div className="flex items-start space-x-4">
                       <div className="w-[60px] h-[60px] bg-muted rounded-lg" />
@@ -135,11 +155,17 @@ export default function Home() {
               ))}
             </div>
           </div>
-          
+
           <div className="w-full overflow-hidden [mask-image:linear-gradient(to_right,transparent,white_10%,white_90%,transparent)] sm:[mask-image:linear-gradient(to_right,transparent,white_20%,white_80%,transparent)]">
-            <div className="flex min-w-full shrink-0 gap-2 sm:gap-3 lg:gap-4 py-2 sm:py-4 w-max flex-nowrap animate-scroll" style={{ animationDuration: "80s" }}>
+            <div
+              className="flex min-w-full shrink-0 gap-2 sm:gap-3 lg:gap-4 py-2 sm:py-4 w-max flex-nowrap animate-scroll"
+              style={{ animationDuration: "80s" }}
+            >
               {Array.from({ length: 12 }, (_, i) => (
-                <div key={`skeleton-2-${i}`} className="w-[280px] sm:w-[320px] lg:w-[350px] h-[280px] sm:h-[320px] shrink-0 bg-card border rounded-lg flex flex-col animate-pulse">
+                <div
+                  key={`skeleton-2-${i}`}
+                  className="w-[280px] sm:w-[320px] lg:w-[350px] h-[280px] sm:h-[320px] shrink-0 bg-card border rounded-lg flex flex-col animate-pulse"
+                >
                   <div className="p-6 flex-grow">
                     <div className="flex items-start space-x-4">
                       <div className="w-[60px] h-[60px] bg-muted rounded-lg" />
@@ -174,7 +200,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-        
+
         <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="text-center">
             <Button asChild size="lg">
@@ -188,7 +214,9 @@ export default function Home() {
 
         <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <div className="text-center mb-16">
-            <h2 className="text-2xl md:text-3xl font-bold mb-4">What You Get</h2>
+            <h2 className="text-2xl md:text-3xl font-medium mb-4">
+              What You Get
+            </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               Everything you need to understand your users:
             </p>
@@ -196,7 +224,7 @@ export default function Home() {
 
           <div className="max-w-6xl mx-auto mb-16">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 border border-border rounded-lg overflow-hidden shadow-lg relative">
-              <div 
+              <div
                 className="group relative px-8 py-10 bg-card hover:bg-card/80 transition-all duration-300 overflow-hidden border-r border-b border-border lg:border-b-0"
                 onMouseMove={(e) => {
                   const rect = e.currentTarget.getBoundingClientRect();
@@ -221,18 +249,20 @@ export default function Home() {
                 <div className="relative">
                   <div className="flex items-center mb-5">
                     <Search className="h-5 w-5 text-primary mr-3" />
-                    <span className="text-sm font-medium text-primary">Discovery</span>
+                    <span className="text-sm font-medium text-primary">
+                      Discovery
+                    </span>
                   </div>
-                  <h3 className="text-xl mb-2">
-                    Opportunity Aggregation
-                  </h3>
+                  <h3 className="text-xl mb-2">Opportunity Aggregation</h3>
                   <p className="text-xs text-muted-foreground leading-relaxed">
-                    Browse fellowships, grants, accelerators, hackathons, and funding opportunities from diverse sources all in one centralized platform.
+                    Browse fellowships, grants, accelerators, hackathons, and
+                    funding opportunities from diverse sources all in one
+                    centralized platform.
                   </p>
                 </div>
               </div>
 
-              <div 
+              <div
                 className="group relative px-8 py-10 bg-card hover:bg-card/80 transition-all duration-300 overflow-hidden border-r border-b border-border md:border-r-0 lg:border-r lg:border-b-0"
                 onMouseMove={(e) => {
                   const rect = e.currentTarget.getBoundingClientRect();
@@ -257,18 +287,20 @@ export default function Home() {
                 <div className="relative">
                   <div className="flex items-center mb-5">
                     <Filter className="h-5 w-5 text-primary mr-3" />
-                    <span className="text-sm font-medium text-primary">Filtering</span>
+                    <span className="text-sm font-medium text-primary">
+                      Filtering
+                    </span>
                   </div>
-                  <h3 className="text-xl mb-2">
-                    Advanced Search
-                  </h3>
+                  <h3 className="text-xl mb-2">Advanced Search</h3>
                   <p className="text-xs text-muted-foreground leading-relaxed">
-                    Filter opportunities by region, category, deadline status, keywords, and tags to find exactly what matches your interests and profile.
+                    Filter opportunities by region, category, deadline status,
+                    keywords, and tags to find exactly what matches your
+                    interests and profile.
                   </p>
                 </div>
               </div>
 
-              <div 
+              <div
                 className="group relative px-8 py-10 bg-card hover:bg-card/80 transition-all duration-300 overflow-hidden border-b border-border md:border-r lg:border-r-0 lg:border-b-0"
                 onMouseMove={(e) => {
                   const rect = e.currentTarget.getBoundingClientRect();
@@ -293,18 +325,20 @@ export default function Home() {
                 <div className="relative">
                   <div className="flex items-center mb-5">
                     <Calendar className="h-5 w-5 text-primary mr-3" />
-                    <span className="text-sm font-medium text-primary">Timeline</span>
+                    <span className="text-sm font-medium text-primary">
+                      Timeline
+                    </span>
                   </div>
-                  <h3 className="text-xl mb-2">
-                    Deadline Visualization
-                  </h3>
+                  <h3 className="text-xl mb-2">Deadline Visualization</h3>
                   <p className="text-xs text-muted-foreground leading-relaxed">
-                    Visualize upcoming deadlines over weeks and months in an interactive timeline view to plan your applications strategically.
+                    Visualize upcoming deadlines over weeks and months in an
+                    interactive timeline view to plan your applications
+                    strategically.
                   </p>
                 </div>
               </div>
 
-              <div 
+              <div
                 className="group relative px-8 py-10 bg-card hover:bg-card/80 transition-all duration-300 overflow-hidden border-r border-b border-border md:border-b-0 lg:border-b"
                 onMouseMove={(e) => {
                   const rect = e.currentTarget.getBoundingClientRect();
@@ -329,18 +363,20 @@ export default function Home() {
                 <div className="relative">
                   <div className="flex items-center mb-5">
                     <Bell className="h-5 w-5 text-primary mr-3" />
-                    <span className="text-sm font-medium text-primary">Reminders</span>
+                    <span className="text-sm font-medium text-primary">
+                      Reminders
+                    </span>
                   </div>
-                  <h3 className="text-xl mb-2">
-                    Smart Alerts
-                  </h3>
+                  <h3 className="text-xl mb-2">Smart Alerts</h3>
                   <p className="text-xs text-muted-foreground leading-relaxed">
-                    Save opportunity deadlines directly to your calendar and never miss an application window with integrated calendar exports.
+                    Save opportunity deadlines directly to your calendar and
+                    never miss an application window with integrated calendar
+                    exports.
                   </p>
                 </div>
               </div>
 
-              <div 
+              <div
                 className="group relative px-8 py-10 bg-card hover:bg-card/80 transition-all duration-300 overflow-hidden border-r border-b border-border md:border-r-0 md:border-b-0 lg:border-r lg:border-b"
                 onMouseMove={(e) => {
                   const rect = e.currentTarget.getBoundingClientRect();
@@ -366,20 +402,24 @@ export default function Home() {
                   <div className="flex items-center justify-between mb-5">
                     <div className="flex items-center">
                       <Users className="h-5 w-5 text-primary mr-3" />
-                      <span className="text-sm font-medium text-primary">Dashboard</span>
+                      <span className="text-sm font-medium text-primary">
+                        Dashboard
+                      </span>
                     </div>
-                    <span className="text-xs bg-gray-700 text-white px-3 py-1 rounded-lg font-medium">Soon</span>
+                    <span className="text-xs bg-gray-700 text-white px-3 py-1 rounded-lg font-medium">
+                      Soon
+                    </span>
                   </div>
-                  <h3 className="text-xl mb-2">
-                    Personal Tracking
-                  </h3>
+                  <h3 className="text-xl mb-2">Personal Tracking</h3>
                   <p className="text-xs text-muted-foreground leading-relaxed">
-                    Save fellowships you've attended in your profile, ask alumni for recommendations to join, and build your fellowship network.
+                    Save fellowships you've attended in your profile, ask alumni
+                    for recommendations to join, and build your fellowship
+                    network.
                   </p>
                 </div>
               </div>
 
-              <div 
+              <div
                 className="group relative px-8 py-10 bg-card hover:bg-card/80 transition-all duration-300 overflow-hidden"
                 onMouseMove={(e) => {
                   const rect = e.currentTarget.getBoundingClientRect();
@@ -404,27 +444,59 @@ export default function Home() {
                 <div className="relative">
                   <div className="flex items-center mb-5">
                     <Clock className="h-5 w-5 text-primary mr-3" />
-                    <span className="text-sm font-medium text-primary">Community</span>
+                    <span className="text-sm font-medium text-primary">
+                      Community
+                    </span>
                   </div>
-                  <h3 className="text-xl mb-2">
-                    Community Driven
-                  </h3>
+                  <h3 className="text-xl mb-2">Community Driven</h3>
                   <p className="text-xs text-muted-foreground leading-relaxed">
-                    Submit new opportunities through our community-driven platform. Help others discover amazing fellowships and funding opportunities.
+                    Submit new opportunities through our community-driven
+                    platform. Help others discover amazing fellowships and
+                    funding opportunities.
                   </p>
                 </div>
               </div>
 
-              <div className="absolute hidden md:block w-full h-px bg-border" style={{left: '0', top: '50%', transform: 'translateY(-50%)'}}></div>
-              <div className="absolute hidden lg:block w-3 h-px bg-black" style={{left: '33.333%', top: '50%', transform: 'translate(-50%, -50%)'}}></div>
-              <div className="absolute hidden lg:block w-px h-3 bg-black" style={{left: '33.333%', top: '50%', transform: 'translate(-50%, -50%)'}}></div>
-              
-              <div className="absolute hidden lg:block w-3 h-px bg-black" style={{left: '66.666%', top: '50%', transform: 'translate(-50%, -50%)'}}></div>
-              <div className="absolute hidden lg:block w-px h-3 bg-black" style={{left: '66.666%', top: '50%', transform: 'translate(-50%, -50%)'}}></div>
+              <div
+                className="absolute hidden md:block w-full h-px bg-border"
+                style={{ left: "0", top: "50%", transform: "translateY(-50%)" }}
+              ></div>
+              <div
+                className="absolute hidden lg:block w-3 h-px bg-black"
+                style={{
+                  left: "33.333%",
+                  top: "50%",
+                  transform: "translate(-50%, -50%)",
+                }}
+              ></div>
+              <div
+                className="absolute hidden lg:block w-px h-3 bg-black"
+                style={{
+                  left: "33.333%",
+                  top: "50%",
+                  transform: "translate(-50%, -50%)",
+                }}
+              ></div>
+
+              <div
+                className="absolute hidden lg:block w-3 h-px bg-black"
+                style={{
+                  left: "66.666%",
+                  top: "50%",
+                  transform: "translate(-50%, -50%)",
+                }}
+              ></div>
+              <div
+                className="absolute hidden lg:block w-px h-3 bg-black"
+                style={{
+                  left: "66.666%",
+                  top: "50%",
+                  transform: "translate(-50%, -50%)",
+                }}
+              ></div>
             </div>
           </div>
         </section>
-
       </div>
     );
   }
@@ -456,8 +528,18 @@ export default function Home() {
       </section>
 
       <div className="space-y-2 sm:space-y-4">
-        <InfiniteCarousel opportunities={distributedCarousel1} direction="right" speed="slow" from="home" />
-        <InfiniteCarousel opportunities={distributedCarousel2} direction="left" speed="slow" from="home" />
+        <InfiniteCarousel
+          opportunities={distributedCarousel1}
+          direction="right"
+          speed="slow"
+          from="home"
+        />
+        <InfiniteCarousel
+          opportunities={distributedCarousel2}
+          direction="left"
+          speed="slow"
+          from="home"
+        />
       </div>
 
       <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -473,15 +555,15 @@ export default function Home() {
 
       <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="text-center mb-16">
-          <h2 className="text-2xl md:text-3xl font-bold mb-4">What You Get</h2>
+          <h2 className="text-2xl md:text-3xl font-medium mb-4">What You Get</h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Everything you need to understand your users:
+            Everything you need to discover and track fellowship opportunities
           </p>
         </div>
 
         <div className="max-w-6xl mx-auto mb-16">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 border border-border rounded-lg overflow-hidden relative">
-            <div 
+            <div
               className="group relative px-8 py-10 bg-card hover:bg-card/80 transition-all duration-300 overflow-hidden border-r border-b border-border lg:border-b-0"
               onMouseMove={(e) => {
                 const rect = e.currentTarget.getBoundingClientRect();
@@ -506,17 +588,20 @@ export default function Home() {
               <div className="relative">
                 <div className="flex items-center mb-5">
                   <Search className="h-5 w-5 text-primary mr-3" />
-                  <span className="text-sm font-medium text-primary">Discovery</span>
+                  <span className="text-sm font-medium text-primary">
+                    Discovery
+                  </span>
                 </div>
-                <h3 className="text-xl mb-2">Opportunity Aggregation
-                </h3>
+                <h3 className="text-xl mb-2">Opportunity Aggregation</h3>
                 <p className="text-xs text-muted-foreground leading-relaxed">
-                  Browse fellowships, grants, accelerators, hackathons, and funding opportunities from diverse sources all in one centralized platform.
+                  Browse fellowships, grants, accelerators, hackathons, and
+                  funding opportunities from diverse sources all in one
+                  centralized platform.
                 </p>
               </div>
             </div>
 
-            <div 
+            <div
               className="group relative px-8 py-10 bg-card hover:bg-card/80 transition-all duration-300 overflow-hidden border-r border-b border-border md:border-r-0 lg:border-r lg:border-b-0"
               onMouseMove={(e) => {
                 const rect = e.currentTarget.getBoundingClientRect();
@@ -541,17 +626,20 @@ export default function Home() {
               <div className="relative">
                 <div className="flex items-center mb-5">
                   <Filter className="h-5 w-5 text-primary mr-3" />
-                  <span className="text-sm font-medium text-primary">Filtering</span>
+                  <span className="text-sm font-medium text-primary">
+                    Filtering
+                  </span>
                 </div>
-                <h3 className="text-xl mb-2">Advanced Search
-                </h3>
+                <h3 className="text-xl mb-2">Advanced Search</h3>
                 <p className="text-xs text-muted-foreground leading-relaxed">
-                  Filter opportunities by region, category, deadline status, keywords, and tags to find exactly what matches your interests and profile.
+                  Filter opportunities by region, category, deadline status,
+                  keywords, and tags to find exactly what matches your interests
+                  and profile.
                 </p>
               </div>
             </div>
 
-            <div 
+            <div
               className="group relative px-8 py-10 bg-card hover:bg-card/80 transition-all duration-300 overflow-hidden border-b border-border md:border-r lg:border-r-0 lg:border-b-0"
               onMouseMove={(e) => {
                 const rect = e.currentTarget.getBoundingClientRect();
@@ -576,17 +664,20 @@ export default function Home() {
               <div className="relative">
                 <div className="flex items-center mb-5">
                   <Calendar className="h-5 w-5 text-primary mr-3" />
-                  <span className="text-sm font-medium text-primary">Timeline</span>
+                  <span className="text-sm font-medium text-primary">
+                    Timeline
+                  </span>
                 </div>
-                <h3 className="text-xl mb-2">Deadline Visualization
-                </h3>
+                <h3 className="text-xl mb-2">Deadline Visualization</h3>
                 <p className="text-xs text-muted-foreground leading-relaxed">
-                  Visualize upcoming deadlines over weeks and months in an interactive timeline view to plan your applications strategically.
+                  Visualize upcoming deadlines over weeks and months in an
+                  interactive timeline view to plan your applications
+                  strategically.
                 </p>
               </div>
             </div>
 
-            <div 
+            <div
               className="group relative px-8 py-10 bg-card hover:bg-card/80 transition-all duration-300 overflow-hidden border-r border-b border-border md:border-b-0 lg:border-b"
               onMouseMove={(e) => {
                 const rect = e.currentTarget.getBoundingClientRect();
@@ -611,17 +702,19 @@ export default function Home() {
               <div className="relative">
                 <div className="flex items-center mb-5">
                   <Bell className="h-5 w-5 text-primary mr-3" />
-                  <span className="text-sm font-medium text-primary">Reminders</span>
+                  <span className="text-sm font-medium text-primary">
+                    Reminders
+                  </span>
                 </div>
-                <h3 className="text-xl mb-2">Smart Alerts
-                </h3>
+                <h3 className="text-xl mb-2">Smart Alerts</h3>
                 <p className="text-xs text-muted-foreground leading-relaxed">
-                  Save opportunity deadlines directly to your calendar and never miss an application window with integrated calendar exports.
+                  Save opportunity deadlines directly to your calendar and never
+                  miss an application window with integrated calendar exports.
                 </p>
               </div>
             </div>
 
-            <div 
+            <div
               className="group relative px-8 py-10 bg-card hover:bg-card/80 transition-all duration-300 overflow-hidden border-r border-b border-border md:border-r-0 md:border-b-0 lg:border-r lg:border-b"
               onMouseMove={(e) => {
                 const rect = e.currentTarget.getBoundingClientRect();
@@ -647,19 +740,24 @@ export default function Home() {
                 <div className="flex items-center justify-between mb-5">
                   <div className="flex items-center">
                     <Users className="h-5 w-5 text-primary mr-3" />
-                    <span className="text-sm font-medium text-primary">Dashboard</span>
+                    <span className="text-sm font-medium text-primary">
+                      Dashboard
+                    </span>
                   </div>
-                  <span className="text-xs bg-gray-700 text-white px-3 py-1 rounded-lg font-medium">Soon</span>
+                  <span className="text-xs bg-muted text-muted-foreground px-3 py-1 rounded-lg font-medium">
+                    Soon
+                  </span>
                 </div>
-                <h3 className="text-xl mb-2">Personal Tracking
-                </h3>
+                <h3 className="text-xl mb-2">Personal Tracking</h3>
                 <p className="text-xs text-muted-foreground leading-relaxed">
-                  Save fellowships you've attended in your profile, ask alumni for recommendations to join, and build your fellowship network.
+                  Save fellowships you've attended in your profile, ask alumni
+                  for recommendations to join, and build your fellowship
+                  network.
                 </p>
               </div>
             </div>
 
-            <div 
+            <div
               className="group relative px-8 py-10 bg-card hover:bg-card/80 transition-all duration-300 overflow-hidden"
               onMouseMove={(e) => {
                 const rect = e.currentTarget.getBoundingClientRect();
@@ -684,22 +782,56 @@ export default function Home() {
               <div className="relative">
                 <div className="flex items-center mb-5">
                   <Clock className="h-5 w-5 text-primary mr-3" />
-                  <span className="text-sm font-medium text-primary">Community</span>
+                  <span className="text-sm font-medium text-primary">
+                    Community
+                  </span>
                 </div>
-                <h3 className="text-xl mb-2">Community Driven
-                </h3>
+                <h3 className="text-xl mb-2">Community Driven</h3>
                 <p className="text-xs text-muted-foreground leading-relaxed">
-                  Submit new opportunities through our community-driven platform. Help others discover amazing fellowships and funding opportunities.
+                  Submit new opportunities through our community-driven
+                  platform. Help others discover amazing fellowships and funding
+                  opportunities.
                 </p>
               </div>
             </div>
 
-            <div className="absolute hidden md:block w-full h-px bg-border" style={{left: '0', top: '50%', transform: 'translateY(-50%)'}}></div>
-            <div className="absolute hidden lg:block w-3 h-px bg-black" style={{left: '33.333%', top: '50%', transform: 'translate(-50%, -50%)'}}></div>
-            <div className="absolute hidden lg:block w-px h-3 bg-black" style={{left: '33.333%', top: '50%', transform: 'translate(-50%, -50%)'}}></div>
-            
-            <div className="absolute hidden lg:block w-3 h-px bg-black" style={{left: '66.666%', top: '50%', transform: 'translate(-50%, -50%)'}}></div>
-            <div className="absolute hidden lg:block w-px h-3 bg-black" style={{left: '66.666%', top: '50%', transform: 'translate(-50%, -50%)'}}></div>
+            <div
+              className="absolute hidden md:block w-full h-px bg-border"
+              style={{ left: "0", top: "50%", transform: "translateY(-50%)" }}
+            ></div>
+            <div
+              className="absolute hidden lg:block w-3 h-px bg-black dark:bg-white"
+              style={{
+                left: "33.333%",
+                top: "50%",
+                transform: "translate(-50%, -50%)",
+              }}
+            ></div>
+            <div
+              className="absolute hidden lg:block w-px h-3 bg-black dark:bg-white"
+              style={{
+                left: "33.333%",
+                top: "50%",
+                transform: "translate(-50%, -50%)",
+              }}
+            ></div>
+
+            <div
+              className="absolute hidden lg:block w-3 h-px bg-black dark:bg-white"
+              style={{
+                left: "66.666%",
+                top: "50%",
+                transform: "translate(-50%, -50%)",
+              }}
+            ></div>
+            <div
+              className="absolute hidden lg:block w-px h-3 bg-black dark:bg-white"
+              style={{
+                left: "66.666%",
+                top: "50%",
+                transform: "translate(-50%, -50%)",
+              }}
+            ></div>
           </div>
         </div>
       </section>
