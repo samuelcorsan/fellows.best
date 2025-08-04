@@ -195,9 +195,9 @@ export default function Home() {
           </div>
 
           <div className="max-w-6xl mx-auto mb-16">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 border border-stone-800 rounded-lg overflow-hidden shadow-lg relative">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 border border-border rounded-lg overflow-hidden shadow-lg relative">
               <div 
-                className="group relative px-8 py-10 bg-card hover:bg-card/80 transition-all duration-300 overflow-hidden border-r border-b border-stone-800 lg:border-b-0"
+                className="group relative px-8 py-10 bg-card hover:bg-card/80 transition-all duration-300 overflow-hidden border-r border-b border-border lg:border-b-0"
                 onMouseMove={(e) => {
                   const rect = e.currentTarget.getBoundingClientRect();
                   const x = e.clientX - rect.left;
@@ -233,7 +233,7 @@ export default function Home() {
               </div>
 
               <div 
-                className="group relative px-8 py-10 bg-card hover:bg-card/80 transition-all duration-300 overflow-hidden border-r border-b border-stone-800 md:border-r-0 lg:border-r lg:border-b-0"
+                className="group relative px-8 py-10 bg-card hover:bg-card/80 transition-all duration-300 overflow-hidden border-r border-b border-border md:border-r-0 lg:border-r lg:border-b-0"
                 onMouseMove={(e) => {
                   const rect = e.currentTarget.getBoundingClientRect();
                   const x = e.clientX - rect.left;
@@ -269,7 +269,7 @@ export default function Home() {
               </div>
 
               <div 
-                className="group relative px-8 py-10 bg-card hover:bg-card/80 transition-all duration-300 overflow-hidden border-b border-stone-800 md:border-r lg:border-r-0 lg:border-b-0"
+                className="group relative px-8 py-10 bg-card hover:bg-card/80 transition-all duration-300 overflow-hidden border-b border-border md:border-r lg:border-r-0 lg:border-b-0"
                 onMouseMove={(e) => {
                   const rect = e.currentTarget.getBoundingClientRect();
                   const x = e.clientX - rect.left;
@@ -305,7 +305,7 @@ export default function Home() {
               </div>
 
               <div 
-                className="group relative px-8 py-10 bg-card hover:bg-card/80 transition-all duration-300 overflow-hidden border-r border-b border-stone-800 md:border-b-0 lg:border-b"
+                className="group relative px-8 py-10 bg-card hover:bg-card/80 transition-all duration-300 overflow-hidden border-r border-b border-border md:border-b-0 lg:border-b"
                 onMouseMove={(e) => {
                   const rect = e.currentTarget.getBoundingClientRect();
                   const x = e.clientX - rect.left;
@@ -341,7 +341,7 @@ export default function Home() {
               </div>
 
               <div 
-                className="group relative px-8 py-10 bg-card hover:bg-card/80 transition-all duration-300 overflow-hidden border-r border-b border-stone-800 md:border-r-0 md:border-b-0 lg:border-r lg:border-b"
+                className="group relative px-8 py-10 bg-card hover:bg-card/80 transition-all duration-300 overflow-hidden border-r border-b border-border md:border-r-0 md:border-b-0 lg:border-r lg:border-b"
                 onMouseMove={(e) => {
                   const rect = e.currentTarget.getBoundingClientRect();
                   const x = e.clientX - rect.left;
@@ -415,12 +415,12 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="absolute hidden md:block w-full h-px bg-stone-800" style={{left: '0', top: '50%', transform: 'translateY(-50%)'}}></div>
-              <div className="absolute hidden lg:block w-3 h-px bg-white" style={{left: '33.333%', top: '50%', transform: 'translate(-50%, -50%)'}}></div>
-              <div className="absolute hidden lg:block w-px h-3 bg-white" style={{left: '33.333%', top: '50%', transform: 'translate(-50%, -50%)'}}></div>
+              <div className="absolute hidden md:block w-full h-px bg-border" style={{left: '0', top: '50%', transform: 'translateY(-50%)'}}></div>
+              <div className="absolute hidden lg:block w-3 h-px bg-black" style={{left: '33.333%', top: '50%', transform: 'translate(-50%, -50%)'}}></div>
+              <div className="absolute hidden lg:block w-px h-3 bg-black" style={{left: '33.333%', top: '50%', transform: 'translate(-50%, -50%)'}}></div>
               
-              <div className="absolute hidden lg:block w-3 h-px bg-white" style={{left: '66.666%', top: '50%', transform: 'translate(-50%, -50%)'}}></div>
-              <div className="absolute hidden lg:block w-px h-3 bg-white" style={{left: '66.666%', top: '50%', transform: 'translate(-50%, -50%)'}}></div>
+              <div className="absolute hidden lg:block w-3 h-px bg-black" style={{left: '66.666%', top: '50%', transform: 'translate(-50%, -50%)'}}></div>
+              <div className="absolute hidden lg:block w-px h-3 bg-black" style={{left: '66.666%', top: '50%', transform: 'translate(-50%, -50%)'}}></div>
             </div>
           </div>
         </section>
@@ -480,9 +480,9 @@ export default function Home() {
         </div>
 
         <div className="max-w-6xl mx-auto mb-16">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 border border-stone-800 rounded-lg overflow-hidden shadow-lg relative">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 border border-border rounded-lg overflow-hidden relative">
             <div 
-              className="group relative px-8 py-10 bg-card hover:bg-card/80 transition-all duration-300 overflow-hidden border-r border-b border-stone-800 lg:border-b-0"
+              className="group relative px-8 py-10 bg-card hover:bg-card/80 transition-all duration-300 overflow-hidden border-r border-b border-border lg:border-b-0"
               onMouseMove={(e) => {
                 const rect = e.currentTarget.getBoundingClientRect();
                 const x = e.clientX - rect.left;
@@ -517,7 +517,7 @@ export default function Home() {
             </div>
 
             <div 
-              className="group relative px-8 py-10 bg-card hover:bg-card/80 transition-all duration-300 overflow-hidden border-r border-b border-stone-800 md:border-r-0 lg:border-r lg:border-b-0"
+              className="group relative px-8 py-10 bg-card hover:bg-card/80 transition-all duration-300 overflow-hidden border-r border-b border-border md:border-r-0 lg:border-r lg:border-b-0"
               onMouseMove={(e) => {
                 const rect = e.currentTarget.getBoundingClientRect();
                 const x = e.clientX - rect.left;
@@ -552,7 +552,7 @@ export default function Home() {
             </div>
 
             <div 
-              className="group relative px-8 py-10 bg-card hover:bg-card/80 transition-all duration-300 overflow-hidden border-b border-stone-800 md:border-r lg:border-r-0 lg:border-b-0"
+              className="group relative px-8 py-10 bg-card hover:bg-card/80 transition-all duration-300 overflow-hidden border-b border-border md:border-r lg:border-r-0 lg:border-b-0"
               onMouseMove={(e) => {
                 const rect = e.currentTarget.getBoundingClientRect();
                 const x = e.clientX - rect.left;
@@ -587,7 +587,7 @@ export default function Home() {
             </div>
 
             <div 
-              className="group relative px-8 py-10 bg-card hover:bg-card/80 transition-all duration-300 overflow-hidden border-r border-b border-stone-800 md:border-b-0 lg:border-b"
+              className="group relative px-8 py-10 bg-card hover:bg-card/80 transition-all duration-300 overflow-hidden border-r border-b border-border md:border-b-0 lg:border-b"
               onMouseMove={(e) => {
                 const rect = e.currentTarget.getBoundingClientRect();
                 const x = e.clientX - rect.left;
@@ -622,7 +622,7 @@ export default function Home() {
             </div>
 
             <div 
-              className="group relative px-8 py-10 bg-card hover:bg-card/80 transition-all duration-300 overflow-hidden border-r border-b border-stone-800 md:border-r-0 md:border-b-0 lg:border-r lg:border-b"
+              className="group relative px-8 py-10 bg-card hover:bg-card/80 transition-all duration-300 overflow-hidden border-r border-b border-border md:border-r-0 md:border-b-0 lg:border-r lg:border-b"
               onMouseMove={(e) => {
                 const rect = e.currentTarget.getBoundingClientRect();
                 const x = e.clientX - rect.left;
@@ -694,12 +694,12 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="absolute hidden md:block w-full h-px bg-stone-800" style={{left: '0', top: '50%', transform: 'translateY(-50%)'}}></div>
-            <div className="absolute hidden lg:block w-3 h-px bg-white" style={{left: '33.333%', top: '50%', transform: 'translate(-50%, -50%)'}}></div>
-            <div className="absolute hidden lg:block w-px h-3 bg-white" style={{left: '33.333%', top: '50%', transform: 'translate(-50%, -50%)'}}></div>
+            <div className="absolute hidden md:block w-full h-px bg-border" style={{left: '0', top: '50%', transform: 'translateY(-50%)'}}></div>
+            <div className="absolute hidden lg:block w-3 h-px bg-black" style={{left: '33.333%', top: '50%', transform: 'translate(-50%, -50%)'}}></div>
+            <div className="absolute hidden lg:block w-px h-3 bg-black" style={{left: '33.333%', top: '50%', transform: 'translate(-50%, -50%)'}}></div>
             
-            <div className="absolute hidden lg:block w-3 h-px bg-white" style={{left: '66.666%', top: '50%', transform: 'translate(-50%, -50%)'}}></div>
-            <div className="absolute hidden lg:block w-px h-3 bg-white" style={{left: '66.666%', top: '50%', transform: 'translate(-50%, -50%)'}}></div>
+            <div className="absolute hidden lg:block w-3 h-px bg-black" style={{left: '66.666%', top: '50%', transform: 'translate(-50%, -50%)'}}></div>
+            <div className="absolute hidden lg:block w-px h-3 bg-black" style={{left: '66.666%', top: '50%', transform: 'translate(-50%, -50%)'}}></div>
           </div>
         </div>
       </section>

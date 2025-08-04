@@ -178,22 +178,32 @@ export function Header() {
               <UserMenu />
             </div>
 
-            <Button
-              variant="ghost"
-              size="sm"
-              className="md:hidden"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-            >
-              {isMenuOpen ? (
-                <X className="h-5 w-5" />
-              ) : (
-                <Menu className="h-5 w-5" aria-label="Menu" />
-              )}
-            </Button>
+            <div className="flex items-center space-x-2 md:hidden">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              >
+                <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+                <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+                <span className="sr-only">Toggle theme</span>
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+              >
+                {isMenuOpen ? (
+                  <X className="h-5 w-5" />
+                ) : (
+                  <Menu className="h-5 w-5" aria-label="Menu" />
+                )}
+              </Button>
+            </div>
           </div>
 
           {isMenuOpen && (
-            <div className="fixed inset-0 top-16 z-50 bg-black/90 md:hidden">
+            <div className="fixed inset-0 top-16 z-50 bg-background/95 backdrop-blur-sm md:hidden">
               <div className="flex flex-col h-full p-8">
                 <nav className="flex flex-col space-y-8 flex-grow justify-center">
                   {navigation.map((item) => {
@@ -203,8 +213,8 @@ export function Header() {
                       <Link
                         key={item.name}
                         href={item.href}
-                        className={`flex items-center space-x-4 text-2xl font-medium text-white transition-colors hover:text-white/80 drop-shadow-lg ${
-                          isActive ? "text-white" : "text-white/90"
+                        className={`flex items-center space-x-4 text-lg font-medium transition-colors hover:text-muted-foreground ${
+                          isActive ? "text-foreground" : "text-foreground/90"
                         }`}
                         onClick={() => setIsMenuOpen(false)}
                       >
@@ -213,24 +223,13 @@ export function Header() {
                       </Link>
                     );
                   })}
-                  <button
-                    onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-                    className="flex items-center space-x-4 text-2xl font-medium text-white/90 transition-colors hover:text-white/80 text-left drop-shadow-lg"
-                  >
-                    {theme === "dark" ? (
-                      <Sun className="h-6 w-6" />
-                    ) : (
-                      <Moon className="h-6 w-6" />
-                    )}
-                    <span>{theme === "dark" ? "Light Mode" : "Dark Mode"}</span>
-                  </button>
                   {!session ? (
                     <button
                       onClick={() => {
                         setIsSignInOpen(true);
                         setIsMenuOpen(false);
                       }}
-                      className="flex items-center space-x-4 text-2xl font-medium text-white/90 transition-colors hover:text-white/80 text-left drop-shadow-lg"
+                      className="flex items-center space-x-4 text-lg font-medium text-foreground/90 transition-colors hover:text-muted-foreground text-left"
                     >
                       <User className="h-6 w-6" />
                       <span>Get Started</span>
@@ -240,14 +239,14 @@ export function Header() {
                       <Link
                         href="/profile"
                         onClick={() => setIsMenuOpen(false)}
-                        className="flex items-center space-x-4 text-2xl font-medium text-white/90 transition-colors hover:text-white/80 text-left drop-shadow-lg"
+                        className="flex items-center space-x-4 text-lg font-medium text-foreground/90 transition-colors hover:text-muted-foreground text-left"
                       >
                         <User className="h-6 w-6" />
                         <span>Profile</span>
                       </Link>
                       <button
                         onClick={handleSignOut}
-                        className="flex items-center space-x-4 text-2xl font-medium text-white/90 transition-colors hover:text-white/80 text-left drop-shadow-lg"
+                        className="flex items-center space-x-4 text-lg font-medium text-foreground/90 transition-colors hover:text-muted-foreground text-left"
                       >
                         <LogOut className="h-6 w-6" />
                         <span>Sign Out</span>
