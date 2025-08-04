@@ -6,7 +6,7 @@ export default function PrivacyPage() {
       <h1 className="text-3xl font-bold mb-8">Privacy Policy</h1>
 
       <div className="prose prose-slate max-w-none">
-        <p className="text-muted-foreground mb-6">Last updated: 07/29/2025</p>
+        <p className="text-muted-foreground mb-6">Last updated: 08/04/2025</p>
 
         <section className="mb-8">
           <h2 className="text-2xl font-semibold mb-4">1. Introduction</h2>
@@ -57,9 +57,9 @@ export default function PrivacyPage() {
               data.
             </li>
             <li>
-              <strong>Groq:</strong> For AI-powered opportunity recommendations.
-              When you use our AI features, your queries are processed by
-              Groq&apos;s AI models.
+              <strong>Neon.tech:</strong> For database services and data storage.
+              Your application data is securely stored and managed through
+              Neon&apos;s PostgreSQL database platform.
             </li>
             <li>
               <strong>Better Auth:</strong> For secure authentication services.
