@@ -191,8 +191,12 @@ export function FilterPanel({
     filters.categories.length +
     filters.regions.length +
     filters.tags.length +
-    (filters.fundingAmount.min > 0 || filters.fundingAmount.max < 2000000 ? 1 : 0) +
-    (filters.equityPercentage.min > 0 || filters.equityPercentage.max < 20 ? 1 : 0);
+    (filters.fundingAmount.min > 0 || filters.fundingAmount.max < 2000000
+      ? 1
+      : 0) +
+    (filters.equityPercentage.min > 0 || filters.equityPercentage.max < 20
+      ? 1
+      : 0);
 
   return (
     <>
@@ -273,7 +277,10 @@ export function FilterPanel({
               </Label>
               <div className="space-y-4">
                 <Slider
-                  value={[filters.equityPercentage.min, filters.equityPercentage.max]}
+                  value={[
+                    filters.equityPercentage.min,
+                    filters.equityPercentage.max,
+                  ]}
                   onValueChange={handleEquityPercentageChange}
                   max={20}
                   min={0}
@@ -387,7 +394,6 @@ export function FilterPanel({
 
             <Separator />
 
-            {/* New organized tag groups */}
             {Object.entries(tagGroups).map(([groupKey, group]) => (
               <div key={groupKey}>
                 <Label className="text-sm font-medium mb-3 block">

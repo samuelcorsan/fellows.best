@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, useEffect, useRef } from "react";
+import { useState, useMemo, useEffect, useRef, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import {
   ArrowUpDown,
@@ -29,9 +29,14 @@ import { toast } from "sonner";
 import { SignInDialog } from "@/components/global/sign-in-dialog";
 import { AiResponse } from "@/lib/types";
 
-export default function BrowsePage() {
-  const { data: session } = authClient.useSession();
+function BrowsePageContent() {
+  const { data: session, isPending } = authClient.useSession();
   const searchParams = useSearchParams();
+  const [isHydrated, setIsHydrated] = useState(false);
+
+  useEffect(() => {
+    setIsHydrated(true);
+  }, []);
   const [isSignInOpen, setIsSignInOpen] = useState(false);
   const [isAIInputOpen, setIsAIInputOpen] = useState(false);
   const [aiQuery, setAiQuery] = useState("");
@@ -49,15 +54,21 @@ export default function BrowsePage() {
 
   const handleFiltersChange = (newFilters: FilterOptions) => {
     setFilters(newFilters);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
   const [sortBy, setSortBy] = useState<"deadline" | "name" | "category">(
     "deadline"
   );
-  const [viewMode, setViewMode] = useState<"grid" | "list" | "timeline">(() => {
+  const [viewMode, setViewMode] = useState<"grid" | "list" | "timeline">(
+    "grid"
+  );
+
+  useEffect(() => {
     const viewParam = searchParams.get("view");
-    return viewParam === "timeline" ? "timeline" : "grid";
-  });
+    if (viewParam === "timeline") {
+      setViewMode("timeline");
+    }
+  }, [searchParams]);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(false);
@@ -152,7 +163,7 @@ export default function BrowsePage() {
       }
     });
 
-    if (!session) {
+    if (!session && isHydrated) {
       filtered = filtered.slice(0, 4);
     }
 
@@ -259,12 +270,12 @@ export default function BrowsePage() {
             </div>
 
             <div className="flex items-center justify-between">
-              {session && (
+              {session && isHydrated && (
                 <p className="text-muted-foreground">
                   {filteredAndSortedOpportunities.length} opportunities found
                 </p>
               )}
-              {!session && <div />}
+              {(!session || !isHydrated) && <div />}
 
               {viewMode === "timeline" && (
                 <div className="flex items-center gap-1">
@@ -314,7 +325,11 @@ export default function BrowsePage() {
               </div>
             ) : viewMode === "timeline" ? (
               <div className="relative">
-                <div className={!session ? "blur-sm pointer-events-none" : ""}>
+                <div
+                  className={
+                    !session || !isHydrated ? "blur-sm pointer-events-none" : ""
+                  }
+                >
                   <Timeline
                     ref={timelineRef}
                     opportunities={filteredAndSortedOpportunities}
@@ -322,7 +337,7 @@ export default function BrowsePage() {
                     onScrollStateChange={handleScrollStateChange}
                   />
                 </div>
-                {!session && (
+                {(!session || !isHydrated) && (
                   <div className="absolute inset-0 bg-background/60 flex items-center justify-center">
                     <div className="text-center p-8 bg-card border rounded-lg shadow-lg max-w-md">
                       <h3 className="text-xl font-semibold mb-3">
@@ -357,7 +372,7 @@ export default function BrowsePage() {
                     />
                   ))}
                 </div>
-                {!session && (
+                {(!session || !isHydrated) && (
                   <div className="mt-8 text-center p-6 border rounded-lg bg-muted/50">
                     <h3 className="text-xl font-semibold mb-2">
                       Want to see more opportunities?
@@ -386,5 +401,73 @@ export default function BrowsePage() {
 
       <SignInDialog isOpen={isSignInOpen} onOpenChange={setIsSignInOpen} />
     </>
+  );
+}
+
+function BrowsePageSkeleton() {
+  return (
+    <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="mb-8">
+        <div className="h-10 bg-muted rounded-lg w-80 mb-4 animate-pulse" />
+        <div className="h-6 bg-muted rounded-lg w-96 animate-pulse" />
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+        <div className="lg:col-span-1">
+          <div className="h-[600px] bg-muted rounded-lg animate-pulse" />
+        </div>
+
+        <div className="lg:col-span-3 space-y-6">
+          <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex-1">
+              <div className="h-10 bg-muted rounded-lg animate-pulse" />
+            </div>
+            <div className="flex gap-2">
+              <div className="h-10 w-40 bg-muted rounded-lg animate-pulse" />
+              <div className="h-10 w-32 bg-muted rounded-lg animate-pulse" />
+            </div>
+          </div>
+
+          <div className="flex items-center justify-between">
+            <div className="h-4 w-48 bg-muted rounded animate-pulse" />
+            <div className="h-4 w-20 bg-muted rounded animate-pulse" />
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {[...Array(6)].map((_, i) => (
+              <div key={i} className="border rounded-lg p-6 space-y-4">
+                <div className="flex items-start space-x-4">
+                  <div className="w-16 h-16 bg-muted rounded-lg animate-pulse" />
+                  <div className="flex-1 space-y-2">
+                    <div className="h-5 bg-muted rounded animate-pulse" />
+                    <div className="h-4 bg-muted rounded w-3/4 animate-pulse" />
+                    <div className="flex gap-2">
+                      <div className="h-6 w-16 bg-muted rounded animate-pulse" />
+                      <div className="h-6 w-20 bg-muted rounded animate-pulse" />
+                    </div>
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <div className="h-4 bg-muted rounded animate-pulse" />
+                  <div className="h-4 bg-muted rounded w-5/6 animate-pulse" />
+                </div>
+                <div className="flex justify-between items-center">
+                  <div className="h-8 w-24 bg-muted rounded animate-pulse" />
+                  <div className="h-8 w-20 bg-muted rounded animate-pulse" />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default function BrowsePage() {
+  return (
+    <Suspense fallback={<BrowsePageSkeleton />}>
+      <BrowsePageContent />
+    </Suspense>
   );
 }
