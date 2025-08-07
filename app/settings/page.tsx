@@ -26,6 +26,7 @@ import {
 } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
+import { Skeleton } from "@/components/ui/skeleton";
 import { 
   Save,
   X,
@@ -251,10 +252,139 @@ export default function SettingsPage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
-          <p className="text-muted-foreground text-sm">Loading settings...</p>
+      <div className="fixed inset-0 top-16 bottom-0 bg-background z-10">
+        <div className="flex h-full">
+          <div className="w-64 border-r border-border/40 bg-background flex-shrink-0">
+            <div className="p-8 flex flex-col h-full">
+              <div className="flex-1">
+                <h1 className="text-xl font-semibold mb-6">Settings</h1>
+                <nav className="space-y-1">
+                  <button className="w-full text-left px-4 py-2 rounded-lg bg-muted text-foreground font-medium text-sm">
+                    My account
+                  </button>
+                </nav>
+              </div>
+              
+              <div className="border-t border-border/40 pt-6">
+                <h3 className="text-sm font-medium mb-3">Feedback</h3>
+                <p className="text-xs text-muted-foreground mb-4">
+                  Help us improve by sharing your thoughts
+                </p>
+                <Button variant="outline" size="sm" className="w-full rounded-lg text-xs" disabled>
+                  <Upload className="h-3 w-3 mr-2" />
+                  Upload feedback
+                </Button>
+              </div>
+            </div>
+          </div>
+
+          <div className="flex-1 overflow-y-auto">
+            <div className="flex justify-center w-full">
+              <div className="max-w-2xl w-full py-8 px-8">
+                <div className="text-center mb-8">
+                  <h2 className="text-2xl font-semibold mb-2">My account</h2>
+                  <p className="text-muted-foreground text-sm">
+                    Manage your account settings and preferences
+                  </p>
+                </div>
+
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between py-4 px-6 border border-border/40 rounded-lg">
+                    <div className="flex items-center gap-4">
+                      <Skeleton className="h-12 w-12 rounded-full" />
+                      <div>
+                        <p className="font-medium text-sm">Photo</p>
+                        <p className="text-muted-foreground text-xs">Update your profile photo</p>
+                      </div>
+                    </div>
+                    <Button variant="outline" size="sm" className="rounded-lg px-4 text-xs" disabled>
+                      Change photo
+                    </Button>
+                  </div>
+
+                  <div className="border border-border/40 rounded-lg">
+                    <div className="flex items-center justify-between py-4 px-6">
+                      <div className="flex-1">
+                        <p className="font-medium text-sm mb-1">Full name</p>
+                        <Skeleton className="h-4 w-32" />
+                      </div>
+                      <Button variant="outline" size="sm" className="rounded-lg px-4 text-xs" disabled>
+                        Change name
+                      </Button>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-between py-4 px-6 border border-border/40 rounded-lg">
+                    <div>
+                      <p className="font-medium text-sm mb-1">Email</p>
+                      <Skeleton className="h-4 w-48" />
+                    </div>
+                    <Button variant="outline" size="sm" className="rounded-lg px-4 text-xs" disabled>
+                      Change email
+                    </Button>
+                  </div>
+
+                  <div className="border border-border/40 rounded-lg">
+                    <div className="flex items-center justify-between py-4 px-6">
+                      <div className="flex-1">
+                        <p className="font-medium text-sm mb-1">Location</p>
+                        <Skeleton className="h-4 w-24" />
+                      </div>
+                      <Button variant="outline" size="sm" className="rounded-lg px-4 text-xs" disabled>
+                        Change location
+                      </Button>
+                    </div>
+                  </div>
+
+                  <div className="border border-border/40 rounded-lg">
+                    <div className="flex items-center justify-between py-4 px-6">
+                      <div className="flex-1">
+                        <p className="font-medium text-sm mb-1">Website</p>
+                        <Skeleton className="h-4 w-28" />
+                      </div>
+                      <Button variant="outline" size="sm" className="rounded-lg px-4 text-xs" disabled>
+                        Change website
+                      </Button>
+                    </div>
+                  </div>
+
+                  <div className="border border-border/40 rounded-lg p-6">
+                    <div className="mb-4">
+                      <p className="font-medium text-sm mb-1">Connected providers</p>
+                      <p className="text-muted-foreground text-xs">Manage your authentication methods</p>
+                    </div>
+                    
+                    <div className="space-y-3">
+                      <div className="flex items-center justify-between py-3 px-4 border border-border/20 rounded-lg">
+                        <div className="flex items-center gap-3">
+                          <Skeleton className="w-8 h-8 rounded-lg" />
+                          <div>
+                            <Skeleton className="h-4 w-16 mb-1" />
+                            <Skeleton className="h-3 w-24" />
+                          </div>
+                        </div>
+                        <Skeleton className="h-6 w-12 rounded-lg" />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="border border-red-500/40 rounded-lg p-6 bg-transparent">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="font-medium text-sm mb-1 text-red-600">Delete my account</p>
+                        <p className="text-muted-foreground text-xs">
+                          Permanently delete your account and all associated data
+                        </p>
+                      </div>
+                      <Button variant="destructive" size="sm" className="rounded-lg px-4 text-xs text-white" disabled>
+                        Delete account
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     );
