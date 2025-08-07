@@ -26,6 +26,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { authClient } from "@/lib/auth-client";
 import { SignInDialog } from "./sign-in-dialog";
@@ -77,9 +78,7 @@ export function Header() {
   ];
 
   const UserMenu = () => {
-    if (isPending) return null;
-
-    if (!session) {
+    if (isPending || !session) {
       return <Button onClick={() => setIsSignInOpen(true)}>Get Started</Button>;
     }
 
@@ -133,21 +132,23 @@ export function Header() {
     <>
       <header className="sticky top-0 z-50 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex h-16 items-center justify-between">
-            <Link href="/" className="flex items-center space-x-3 group">
-              <div className="relative h-8 w-8 flex items-center justify-center">
-                <div className="absolute inset-0 rounded-lg opacity-20 group-hover:opacity-100 transition-opacity duration-300 bg-foreground/10" />
-                <Calendar
-                  className="h-5 w-5 transform group-hover:scale-110 transition-transform duration-300"
-                  strokeWidth={1.5}
-                />
-              </div>
-              <span className="text-xl font-medium tracking-tight">
-                fellows.best
-              </span>
-            </Link>
+          <div className="flex h-16 items-center">
+            <div className="flex-1">
+              <Link href="/" className="flex items-center space-x-3 group w-fit">
+                <div className="relative h-8 w-8 flex items-center justify-center">
+                  <div className="absolute inset-0 rounded-lg opacity-20 group-hover:opacity-100 transition-opacity duration-300 bg-foreground/10" />
+                  <Calendar
+                    className="h-5 w-5 transform group-hover:scale-110 transition-transform duration-300"
+                    strokeWidth={1.5}
+                  />
+                </div>
+                <span className="text-xl font-medium tracking-tight">
+                  fellows.best
+                </span>
+              </Link>
+            </div>
 
-            <nav className="hidden md:flex items-center space-x-8">
+            <nav className="hidden md:flex items-center space-x-8 flex-1 justify-center">
               {navigation.map((item) => {
                 const Icon = item.icon;
                 const isActive = pathname === item.href;
@@ -166,7 +167,7 @@ export function Header() {
               })}
             </nav>
 
-            <div className="hidden md:flex items-center space-x-4">
+            <div className="hidden md:flex items-center space-x-4 flex-1 justify-end">
               <Button
                 variant="ghost"
                 size="sm"
@@ -224,7 +225,7 @@ export function Header() {
                       </Link>
                     );
                   })}
-                  {!session ? (
+                  {isPending || !session ? (
                     <button
                       onClick={() => {
                         setIsSignInOpen(true);
