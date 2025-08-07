@@ -36,7 +36,8 @@ export const fellowshipOpportunities: Opportunity[] = [
     name: "Antler",
     logoUrl:
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlw1SR_n3ElASD6T-_OnBNMule8y1BPSsy3g&s",
-    shareImageUrl: "https://scandasia.com/wp-content/uploads/2021/02/ANTL.jpg",
+    shareImageUrl:
+      "https://1ekwuvtw2t.ufs.sh/f/A3uMVCvbWYHhkFFVBz2fN6TcywpJmxz4q87sGtrPgdokLIUO",
     description:
       "Global early-stage investor providing $200–$250K for ~8–9% equity in a 6-week residency.",
     fullDescription:
@@ -77,14 +78,21 @@ export const fellowshipOpportunities: Opportunity[] = [
     logoUrl:
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6XO5KwwWObYn7hMTtE2XjospgfBRs8j0t3A&s",
     shareImageUrl:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT1DYSUKVdiwd_Kk8yX12qVXqNY4HAyJokCmA&s",
+      "https://1ekwuvtw2t.ufs.sh/f/A3uMVCvbWYHhnNfDRrBeTJ9R8wr7OMCmNbEZAljoeYKXkpDt",
     description:
       "Global accelerator offering $220,000 in funding for ~5–7% total equity.",
     fullDescription:
       "Techstars runs 3-month, mentorship-driven accelerator programs in 40+ locations worldwide. Starting Fall 2025, accepted companies receive a $220,000 investment: $20K for 5% common stock and $200K as an uncapped MFN SAFE (total 5% plus SAFE conversion). The program includes intensive mentorship, partner perks, and a Demo Day at the end. Applications open early 2025 for various global cohorts.",
     openDate: "2025-04-08",
     closeDate: "2025-06-11",
-    tags: ["equity-based", "accelerator", "mentorship", "global", "in-person", "pre-seed"],
+    tags: [
+      "equity-based",
+      "accelerator",
+      "mentorship",
+      "global",
+      "in-person",
+      "pre-seed",
+    ],
     category: "accelerator",
     region: "Global",
     country: "Various",
@@ -111,14 +119,21 @@ export const fellowshipOpportunities: Opportunity[] = [
     logoUrl:
       "https://upload.wikimedia.org/wikipedia/commons/2/20/500_Startups_-_logo.svg",
     shareImageUrl:
-      "https://cdn.techinasia.com/wp-content/uploads/2016/04/500-startups-accelerator.jpeg",
+      "https://1ekwuvtw2t.ufs.sh/f/A3uMVCvbWYHhIsXO5pDwMfF9CW7yAItiDjBHJXxN8dlb0sSO",
     description:
       "Early-stage accelerator by 500 Global offering $150,000 for 6% SAFE (plus fees).",
     fullDescription:
       "500 Global (formerly 500 Startups) runs the flagship accelerator in Palo Alto focused on early-stage tech startups. The program invests $150,000 for 6% equity via a SAFE, plus a $37,500 program fee. The 4-month program includes mentorship, workshops, and Demo Day. Batch 36 starts Q1 2025 (deadline Oct 11, 2025). The accelerator emphasizes global market reach, with 30–40% of participants coming from outside the US.",
     openDate: null,
     closeDate: "2025-10-11",
-    tags: ["equity-based", "accelerator", "tech", "mentorship", "global", "pre-seed"],
+    tags: [
+      "equity-based",
+      "accelerator",
+      "tech",
+      "mentorship",
+      "global",
+      "pre-seed",
+    ],
     category: "accelerator",
     region: "Global",
     country: "United States",
@@ -145,7 +160,7 @@ export const fellowshipOpportunities: Opportunity[] = [
     logoUrl:
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwtO3ehSzooj_FQt19mQm147BrMDc1XLH_rA&s",
     shareImageUrl:
-      "https://blog.southparkcommons.com/content/images/2025/07/F25-blog-hero-1.jpg",
+      "https://1ekwuvtw2t.ufs.sh/f/A3uMVCvbWYHhJ2zETuU6Rlraf4UHqSDE75AiVPwgjnm9C0pX",
     description:
       "Fellowship-style community program investing $400,000 for 7% equity + $600K follow-on.",
     fullDescription:
@@ -184,7 +199,8 @@ export const fellowshipOpportunities: Opportunity[] = [
     name: "HF0 Residency",
     logoUrl:
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCY1QBVYto4FCIaaNZaIJ2v_0AW7U9l90ppw&s",
-    shareImageUrl: "https://i.imgur.com/c43UnNR.jpeg",
+    shareImageUrl:
+      "https://1ekwuvtw2t.ufs.sh/f/A3uMVCvbWYHhDdxeqM70g1UoVdXt6CI8Rcq4Dyjxp3FWe2Kh",
     description:
       "Intensive 12-week live-in accelerator writing a $1M SAFE for 5% (or $500K + 3%).",
     fullDescription:
@@ -218,7 +234,7 @@ export const fellowshipOpportunities: Opportunity[] = [
     logoUrl:
       "https://pbs.twimg.com/profile_images/1263180829355737088/yzf9DSV6_400x400.jpg",
     shareImageUrl:
-      "https://xraise.ai/blog/wp-content/uploads/2025/02/Winning-Neo-Application-1024x683.jpg",
+      "https://1ekwuvtw2t.ufs.sh/f/A3uMVCvbWYHhf5FHP8b1U35vBlSyKWGjXcLmoVkNgsiHqe4u",
     description:
       "3-month hybrid accelerator offering $600K via uncapped SAFE (with $10M floor) + equity.",
     fullDescription:
@@ -251,14 +267,22 @@ export const fellowshipOpportunities: Opportunity[] = [
     name: "PearX",
     logoUrl:
       "https://pbs.twimg.com/profile_images/1826032501669900289/2-3uAuhc_400x400.jpg",
-    shareImageUrl: "https://pbs.twimg.com/media/GY1JFrgbQAElYne.jpg",
+    shareImageUrl:
+      "https://1ekwuvtw2t.ufs.sh/f/A3uMVCvbWYHhQ8nMVgbZtO7cW0kYBrmEHJad5ob4Z9jUiRP3",
     description:
       "12-week accelerator by Pear VC investing $250K–$2M in each startup.",
     fullDescription:
       "PearX is Pear VC's accelerator in Menlo Park for ambitious startups. It provides $250,000 to $2,000,000 in funding via a SAFE (no fixed equity %) and a 12-week program. Cohorts are limited (~20 teams), and graduates get 6 months of free office space in San Francisco. PearX is staffed by hands-on partners who were founders themselves.",
     openDate: null,
     closeDate: null,
-    tags: ["equity-based", "accelerator", "tech", "mentorship", "in-person", "seed-stage"],
+    tags: [
+      "equity-based",
+      "accelerator",
+      "tech",
+      "mentorship",
+      "in-person",
+      "seed-stage",
+    ],
     category: "accelerator",
     region: "North America",
     country: "United States",
@@ -286,7 +310,7 @@ export const fellowshipOpportunities: Opportunity[] = [
     logoUrl:
       "https://pbs.twimg.com/profile_images/1027408115900116992/6NwB_C4E_400x400.jpg",
     shareImageUrl:
-      "https://d1zhjck9imo0be.cloudfront.net/assets/twitter-image-4-a2925a5571d50fafc69a0ce371d901e25653aa6472cc9085183a99236995e203.png",
+      "https://1ekwuvtw2t.ufs.sh/f/A3uMVCvbWYHhBevhF9pcL8UTglCRXp4nQJ1Pvf7zNhtaFMOG",
     description:
       "$20K for 1% equity (or advisory only); virtual startup contest with mentors.",
     fullDescription:
@@ -320,14 +344,21 @@ export const fellowshipOpportunities: Opportunity[] = [
     logoUrl:
       "https://cdn.prod.website-files.com/62bb99283ae5a82092305431/65eb284defd44d9e3bd6545e_LAUNCH%20Logo.png",
     shareImageUrl:
-      "https://cdn.prod.website-files.com/62bb99283ae5a870d6305429/63596f5f885ef9732af7d29e_Add%20a%20heading%20(47).png",
+      "https://1ekwuvtw2t.ufs.sh/f/A3uMVCvbWYHhwqpoHY4CvoLG7XuNs5JYFAfbRmUZhEjyHwQp",
     description:
       "$125K for 6–7% equity; 14-week accelerator founded by Jason Calacanis.",
     fullDescription:
       "LAUNCH is a San Francisco accelerator by Jason Calacanis that runs twice yearly. It invests $125,000 in exchange for roughly 6–7% equity. The 14-week program focuses heavily on fundraising, with intensive mentoring and exposure to 700+ angel investors. It is suited for startups with initial traction (e.g. >$2K MRR or >3K DAU).",
     openDate: null,
     closeDate: null,
-    tags: ["equity-based", "accelerator", "tech", "mentorship", "in-person", "seed-stage"],
+    tags: [
+      "equity-based",
+      "accelerator",
+      "tech",
+      "mentorship",
+      "in-person",
+      "seed-stage",
+    ],
     category: "accelerator",
     region: "North America",
     country: "United States",
@@ -342,7 +373,7 @@ export const fellowshipOpportunities: Opportunity[] = [
     ],
     organizer: "LAUNCH",
     funding: {
-      amount: 125000,  
+      amount: 125000,
       currency: "USD",
       equityPercentage: 6.5,
       fundingType: "equity-based",
@@ -354,8 +385,9 @@ export const fellowshipOpportunities: Opportunity[] = [
     name: "The Mint (BTV)",
     logoUrl:
       "https://pbs.twimg.com/profile_images/1410218406478024706/fPTKFVnj_200x200.png",
+    //TODO: improve banner quality
     shareImageUrl:
-      "https://cdn.prod.website-files.com/679b35165919d4462044e4cc/67ab051ed5af1c42b3542fbd_opengraph.png",
+      "https://1ekwuvtw2t.ufs.sh/f/A3uMVCvbWYHhzDBDH9DXkfLWjECG6Qw5rXbKtaquN294JBPe",
     description: "10-week fintech accelerator; invests $500K for 10% SAFE.",
     fullDescription:
       "The Mint (run by BTV Capital) is a 10-week accelerator focused on fintech startups in NYC and SF. It provides $500,000 in exchange for 10% of the company via a SAFE agreement. The program includes intensive mentoring from fintech experts and a founder retreat. The next cohort opens in Q4 2025 (application period to be announced).",
@@ -394,13 +426,20 @@ export const fellowshipOpportunities: Opportunity[] = [
     logoUrl:
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBK4BtCLrLD_GxTah405PncrpOJzpCcpPLEA&s",
     shareImageUrl:
-      "https://www.crowdfundinsider.com/wp-content/uploads/2014/05/AngelPad-Eleven-companies.png",
+      "https://1ekwuvtw2t.ufs.sh/f/A3uMVCvbWYHhqJOrnoDGnLYSAzDpB5oErFmUN0aMIhcfPW62",
     description: "10-week accelerator (NYC/SF) offering $120K for 7% equity.",
     fullDescription:
       "AngelPad is a seed-stage accelerator in NYC and San Francisco, accepting only ~15 startups per batch. It provides $120,000 for about 7% equity. The intensive 10-week program emphasizes company-building and has a highly competitive admission rate (<1%). Applications open twice a year and require a concise pitch deck and video.",
     openDate: null,
     closeDate: null,
-    tags: ["equity-based", "accelerator", "tech", "mentorship", "intensive", "pre-seed"],
+    tags: [
+      "equity-based",
+      "accelerator",
+      "tech",
+      "mentorship",
+      "intensive",
+      "pre-seed",
+    ],
     category: "accelerator",
     region: "North America",
     country: "United States",
@@ -425,16 +464,23 @@ export const fellowshipOpportunities: Opportunity[] = [
     id: "betaworks-ai-camp-2026",
     name: "Betaworks AI Camp",
     logoUrl:
-      "https://cdn.prod.website-files.com/604f786ed522e2678a3bfa51/625b42de6f4d6ed79626beac_betaworksventures.png",
+      "https://1ekwuvtw2t.ufs.sh/f/A3uMVCvbWYHhgMMaJ0zBeOJ2bdQ8W6RXnVctUw3mxkHolSiF",
     shareImageUrl:
-      "https://miro.medium.com/v2/resize:fit:1400/1*DUFwdkoJRI0_k1pggHwGmg.png",
+      "https://1ekwuvtw2t.ufs.sh/f/A3uMVCvbWYHhvzRxR8fR7aOJbWymZEvPXQix24FVuNnITqLp",
     description:
       "$500K investment from a Betaworks-led syndicate for AI startups.",
     fullDescription:
       "Betaworks AI Camp is a 12-week program in New York City for early-stage AI startups (with focuses like agentic B2B, personalized AI, etc.). Participating teams receive a $500,000 investment from a syndicate led by Betaworks. The program runs cohort-based, culminating in a Demo Day. (Next application cycle opens in Q1 2026.)",
     openDate: null,
     closeDate: null,
-    tags: ["equity-based", "accelerator", "AI", "technology", "mentorship", "pre-seed"],
+    tags: [
+      "equity-based",
+      "accelerator",
+      "AI",
+      "technology",
+      "mentorship",
+      "pre-seed",
+    ],
     category: "accelerator",
     region: "North America",
     country: "United States",
@@ -455,7 +501,7 @@ export const fellowshipOpportunities: Opportunity[] = [
     logoUrl:
       "https://greylock.com/wp-content/uploads/2023/10/footer-logo-3.png",
     shareImageUrl:
-      "https://images.lumacdn.com/cdn-cgi/image/format=auto,fit=cover,dpr=2,anim=false,background=white,quality=75,width=1000,height=500/event-covers/zq/ab274f7b-d242-4678-8007-2305f08d839e",
+      "https://1ekwuvtw2t.ufs.sh/f/A3uMVCvbWYHhX7ZJObqGAriyjB63q0UfQM8h7P4TVODXgoER",
     description:
       "3-month program with custom SAFE or priced terms + $500K+ in partner credits.",
     fullDescription:
@@ -481,7 +527,8 @@ export const fellowshipOpportunities: Opportunity[] = [
     id: "conviction-embed-2025",
     name: "Conviction Embed",
     logoUrl: "https://embed.conviction.com/applogo.png",
-    shareImageUrl: "",
+    shareImageUrl:
+      "https://1ekwuvtw2t.ufs.sh/f/A3uMVCvbWYHhEgctOBHI8sUpKYTozSt05m6G2xlubD4ZXQNV",
     description:
       "Hands-on embedded partner program offering a $150K uncapped SAFE (MFN).",
     fullDescription:
@@ -508,7 +555,7 @@ export const fellowshipOpportunities: Opportunity[] = [
     name: "OpenAI Converge",
     logoUrl: "https://github.com/openai.png",
     shareImageUrl:
-      "https://framerusercontent.com/images/3QoIJiw9cgCCDzhvxAaCxtdw80w.png",
+      "https://1ekwuvtw2t.ufs.sh/f/A3uMVCvbWYHhEgctOBHI8sUpKYTozSt05m6G2xlubD4ZXQNV",
     description:
       "6-week AI startup summit with $1M equity investment from OpenAI's Startup Fund.",
     fullDescription:
@@ -536,14 +583,21 @@ export const fellowshipOpportunities: Opportunity[] = [
     logoUrl:
       "https://yt3.googleusercontent.com/76rqwEbyJwe1C0gjwLXTOQb71lCGKUlBfpwBhQZlYf88no6m8mmmMRkFSiHI1hEUTO1zr6B-SA=s900-c-k-c0x00ffffff-no-rj",
     shareImageUrl:
-      "https://www.polodigital.eu/wp-content/uploads/https___cdn.evbuc_.com_images_645927159_1211321175083_1_original.jpeg",
+      "https://1ekwuvtw2t.ufs.sh/f/A3uMVCvbWYHhvVuvmcfR7aOJbWymZEvPXQix24FVuNnITqLp",
     description:
       "Europe-wide accelerator (HQ Tallinn) providing up to €65K seed funding plus follow-on up to €300K.",
     fullDescription:
       "Startup Wise Guys is a European accelerator headquartered in Tallinn, Estonia, with programs across Europe. It invests up to €65,000 in each pre-seed startup for equity (size varies by cohort), and can follow on with up to €300,000. The program is ~5 months hybrid (online + on-site), with tracks like SaaS, cybersecurity, and sustainability. Multiple cohorts run each year.",
     openDate: null,
     closeDate: null,
-    tags: ["equity-based", "accelerator", "tech", "mentorship", "Europe", "pre-seed"],
+    tags: [
+      "equity-based",
+      "accelerator",
+      "tech",
+      "mentorship",
+      "Europe",
+      "pre-seed",
+    ],
     category: "accelerator",
     region: "Europe",
     country: "Estonia",
@@ -563,7 +617,7 @@ export const fellowshipOpportunities: Opportunity[] = [
     name: "APX by Porsche & Axel Springer",
     logoUrl: "https://apx.vc/app/uploads/2021/08/APX_Logo-1.png",
     shareImageUrl:
-      "https://www.axelspringer.com/data/uploads/2021/01/1920_apx-kopie.jpg",
+      "https://1ekwuvtw2t.ufs.sh/f/A3uMVCvbWYHhLpi24Ugv1wfQckjKBmhRE4qCFxslYDHr9XVb",
     description:
       "Berlin-based accelerator with up to €50K for 5% (and follow-on up to €500K).",
     fullDescription:
@@ -590,7 +644,8 @@ export const fellowshipOpportunities: Opportunity[] = [
     name: "Seedcamp",
     logoUrl:
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTxuf36fKBQICe2ebAFesSyL9S5qCbe5rCnig&s",
-    shareImageUrl: "https://cdn.wamda.com/feature-images/2b6b59be02008b0.jpg",
+    shareImageUrl:
+      "https://1ekwuvtw2t.ufs.sh/f/A3uMVCvbWYHh7iZlYeF6fVHp92KSs4EIBdO0CXk8vug3FiNa",
     description: "Europe's flagship seed fund; invests €100–€200K for ~7–7.5%.",
     fullDescription:
       "Seedcamp is Europe's first seed accelerator and fund, based in London. It provides €100,000–€200,000 investment in exchange for roughly 7–7.5% equity. Unlike a fixed cohort model, Seedcamp runs rolling applications and periodic 'Seedcamp Weeks' where selected companies join workshops and pitch events. Seedcamp places emphasis on global scaling and has built a vast mentor network.",
@@ -617,7 +672,7 @@ export const fellowshipOpportunities: Opportunity[] = [
     logoUrl:
       "https://yt3.googleusercontent.com/ytc/AIdro_n3anK0o7gAPPtCy5WX5RF6Io_tcZsIPcsqEwK8XmPvSWw=s900-c-k-c0x00ffffff-no-rj",
     shareImageUrl:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSm3HXY4KnW1jXTyq340bUl274IYrvWLn9Erw&s",
+      "https://1ekwuvtw2t.ufs.sh/f/A3uMVCvbWYHhVr3zKCQJK82GnzcgbM7Ni9XYvrySIkjsE4Wf",
     description:
       "Equity-free accelerator: no cash funding, but up to $100K GCP credits.",
     fullDescription:
@@ -645,7 +700,7 @@ export const fellowshipOpportunities: Opportunity[] = [
     logoUrl:
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRPg0vG-pPmjZSc12TTbTY605teHhOuu23HHQ&s",
     shareImageUrl:
-      "https://cdn.prod.website-files.com/6410c4927a4ae326761f2b26/643ba7164cc0824fbd954929_613ee3b796c6e1ab56a3d34d_612c8c15c15c0101f1f195fc_atoms.webp",
+      "https://1ekwuvtw2t.ufs.sh/f/A3uMVCvbWYHhRVbthlyxBCj7TcVigtfekaQ9ybNE6rsqGHSJ",
     description:
       "$500K–$1M seed participation by Accel for India-first startups.",
     fullDescription:
@@ -670,9 +725,10 @@ export const fellowshipOpportunities: Opportunity[] = [
   {
     id: "ai2-incubator-2025",
     name: "AI2 Incubator",
-    logoUrl: "https://images.0xw.app/images/AI2%20Incubator.png",
+    logoUrl:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSp4MiTaxDAprdyvNCfltO6uzoiytkATjPuLA&s",
     shareImageUrl:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRRqApv52NhzgACeKfilgf-a6K_S0zNpP6yIg&s",
+      "https://1ekwuvtw2t.ufs.sh/f/A3uMVCvbWYHhHmlD80uKafZjXCuYI1wlOiDUJck5x3q7m9AV",
     description:
       "$50K–$150K seed funding in exchange for equity for AI startups.",
     fullDescription:
@@ -700,7 +756,7 @@ export const fellowshipOpportunities: Opportunity[] = [
     logoUrl:
       "https://cdn.theorg.com/26b973bd-f0e1-425c-941e-a5cd2475693f_thumb.jpg",
     shareImageUrl:
-      "https://framerusercontent.com/images/VHRYnHguTbDzYmLy5JeLGhtyRI.png",
+      "https://1ekwuvtw2t.ufs.sh/f/A3uMVCvbWYHhsPsU2dtKhgUIXGN4MBCbZ0nWfL17e9QOarok",
     description:
       "Semi-annual fellowship investing $100K SAFE (<1% equity) in founders.",
     fullDescription:
@@ -727,8 +783,9 @@ export const fellowshipOpportunities: Opportunity[] = [
     name: "Founder Institute",
     logoUrl:
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTGm3J8oIHtjXoLgAxshGTMXTfWVzvr6QdaB87jRiAzM_4BxM16fOC6-t78rUFF3ZzY00&usqp=CAU",
+    //TODO: improve quality
     shareImageUrl:
-      "https://fi-hatchbox-production-uploads.s3.amazonaws.com/posts/FI_Backdrop_5.png",
+      "https://es.investinbogota.org/wp-content/uploads/2025/01/founder-logos.jpg",
     description:
       "16-week pre-seed accelerator/education program; participants share equity, often receive $10–$20K each.",
     fullDescription:
@@ -755,7 +812,7 @@ export const fellowshipOpportunities: Opportunity[] = [
     name: "Boost VC",
     logoUrl: "https://www.capboard.io/cms/assets/investor_listing/805.png",
     shareImageUrl:
-      "https://substackcdn.com/image/fetch/$s_!CsWN!,w_1200,h_600,c_fill,f_jpg,q_auto:good,fl_progressive:steep,g_auto/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F59b65ce7-f2c7-43f7-b118-155768aeb3e8_600x334.gif",
+      "https://1ekwuvtw2t.ufs.sh/f/A3uMVCvbWYHhxAWzFmSkHXl2PRO35mBtvMzeciCVL84UyjIF",
     description:
       "Deep tech accelerator investing $500,000 for ~15% equity:contentReference[oaicite:0]{index=0}.",
     fullDescription:
@@ -794,6 +851,8 @@ export const fellowshipOpportunities: Opportunity[] = [
     name: "Vercel Open Source Program",
     logoUrl:
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFggf9yNRN9xCYku8XMEkSE0LU9uMhkYbehQ&s",
+    shareImageUrl:
+      "https://1ekwuvtw2t.ufs.sh/f/A3uMVCvbWYHhDiIVjm70g1UoVdXt6CI8Rcq4Dyjxp3FWe2Kh",
     description:
       "Seasonal cohort-based program offering impactful open source projects up to $3,600 in Vercel credits, third-party OSS starter-pack credits, and prioritized support.",
     fullDescription:
@@ -820,6 +879,8 @@ export const fellowshipOpportunities: Opportunity[] = [
     name: "Afore Grants",
     logoUrl:
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVIZtjevkGlPattYIUlcpxkTvbz8EcZifXqQ&s",
+    shareImageUrl:
+      "https://1ekwuvtw2t.ufs.sh/f/A3uMVCvbWYHhzHccdAXkfLWjECG6Qw5rXbKtaquN294JBPeV",
     description:
       "100% non‐dilutive microgrants of $1,000 for high‐agency builders aged 21 or younger in North America, paired with mentorship and program support.",
     fullDescription:
@@ -853,6 +914,8 @@ export const fellowshipOpportunities: Opportunity[] = [
     name: "776 Foundation Fellowship",
     logoUrl:
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-rE_hcajytWETqX5IyNz6-7dVwxiuwa2qtQ&s",
+    shareImageUrl:
+      "https://1ekwuvtw2t.ufs.sh/f/A3uMVCvbWYHhNg5Kuuxzosk5uS1ctlJYQqTUg8naE9ZyLfhO",
     description:
       "Two-year full-time fellowship offering a $100,000 grant to young innovators aged 18–24 working on high-impact climate change projects; open globally and requires fellows to take a leave from or forgo university.",
     fullDescription:
@@ -882,36 +945,12 @@ export const fellowshipOpportunities: Opportunity[] = [
     },
   },
   {
-    id: "angelpad",
-    name: "AngelPad",
-    logoUrl: "https://angelpad.com/wp-content/uploads/angelpad-logo.jpg",
-    description:
-      "12-week, seed-stage on-site accelerator based in San Francisco and New York; invests $120,000 for ~7% equity and provides intensive mentorship, fundraising prep, and access to a top-tier founder network.",
-    fullDescription:
-      "AngelPad, founded in 2010 by Thomas Korte and Carine Magescas, selects about 15 startups twice a year from ~2,000 applicants for its 12-week cohorts in San Francisco or New York. Participating teams receive a $120,000 seed investment (2% equity plus 5% common stock), access to over $300,000 in cloud credits, 1:1 mentorship from experienced founders, regular investor prep sessions, and culminate the program with a Demo Day to top investors. Applications are highly competitive (<1% acceptance) and the next cohort schedule is announced via their mailing list.",
-    openDate: null,
-    closeDate: null,
-    tags: ["equity-based", "mentorship", "short-term", "tech", "in-person"],
-    category: "accelerator",
-    region: "North America",
-    country: "USA",
-    eligibility:
-      "Seed-stage startups with a working prototype or MVP; founding teams typically of two or more; must relocate to SF or NYC for the duration; open to applicants worldwide, acceptance rate under 1%.",
-    applyLink: "https://angelpad.com/#apply",
-    benefits: [
-      "$120,000 investment for ~7% equity",
-      "12-week intensive on-site program",
-      "1:1 mentorship from top founders",
-      "$300,000+ in cloud credits",
-      "Demo Day with prominent investors",
-    ],
-    organizer: "AngelPad",
-  },
-  {
     id: "the-residency-startup",
     name: "The Residency",
     logoUrl:
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSgPUDl4LKZbxLf0Z2JIlQkB_sXBLf7PYm6Mg&s",
+    shareImageUrl:
+      "https://1ekwuvtw2t.ufs.sh/f/A3uMVCvbWYHh99wLwRELpyCQJmqx2KR5T7cv46Xk3YEdMOH1",
     description:
       "3–6-month in-person cohorts providing full-time housing, co-working space, and community for ambitious builders; locations include San Francisco, Berkeley, Cambridge (MA), Berlin, and Bangalore.",
     fullDescription:
@@ -944,6 +983,8 @@ export const fellowshipOpportunities: Opportunity[] = [
     name: "Edge City Fellowship",
     logoUrl:
       "https://pbs.twimg.com/profile_images/1754493933625737216/5pr4yurq_400x400.jpg",
+    shareImageUrl:
+      "https://1ekwuvtw2t.ufs.sh/f/A3uMVCvbWYHhqvxRxpDGnLYSAzDpB5oErFmUN0aMIhcfPW62",
     description:
       "Month-long immersive pop-up village experience for builders under 25, fully covered (housing & ticket) at Edge City's global sites.",
     fullDescription:
@@ -972,35 +1013,12 @@ export const fellowshipOpportunities: Opportunity[] = [
     organizer: "Edge City",
   },
   {
-    id: "edge-city-inflection-grants",
-    name: "Edge City Inflection Grants",
-    logoUrl:
-      "https://pbs.twimg.com/profile_images/1754493933625737216/5pr4yurq_400x400.jpg",
-    description:
-      "Micro-grant of $2 000 for creative builders under 25 to turn unusual ideas into reality.",
-    fullDescription:
-      "Inflection Grants provide a $2 000 award to creative young builders (under 25) to pursue high-impact, unconventional projects anywhere in the world. Recipients gain access to the Edge City ecosystem, community support, and mentorship, plus the option to apply for follow-on funding through our broader grant programs.",
-    openDate: null,
-    closeDate: null,
-    tags: ["equity-free", "mentorship", "short-term", "under-25", "funding"],
-    category: "grant",
-    region: "Global",
-    country: null,
-    eligibility:
-      "Creative builders under 25 with a clear proof-of-work portfolio and an unusual idea ready for a small but catalytic push.",
-    applyLink: "https://www.edgecity.live/grants-fellowships",
-    benefits: [
-      "$2 000 to build and experiment",
-      "Access to Edge City's global community & resources",
-      "Pathway to follow-on funding (SHIFT, VC partnerships)",
-    ],
-    organizer: "Edge City",
-  },
-  {
     id: "edge-city-shift-grants",
     name: "Edge City SHIFT Grants",
     logoUrl:
       "https://pbs.twimg.com/profile_images/1754493933625737216/5pr4yurq_400x400.jpg",
+    shareImageUrl:
+      "https://1ekwuvtw2t.ufs.sh/f/A3uMVCvbWYHhqvxRxpDGnLYSAzDpB5oErFmUN0aMIhcfPW62",
     description:
       "Tiered grants ($5K–$40K) for d/acc projects in biosecurity, cyber defense, info resilience, physical resilience, neurotech & social technology.",
     fullDescription:
@@ -1022,36 +1040,12 @@ export const fellowshipOpportunities: Opportunity[] = [
     organizer: "Edge City",
   },
   {
-    id: "ashoka-fellowship",
-    name: "Ashoka Fellowship",
-    logoUrl:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSxOghHespezyoNolFyTtOchC_7S0OibiWlA&s",
-    description:
-      "Lifelong network for leading social entrepreneurs, offering needs-assessed stipends and strategic support to champion system-changing solutions globally.",
-    fullDescription:
-      "For over 40 years, Ashoka has elected world-leading social entrepreneurs as Fellows. Selected changemakers join a lifelong, non-residential Fellowship—receiving an unrestricted, needs-assessed stipend (up to three years), pro-bono legal advice, coaching, leadership development, and access to online courses and trainings on systems change and social finance. Ashoka's global community of peers provides personalized and ad hoc support throughout Fellows' entrepreneurial journeys.",
-    openDate: null,
-    closeDate: null,
-    tags: ["stipend", "mentorship", "long-term", "social-impact", "global"],
-    category: "fellowship",
-    region: "Global",
-    country: null,
-    eligibility:
-      "Exceptional social entrepreneurs (founders/co-founders of non-profits) with proven, system-changing ideas, committed to working full-time on their initiative for at least three years.",
-    applyLink: "https://www.ashoka.org/en/fellows/nominate",
-    benefits: [
-      "Needs-assessed living stipend for up to three years",
-      "Access to a global community of social entrepreneurs",
-      "Pro-bono legal advice, coaching, and leadership development",
-      "Structured courses, webinars, and ad hoc strategic support",
-    ],
-    organizer: "Ashoka",
-  },
-  {
     id: "entrepreneurs-first-fall-2025",
     name: "Entrepreneurs First",
     logoUrl:
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRUA_aYiiXgyGi7W9as6RswttrMywi6Re8mA&s",
+    shareImageUrl:
+      "https://1ekwuvtw2t.ufs.sh/f/A3uMVCvbWYHhF9AkJnRsVuxWRLnfGwEe5yN9ikjhDvd6YtcK",
     description:
       "12-week in-person talent-investor program across EF offices in London, Paris, Bangalore & San Francisco; Fall 2025 application deadlines: June 29 (Bangalore), July 14 (Paris), August 1 (London).",
     fullDescription:
@@ -1076,36 +1070,12 @@ export const fellowshipOpportunities: Opportunity[] = [
     organizer: "Entrepreneurs First",
   },
   {
-    id: "founder-institute",
-    name: "Founder Institute",
-    logoUrl:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTuOhMwPG-8dCs76XzBVayTG-3MkKZfXCkrUQ&s",
-    description:
-      '14-week pre-seed startup accelerator providing structured training, mentorship, and access to a global network of mentors and entrepreneurs; requires a refundable entrance fee of $799 (early, by Aug 17, 2025) or $999 (standard), refundable if withdrawn before the "Revenue & Business Models" session.',
-    fullDescription:
-      "The Founder Institute, based in Palo Alto, California, runs a 14-week part-time program for idea-stage to pre-seed founders. Participants work through weekly sprints on vision, customer development, business models, legal, go-to-market, and fundraising, with constant feedback from local and global mentors. Cohorts start quarterly—with the Fall 2025 cycle having an Early Admissions Deadline of August 17, 2025, Final Admissions Deadline of September 21, 2025, and kickoff on October 8, 2025. Graduates join an equity collective and gain ongoing support through advanced programs and investor networks.",
-    openDate: null,
-    closeDate: null,
-    tags: ["equity-based", "mentorship", "medium-term", "tech", "hybrid"],
-    category: "accelerator",
-    region: "North America",
-    country: "USA",
-    eligibility:
-      "Aspiring founders and early-stage startups (solo or teams) at idea or pre-seed stage, across tech and tech-enabled industries.",
-    applyLink: "https://fi.co/join",
-    benefits: [
-      "Structured 14-week curriculum",
-      "Weekly feedback sessions with mentors",
-      "Access to a global network of 35,000+ mentors",
-      "Alumni equity collective and investor introductions",
-    ],
-    organizer: "Founder Institute",
-  },
-  {
     id: "emergent-ventures",
     name: "Emergent Ventures Fellowship",
     logoUrl:
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSm8aVTqEo-OBmgqD8yEeSdhgGnjfglNQOozw&s",
+    shareImageUrl:
+      "https://1ekwuvtw2t.ufs.sh/f/A3uMVCvbWYHhnN6765VeTJ9R8wr7OMCmNbEZAljoeYKXkpDt",
     description:
       "Two-year flexible research grant and community designed to support high-impact thinkers tackling big, unconventional problems.",
     fullDescription:
@@ -1146,7 +1116,14 @@ export const fellowshipOpportunities: Opportunity[] = [
       "Y Combinator runs a three-month accelerator program in Silicon Valley, investing $125 000 for 7% equity plus $375 000 on an uncapped SAFE (MFN clause). Participants get weekly dinners and office hours with top founders, culminating in Demo Day. Four batches run each year; applications for Fall 2025 are open now, with on-time deadline August 4, 2025 at 8 PM PT.",
     openDate: "2025-05-06",
     closeDate: "2025-08-04",
-    tags: ["equity-based", "mentorship", "short-term", "tech", "in-person", "pre-seed"],
+    tags: [
+      "equity-based",
+      "mentorship",
+      "short-term",
+      "tech",
+      "in-person",
+      "pre-seed",
+    ],
     category: "accelerator",
     region: "North America",
     country: "United States",
@@ -1608,9 +1585,9 @@ export function matchRegion(
 
 export function filterOpportunities(
   opportunities: Opportunity[],
-  filters: { 
-    categories: string[]; 
-    regions: string[]; 
+  filters: {
+    categories: string[];
+    regions: string[];
     tags: string[];
     fundingAmount?: { min: number; max: number };
     equityPercentage?: { min: number; max: number };
@@ -1629,23 +1606,33 @@ export function filterOpportunities(
       filters.tags.length === 0 ||
       filters.tags.every((tag) => opp.tags.includes(tag));
 
-    const isDefaultFundingRange = !filters.fundingAmount || 
-      (filters.fundingAmount.min === 0 && filters.fundingAmount.max === 2000000);
-    
-    const fundingMatch = isDefaultFundingRange || 
-      (opp.funding && filters.fundingAmount &&
-       opp.funding.amount >= filters.fundingAmount.min && 
-       opp.funding.amount <= filters.fundingAmount.max);
+    const isDefaultFundingRange =
+      !filters.fundingAmount ||
+      (filters.fundingAmount.min === 0 &&
+        filters.fundingAmount.max === 2000000);
 
-    const isDefaultEquityRange = !filters.equityPercentage || 
-      (filters.equityPercentage.min === 0 && filters.equityPercentage.max === 20);
-    
-    const equityMatch = isDefaultEquityRange || 
-      (opp.funding && filters.equityPercentage &&
-       opp.funding.equityPercentage >= filters.equityPercentage.min && 
-       opp.funding.equityPercentage <= filters.equityPercentage.max);
+    const fundingMatch =
+      isDefaultFundingRange ||
+      (opp.funding &&
+        filters.fundingAmount &&
+        opp.funding.amount >= filters.fundingAmount.min &&
+        opp.funding.amount <= filters.fundingAmount.max);
 
-    return categoryMatch && regionMatch && tagMatch && fundingMatch && equityMatch;
+    const isDefaultEquityRange =
+      !filters.equityPercentage ||
+      (filters.equityPercentage.min === 0 &&
+        filters.equityPercentage.max === 20);
+
+    const equityMatch =
+      isDefaultEquityRange ||
+      (opp.funding &&
+        filters.equityPercentage &&
+        opp.funding.equityPercentage >= filters.equityPercentage.min &&
+        opp.funding.equityPercentage <= filters.equityPercentage.max);
+
+    return (
+      categoryMatch && regionMatch && tagMatch && fundingMatch && equityMatch
+    );
   });
 }
 

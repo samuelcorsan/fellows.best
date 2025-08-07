@@ -139,7 +139,7 @@ export default async function OpportunityPage({
               className="object-cover"
               priority
             />
-            <div className="absolute inset-0 bg-black/20" />
+            <div className="absolute inset-0 bg-black/10" />
           </div>
           
           {/* Overlapping Logo */}
@@ -150,7 +150,7 @@ export default async function OpportunityPage({
                 alt={`${opportunity.name} logo`}
                 width={100}
                 height={100}
-                className="rounded-xl object-cover w-20 h-20 sm:w-[100px] sm:h-[100px] border-4 border-white shadow-2xl"
+                className="rounded-xl object-cover w-20 h-20 sm:w-[100px] sm:h-[100px] border-4 border-white shadow-2xl bg-white"
               />
             </div>
           </div>
