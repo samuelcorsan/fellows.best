@@ -252,138 +252,111 @@ export default function SettingsPage() {
 
   if (isLoading) {
     return (
-      <div className="fixed inset-0 top-16 bottom-0 bg-background z-10">
-        <div className="flex h-full">
-          <div className="w-64 border-r border-border/40 bg-background flex-shrink-0">
-            <div className="p-8 flex flex-col h-full">
-              <div className="flex-1">
-                <h1 className="text-xl font-semibold mb-6">Settings</h1>
-                <nav className="space-y-1">
-                  <button className="w-full text-left px-4 py-2 rounded-lg bg-muted text-foreground font-medium text-sm">
-                    My account
-                  </button>
-                </nav>
-              </div>
-              
-              <div className="border-t border-border/40 pt-6">
-                <h3 className="text-sm font-medium mb-3">Feedback</h3>
-                <p className="text-xs text-muted-foreground mb-4">
-                  Help us improve by sharing your thoughts
-                </p>
-                <Button variant="outline" size="sm" className="w-full rounded-lg text-xs" disabled>
-                  <Upload className="h-3 w-3 mr-2" />
-                  Upload feedback
+      <div className="bg-background pb-20 sm:pb-8">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8">
+          <div className="max-w-2xl mx-auto">
+            <div className="text-center mb-6 sm:mb-8">
+              <h2 className="text-2xl sm:text-3xl font-semibold mb-2">My account</h2>
+              <p className="text-muted-foreground text-sm">
+                Manage your account settings and preferences
+              </p>
+            </div>
+
+            <div className="space-y-4">
+              <div className="flex items-center justify-between py-4 px-6 border border-border/40 rounded-lg">
+                <div className="flex items-center gap-4">
+                  <Skeleton className="h-12 w-12 rounded-full" />
+                  <div>
+                    <p className="font-medium text-sm">Photo</p>
+                    <p className="text-muted-foreground text-xs">Update your profile photo</p>
+                  </div>
+                </div>
+                <Button variant="outline" size="sm" className="rounded-lg px-4 text-xs" disabled>
+                  Change photo
                 </Button>
               </div>
-            </div>
-          </div>
 
-          <div className="flex-1 overflow-y-auto">
-            <div className="flex justify-center w-full">
-              <div className="max-w-2xl w-full py-8 px-8">
-                <div className="text-center mb-8">
-                  <h2 className="text-2xl font-semibold mb-2">My account</h2>
-                  <p className="text-muted-foreground text-sm">
-                    Manage your account settings and preferences
-                  </p>
+              <div className="border border-border/40 rounded-lg">
+                <div className="flex items-center justify-between py-4 px-6">
+                  <div className="flex-1">
+                    <p className="font-medium text-sm mb-1">Full name</p>
+                    <Skeleton className="h-4 w-32" />
+                  </div>
+                  <Button variant="outline" size="sm" className="rounded-lg px-4 text-xs" disabled>
+                    Change name
+                  </Button>
                 </div>
+              </div>
 
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between py-4 px-6 border border-border/40 rounded-lg">
-                    <div className="flex items-center gap-4">
-                      <Skeleton className="h-12 w-12 rounded-full" />
+              <div className="flex items-center justify-between py-4 px-6 border border-border/40 rounded-lg">
+                <div>
+                  <p className="font-medium text-sm mb-1">Email</p>
+                  <Skeleton className="h-4 w-48" />
+                </div>
+                <Button variant="outline" size="sm" className="rounded-lg px-4 text-xs" disabled>
+                  Change email
+                </Button>
+              </div>
+
+              <div className="border border-border/40 rounded-lg">
+                <div className="flex items-center justify-between py-4 px-6">
+                  <div className="flex-1">
+                    <p className="font-medium text-sm mb-1">Location</p>
+                    <Skeleton className="h-4 w-24" />
+                  </div>
+                  <Button variant="outline" size="sm" className="rounded-lg px-4 text-xs" disabled>
+                    Change location
+                  </Button>
+                </div>
+              </div>
+
+              <div className="border border-border/40 rounded-lg">
+                <div className="flex items-center justify-between py-4 px-6">
+                  <div className="flex-1">
+                    <p className="font-medium text-sm mb-1">Website</p>
+                    <Skeleton className="h-4 w-28" />
+                  </div>
+                  <Button variant="outline" size="sm" className="rounded-lg px-4 text-xs" disabled>
+                    Change website
+                  </Button>
+                </div>
+              </div>
+
+              <div className="border border-border/40 rounded-lg p-6">
+                <div className="mb-4">
+                  <p className="font-medium text-sm mb-1">Connected providers</p>
+                  <p className="text-muted-foreground text-xs">Manage your authentication methods</p>
+                </div>
+                
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between py-3 px-4 border border-border/20 rounded-lg">
+                    <div className="flex items-center gap-3">
+                      <Skeleton className="w-8 h-8 rounded-lg" />
                       <div>
-                        <p className="font-medium text-sm">Photo</p>
-                        <p className="text-muted-foreground text-xs">Update your profile photo</p>
+                        <Skeleton className="h-4 w-16 mb-1" />
+                        <Skeleton className="h-3 w-24" />
                       </div>
                     </div>
-                    <Button variant="outline" size="sm" className="rounded-lg px-4 text-xs" disabled>
-                      Change photo
-                    </Button>
-                  </div>
-
-                  <div className="border border-border/40 rounded-lg">
-                    <div className="flex items-center justify-between py-4 px-6">
-                      <div className="flex-1">
-                        <p className="font-medium text-sm mb-1">Full name</p>
-                        <Skeleton className="h-4 w-32" />
-                      </div>
-                      <Button variant="outline" size="sm" className="rounded-lg px-4 text-xs" disabled>
-                        Change name
-                      </Button>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center justify-between py-4 px-6 border border-border/40 rounded-lg">
-                    <div>
-                      <p className="font-medium text-sm mb-1">Email</p>
-                      <Skeleton className="h-4 w-48" />
-                    </div>
-                    <Button variant="outline" size="sm" className="rounded-lg px-4 text-xs" disabled>
-                      Change email
-                    </Button>
-                  </div>
-
-                  <div className="border border-border/40 rounded-lg">
-                    <div className="flex items-center justify-between py-4 px-6">
-                      <div className="flex-1">
-                        <p className="font-medium text-sm mb-1">Location</p>
-                        <Skeleton className="h-4 w-24" />
-                      </div>
-                      <Button variant="outline" size="sm" className="rounded-lg px-4 text-xs" disabled>
-                        Change location
-                      </Button>
-                    </div>
-                  </div>
-
-                  <div className="border border-border/40 rounded-lg">
-                    <div className="flex items-center justify-between py-4 px-6">
-                      <div className="flex-1">
-                        <p className="font-medium text-sm mb-1">Website</p>
-                        <Skeleton className="h-4 w-28" />
-                      </div>
-                      <Button variant="outline" size="sm" className="rounded-lg px-4 text-xs" disabled>
-                        Change website
-                      </Button>
-                    </div>
-                  </div>
-
-                  <div className="border border-border/40 rounded-lg p-6">
-                    <div className="mb-4">
-                      <p className="font-medium text-sm mb-1">Connected providers</p>
-                      <p className="text-muted-foreground text-xs">Manage your authentication methods</p>
-                    </div>
-                    
-                    <div className="space-y-3">
-                      <div className="flex items-center justify-between py-3 px-4 border border-border/20 rounded-lg">
-                        <div className="flex items-center gap-3">
-                          <Skeleton className="w-8 h-8 rounded-lg" />
-                          <div>
-                            <Skeleton className="h-4 w-16 mb-1" />
-                            <Skeleton className="h-3 w-24" />
-                          </div>
-                        </div>
-                        <Skeleton className="h-6 w-12 rounded-lg" />
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="border border-red-500/40 rounded-lg p-6 bg-transparent">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className="font-medium text-sm mb-1 text-red-600">Delete my account</p>
-                        <p className="text-muted-foreground text-xs">
-                          Permanently delete your account and all associated data
-                        </p>
-                      </div>
-                      <Button variant="destructive" size="sm" className="rounded-lg px-4 text-xs text-white" disabled>
-                        Delete account
-                      </Button>
-                    </div>
+                    <Skeleton className="h-6 w-12 rounded-lg" />
                   </div>
                 </div>
               </div>
+
+              <div className="border border-red-500/40 rounded-lg p-6 bg-transparent">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="font-medium text-sm mb-1 text-red-600">Delete my account</p>
+                    <p className="text-muted-foreground text-xs">
+                      Permanently delete your account and all associated data
+                    </p>
+                  </div>
+                  <Button variant="destructive" size="sm" className="rounded-lg px-4 text-xs text-white" disabled>
+                    Delete account
+                  </Button>
+                </div>
+              </div>
             </div>
+
           </div>
         </div>
       </div>
@@ -407,85 +380,18 @@ export default function SettingsPage() {
   }
 
   return (
-    <div className="fixed inset-0 top-16 bottom-0 bg-background z-10">
-      <div className="flex h-full">
-        <div className="w-64 border-r border-border/40 bg-background flex-shrink-0">
-          <div className="p-8 flex flex-col h-full">
-            <div className="flex-1">
-              <h1 className="text-xl font-semibold mb-6">Settings</h1>
-              <nav className="space-y-1">
-                {sidebarSections.map((section) => (
-                  <button
-                    key={section.id}
-                    onClick={() => setActiveSection(section.id)}
-                    className={`w-full text-left px-4 py-2 rounded-lg transition-colors font-medium text-sm ${
-                      activeSection === section.id
-                        ? "bg-muted text-foreground"
-                        : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
-                    }`}
-                  >
-                    {section.label}
-                  </button>
-                ))}
-              </nav>
-            </div>
-            
-            <div className="border-t border-border/40 pt-6">
-              <h3 className="text-sm font-medium mb-3">Feedback</h3>
-              <p className="text-xs text-muted-foreground mb-4">
-                Help us improve by sharing your thoughts
-              </p>
-              <Dialog open={feedbackOpen} onOpenChange={setFeedbackOpen}>
-                <DialogTrigger asChild>
-                  <Button variant="outline" size="sm" className="w-full rounded-lg text-xs">
-                    <Upload className="h-3 w-3 mr-2" />
-                    Upload feedback
-                  </Button>
-                </DialogTrigger>
-                <DialogContent>
-                  <DialogHeader>
-                    <DialogTitle>Send Feedback</DialogTitle>
-                    <DialogDescription>
-                      Share your thoughts, suggestions, or report issues to help us improve.
-                    </DialogDescription>
-                  </DialogHeader>
-                  <div className="space-y-4">
-                    <Textarea
-                      placeholder="Tell us what's on your mind..."
-                      value={feedbackText}
-                      onChange={(e) => setFeedbackText(e.target.value)}
-                      className="min-h-[100px]"
-                    />
-                  </div>
-                  <DialogFooter>
-                    <Button variant="outline" onClick={() => setFeedbackOpen(false)}>
-                      Cancel
-                    </Button>
-                    <Button 
-                      onClick={handleFeedbackSubmit}
-                      disabled={!feedbackText.trim() || feedbackSubmitting}
-                    >
-                      {feedbackSubmitting ? "Sending..." : "Send Feedback"}
-                    </Button>
-                  </DialogFooter>
-                </DialogContent>
-              </Dialog>
-            </div>
-          </div>
-        </div>
-
-        <div className="flex-1 overflow-y-auto">
-          <div className="flex justify-center w-full">
-            <div className="max-w-2xl w-full py-8 px-8">
-            <div className="text-center mb-8">
-              <h2 className="text-2xl font-semibold mb-2">My account</h2>
+    <div className="bg-background pb-20 sm:pb-8">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8">
+        <div className="max-w-2xl mx-auto">
+            <div className="text-center mb-6 sm:mb-8">
+              <h2 className="text-2xl sm:text-3xl font-semibold mb-2">My account</h2>
               <p className="text-muted-foreground text-sm">
                 Manage your account settings and preferences
               </p>
             </div>
 
             <div className="space-y-4">
-              <div className="flex items-center justify-between py-4 px-6 border border-border/40 rounded-lg">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 py-4 px-4 sm:px-6 border border-border/40 rounded-lg">
                 <div className="flex items-center gap-4">
                   <Avatar className="h-12 w-12">
                     <AvatarImage src={session.user.image || ""} />
@@ -498,64 +404,66 @@ export default function SettingsPage() {
                     <p className="text-muted-foreground text-xs">Update your profile photo</p>
                   </div>
                 </div>
-                <Button variant="outline" size="sm" className="rounded-lg px-4 text-xs">
+                <Button variant="outline" size="sm" className="rounded-lg px-4 text-xs w-full sm:w-auto">
                   Change photo
                 </Button>
               </div>
 
               <div className="border border-border/40 rounded-lg">
-                <div className="flex items-center justify-between py-4 px-6">
+                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 py-4 px-4 sm:px-6">
                   <div className="flex-1">
                     <p className="font-medium text-sm mb-1">Full name</p>
                     {editingField === "name" ? (
-                      <div className="flex items-center gap-2 mt-2">
+                      <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 mt-2">
                         <Input
                           value={tempValue}
                           onChange={(e) => setTempValue(e.target.value)}
                           className={`text-sm h-8 ${errors.name ? "border-red-500" : ""}`}
                           autoFocus
                         />
-                        <Button size="sm" onClick={() => handleSave("name")} className="h-8 px-3">
-                          <Save className="h-3 w-3" />
-                        </Button>
-                        <Button size="sm" variant="ghost" onClick={handleCancel} className="h-8 px-3">
-                          <X className="h-3 w-3" />
-                        </Button>
+                        <div className="flex gap-2">
+                          <Button size="sm" onClick={() => handleSave("name")} className="h-8 px-3 flex-1 sm:flex-initial">
+                            <Save className="h-3 w-3" />
+                          </Button>
+                          <Button size="sm" variant="ghost" onClick={handleCancel} className="h-8 px-3 flex-1 sm:flex-initial">
+                            <X className="h-3 w-3" />
+                          </Button>
+                        </div>
                       </div>
                     ) : (
-                      <p className="text-muted-foreground text-sm">{profileData.name}</p>
+                      <p className="text-muted-foreground text-sm break-words">{profileData.name}</p>
                     )}
                   </div>
                   {editingField !== "name" && (
                     <Button 
                       variant="outline" 
                       size="sm" 
-                      className="rounded-lg px-4 text-xs"
+                      className="rounded-lg px-4 text-xs w-full sm:w-auto"
                       onClick={() => handleEdit("name", profileData.name)}
                     >
                       Change name
                     </Button>
                   )}
                 </div>
-                {errors.name && <p className="text-red-500 text-xs px-6 pb-4">{errors.name}</p>}
+                {errors.name && <p className="text-red-500 text-xs px-4 sm:px-6 pb-4">{errors.name}</p>}
               </div>
 
-              <div className="flex items-center justify-between py-4 px-6 border border-border/40 rounded-lg">
-                <div>
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 py-4 px-4 sm:px-6 border border-border/40 rounded-lg">
+                <div className="min-w-0">
                   <p className="font-medium text-sm mb-1">Email</p>
-                  <p className="text-muted-foreground text-sm">{profileData.email}</p>
+                  <p className="text-muted-foreground text-sm break-all">{profileData.email}</p>
                 </div>
-                <Button variant="outline" size="sm" className="rounded-lg px-4 text-xs" disabled>
+                <Button variant="outline" size="sm" className="rounded-lg px-4 text-xs w-full sm:w-auto" disabled>
                   Change email
                 </Button>
               </div>
 
               <div className="border border-border/40 rounded-lg">
-                <div className="flex items-center justify-between py-4 px-6">
+                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 py-4 px-4 sm:px-6">
                   <div className="flex-1">
                     <p className="font-medium text-sm mb-1">Location</p>
                     {editingField === "location" ? (
-                      <div className="flex items-center gap-2 mt-2">
+                      <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 mt-2">
                         <Input
                           value={tempValue}
                           onChange={(e) => setTempValue(e.target.value)}
@@ -563,15 +471,17 @@ export default function SettingsPage() {
                           placeholder="Your location"
                           autoFocus
                         />
-                        <Button size="sm" onClick={() => handleSave("location")} className="h-8 px-3">
-                          <Save className="h-3 w-3" />
-                        </Button>
-                        <Button size="sm" variant="ghost" onClick={handleCancel} className="h-8 px-3">
-                          <X className="h-3 w-3" />
-                        </Button>
+                        <div className="flex gap-2">
+                          <Button size="sm" onClick={() => handleSave("location")} className="h-8 px-3 flex-1 sm:flex-initial">
+                            <Save className="h-3 w-3" />
+                          </Button>
+                          <Button size="sm" variant="ghost" onClick={handleCancel} className="h-8 px-3 flex-1 sm:flex-initial">
+                            <X className="h-3 w-3" />
+                          </Button>
+                        </div>
                       </div>
                     ) : (
-                      <p className="text-muted-foreground text-sm">
+                      <p className="text-muted-foreground text-sm break-words">
                         {profileData.location || "No location set"}
                       </p>
                     )}
@@ -580,22 +490,22 @@ export default function SettingsPage() {
                     <Button 
                       variant="outline" 
                       size="sm" 
-                      className="rounded-lg px-4 text-xs"
+                      className="rounded-lg px-4 text-xs w-full sm:w-auto"
                       onClick={() => handleEdit("location", profileData.location)}
                     >
                       Change location
                     </Button>
                   )}
                 </div>
-                {errors.location && <p className="text-red-500 text-xs px-6 pb-4">{errors.location}</p>}
+                {errors.location && <p className="text-red-500 text-xs px-4 sm:px-6 pb-4">{errors.location}</p>}
               </div>
 
               <div className="border border-border/40 rounded-lg">
-                <div className="flex items-center justify-between py-4 px-6">
+                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 py-4 px-4 sm:px-6">
                   <div className="flex-1">
                     <p className="font-medium text-sm mb-1">Website</p>
                     {editingField === "website" ? (
-                      <div className="flex items-center gap-2 mt-2">
+                      <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 mt-2">
                         <Input
                           value={tempValue}
                           onChange={(e) => setTempValue(e.target.value)}
@@ -603,15 +513,17 @@ export default function SettingsPage() {
                           placeholder="example.com"
                           autoFocus
                         />
-                        <Button size="sm" onClick={() => handleSave("website")} className="h-8 px-3">
-                          <Save className="h-3 w-3" />
-                        </Button>
-                        <Button size="sm" variant="ghost" onClick={handleCancel} className="h-8 px-3">
-                          <X className="h-3 w-3" />
-                        </Button>
+                        <div className="flex gap-2">
+                          <Button size="sm" onClick={() => handleSave("website")} className="h-8 px-3 flex-1 sm:flex-initial">
+                            <Save className="h-3 w-3" />
+                          </Button>
+                          <Button size="sm" variant="ghost" onClick={handleCancel} className="h-8 px-3 flex-1 sm:flex-initial">
+                            <X className="h-3 w-3" />
+                          </Button>
+                        </div>
                       </div>
                     ) : (
-                      <p className="text-muted-foreground text-sm">
+                      <p className="text-muted-foreground text-sm break-all">
                         {profileData.website || "No website set"}
                       </p>
                     )}
@@ -620,17 +532,17 @@ export default function SettingsPage() {
                     <Button 
                       variant="outline" 
                       size="sm" 
-                      className="rounded-lg px-4 text-xs"
+                      className="rounded-lg px-4 text-xs w-full sm:w-auto"
                       onClick={() => handleEdit("website", profileData.website)}
                     >
                       Change website
                     </Button>
                   )}
                 </div>
-                {errors.website && <p className="text-red-500 text-xs px-6 pb-4">{errors.website}</p>}
+                {errors.website && <p className="text-red-500 text-xs px-4 sm:px-6 pb-4">{errors.website}</p>}
               </div>
 
-              <div className="border border-border/40 rounded-lg p-6">
+              <div className="border border-border/40 rounded-lg p-4 sm:p-6">
                 <div className="mb-4">
                   <p className="font-medium text-sm mb-1">Connected providers</p>
                   <p className="text-muted-foreground text-xs">Manage your authentication methods</p>
@@ -639,16 +551,16 @@ export default function SettingsPage() {
                 {accounts.length > 0 ? (
                   <div className="space-y-3">
                     {accounts.map((account) => (
-                      <div key={account.id} className="flex items-center justify-between py-3 px-4 border border-border/20 rounded-lg">
-                        <div className="flex items-center gap-3">
-                          <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-muted">
+                      <div key={account.id} className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 py-3 px-4 border border-border/20 rounded-lg">
+                        <div className="flex items-center gap-3 min-w-0">
+                          <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-muted flex-shrink-0">
                             {account.providerId === 'google' ? (
                               <FaGoogle className="h-4 w-4" />
                             ) : (
                               <FaGithub className="h-4 w-4" />
                             )}
                           </div>
-                          <div>
+                          <div className="min-w-0">
                             <p className="font-medium text-sm">
                               {getProviderName(account.providerId)}
                             </p>
@@ -657,7 +569,7 @@ export default function SettingsPage() {
                             </p>
                           </div>
                         </div>
-                        <Badge variant="secondary" className="rounded-lg px-3 py-1 text-xs">
+                        <Badge variant="secondary" className="rounded-lg px-3 py-1 text-xs self-start sm:self-center">
                           Active
                         </Badge>
                       </div>
@@ -668,8 +580,8 @@ export default function SettingsPage() {
                 )}
               </div>
 
-              <div className="border border-red-500/40 rounded-lg p-6 bg-transparent">
-                <div className="flex items-center justify-between">
+              <div className="border border-red-500/40 rounded-lg p-4 sm:p-6 bg-transparent">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                   <div>
                     <p className="font-medium text-sm mb-1 text-red-600">Delete my account</p>
                     <p className="text-muted-foreground text-xs">
@@ -679,7 +591,7 @@ export default function SettingsPage() {
                   
                   <AlertDialog>
                     <AlertDialogTrigger asChild>
-                      <Button variant="destructive" size="sm" className="rounded-lg px-4 text-xs text-white">
+                      <Button variant="destructive" size="sm" className="rounded-lg px-4 text-xs text-white w-full sm:w-auto">
                         Delete account
                       </Button>
                     </AlertDialogTrigger>
@@ -709,8 +621,7 @@ export default function SettingsPage() {
                 )}
               </div>
             </div>
-            </div>
-          </div>
+
         </div>
       </div>
     </div>

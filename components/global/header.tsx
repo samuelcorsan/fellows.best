@@ -130,7 +130,7 @@ export function Header() {
 
   return (
     <>
-      <header className="sticky top-0 z-50 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <header className="sticky top-0 z-50 border-b bg-background">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 items-center">
             <div className="flex-1">
@@ -205,57 +205,88 @@ export function Header() {
           </div>
 
           {isMenuOpen && (
-            <div className="fixed inset-0 top-16 z-50 bg-background/95 backdrop-blur-sm md:hidden">
-              <div className="flex flex-col h-full p-4">
-                <nav className="flex flex-col space-y-4 flex-grow justify-center items-start ml-4">
-                  {navigation.map((item) => {
-                    const Icon = item.icon;
-                    const isActive = pathname === item.href;
-                    return (
-                      <Link
-                        key={item.name}
-                        href={item.href}
-                        className={`flex items-center space-x-3 text-base font-medium transition-colors hover:text-muted-foreground ${
-                          isActive ? "text-foreground" : "text-foreground/90"
-                        }`}
-                        onClick={() => setIsMenuOpen(false)}
-                      >
-                        <Icon className="h-6 w-6" />
-                        <span>{item.name}</span>
-                      </Link>
-                    );
-                  })}
-                  {isPending || !session ? (
-                    <button
-                      onClick={() => {
-                        setIsSignInOpen(true);
-                        setIsMenuOpen(false);
-                      }}
-                      className="flex items-center space-x-3 text-base font-medium text-foreground/90 transition-colors hover:text-muted-foreground text-left"
-                    >
-                      <User className="h-6 w-6" />
-                      <span>Get Started</span>
-                    </button>
-                  ) : (
-                    <>
-                      <Link
-                        href="/settings"
-                        onClick={() => setIsMenuOpen(false)}
-                        className="flex items-center space-x-3 text-base font-medium text-foreground/90 transition-colors hover:text-muted-foreground text-left"
-                      >
-                        <Settings className="h-6 w-6" />
-                        <span>Settings</span>
-                      </Link>
+            <div className="fixed inset-0 top-16 z-50 bg-background border-t md:hidden">
+              <div className="flex flex-col h-full">
+                <div className="flex-1 px-6 py-8">
+                  <div className="space-y-1">
+                    <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-4">Navigation</p>
+                    {navigation.map((item) => {
+                      const Icon = item.icon;
+                      const isActive = pathname === item.href;
+                      return (
+                        <Link
+                          key={item.name}
+                          href={item.href}
+                          className={`flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg transition-all duration-200 ${
+                            isActive 
+                              ? "bg-primary/10 text-primary border border-primary/20" 
+                              : "text-foreground hover:bg-muted hover:text-foreground"
+                          }`}
+                          onClick={() => setIsMenuOpen(false)}
+                        >
+                          <Icon className="h-5 w-5 flex-shrink-0" />
+                          <span>{item.name}</span>
+                          {isActive && (
+                            <div className="ml-auto w-2 h-2 bg-primary rounded-full"></div>
+                          )}
+                        </Link>
+                      );
+                    })}
+                  </div>
+
+                  <div className="mt-8 pt-8 border-t">
+                    <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-4">Account</p>
+                    {isPending || !session ? (
                       <button
-                        onClick={handleSignOut}
-                        className="flex items-center space-x-3 text-base font-medium text-foreground/90 transition-colors hover:text-muted-foreground text-left"
+                        onClick={() => {
+                          setIsSignInOpen(true);
+                          setIsMenuOpen(false);
+                        }}
+                        className="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg transition-all duration-200 text-foreground hover:bg-muted w-full text-left"
                       >
-                        <LogOut className="h-6 w-6" />
-                        <span>Sign Out</span>
+                        <User className="h-5 w-5 flex-shrink-0" />
+                        <span>Get Started</span>
                       </button>
-                    </>
-                  )}
-                </nav>
+                    ) : (
+                      <div className="space-y-1">
+                        <div className="flex items-center gap-3 px-4 py-3 mb-3">
+                          <Avatar className="h-8 w-8">
+                            <AvatarImage src={session.user.image || ""} alt={session.user.name || ""} />
+                            <AvatarFallback className="text-xs">
+                              {session.user.name?.[0]?.toUpperCase()}
+                            </AvatarFallback>
+                          </Avatar>
+                          <div className="flex-1 min-w-0">
+                            <p className="text-sm font-medium text-foreground truncate">
+                              {session.user.name}
+                            </p>
+                            <p className="text-xs text-muted-foreground truncate">
+                              {session.user.email}
+                            </p>
+                          </div>
+                        </div>
+                        <Link
+                          href="/settings"
+                          onClick={() => setIsMenuOpen(false)}
+                          className="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg transition-all duration-200 text-foreground hover:bg-muted"
+                        >
+                          <Settings className="h-5 w-5 flex-shrink-0" />
+                          <span>Settings</span>
+                        </Link>
+                        <button
+                          onClick={() => {
+                            handleSignOut();
+                            setIsMenuOpen(false);
+                          }}
+                          className="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg transition-all duration-200 text-red-600 hover:bg-red-50 dark:hover:bg-red-950/20 w-full text-left"
+                        >
+                          <LogOut className="h-5 w-5 flex-shrink-0" />
+                          <span>Sign Out</span>
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                </div>
               </div>
             </div>
           )}

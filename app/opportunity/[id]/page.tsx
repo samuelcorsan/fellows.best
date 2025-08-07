@@ -118,38 +118,83 @@ export default async function OpportunityPage({
 
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <Button asChild variant="ghost" className="mb-6">
-        <Link href={backUrl}>
-          <ArrowLeft className="mr-2 h-4 w-4" />
-          {backText}
-        </Link>
-      </Button>
+      {!opportunity.shareImageUrl && (
+        <Button asChild variant="ghost" className="mb-6">
+          <Link href={backUrl}>
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            {backText}
+          </Link>
+        </Button>
+      )}
 
-      <div className="flex items-start justify-between space-x-6 mb-8">
-        <div className="flex items-start space-x-6">
-          <Image
-            src={opportunity.logoUrl}
-            alt={`${opportunity.name} logo`}
-            width={100}
-            height={100}
-            className="rounded-xl object-cover"
-          />
-          <div className="flex-1">
-            <div className="flex items-center gap-3 mb-2">
-              <h1 className="text-3xl md:text-4xl font-bold">
+      {/* Banner with share image and overlapping logo */}
+      {opportunity.shareImageUrl ? (
+        <div className="relative w-full mb-12 sm:mb-16">
+          {/* Banner */}
+          <div className="relative w-full h-32 sm:h-48 md:h-64 rounded-2xl overflow-hidden">
+            <Image
+              src={opportunity.shareImageUrl}
+              alt={`${opportunity.name} banner`}
+              fill
+              className="object-cover"
+              priority
+            />
+            <div className="absolute inset-0 bg-black/20" />
+          </div>
+          
+          {/* Overlapping Logo */}
+          <div className="absolute -bottom-8 sm:-bottom-6 left-1/2 sm:left-8 transform -translate-x-1/2 sm:translate-x-0">
+            <div className="relative">
+              <Image
+                src={opportunity.logoUrl}
+                alt={`${opportunity.name} logo`}
+                width={100}
+                height={100}
+                className="rounded-xl object-cover w-20 h-20 sm:w-[100px] sm:h-[100px] border-4 border-white shadow-2xl"
+              />
+            </div>
+          </div>
+          
+          {/* Back button on banner */}
+          <div className="absolute top-4 left-4 sm:top-6 sm:left-8 z-20">
+            <Button asChild size="icon" className="bg-white text-black hover:bg-gray-100 shadow-md rounded-xl w-10 h-10">
+              <Link href={backUrl}>
+                <ArrowLeft className="h-4 w-4" />
+              </Link>
+            </Button>
+          </div>
+        </div>
+      ) : null}
+
+      <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6 mb-8">
+        <div className="flex flex-col sm:flex-row sm:items-start gap-4 sm:gap-6 flex-1">
+          {!opportunity.shareImageUrl && (
+            <div className="relative">
+              <Image
+                src={opportunity.logoUrl}
+                alt={`${opportunity.name} logo`}
+                width={100}
+                height={100}
+                className="rounded-xl object-cover w-20 h-20 sm:w-[100px] sm:h-[100px] mx-auto sm:mx-0 flex-shrink-0 border-4 border-white shadow-lg"
+              />
+            </div>
+          )}
+          <div className="flex-1 text-center sm:text-left">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mb-2">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold">
                 {opportunity.name}
               </h1>
               {opportunity.closeDate &&
                 getDaysUntilDeadline(opportunity.closeDate) < 0 && (
-                  <Badge className="text-sm" variant="destructive">
+                  <Badge className="text-sm mx-auto sm:mx-0 w-fit" variant="destructive">
                     Closed
                   </Badge>
                 )}
             </div>
-            <p className="text-xl text-muted-foreground mb-4">
+            <p className="text-lg sm:text-xl text-muted-foreground mb-4">
               {opportunity.organizer}
             </p>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2 justify-center sm:justify-start">
               <Badge variant="outline" className="text-sm rounded-lg">
                 {opportunity.category}
               </Badge>
@@ -165,21 +210,18 @@ export default async function OpportunityPage({
             </div>
           </div>
         </div>
-        <div className="flex items-center gap-3 shrink-0">
-          {opportunity.closeDate &&
-            getDaysUntilDeadline(opportunity.closeDate) >= 0 && (
-              <Button asChild size="lg">
-                <a
-                  href={opportunity.applyLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center"
-                >
-                  Apply Now
-                  <ExternalLink className="ml-2 h-4 w-4" />
-                </a>
-              </Button>
-            )}
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 lg:shrink-0">
+          <Button asChild size="lg" className="w-full sm:w-auto">
+            <a
+              href={opportunity.applyLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center"
+            >
+              Apply Now
+              <ExternalLink className="ml-2 h-4 w-4" />
+            </a>
+          </Button>
           <ShareButton opportunity={opportunity} />
         </div>
       </div>

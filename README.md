@@ -16,10 +16,8 @@ A centralized platform to discover, track, and receive reminders for fellowships
 
 ## Tech Stack
 
-> **Note:** Adjust as needed based on your implementation choices.
-
 - **Frontend**: Next.js, React, TypeScript, TailwindCSS, shadcn/ui
-- **Backend**: Node.js with Express
+- **Backend**: Next.js API routes
 - **Database**: PostgreSQL for storing users, settings and more
 - **Authentication**: Better Auth
 - **Deployment**: Vercel
