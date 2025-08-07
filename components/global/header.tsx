@@ -15,6 +15,7 @@ import {
   Sun,
   LogOut,
   Home,
+  Settings,
 } from "lucide-react";
 import { useTheme } from "next-themes";
 import {
@@ -111,9 +112,9 @@ export function Header() {
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuItem asChild>
-            <Link href="/profile" className="cursor-pointer">
-              <User className="mr-2 h-4 w-4" />
-              Profile
+            <Link href="/settings" className="cursor-pointer">
+              <Settings className="mr-2 h-4 w-4" />
+              Settings
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem
@@ -237,12 +238,12 @@ export function Header() {
                   ) : (
                     <>
                       <Link
-                        href="/profile"
+                        href="/settings"
                         onClick={() => setIsMenuOpen(false)}
                         className="flex items-center space-x-3 text-base font-medium text-foreground/90 transition-colors hover:text-muted-foreground text-left"
                       >
-                        <User className="h-6 w-6" />
-                        <span>Profile</span>
+                        <Settings className="h-6 w-6" />
+                        <span>Settings</span>
                       </Link>
                       <button
                         onClick={handleSignOut}

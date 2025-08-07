@@ -195,7 +195,6 @@ export default function SubmitPage() {
       
       toast.success("Opportunity submitted successfully! We'll review it and add it to our database.");
       
-      // Reset form
       setFormData({
         name: "",
         organizer: "",

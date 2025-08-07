@@ -164,7 +164,7 @@ function BrowsePageContent() {
     });
 
     if (!session && isHydrated) {
-      filtered = filtered.slice(0, 4);
+      filtered = filtered.slice(0, 6);
     }
 
     return filtered;

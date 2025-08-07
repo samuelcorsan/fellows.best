@@ -1629,7 +1629,6 @@ export function filterOpportunities(
       filters.tags.length === 0 ||
       filters.tags.every((tag) => opp.tags.includes(tag));
 
-    // Funding amount filter
     const isDefaultFundingRange = !filters.fundingAmount || 
       (filters.fundingAmount.min === 0 && filters.fundingAmount.max === 2000000);
     
@@ -1638,7 +1637,6 @@ export function filterOpportunities(
        opp.funding.amount >= filters.fundingAmount.min && 
        opp.funding.amount <= filters.fundingAmount.max);
 
-    // Equity percentage filter
     const isDefaultEquityRange = !filters.equityPercentage || 
       (filters.equityPercentage.min === 0 && filters.equityPercentage.max === 20);
     
