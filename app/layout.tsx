@@ -37,6 +37,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
+    title: "fellows.best - Discover Your Next Fellowship Opportunity",
+    description: "Discover fellowships, grants, accelerators, and competitions. Track deadlines, get reminders, and never miss an opportunity.",
     images: ["https://1ekwuvtw2t.ufs.sh/f/A3uMVCvbWYHhArrhCHvbWYHhOLpzIG2SMuXaDR8vVKjs4ilF"],
   },
 };
