@@ -26,9 +26,18 @@ export const metadata: Metadata = {
     url: "/",
     siteName: "fellows.best",
     type: "website",
+    images: [
+      {
+        url: "https://1ekwuvtw2t.ufs.sh/f/A3uMVCvbWYHhArrhCHvbWYHhOLpzIG2SMuXaDR8vVKjs4ilF",
+        width: 1200,
+        height: 630,
+        alt: "fellows.best - Discover Your Next Fellowship Opportunity",
+      }
+    ],
   },
   twitter: {
     card: "summary_large_image",
+    images: ["https://1ekwuvtw2t.ufs.sh/f/A3uMVCvbWYHhArrhCHvbWYHhOLpzIG2SMuXaDR8vVKjs4ilF"],
   },
 };
 
