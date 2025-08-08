@@ -9,6 +9,7 @@ import {
   Clock,
   Users,
   Award,
+  Play,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -241,6 +242,7 @@ export default async function OpportunityPage({
             </CardContent>
           </Card>
 
+
           {opportunity.benefits.length > 0 && (
             <Card>
               <CardHeader>
@@ -330,6 +332,32 @@ export default async function OpportunityPage({
               </div>
             </CardContent>
           </Card>
+
+          {opportunity.applicationVideo && (
+            <Card className="overflow-hidden">
+              <CardHeader>
+                <CardTitle className="flex items-center text-base">
+                  <Play className="mr-2 h-4 w-4" />
+                  Application Tips
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="relative aspect-video rounded-lg overflow-hidden">
+                  <iframe
+                    width="560"
+                    height="315"
+                    src={opportunity.applicationVideo}
+                    title="YouTube video player"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    referrerPolicy="strict-origin-when-cross-origin"
+                    allowFullScreen
+                    className="absolute inset-0 w-full h-full"
+                  />
+                </div>
+              </CardContent>
+            </Card>
+          )}
 
           {opportunity.closeDate && (
             <Card>

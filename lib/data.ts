@@ -28,6 +28,7 @@ export interface Opportunity {
     fundingType: "equity-based" | "equity-free" | "mixed";
     isApproximate?: boolean;
   };
+  applicationVideo?: string;
 }
 
 export const fellowshipOpportunities: Opportunity[] = [
@@ -1143,6 +1144,8 @@ export const fellowshipOpportunities: Opportunity[] = [
       equityPercentage: 7,
       fundingType: "equity-based",
     },
+    applicationVideo:
+      "https://www.youtube.com/embed/B5tU2447OK8?si=qTJK_Bm_XSyaQQ02",
   },
   {
     id: "zfellows",
@@ -1472,43 +1475,18 @@ export const fellowshipOpportunities: Opportunity[] = [
     organizer: "Founders, Inc.",
   },
   {
-    id: "startup-community-partnership-founder-catalyst-fall-2025",
-    name: "Startup Community Partnership Founder Catalyst (Fall 2025)",
-    logoUrl:
-      "https://images.pexels.com/photos/8761636/pexels-photo-8761636.jpeg",
-    description:
-      "Virtual 10-week pre-accelerator for early-stage founders, offered by Techstars in partnership with cities (Istanbul, Sarajevo, Omaha).",
-    fullDescription:
-      "This part-time program (Sept 24 to Nov 28, 2025) provides weekly masterclasses, tailored workshops, hands-on mentorship and pitch coaching for selected startups. It is powered by Techstars and connects founders to industry experts and resources over 10 weeks.",
-    openDate: "2025-06-28",
-    closeDate: "2025-08-28",
-    tags: ["mentorship", "short-term", "tech", "virtual", "pre-seed"],
-    category: "accelerator",
-    region: "Global",
-    country: null,
-    eligibility:
-      "Founders based in Istanbul (Turkey), Sarajevo (Bosnia), or Omaha (USA).",
-    applyLink:
-      "https://apply.techstars.com/startup-community-partnership-founder-catalyst-fall-2025",
-    benefits: [
-      "Weekly masterclasses by Techstars leaders",
-      "Tailored workshops for founders",
-      "One-on-one mentoring from Techstars team",
-      "Pitch coaching and strategic partner sessions",
-    ],
-    organizer: "Techstars",
-  },
-  {
     id: "eu-lac-digital-accelerator-open-call-2025",
     name: "EU-LAC Digital Accelerator (Open Call)",
     logoUrl:
-      "https://images.pexels.com/photos/3184603/pexels-photo-3184603.jpeg",
+      "https://1ekwuvtw2t.ufs.sh/f/A3uMVCvbWYHhjchyUB5Go7rxKyQSTWwZB0csH5uDa4hGnJ19",
+    shareImageUrl:
+      "https://1ekwuvtw2t.ufs.sh/f/A3uMVCvbWYHhervgEk6ADUoMVHY0yc8iabm2wS4qk3rpRlg9",
     description:
       "Open call for partnerships between European and Latin American tech startups and corporates, offering acceleration services worth up to €30,000 and grants up to €10,500.",
     fullDescription:
       "The EU-LAC Digital Accelerator supports EU–Latin America/Caribbean collaborations on digital innovation projects. Selected partners receive customized acceleration services (coaching, pilot planning, market strategy) and grants for proof-of-concept development (up to €7K PoC grant, €2K travel, €1.5K equipment). Next open call is expected in summer 2025.",
     openDate: "2025-07-01",
-    closeDate: "2025-08-31",
+    closeDate: "2025-10-31",
     tags: ["equity-free", "mentorship", "medium-term", "tech", "hybrid"],
     category: "accelerator",
     region: "Europe",
