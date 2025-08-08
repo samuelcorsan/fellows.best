@@ -25,5 +25,5 @@ A centralized platform to discover, track, and receive reminders for fellowships
 ## Contact
 
 - **Project Maintainer**: disamdev ([samuel@disam.dev](mailto:samuel@disam.dev))
-- **Repository**: [https://github.com/samuelcorsan/fellows.best](https://github.com/samuelcorsan/ddfellows)
+- **Repository**: [https://github.com/samuelcorsan/ddfellows](https://github.com/samuelcorsan/ddfellows)
 - **Website**: [https://fellows.best](https://fellows.best)
