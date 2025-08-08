@@ -114,7 +114,7 @@ export const fellowshipOpportunities: Opportunity[] = [
     id: "500-global-flagship-2025",
     name: "500 Global Flagship Accelerator",
     logoUrl:
-      "https://upload.wikimedia.org/wikipedia/commons/2/20/500_Startups_-_logo.svg",
+      "https://cdn.fellows.best/logos/500-startup-flagship-accelerator.webp",
     shareImageUrl:
       "https://cdn.fellows.best/banners/500-global-flagship-2025-banner.jpg",
     description:
@@ -1075,8 +1075,7 @@ export const fellowshipOpportunities: Opportunity[] = [
     id: "y-combinator-fall-2025",
     name: "Y Combinator",
     logoUrl: "https://cdn.fellows.best/logos/y-combinator-fall-2025-logo.png",
-    shareImageUrl:
-      "https://www.startupjournal.io/_next/image?url=https%3A%2F%2F3yn03ejeua.ufs.sh%2Ff%2FPGO84Vt2L1OXwMZgRgbPPypcg5GIlV3LT8FH7RBtreasdmWz&w=3840&q=75",
+    shareImageUrl: "https://cdn.fellows.best/banners/ycombinator-banner.png",
     description:
       "Seed-stage accelerator providing $500 000 in funding and mentorship for early-stage startups.",
     fullDescription:

@@ -188,7 +188,7 @@ export default async function OpportunityPage({
               {opportunity.closeDate &&
                 getDaysUntilDeadline(opportunity.closeDate) < 0 && (
                   <Badge
-                    className="text-sm mx-auto sm:mx-0 w-fit"
+                    className="text-sm mx-auto sm:mx-0 w-fit px-4 py-1 rounded-lg self-center"
                     variant="destructive"
                   >
                     Closed
@@ -348,7 +348,6 @@ export default async function OpportunityPage({
                     height="315"
                     src={opportunity.applicationVideo}
                     title="YouTube video player"
-                    frameBorder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                     referrerPolicy="strict-origin-when-cross-origin"
                     allowFullScreen
