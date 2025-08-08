@@ -35,10 +35,8 @@ export const fellowshipOpportunities: Opportunity[] = [
   {
     id: "antler-2025",
     name: "Antler",
-    logoUrl:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlw1SR_n3ElASD6T-_OnBNMule8y1BPSsy3g&s",
-    shareImageUrl:
-      "https://1ekwuvtw2t.ufs.sh/f/A3uMVCvbWYHhkFFVBz2fN6TcywpJmxz4q87sGtrPgdokLIUO",
+    logoUrl: "https://cdn.fellows.best/logos/antler-2025-logo.jpg",
+    shareImageUrl: "https://cdn.fellows.best/banners/antler-2025-banner.jpg",
     description:
       "Global early-stage investor providing $200–$250K for ~8–9% equity in a 6-week residency.",
     fullDescription:
@@ -76,10 +74,8 @@ export const fellowshipOpportunities: Opportunity[] = [
   {
     id: "techstars-2025",
     name: "Techstars",
-    logoUrl:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6XO5KwwWObYn7hMTtE2XjospgfBRs8j0t3A&s",
-    shareImageUrl:
-      "https://1ekwuvtw2t.ufs.sh/f/A3uMVCvbWYHhnNfDRrBeTJ9R8wr7OMCmNbEZAljoeYKXkpDt",
+    logoUrl: "https://cdn.fellows.best/logos/techstars-2025-logo.jpg",
+    shareImageUrl: "https://cdn.fellows.best/banners/techstars-2025-banner.jpg",
     description:
       "Global accelerator offering $220,000 in funding for ~5–7% total equity.",
     fullDescription:
@@ -120,7 +116,7 @@ export const fellowshipOpportunities: Opportunity[] = [
     logoUrl:
       "https://upload.wikimedia.org/wikipedia/commons/2/20/500_Startups_-_logo.svg",
     shareImageUrl:
-      "https://1ekwuvtw2t.ufs.sh/f/A3uMVCvbWYHhIsXO5pDwMfF9CW7yAItiDjBHJXxN8dlb0sSO",
+      "https://cdn.fellows.best/banners/500-global-flagship-2025-banner.jpg",
     description:
       "Early-stage accelerator by 500 Global offering $150,000 for 6% SAFE (plus fees).",
     fullDescription:
@@ -158,10 +154,9 @@ export const fellowshipOpportunities: Opportunity[] = [
   {
     id: "south-park-commons-2025",
     name: "South Park Commons Fellowship",
-    logoUrl:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwtO3ehSzooj_FQt19mQm147BrMDc1XLH_rA&s",
+    logoUrl: "https://cdn.fellows.best/logos/south-park-commons-2025-logo.jpg",
     shareImageUrl:
-      "https://1ekwuvtw2t.ufs.sh/f/A3uMVCvbWYHhJ2zETuU6Rlraf4UHqSDE75AiVPwgjnm9C0pX",
+      "https://cdn.fellows.best/banners/south-park-commons-2025-banner.jpg",
     description:
       "Fellowship-style community program investing $400,000 for 7% equity + $600K follow-on.",
     fullDescription:
@@ -198,10 +193,9 @@ export const fellowshipOpportunities: Opportunity[] = [
   {
     id: "hf0-residency-2025",
     name: "HF0 Residency",
-    logoUrl:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCY1QBVYto4FCIaaNZaIJ2v_0AW7U9l90ppw&s",
+    logoUrl: "https://cdn.fellows.best/logos/hf0-residency-2025-logo.jpg",
     shareImageUrl:
-      "https://1ekwuvtw2t.ufs.sh/f/A3uMVCvbWYHhDdxeqM70g1UoVdXt6CI8Rcq4Dyjxp3FWe2Kh",
+      "https://cdn.fellows.best/banners/hf0-residency-2025-banner.jpg",
     description:
       "Intensive 12-week live-in accelerator writing a $1M SAFE for 5% (or $500K + 3%).",
     fullDescription:
@@ -232,10 +226,9 @@ export const fellowshipOpportunities: Opportunity[] = [
   {
     id: "neo-accelerator-2025",
     name: "NEO Accelerator",
-    logoUrl:
-      "https://pbs.twimg.com/profile_images/1263180829355737088/yzf9DSV6_400x400.jpg",
+    logoUrl: "https://cdn.fellows.best/logos/neo-accelerator-2025-logo.jpg",
     shareImageUrl:
-      "https://1ekwuvtw2t.ufs.sh/f/A3uMVCvbWYHhf5FHP8b1U35vBlSyKWGjXcLmoVkNgsiHqe4u",
+      "https://cdn.fellows.best/banners/neo-accelerator-2025-banner.jpg",
     description:
       "3-month hybrid accelerator offering $600K via uncapped SAFE (with $10M floor) + equity.",
     fullDescription:
@@ -266,10 +259,8 @@ export const fellowshipOpportunities: Opportunity[] = [
   {
     id: "pearx-2025",
     name: "PearX",
-    logoUrl:
-      "https://pbs.twimg.com/profile_images/1826032501669900289/2-3uAuhc_400x400.jpg",
-    shareImageUrl:
-      "https://1ekwuvtw2t.ufs.sh/f/A3uMVCvbWYHhQ8nMVgbZtO7cW0kYBrmEHJad5ob4Z9jUiRP3",
+    logoUrl: "https://cdn.fellows.best/logos/pearx-2025-logo.jpg",
+    shareImageUrl: "https://cdn.fellows.best/banners/pearx-2025-banner.jpg",
     description:
       "12-week accelerator by Pear VC investing $250K–$2M in each startup.",
     fullDescription:
@@ -308,10 +299,8 @@ export const fellowshipOpportunities: Opportunity[] = [
   {
     id: "pioneer-2025",
     name: "Pioneer",
-    logoUrl:
-      "https://pbs.twimg.com/profile_images/1027408115900116992/6NwB_C4E_400x400.jpg",
-    shareImageUrl:
-      "https://1ekwuvtw2t.ufs.sh/f/A3uMVCvbWYHhBevhF9pcL8UTglCRXp4nQJ1Pvf7zNhtaFMOG",
+    logoUrl: "https://cdn.fellows.best/logos/pioneer-2025-logo.jpg",
+    shareImageUrl: "https://cdn.fellows.best/banners/pioneer-2025-banner.jpg",
     description:
       "$20K for 1% equity (or advisory only); virtual startup contest with mentors.",
     fullDescription:
@@ -342,10 +331,9 @@ export const fellowshipOpportunities: Opportunity[] = [
   {
     id: "launch-accelerator-2025",
     name: "LAUNCH Accelerator",
-    logoUrl:
-      "https://cdn.prod.website-files.com/62bb99283ae5a82092305431/65eb284defd44d9e3bd6545e_LAUNCH%20Logo.png",
+    logoUrl: "https://cdn.fellows.best/logos/launch-accelerator-2025-logo.png",
     shareImageUrl:
-      "https://1ekwuvtw2t.ufs.sh/f/A3uMVCvbWYHhwqpoHY4CvoLG7XuNs5JYFAfbRmUZhEjyHwQp",
+      "https://cdn.fellows.best/banners/launch-accelerator-2025-banner.jpg",
     description:
       "$125K for 6–7% equity; 14-week accelerator founded by Jason Calacanis.",
     fullDescription:
@@ -384,11 +372,9 @@ export const fellowshipOpportunities: Opportunity[] = [
   {
     id: "the-mint-2025",
     name: "The Mint (BTV)",
-    logoUrl:
-      "https://pbs.twimg.com/profile_images/1410218406478024706/fPTKFVnj_200x200.png",
+    logoUrl: "https://cdn.fellows.best/logos/the-mint-2025-logo.png",
     //TODO: improve banner quality
-    shareImageUrl:
-      "https://1ekwuvtw2t.ufs.sh/f/A3uMVCvbWYHhzDBDH9DXkfLWjECG6Qw5rXbKtaquN294JBPe",
+    shareImageUrl: "https://cdn.fellows.best/banners/the-mint-2025-banner.jpg",
     description: "10-week fintech accelerator; invests $500K for 10% SAFE.",
     fullDescription:
       "The Mint (run by BTV Capital) is a 10-week accelerator focused on fintech startups in NYC and SF. It provides $500,000 in exchange for 10% of the company via a SAFE agreement. The program includes intensive mentoring from fintech experts and a founder retreat. The next cohort opens in Q4 2025 (application period to be announced).",
@@ -424,10 +410,8 @@ export const fellowshipOpportunities: Opportunity[] = [
   {
     id: "angelpad-2025",
     name: "AngelPad",
-    logoUrl:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBK4BtCLrLD_GxTah405PncrpOJzpCcpPLEA&s",
-    shareImageUrl:
-      "https://1ekwuvtw2t.ufs.sh/f/A3uMVCvbWYHhqJOrnoDGnLYSAzDpB5oErFmUN0aMIhcfPW62",
+    logoUrl: "https://cdn.fellows.best/logos/angelpad-2025-logo.jpg",
+    shareImageUrl: "https://cdn.fellows.best/banners/angelpad-2025-banner.jpg",
     description: "10-week accelerator (NYC/SF) offering $120K for 7% equity.",
     fullDescription:
       "AngelPad is a seed-stage accelerator in NYC and San Francisco, accepting only ~15 startups per batch. It provides $120,000 for about 7% equity. The intensive 10-week program emphasizes company-building and has a highly competitive admission rate (<1%). Applications open twice a year and require a concise pitch deck and video.",
@@ -464,10 +448,9 @@ export const fellowshipOpportunities: Opportunity[] = [
   {
     id: "betaworks-ai-camp-2026",
     name: "Betaworks AI Camp",
-    logoUrl:
-      "https://1ekwuvtw2t.ufs.sh/f/A3uMVCvbWYHhgMMaJ0zBeOJ2bdQ8W6RXnVctUw3mxkHolSiF",
+    logoUrl: "https://cdn.fellows.best/logos/betaworks-ai-camp-2026-logo.jpg",
     shareImageUrl:
-      "https://1ekwuvtw2t.ufs.sh/f/A3uMVCvbWYHhvzRxR8fR7aOJbWymZEvPXQix24FVuNnITqLp",
+      "https://cdn.fellows.best/banners/betaworks-ai-camp-2026-banner.jpg",
     description:
       "$500K investment from a Betaworks-led syndicate for AI startups.",
     fullDescription:
@@ -499,10 +482,9 @@ export const fellowshipOpportunities: Opportunity[] = [
   {
     id: "greylock-edge-2025",
     name: "Greylock Edge",
-    logoUrl:
-      "https://greylock.com/wp-content/uploads/2023/10/footer-logo-3.png",
+    logoUrl: "https://cdn.fellows.best/logos/greylock-edge-2025-logo.png",
     shareImageUrl:
-      "https://1ekwuvtw2t.ufs.sh/f/A3uMVCvbWYHhX7ZJObqGAriyjB63q0UfQM8h7P4TVODXgoER",
+      "https://cdn.fellows.best/banners/greylock-edge-2025-banner.jpg",
     description:
       "3-month program with custom SAFE or priced terms + $500K+ in partner credits.",
     fullDescription:
@@ -527,9 +509,9 @@ export const fellowshipOpportunities: Opportunity[] = [
   {
     id: "conviction-embed-2025",
     name: "Conviction Embed",
-    logoUrl: "https://embed.conviction.com/applogo.png",
+    logoUrl: "https://cdn.fellows.best/logos/conviction-embed-2025-logo.png",
     shareImageUrl:
-      "https://1ekwuvtw2t.ufs.sh/f/A3uMVCvbWYHhEgctOBHI8sUpKYTozSt05m6G2xlubD4ZXQNV",
+      "https://cdn.fellows.best/banners/openai-converge-2024-banner.jpg",
     description:
       "Hands-on embedded partner program offering a $150K uncapped SAFE (MFN).",
     fullDescription:
@@ -554,9 +536,9 @@ export const fellowshipOpportunities: Opportunity[] = [
   {
     id: "openai-converge-2024",
     name: "OpenAI Converge",
-    logoUrl: "https://github.com/openai.png",
+    logoUrl: "https://cdn.fellows.best/logos/openai-logo.png",
     shareImageUrl:
-      "https://1ekwuvtw2t.ufs.sh/f/A3uMVCvbWYHhEgctOBHI8sUpKYTozSt05m6G2xlubD4ZXQNV",
+      "https://cdn.fellows.best/banners/openai-converge-2024-banner.jpg",
     description:
       "6-week AI startup summit with $1M equity investment from OpenAI's Startup Fund.",
     fullDescription:
@@ -581,10 +563,9 @@ export const fellowshipOpportunities: Opportunity[] = [
   {
     id: "startup-wise-guys-2025",
     name: "Startup Wise Guys",
-    logoUrl:
-      "https://yt3.googleusercontent.com/76rqwEbyJwe1C0gjwLXTOQb71lCGKUlBfpwBhQZlYf88no6m8mmmMRkFSiHI1hEUTO1zr6B-SA=s900-c-k-c0x00ffffff-no-rj",
+    logoUrl: "https://cdn.fellows.best/logos/startup-wise-guys-2025-logo.jpg",
     shareImageUrl:
-      "https://1ekwuvtw2t.ufs.sh/f/A3uMVCvbWYHhvVuvmcfR7aOJbWymZEvPXQix24FVuNnITqLp",
+      "https://cdn.fellows.best/banners/startup-wise-guys-2025-banner.jpg",
     description:
       "Europe-wide accelerator (HQ Tallinn) providing up to €65K seed funding plus follow-on up to €300K.",
     fullDescription:
@@ -616,9 +597,8 @@ export const fellowshipOpportunities: Opportunity[] = [
   {
     id: "apx-2025",
     name: "APX by Porsche & Axel Springer",
-    logoUrl: "https://apx.vc/app/uploads/2021/08/APX_Logo-1.png",
-    shareImageUrl:
-      "https://1ekwuvtw2t.ufs.sh/f/A3uMVCvbWYHhLpi24Ugv1wfQckjKBmhRE4qCFxslYDHr9XVb",
+    logoUrl: "https://cdn.fellows.best/logos/apx-2025-logo.png",
+    shareImageUrl: "https://cdn.fellows.best/banners/apx-2025-banner.jpg",
     description:
       "Berlin-based accelerator with up to €50K for 5% (and follow-on up to €500K).",
     fullDescription:
@@ -643,10 +623,8 @@ export const fellowshipOpportunities: Opportunity[] = [
   {
     id: "seedcamp-2025",
     name: "Seedcamp",
-    logoUrl:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTxuf36fKBQICe2ebAFesSyL9S5qCbe5rCnig&s",
-    shareImageUrl:
-      "https://1ekwuvtw2t.ufs.sh/f/A3uMVCvbWYHh7iZlYeF6fVHp92KSs4EIBdO0CXk8vug3FiNa",
+    logoUrl: "https://cdn.fellows.best/logos/seedcamp-2025-logo.jpg",
+    shareImageUrl: "https://cdn.fellows.best/banners/seedcamp-2025-banner.jpg",
     description: "Europe's flagship seed fund; invests €100–€200K for ~7–7.5%.",
     fullDescription:
       "Seedcamp is Europe's first seed accelerator and fund, based in London. It provides €100,000–€200,000 investment in exchange for roughly 7–7.5% equity. Unlike a fixed cohort model, Seedcamp runs rolling applications and periodic 'Seedcamp Weeks' where selected companies join workshops and pitch events. Seedcamp places emphasis on global scaling and has built a vast mentor network.",
@@ -670,10 +648,9 @@ export const fellowshipOpportunities: Opportunity[] = [
   {
     id: "google-for-startups-2025",
     name: "Google for Startups Accelerator",
-    logoUrl:
-      "https://yt3.googleusercontent.com/ytc/AIdro_n3anK0o7gAPPtCy5WX5RF6Io_tcZsIPcsqEwK8XmPvSWw=s900-c-k-c0x00ffffff-no-rj",
+    logoUrl: "https://cdn.fellows.best/logos/google-for-startups-2025-logo.jpg",
     shareImageUrl:
-      "https://1ekwuvtw2t.ufs.sh/f/A3uMVCvbWYHhVr3zKCQJK82GnzcgbM7Ni9XYvrySIkjsE4Wf",
+      "https://cdn.fellows.best/banners/google-for-startups-2025-banner.jpg",
     description:
       "Equity-free accelerator: no cash funding, but up to $100K GCP credits.",
     fullDescription:
@@ -698,10 +675,9 @@ export const fellowshipOpportunities: Opportunity[] = [
   {
     id: "accel-atoms-2025",
     name: "Accel Atoms",
-    logoUrl:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRPg0vG-pPmjZSc12TTbTY605teHhOuu23HHQ&s",
+    logoUrl: "https://cdn.fellows.best/logos/accel-atoms-2025-logo.jpg",
     shareImageUrl:
-      "https://1ekwuvtw2t.ufs.sh/f/A3uMVCvbWYHhRVbthlyxBCj7TcVigtfekaQ9ybNE6rsqGHSJ",
+      "https://cdn.fellows.best/banners/accel-atoms-2025-banner.jpg",
     description:
       "$500K–$1M seed participation by Accel for India-first startups.",
     fullDescription:
@@ -726,10 +702,9 @@ export const fellowshipOpportunities: Opportunity[] = [
   {
     id: "ai2-incubator-2025",
     name: "AI2 Incubator",
-    logoUrl:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSp4MiTaxDAprdyvNCfltO6uzoiytkATjPuLA&s",
+    logoUrl: "https://cdn.fellows.best/logos/ai2-incubator-2025-logo.jpg",
     shareImageUrl:
-      "https://1ekwuvtw2t.ufs.sh/f/A3uMVCvbWYHhHmlD80uKafZjXCuYI1wlOiDUJck5x3q7m9AV",
+      "https://cdn.fellows.best/banners/ai2-incubator-2025-banner.jpg",
     description:
       "$50K–$150K seed funding in exchange for equity for AI startups.",
     fullDescription:
@@ -755,9 +730,9 @@ export const fellowshipOpportunities: Opportunity[] = [
     id: "soma-capital-fellowship-2025",
     name: "Soma Capital Fellowship",
     logoUrl:
-      "https://cdn.theorg.com/26b973bd-f0e1-425c-941e-a5cd2475693f_thumb.jpg",
+      "https://cdn.fellows.best/logos/soma-capital-fellowship-2025-logo.jpg",
     shareImageUrl:
-      "https://1ekwuvtw2t.ufs.sh/f/A3uMVCvbWYHhsPsU2dtKhgUIXGN4MBCbZ0nWfL17e9QOarok",
+      "https://cdn.fellows.best/banners/soma-capital-fellowship-2025-banner.jpg",
     description:
       "Semi-annual fellowship investing $100K SAFE (<1% equity) in founders.",
     fullDescription:
@@ -782,8 +757,7 @@ export const fellowshipOpportunities: Opportunity[] = [
   {
     id: "founder-institute-2025",
     name: "Founder Institute",
-    logoUrl:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTGm3J8oIHtjXoLgAxshGTMXTfWVzvr6QdaB87jRiAzM_4BxM16fOC6-t78rUFF3ZzY00&usqp=CAU",
+    logoUrl: "https://cdn.fellows.best/logos/founder-institute-2025-logo.jpg",
     //TODO: improve quality
     shareImageUrl:
       "https://es.investinbogota.org/wp-content/uploads/2025/01/founder-logos.jpg",
@@ -811,9 +785,8 @@ export const fellowshipOpportunities: Opportunity[] = [
   {
     id: "boost-vc-2025",
     name: "Boost VC",
-    logoUrl: "https://www.capboard.io/cms/assets/investor_listing/805.png",
-    shareImageUrl:
-      "https://1ekwuvtw2t.ufs.sh/f/A3uMVCvbWYHhxAWzFmSkHXl2PRO35mBtvMzeciCVL84UyjIF",
+    logoUrl: "https://cdn.fellows.best/logos/boost-vc-2025-logo.png",
+    shareImageUrl: "https://cdn.fellows.best/banners/boost-vc-2025-banner.jpg",
     description:
       "Deep tech accelerator investing $500,000 for ~15% equity:contentReference[oaicite:0]{index=0}.",
     fullDescription:
@@ -851,9 +824,9 @@ export const fellowshipOpportunities: Opportunity[] = [
     id: "vercel-open-source-program",
     name: "Vercel Open Source Program",
     logoUrl:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFggf9yNRN9xCYku8XMEkSE0LU9uMhkYbehQ&s",
+      "https://cdn.fellows.best/logos/vercel-open-source-program-logo.jpg",
     shareImageUrl:
-      "https://1ekwuvtw2t.ufs.sh/f/A3uMVCvbWYHhDiIVjm70g1UoVdXt6CI8Rcq4Dyjxp3FWe2Kh",
+      "https://cdn.fellows.best/banners/vercel-open-source-program-banner.jpg",
     description:
       "Seasonal cohort-based program offering impactful open source projects up to $3,600 in Vercel credits, third-party OSS starter-pack credits, and prioritized support.",
     fullDescription:
@@ -878,10 +851,8 @@ export const fellowshipOpportunities: Opportunity[] = [
   {
     id: "afore-grants",
     name: "Afore Grants",
-    logoUrl:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVIZtjevkGlPattYIUlcpxkTvbz8EcZifXqQ&s",
-    shareImageUrl:
-      "https://1ekwuvtw2t.ufs.sh/f/A3uMVCvbWYHhzHccdAXkfLWjECG6Qw5rXbKtaquN294JBPeV",
+    logoUrl: "https://cdn.fellows.best/logos/afore-grants-logo.jpg",
+    shareImageUrl: "https://cdn.fellows.best/banners/afore-grants-banner.jpg",
     description:
       "100% non‐dilutive microgrants of $1,000 for high‐agency builders aged 21 or younger in North America, paired with mentorship and program support.",
     fullDescription:
@@ -913,10 +884,9 @@ export const fellowshipOpportunities: Opportunity[] = [
   {
     id: "776-foundation-2025",
     name: "776 Foundation Fellowship",
-    logoUrl:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-rE_hcajytWETqX5IyNz6-7dVwxiuwa2qtQ&s",
+    logoUrl: "https://cdn.fellows.best/logos/776-foundation-2025-logo.jpg",
     shareImageUrl:
-      "https://1ekwuvtw2t.ufs.sh/f/A3uMVCvbWYHhNg5Kuuxzosk5uS1ctlJYQqTUg8naE9ZyLfhO",
+      "https://cdn.fellows.best/banners/776-foundation-2025-banner.jpg",
     description:
       "Two-year full-time fellowship offering a $100,000 grant to young innovators aged 18–24 working on high-impact climate change projects; open globally and requires fellows to take a leave from or forgo university.",
     fullDescription:
@@ -948,10 +918,9 @@ export const fellowshipOpportunities: Opportunity[] = [
   {
     id: "the-residency-startup",
     name: "The Residency",
-    logoUrl:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSgPUDl4LKZbxLf0Z2JIlQkB_sXBLf7PYm6Mg&s",
+    logoUrl: "https://cdn.fellows.best/logos/the-residency-startup-logo.jpg",
     shareImageUrl:
-      "https://1ekwuvtw2t.ufs.sh/f/A3uMVCvbWYHh99wLwRELpyCQJmqx2KR5T7cv46Xk3YEdMOH1",
+      "https://cdn.fellows.best/banners/the-residency-startup-banner.jpg",
     description:
       "3–6-month in-person cohorts providing full-time housing, co-working space, and community for ambitious builders; locations include San Francisco, Berkeley, Cambridge (MA), Berlin, and Bangalore.",
     fullDescription:
@@ -982,10 +951,9 @@ export const fellowshipOpportunities: Opportunity[] = [
   {
     id: "edge-city",
     name: "Edge City Fellowship",
-    logoUrl:
-      "https://pbs.twimg.com/profile_images/1754493933625737216/5pr4yurq_400x400.jpg",
+    logoUrl: "https://cdn.fellows.best/logos/edge-city-shift-grants-logo.jpg",
     shareImageUrl:
-      "https://1ekwuvtw2t.ufs.sh/f/A3uMVCvbWYHhqvxRxpDGnLYSAzDpB5oErFmUN0aMIhcfPW62",
+      "https://cdn.fellows.best/banners/edge-city-shift-grants-banner.jpg",
     description:
       "Month-long immersive pop-up village experience for builders under 25, fully covered (housing & ticket) at Edge City's global sites.",
     fullDescription:
@@ -1019,7 +987,7 @@ export const fellowshipOpportunities: Opportunity[] = [
     logoUrl:
       "https://pbs.twimg.com/profile_images/1754493933625737216/5pr4yurq_400x400.jpg",
     shareImageUrl:
-      "https://1ekwuvtw2t.ufs.sh/f/A3uMVCvbWYHhqvxRxpDGnLYSAzDpB5oErFmUN0aMIhcfPW62",
+      "https://cdn.fellows.best/banners/edge-city-shift-grants-banner.jpg",
     description:
       "Tiered grants ($5K–$40K) for d/acc projects in biosecurity, cyber defense, info resilience, physical resilience, neurotech & social technology.",
     fullDescription:
@@ -1044,9 +1012,9 @@ export const fellowshipOpportunities: Opportunity[] = [
     id: "entrepreneurs-first-fall-2025",
     name: "Entrepreneurs First",
     logoUrl:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRUA_aYiiXgyGi7W9as6RswttrMywi6Re8mA&s",
+      "https://cdn.fellows.best/logos/entrepreneurs-first-fall-2025-logo.jpg",
     shareImageUrl:
-      "https://1ekwuvtw2t.ufs.sh/f/A3uMVCvbWYHhF9AkJnRsVuxWRLnfGwEe5yN9ikjhDvd6YtcK",
+      "https://cdn.fellows.best/banners/entrepreneurs-first-fall-2025-banner.jpg",
     description:
       "12-week in-person talent-investor program across EF offices in London, Paris, Bangalore & San Francisco; Fall 2025 application deadlines: June 29 (Bangalore), July 14 (Paris), August 1 (London).",
     fullDescription:
@@ -1073,10 +1041,9 @@ export const fellowshipOpportunities: Opportunity[] = [
   {
     id: "emergent-ventures",
     name: "Emergent Ventures Fellowship",
-    logoUrl:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSm8aVTqEo-OBmgqD8yEeSdhgGnjfglNQOozw&s",
+    logoUrl: "https://cdn.fellows.best/logos/emergent-ventures-logo.jpg",
     shareImageUrl:
-      "https://1ekwuvtw2t.ufs.sh/f/A3uMVCvbWYHhnN6765VeTJ9R8wr7OMCmNbEZAljoeYKXkpDt",
+      "https://cdn.fellows.best/banners/emergent-ventures-banner.jpg",
     description:
       "Two-year flexible research grant and community designed to support high-impact thinkers tackling big, unconventional problems.",
     fullDescription:
@@ -1107,8 +1074,7 @@ export const fellowshipOpportunities: Opportunity[] = [
   {
     id: "y-combinator-fall-2025",
     name: "Y Combinator",
-    logoUrl:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Y_Combinator_logo.svg/1200px-Y_Combinator_logo.svg.png",
+    logoUrl: "https://cdn.fellows.best/logos/y-combinator-fall-2025-logo.png",
     shareImageUrl:
       "https://www.startupjournal.io/_next/image?url=https%3A%2F%2F3yn03ejeua.ufs.sh%2Ff%2FPGO84Vt2L1OXwMZgRgbPPypcg5GIlV3LT8FH7RBtreasdmWz&w=3840&q=75",
     description:
@@ -1150,8 +1116,7 @@ export const fellowshipOpportunities: Opportunity[] = [
   {
     id: "zfellows",
     name: "Z Fellows",
-    logoUrl:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT65Ro-jLqs28yBKfyD8cp9PgepjaH9IUEgGg&s",
+    logoUrl: "https://cdn.fellows.best/logos/zfellows-logo.jpg",
     description:
       "One-week program offering a $10,000 stipend and mentorship from Silicon Valley's top founders for early technical builders.",
     fullDescription:
@@ -1184,7 +1149,7 @@ export const fellowshipOpportunities: Opportunity[] = [
     id: "a16z-crypto-startup-accelerator",
     name: "a16z Crypto Startup Accelerator",
     logoUrl:
-      "https://pbs.twimg.com/profile_images/1582168997134422016/HcmVyKwV_400x400.jpg",
+      "https://cdn.fellows.best/logos/a16z-crypto-startup-accelerator-logo.jpg",
     description:
       "An intensive accelerator for early-stage blockchain and web3 startups, providing capital, mentorship, and network support.",
     fullDescription:
@@ -1211,7 +1176,7 @@ export const fellowshipOpportunities: Opportunity[] = [
   {
     id: "ewor-fellowship",
     name: "EWOR Fellowship",
-    logoUrl: "https://i.ibb.co/sJDKj0MD/image.png",
+    logoUrl: "https://cdn.fellows.best/logos/ewor-fellowship-logo.png",
     description:
       "A highly selective, virtual-first fellowship offering early-stage founders up to €500,000 in capital and 1:1 mentorship from unicorn founders to build global-impact ventures.",
     fullDescription:
@@ -1240,8 +1205,7 @@ export const fellowshipOpportunities: Opportunity[] = [
   {
     id: "thiel-fellowship-2026",
     name: "Thiel Fellowship",
-    logoUrl:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQID1xMTmAZzfe1EBazgth2MBqA_dZa77DQuQ&s",
+    logoUrl: "https://cdn.fellows.best/logos/thiel-fellowship-2026-logo.jpg",
     description:
       "A two-year, $200,000 grant program for innovators aged 22 or younger to pursue full-time projects instead of attending college.",
     fullDescription:
@@ -1270,7 +1234,7 @@ export const fellowshipOpportunities: Opportunity[] = [
     id: "global-good-fund-fellowship-2026",
     name: "Global Good Fund Fellowship 2026",
     logoUrl:
-      "https://i0.wp.com/www.scholarshipsinindia.com/wp-content/uploads/global-good-fund-fellowship.jpg?fit=200%2C200&ssl=1",
+      "https://cdn.fellows.best/logos/global-good-fund-fellowship-2026-logo.jpg",
     description:
       "A 12-month hybrid leadership program for social entrepreneurs worldwide, offering executive coaching, business mentorship, and a targeted $10,000 leadership development grant.",
     fullDescription:
@@ -1305,8 +1269,7 @@ export const fellowshipOpportunities: Opportunity[] = [
   {
     id: "localhost-japan",
     name: "LocalHost - Japan",
-    logoUrl:
-      "https://pbs.twimg.com/profile_images/1947195504883892224/eK8WwG9R_400x400.jpg",
+    logoUrl: "https://cdn.fellows.best/logos/localhost-france-logo.jpg",
     description:
       "A global, travelling fellowship with a hub in Tokyo for exceptional young builders to pursue full-time projects.",
     fullDescription:
@@ -1449,8 +1412,7 @@ export const fellowshipOpportunities: Opportunity[] = [
   {
     id: "founders-inc-off-season",
     name: "Founders Inc Off Season",
-    logoUrl:
-      "https://pbs.twimg.com/profile_images/1934781639198167040/24emfYDA_400x400.jpg",
+    logoUrl: "https://cdn.fellows.best/logos/founders-inc-off-season-logo.jpg",
     description:
       "6-week equity-free summer residency at Fort Mason for ambitious builders to obsess and build, ending in Demo Day with up to $250K funding opportunity.",
     fullDescription:
@@ -1478,9 +1440,9 @@ export const fellowshipOpportunities: Opportunity[] = [
     id: "eu-lac-digital-accelerator-open-call-2025",
     name: "EU-LAC Digital Accelerator (Open Call)",
     logoUrl:
-      "https://1ekwuvtw2t.ufs.sh/f/A3uMVCvbWYHhjchyUB5Go7rxKyQSTWwZB0csH5uDa4hGnJ19",
+      "https://cdn.fellows.best/logos/eu-lac-digital-accelerator-open-call-2025-logo.jpg",
     shareImageUrl:
-      "https://1ekwuvtw2t.ufs.sh/f/A3uMVCvbWYHhervgEk6ADUoMVHY0yc8iabm2wS4qk3rpRlg9",
+      "https://cdn.fellows.best/banners/eu-lac-digital-accelerator-open-call-2025-banner.jpg",
     description:
       "Open call for partnerships between European and Latin American tech startups and corporates, offering acceleration services worth up to €30,000 and grants up to €10,500.",
     fullDescription:

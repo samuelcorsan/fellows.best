@@ -128,24 +128,18 @@ export default async function OpportunityPage({
         </Button>
       )}
 
-      {/* Banner with share image and overlapping logo */}
       {opportunity.shareImageUrl ? (
         <div className="relative w-full mb-12 sm:mb-16">
-          {/* Banner */}
           <div className="relative w-full h-32 sm:h-48 md:h-64 rounded-2xl overflow-hidden">
             <Image
               src={opportunity.shareImageUrl}
               alt={`${opportunity.name} banner`}
               fill
               className="object-cover"
-              loading="lazy"
-              placeholder="blur"
-              blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
             />
             <div className="absolute inset-0 bg-black/10" />
           </div>
-          
-          {/* Overlapping Logo */}
+
           <div className="absolute -bottom-8 sm:-bottom-6 left-1/2 sm:left-8 transform -translate-x-1/2 sm:translate-x-0">
             <div className="relative">
               <Image
@@ -157,10 +151,13 @@ export default async function OpportunityPage({
               />
             </div>
           </div>
-          
-          {/* Back button on banner */}
+
           <div className="absolute top-4 left-4 sm:top-6 sm:left-8 z-20">
-            <Button asChild size="icon" className="bg-white text-black hover:bg-gray-100 shadow-md rounded-xl w-10 h-10">
+            <Button
+              asChild
+              size="icon"
+              className="bg-white text-black hover:bg-gray-100 shadow-md rounded-xl w-10 h-10"
+            >
               <Link href={backUrl}>
                 <ArrowLeft className="h-4 w-4" />
               </Link>
@@ -178,6 +175,7 @@ export default async function OpportunityPage({
                 alt={`${opportunity.name} logo`}
                 width={100}
                 height={100}
+                priority
                 className="rounded-xl object-cover w-20 h-20 sm:w-[100px] sm:h-[100px] mx-auto sm:mx-0 flex-shrink-0 border-4 border-white shadow-lg"
               />
             </div>
@@ -189,7 +187,10 @@ export default async function OpportunityPage({
               </h1>
               {opportunity.closeDate &&
                 getDaysUntilDeadline(opportunity.closeDate) < 0 && (
-                  <Badge className="text-sm mx-auto sm:mx-0 w-fit" variant="destructive">
+                  <Badge
+                    className="text-sm mx-auto sm:mx-0 w-fit"
+                    variant="destructive"
+                  >
                     Closed
                   </Badge>
                 )}
@@ -241,7 +242,6 @@ export default async function OpportunityPage({
               </p>
             </CardContent>
           </Card>
-
 
           {opportunity.benefits.length > 0 && (
             <Card>

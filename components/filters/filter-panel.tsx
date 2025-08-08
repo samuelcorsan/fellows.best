@@ -146,7 +146,6 @@ export function FilterPanel({
       ? [...filters.regions, region]
       : filters.regions.filter((r) => r !== region);
 
-    // If unchecking a region, also remove its countries
     const regionData = regionOptions.find((r) => r.name === region);
     if (!checked && regionData?.countries) {
       newRegions = newRegions.filter((r) => !regionData.countries.includes(r));

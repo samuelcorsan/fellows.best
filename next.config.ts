@@ -23,7 +23,7 @@ const nextConfig: NextConfig = {
           {
             key: "Content-Security-Policy",
             value:
-              "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https:; frame-ancestors 'none';",
+              "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline' https://va.vercel-scripts.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https:; frame-ancestors 'none';",
           },
           {
             key: "X-Frame-Options",
@@ -45,6 +45,15 @@ const nextConfig: NextConfig = {
             key: "Permissions-Policy",
             value:
               "geolocation=(), microphone=(), camera=(), payment=(), usb=(), magnetometer=(), gyroscope=(), accelerometer=()",
+          },
+        ],
+      },
+      {
+        source: "/:path*\\.(jpg|jpeg|png|gif|webp|svg|ico)",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=2592000",
           },
         ],
       },

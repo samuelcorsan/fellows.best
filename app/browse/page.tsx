@@ -205,21 +205,6 @@ function BrowsePageContent() {
           <div className="lg:col-span-3 space-y-6">
             <div className="flex flex-col sm:flex-row gap-4">
               <div className="flex-1 flex gap-2">
-                {/* <Button
-                  variant="outline"
-                  onClick={() => {
-                    if (!session) {
-                      setIsSignInOpen(true);
-                    } else {
-                      setIsAIInputOpen(true);
-                    }
-                  }}
-                  className="shrink-0 relative group"
-                >
-                  <div className="absolute inset-0 rounded-md bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-pink-500/20 blur-md transition-all duration-300 group-hover:blur-lg -z-10" />
-                  <Lightbulb className="h-5 w-5 text-purple-500" />
-                  <span className="text-sm font-medium ml-2">Ask AI</span>
-                </Button> */}
                 <div className="flex-1">
                   <SearchInput
                     value={searchQuery}

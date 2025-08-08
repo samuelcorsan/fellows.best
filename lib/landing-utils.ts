@@ -1,4 +1,3 @@
-// Seeded random for consistent SSR/client results
 function seededRandom(seed: number) {
   const x = Math.sin(seed) * 10000;
   return x - Math.floor(x);

@@ -34,7 +34,6 @@ import { SignInDialog } from "./sign-in-dialog";
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   
-  // Add blur effect to main content when menu is open
   React.useEffect(() => {
     if (isMenuOpen) {
       const mainElement = document.querySelector('main');

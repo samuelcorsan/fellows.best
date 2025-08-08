@@ -37,7 +37,6 @@ export async function PUT(request: NextRequest) {
       return NextResponse.json({ error: 'Website URL too long (max 500 characters)' }, { status: 400 });
     }
 
-    // URL validation for website
     if (website && website.trim()) {
       try {
         const urlString = website.startsWith('http') ? website : `https://${website}`;
@@ -65,7 +64,6 @@ export async function PUT(request: NextRequest) {
     let sanitizedWebsite = null;
     if (website && website.trim()) {
       const trimmedWebsite = website.trim();
-      // Remove https:// or http:// if present to store clean domain
       sanitizedWebsite = trimmedWebsite.replace(/^https?:\/\//, '').substring(0, 500);
     }
 
