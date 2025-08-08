@@ -26,35 +26,34 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Skeleton } from "@/components/ui/skeleton";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { authClient } from "@/lib/auth-client";
 import { SignInDialog } from "./sign-in-dialog";
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  
+
   React.useEffect(() => {
     if (isMenuOpen) {
-      const mainElement = document.querySelector('main');
-      const footerElement = document.querySelector('footer');
-      if (mainElement) mainElement.style.filter = 'blur(8px)';
-      if (footerElement) footerElement.style.filter = 'blur(8px)';
-      document.body.style.overflow = 'hidden';
+      const mainElement = document.querySelector("main");
+      const footerElement = document.querySelector("footer");
+      if (mainElement) mainElement.style.filter = "blur(8px)";
+      if (footerElement) footerElement.style.filter = "blur(8px)";
+      document.body.style.overflow = "hidden";
     } else {
-      const mainElement = document.querySelector('main');
-      const footerElement = document.querySelector('footer');
-      if (mainElement) mainElement.style.filter = '';
-      if (footerElement) footerElement.style.filter = '';
-      document.body.style.overflow = '';
+      const mainElement = document.querySelector("main");
+      const footerElement = document.querySelector("footer");
+      if (mainElement) mainElement.style.filter = "";
+      if (footerElement) footerElement.style.filter = "";
+      document.body.style.overflow = "";
     }
-    
+
     return () => {
-      const mainElement = document.querySelector('main');
-      const footerElement = document.querySelector('footer');
-      if (mainElement) mainElement.style.filter = '';
-      if (footerElement) footerElement.style.filter = '';
-      document.body.style.overflow = '';
+      const mainElement = document.querySelector("main");
+      const footerElement = document.querySelector("footer");
+      if (mainElement) mainElement.style.filter = "";
+      if (footerElement) footerElement.style.filter = "";
+      document.body.style.overflow = "";
     };
   }, [isMenuOpen]);
   const [isSignInOpen, setIsSignInOpen] = useState(false);
@@ -133,7 +132,10 @@ export function Header() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 items-center">
             <div className="flex-1">
-              <Link href="/" className="flex items-center space-x-3 group w-fit">
+              <Link
+                href="/"
+                className="flex items-center space-x-3 group w-fit"
+              >
                 <div className="relative h-8 w-8 flex items-center justify-center">
                   <div className="absolute inset-0 rounded-lg opacity-20 group-hover:opacity-100 transition-opacity duration-300 bg-foreground/10" />
                   <Calendar
@@ -208,7 +210,9 @@ export function Header() {
               <div className="flex flex-col h-full">
                 <div className="flex-1 px-6 py-8">
                   <div className="space-y-1">
-                    <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-4">Navigation</p>
+                    <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-4">
+                      Navigation
+                    </p>
                     {navigation.map((item) => {
                       const Icon = item.icon;
                       const isActive = pathname === item.href;
@@ -217,8 +221,8 @@ export function Header() {
                           key={item.name}
                           href={item.href}
                           className={`flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg transition-all duration-200 ${
-                            isActive 
-                              ? "bg-primary/10 text-primary border border-primary/20" 
+                            isActive
+                              ? "bg-primary/10 text-primary border border-primary/20"
                               : "text-foreground hover:bg-muted hover:text-foreground"
                           }`}
                           onClick={() => setIsMenuOpen(false)}
@@ -234,7 +238,9 @@ export function Header() {
                   </div>
 
                   <div className="mt-8 pt-8 border-t">
-                    <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-4">Account</p>
+                    <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-4">
+                      Account
+                    </p>
                     {isPending || !session ? (
                       <button
                         onClick={() => {
@@ -250,7 +256,10 @@ export function Header() {
                       <div className="space-y-1">
                         <div className="flex items-center gap-3 px-4 py-3 mb-3">
                           <Avatar className="h-8 w-8">
-                            <AvatarImage src={session.user.image || ""} alt={session.user.name || ""} />
+                            <AvatarImage
+                              src={session.user.image || ""}
+                              alt={session.user.name || ""}
+                            />
                             <AvatarFallback className="text-xs">
                               {session.user.name?.[0]?.toUpperCase()}
                             </AvatarFallback>

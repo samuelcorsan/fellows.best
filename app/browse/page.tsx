@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, useEffect, useRef, Suspense } from "react";
+import { useState, useMemo, useEffect, useRef, useCallback } from "react";
 import { useSearchParams } from "next/navigation";
 import {
   ArrowUpDown,
@@ -25,24 +25,12 @@ import { Timeline, TimelineRef } from "@/components/features/timeline";
 import { fellowshipOpportunities, filterOpportunities } from "@/lib/data";
 import { useDebounce } from "@/hooks/use-debounce";
 import { authClient } from "@/lib/auth-client";
-import { toast } from "sonner";
 import { SignInDialog } from "@/components/global/sign-in-dialog";
-import { AiResponse } from "@/lib/types";
 
 function BrowsePageContent() {
-  const { data: session, isPending } = authClient.useSession();
+  const { data: session } = authClient.useSession();
   const searchParams = useSearchParams();
-  const [isHydrated, setIsHydrated] = useState(false);
-
-  useEffect(() => {
-    setIsHydrated(true);
-  }, []);
   const [isSignInOpen, setIsSignInOpen] = useState(false);
-  const [isAIInputOpen, setIsAIInputOpen] = useState(false);
-  const [aiQuery, setAiQuery] = useState("");
-  const [isAiLoading, setIsAiLoading] = useState(false);
-  const [aiResponse, setAiResponse] = useState<AiResponse | null>(null);
-  const [currentCardIndex, setCurrentCardIndex] = useState(0);
   const [searchQuery, setSearchQuery] = useState("");
   const [filters, setFilters] = useState<FilterOptions>({
     categories: [],
@@ -52,10 +40,10 @@ function BrowsePageContent() {
     equityPercentage: { min: 0, max: 20 },
   });
 
-  const handleFiltersChange = (newFilters: FilterOptions) => {
+  const handleFiltersChange = useCallback((newFilters: FilterOptions) => {
     setFilters(newFilters);
     window.scrollTo({ top: 0, behavior: "smooth" });
-  };
+  }, []);
   const [sortBy, setSortBy] = useState<"deadline" | "name" | "category">(
     "deadline"
   );
@@ -76,72 +64,24 @@ function BrowsePageContent() {
   const timelineRef = useRef<TimelineRef>(null);
   const debouncedSearchQuery = useDebounce(searchQuery, 300);
 
-  useEffect(() => {
-    setCurrentCardIndex(0);
-  }, [aiResponse]);
-
-  const handleAiQuery = async () => {
-    if (!aiQuery.trim()) {
-      toast.error("Please enter your situation first");
-      return;
-    }
-
-    setIsAiLoading(true);
-    setAiResponse(null);
-
-    try {
-      const response = await fetch("/api/ai-match", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ query: aiQuery }),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to get AI recommendations");
-      }
-
-      const data = await response.json();
-      if (data.error) {
-        throw new Error(data.error);
-      }
-      setAiResponse(data);
-      setAiQuery("");
-    } catch (error) {
-      console.error("Error getting AI recommendations:", error);
-      toast.error("Failed to get recommendations. Please try again.");
-    } finally {
-      setIsAiLoading(false);
-    }
-  };
-
-  const closeAiDialog = () => {
-    setIsAIInputOpen(false);
-    setAiQuery("");
-  };
-
   const filteredAndSortedOpportunities = useMemo(() => {
     const currentDate = new Date();
+    const searchQuery = debouncedSearchQuery.toLowerCase();
 
     let filtered = fellowshipOpportunities.filter((opportunity) => {
       const isOpen =
         !opportunity.closeDate || new Date(opportunity.closeDate) > currentDate;
       if (!isOpen) return false;
 
-      const matchesSearch =
-        !debouncedSearchQuery ||
-        opportunity.name
-          .toLowerCase()
-          .includes(debouncedSearchQuery.toLowerCase()) ||
-        opportunity.description
-          .toLowerCase()
-          .includes(debouncedSearchQuery.toLowerCase()) ||
-        opportunity.organizer
-          .toLowerCase()
-          .includes(debouncedSearchQuery.toLowerCase());
+      if (searchQuery) {
+        const matchesSearch =
+          opportunity.name.toLowerCase().includes(searchQuery) ||
+          opportunity.description.toLowerCase().includes(searchQuery) ||
+          opportunity.organizer.toLowerCase().includes(searchQuery);
+        if (!matchesSearch) return false;
+      }
 
-      return matchesSearch;
+      return true;
     });
 
     filtered = filterOpportunities(filtered, filters);
@@ -163,22 +103,39 @@ function BrowsePageContent() {
       }
     });
 
-    if (!session && isHydrated) {
+    if (!session) {
       filtered = filtered.slice(0, 6);
     }
 
     return filtered;
   }, [debouncedSearchQuery, filters, sortBy, session]);
 
-  const handleItemClick = (opportunity: any) => {
-    const fromParam = viewMode === "timeline" ? "timeline" : "browse";
-    window.location.href = `/opportunity/${opportunity.id}?from=${fromParam}`;
-  };
+  const handleItemClick = useCallback(
+    (opportunity: any) => {
+      const fromParam = viewMode === "timeline" ? "timeline" : "browse";
+      window.location.href = `/opportunity/${opportunity.id}?from=${fromParam}`;
+    },
+    [viewMode]
+  );
 
-  const handleScrollStateChange = (canLeft: boolean, canRight: boolean) => {
-    setCanScrollLeft(canLeft);
-    setCanScrollRight(canRight);
-  };
+  const handleScrollStateChange = useCallback(
+    (canLeft: boolean, canRight: boolean) => {
+      setCanScrollLeft(canLeft);
+      setCanScrollRight(canRight);
+    },
+    []
+  );
+
+  const handleClearFilters = useCallback(() => {
+    setSearchQuery("");
+    handleFiltersChange({
+      categories: [],
+      regions: [],
+      tags: [],
+      fundingAmount: { min: 0, max: 2000000 },
+      equityPercentage: { min: 0, max: 20 },
+    });
+  }, [handleFiltersChange]);
 
   return (
     <>
@@ -255,13 +212,6 @@ function BrowsePageContent() {
             </div>
 
             <div className="flex items-center justify-between">
-              {session && isHydrated && (
-                <p className="text-muted-foreground">
-                  {filteredAndSortedOpportunities.length} opportunities found
-                </p>
-              )}
-              {(!session || !isHydrated) && <div />}
-
               {viewMode === "timeline" && (
                 <div className="flex items-center gap-1">
                   <Button
@@ -293,28 +243,11 @@ function BrowsePageContent() {
                 <p className="text-muted-foreground mb-4">
                   Try adjusting your search criteria or filters
                 </p>
-                <Button
-                  onClick={() => {
-                    setSearchQuery("");
-                    handleFiltersChange({
-                      categories: [],
-                      regions: [],
-                      tags: [],
-                      fundingAmount: { min: 0, max: 2000000 },
-                      equityPercentage: { min: 0, max: 20 },
-                    });
-                  }}
-                >
-                  Clear all filters
-                </Button>
+                <Button onClick={handleClearFilters}>Clear all filters</Button>
               </div>
             ) : viewMode === "timeline" ? (
               <div className="relative">
-                <div
-                  className={
-                    !session || !isHydrated ? "blur-sm pointer-events-none" : ""
-                  }
-                >
+                <div className={!session ? "blur-sm pointer-events-none" : ""}>
                   <Timeline
                     ref={timelineRef}
                     opportunities={filteredAndSortedOpportunities}
@@ -322,7 +255,7 @@ function BrowsePageContent() {
                     onScrollStateChange={handleScrollStateChange}
                   />
                 </div>
-                {(!session || !isHydrated) && (
+                {!session && (
                   <div className="absolute inset-0 bg-background/60 flex items-center justify-center">
                     <div className="text-center p-8 bg-card border rounded-lg shadow-lg max-w-md">
                       <h3 className="text-xl font-semibold mb-3">
@@ -357,7 +290,7 @@ function BrowsePageContent() {
                     />
                   ))}
                 </div>
-                {(!session || !isHydrated) && (
+                {!session && (
                   <div className="mt-8 text-center p-6 border rounded-lg bg-muted/50">
                     <h3 className="text-xl font-semibold mb-2">
                       Want to see more opportunities?
@@ -377,82 +310,11 @@ function BrowsePageContent() {
         </div>
       </div>
 
-      <div
-        className={`fixed inset-0 bg-background/80 backdrop-blur-sm transition-all duration-300 ${
-          isAIInputOpen ? "opacity-100" : "opacity-0 pointer-events-none"
-        }`}
-        onClick={closeAiDialog}
-      />
-
       <SignInDialog isOpen={isSignInOpen} onOpenChange={setIsSignInOpen} />
     </>
   );
 }
 
-function BrowsePageSkeleton() {
-  return (
-    <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <div className="mb-8">
-        <div className="h-10 bg-muted rounded-lg w-80 mb-4 animate-pulse" />
-        <div className="h-6 bg-muted rounded-lg w-96 animate-pulse" />
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-        <div className="lg:col-span-1">
-          <div className="h-[600px] bg-muted rounded-lg animate-pulse" />
-        </div>
-
-        <div className="lg:col-span-3 space-y-6">
-          <div className="flex flex-col sm:flex-row gap-4">
-            <div className="flex-1">
-              <div className="h-10 bg-muted rounded-lg animate-pulse" />
-            </div>
-            <div className="flex gap-2">
-              <div className="h-10 w-40 bg-muted rounded-lg animate-pulse" />
-              <div className="h-10 w-32 bg-muted rounded-lg animate-pulse" />
-            </div>
-          </div>
-
-          <div className="flex items-center justify-between">
-            <div className="h-4 w-48 bg-muted rounded animate-pulse" />
-            <div className="h-4 w-20 bg-muted rounded animate-pulse" />
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {[...Array(6)].map((_, i) => (
-              <div key={i} className="border rounded-lg p-6 space-y-4">
-                <div className="flex items-start space-x-4">
-                  <div className="w-16 h-16 bg-muted rounded-lg animate-pulse" />
-                  <div className="flex-1 space-y-2">
-                    <div className="h-5 bg-muted rounded animate-pulse" />
-                    <div className="h-4 bg-muted rounded w-3/4 animate-pulse" />
-                    <div className="flex gap-2">
-                      <div className="h-6 w-16 bg-muted rounded animate-pulse" />
-                      <div className="h-6 w-20 bg-muted rounded animate-pulse" />
-                    </div>
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <div className="h-4 bg-muted rounded animate-pulse" />
-                  <div className="h-4 bg-muted rounded w-5/6 animate-pulse" />
-                </div>
-                <div className="flex justify-between items-center">
-                  <div className="h-8 w-24 bg-muted rounded animate-pulse" />
-                  <div className="h-8 w-20 bg-muted rounded animate-pulse" />
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
 export default function BrowsePage() {
-  return (
-    <Suspense fallback={<BrowsePageSkeleton />}>
-      <BrowsePageContent />
-    </Suspense>
-  );
+  return <BrowsePageContent />;
 }
