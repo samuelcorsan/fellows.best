@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, useEffect, useRef, useCallback } from "react";
+import { useState, useMemo, useEffect, useRef, useCallback, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import {
   ArrowUpDown,
@@ -315,6 +315,28 @@ function BrowsePageContent() {
   );
 }
 
+function BrowsePageFallback() {
+  return (
+    <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="mb-8">
+        <h1 className="text-3xl md:text-4xl font-bold mb-4">
+          Browse Opportunities
+        </h1>
+        <p className="text-xl text-muted-foreground">
+          Discover fellowships, grants, and more
+        </p>
+      </div>
+      <div className="text-center py-8">
+        Loading...
+      </div>
+    </div>
+  );
+}
+
 export default function BrowsePage() {
-  return <BrowsePageContent />;
+  return (
+    <Suspense fallback={<BrowsePageFallback />}>
+      <BrowsePageContent />
+    </Suspense>
+  );
 }
