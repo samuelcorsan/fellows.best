@@ -70,6 +70,7 @@ export const fellowshipOpportunities: Opportunity[] = [
       equityPercentage: 8.5,
       fundingType: "equity-based",
     },
+    applicationVideo: "https://www.youtube.com/embed/0ETl4Ge-hg0",
   },
   {
     id: "techstars-2025",
@@ -1116,6 +1117,7 @@ export const fellowshipOpportunities: Opportunity[] = [
     id: "zfellows",
     name: "Z Fellows",
     logoUrl: "https://cdn.fellows.best/logos/zfellows-logo.jpg",
+    shareImageUrl: "https://cdn.fellows.best/banners/zfellows-banner.png",
     description:
       "One-week program offering a $10,000 stipend and mentorship from Silicon Valley's top founders for early technical builders.",
     fullDescription:
@@ -1149,6 +1151,7 @@ export const fellowshipOpportunities: Opportunity[] = [
     name: "a16z Crypto Startup Accelerator",
     logoUrl:
       "https://cdn.fellows.best/logos/a16z-crypto-startup-accelerator-logo.jpg",
+    shareImageUrl: "https://cdn.fellows.best/banners/a16z-banner.png",
     description:
       "An intensive accelerator for early-stage blockchain and web3 startups, providing capital, mentorship, and network support.",
     fullDescription:
@@ -1176,6 +1179,7 @@ export const fellowshipOpportunities: Opportunity[] = [
     id: "ewor-fellowship",
     name: "EWOR Fellowship",
     logoUrl: "https://cdn.fellows.best/logos/ewor-fellowship-logo.png",
+    shareImageUrl: "https://cdn.fellows.best/banners/ewor-banner.png",
     description:
       "A highly selective, virtual-first fellowship offering early-stage founders up to €500,000 in capital and 1:1 mentorship from unicorn founders to build global-impact ventures.",
     fullDescription:
@@ -1205,6 +1209,8 @@ export const fellowshipOpportunities: Opportunity[] = [
     id: "thiel-fellowship-2026",
     name: "Thiel Fellowship",
     logoUrl: "https://cdn.fellows.best/logos/thiel-fellowship-2026-logo.jpg",
+    shareImageUrl:
+      "https://cdn.fellows.best/banners/thiel-fellowship-banner.png",
     description:
       "A two-year, $200,000 grant program for innovators aged 22 or younger to pursue full-time projects instead of attending college.",
     fullDescription:
@@ -1234,6 +1240,8 @@ export const fellowshipOpportunities: Opportunity[] = [
     name: "Global Good Fund Fellowship 2026",
     logoUrl:
       "https://cdn.fellows.best/logos/global-good-fund-fellowship-2026-logo.jpg",
+    shareImageUrl:
+      "https://cdn.fellows.best/banners/global-good-fund-banner.png",
     description:
       "A 12-month hybrid leadership program for social entrepreneurs worldwide, offering executive coaching, business mentorship, and a targeted $10,000 leadership development grant.",
     fullDescription:
@@ -1269,6 +1277,7 @@ export const fellowshipOpportunities: Opportunity[] = [
     id: "localhost-japan",
     name: "LocalHost - Japan",
     logoUrl: "https://cdn.fellows.best/logos/localhost-france-logo.jpg",
+    shareImageUrl: "https://cdn.fellows.best/banners/localhost-banner.png",
     description:
       "A global, travelling fellowship with a hub in Tokyo for exceptional young builders to pursue full-time projects.",
     fullDescription:
@@ -1303,8 +1312,8 @@ export const fellowshipOpportunities: Opportunity[] = [
   {
     id: "localhost-india",
     name: "LocalHost - India",
-    logoUrl:
-      "https://pbs.twimg.com/profile_images/1947195504883892224/eK8WwG9R_400x400.jpg",
+    logoUrl: "https://cdn.fellows.best/logos/localhost-france-logo.jpg",
+    shareImageUrl: "https://cdn.fellows.best/banners/localhost-banner.png",
     description:
       "A global fellowship with hubs in Bangalore and New Delhi, supporting builders to pursue full-time projects.",
     fullDescription:
@@ -1339,8 +1348,8 @@ export const fellowshipOpportunities: Opportunity[] = [
   {
     id: "localhost-romania",
     name: "LocalHost - Romania",
-    logoUrl:
-      "https://pbs.twimg.com/profile_images/1947195504883892224/eK8WwG9R_400x400.jpg",
+    logoUrl: "https://cdn.fellows.best/logos/localhost-france-logo.jpg",
+    shareImageUrl: "https://cdn.fellows.best/banners/localhost-banner.png",
     description:
       "A global fellowship with a hub in Cluj-Napoca, Romania, for exceptional builders.",
     fullDescription:
@@ -1375,8 +1384,8 @@ export const fellowshipOpportunities: Opportunity[] = [
   {
     id: "localhost-france",
     name: "LocalHost - France",
-    logoUrl:
-      "https://pbs.twimg.com/profile_images/1947195504883892224/eK8WwG9R_400x400.jpg",
+    logoUrl: "https://cdn.fellows.best/logos/localhost-france-logo.jpg",
+    shareImageUrl: "https://cdn.fellows.best/banners/localhost-banner.png",
     description:
       "A global fellowship with activities and events in Paris, France, supporting exceptional builders.",
     fullDescription:
@@ -1412,6 +1421,7 @@ export const fellowshipOpportunities: Opportunity[] = [
     id: "founders-inc-off-season",
     name: "Founders Inc Off Season",
     logoUrl: "https://cdn.fellows.best/logos/founders-inc-off-season-logo.jpg",
+    shareImageUrl: "https://cdn.fellows.best/banners/founders-inc.png",
     description:
       "6-week equity-free summer residency at Fort Mason for ambitious builders to obsess and build, ending in Demo Day with up to $250K funding opportunity.",
     fullDescription:
