@@ -4,6 +4,7 @@ import { Geist } from "next/font/google";
 import { Header } from "@/components/global/header";
 import { Footer } from "@/components/global/footer";
 import { ThemeProvider } from "@/providers/theme-provider";
+
 import { Toaster } from "sonner";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";

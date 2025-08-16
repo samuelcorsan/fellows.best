@@ -1472,21 +1472,231 @@ export const fellowshipOpportunities: Opportunity[] = [
     ],
     organizer: "EU-LAC Digital Accelerator",
   },
+  {
+    id: "seven-seven-six",
+    name: "Seven Seven Six (776)",
+    logoUrl: "https://cdn.fellows.best/logos/seven-seven-six-logo.jpg",
+    shareImageUrl:
+      "https://cdn.fellows.best/banners/seven-seven-six-banner.webp",
+    description:
+      "Early-stage venture capital firm founded by Alexis Ohanian (also known as 776).",
+    fullDescription:
+      "Seven Seven Six (776) is an early-stage venture capital firm founded by Alexis Ohanian. The firm focuses on product-led startups across consumer, web3, sports, fintech and other sectors, runs operator programs (e.g. Operator-in-Residence), and backs companies from seed through Series A. 776 closed a $150M debut fund and later raised additional vehicles, growing its assets under management into the hundreds of millions / near $1B range. The firm also runs philanthropic and fellowship initiatives under the 776 brand.",
+    openDate: null,
+    closeDate: null,
+    tags: [
+      "venture-capital",
+      "early-stage",
+      "seed",
+      "series-a",
+      "operator-program",
+      "web3",
+      "sports",
+      "founder-led",
+      "diversity",
+    ],
+    category: "grant",
+    region: "Global",
+    country: "United States",
+    eligibility:
+      "Seed to early growth stage startups (founder-led teams). Sector-agnostic emphasis with active interest in consumer, sports, web3, fintech and companies led by underrepresented founders.",
+    applyLink: "https://sevensevensix.com/",
+    benefits: [
+      "Access to early-stage capital (seed → Series A)",
+      "Operator-in-Residence program and hands-on operator support",
+      "Founder/operator network and brand access",
+      "Track record of investments across web3, consumer and sports",
+      "Founder-focused, operator-first support and programs",
+    ],
+    organizer: "Seven Seven Six (776)",
+  },
+  {
+    id: "hummingbird-vc",
+    name: "Hummingbird VC",
+    logoUrl: "https://cdn.fellows.best/logos/hummingbird-vc-logo.png",
+    shareImageUrl:
+      "https://cdn.fellows.best/banners/hummingbird-vc-banner.avif",
+    description:
+      "Global seed investors backing outlier founders across deep tech, AI, SaaS, fintech and healthcare.",
+    fullDescription:
+      "Hummingbird is a global early-stage venture capital firm (also known as Hummingbird Ventures) that partners very early with ambitious founders. The firm invests across sectors including AI, deep tech, SaaS, healthcare, gaming and marketplaces, and operates with hubs across multiple continents while maintaining in-house operations in Belgium. Hummingbird invests from seed checks (starting around $500K) and retains the ability to double or triple down later (writing follow-on capital up to tens of millions).",
+    openDate: null,
+    closeDate: null,
+    tags: [
+      "seed",
+      "early-stage",
+      "venture-capital",
+      "deep-tech",
+      "AI",
+      "SaaS",
+      "fintech",
+      "global",
+    ],
+    category: "grant",
+    region: "Global",
+    country: "Belgium",
+    eligibility:
+      "Early-stage / seed founders building technology-enabled startups (sector-agnostic with particular interest in AI, deep tech, SaaS, healthcare, fintech, gaming and marketplaces).",
+    applyLink: "https://www.hummingbird.vc",
+    benefits: [
+      "Seed-stage capital and follow-on funding (ability to scale checks substantially over time)",
+      "Global operator network and hands-on support from investing & operations teams",
+      "Access to Hummingbird’s portfolio network and resources across multiple hubs",
+      "Experienced investment team with founding partners and partners focused on founder support",
+    ],
+    organizer: "Hummingbird VC (Hummingbird Ventures)",
+  },
+  {
+    id: "khosla-ventures",
+    name: "Khosla Ventures",
+    logoUrl: "https://cdn.fellows.best/logos/khosla-ventures-logo.jpg",
+    //TODO: improve banner quality
+    shareImageUrl: "https://cdn.fellows.best/logos/khosla-ventures-banner.webp",
+    description:
+      "Early-stage and growth venture capital firm founded by Vinod Khosla, investing in ambitious technology companies across enterprise, consumer, health, sustainability and frontier tech.",
+    fullDescription:
+      "Khosla Ventures is a Menlo Park–based venture capital firm founded by Vinod Khosla. The firm backs entrepreneurs across stages — from seed to growth — with a focus on enterprise software, consumer, digital health, medtech, sustainability/energy, fintech and frontier/deep technology (including AI and space-related ventures). Khosla has backed many notable startups and operates a hands-on investing approach that supports bold, technically ambitious founders.",
+    openDate: null,
+    closeDate: null,
+    tags: [
+      "venture-capital",
+      "early-stage",
+      "growth",
+      "enterprise",
+      "digital-health",
+      "sustainability",
+      "deep-tech",
+      "AI",
+    ],
+    category: "grant",
+    region: "Global",
+    country: "United States",
+    eligibility:
+      "Founders and startups across seed through growth stages building technology-driven businesses; sector-agnostic but strong interest in enterprise software, health, sustainability and frontier tech.",
+    applyLink: "https://www.khoslaventures.com/",
+    benefits: [
+      "Access to venture capital across seed → growth stages",
+      "Hands-on partner support and technical/operator network",
+      "Deep domain expertise in sustainability, healthcare, enterprise and frontier tech",
+      "Track record of follow-on funding and exit support",
+    ],
+    organizer: "Khosla Ventures",
+  },
+  {
+    id: "lightspeed-venture-partners",
+    name: "Lightspeed Venture Partners (LSVP)",
+    logoUrl: "https://cdn.fellows.best/logos/lightspeed-vc-logo.jpg",
+    shareImageUrl: "https://cdn.fellows.best/banners/lightspeed-vc-banner.png",
+    description:
+      "Multi-stage venture capital firm investing globally across Enterprise, Consumer, Health and Fintech.",
+    fullDescription:
+      "Lightspeed Venture Partners (LSVP) is a multi-stage venture capital firm founded in 2000 and headquartered in Menlo Park, California. The firm backs bold founders from Seed through late-stage (Series F and beyond), with active investing across Enterprise, Consumer, Health and Fintech sectors. Lightspeed operates globally with teams in the US, Europe, India, Israel and Southeast Asia, and has backed hundreds of companies including Affirm, Epic Games, Nutanix, Carta, and Anthropic. In recent years Lightspeed has also expanded activities into secondary-market investing alongside its primary venture practice.",
+    openDate: null,
+    closeDate: null,
+    tags: [
+      "venture-capital",
+      "multi-stage",
+      "seed",
+      "series-a",
+      "series-f",
+      "enterprise",
+      "consumer",
+      "health",
+      "fintech",
+      "global",
+    ],
+    category: "grant",
+    region: "Global",
+    country: "United States",
+    eligibility:
+      "Founders and companies from Seed through growth stages seeking institutional venture capital — sector-agnostic with particular emphasis on enterprise software, consumer, health and fintech.",
+    applyLink: "https://lsvp.com/launch/",
+    benefits: [
+      "Multi-stage capital from Seed through late rounds",
+      "Global network and local teams across major startup markets",
+      "Operator and advisory network (Advisory Council and Launch resources)",
+      "Track record of large outcomes and follow-on support",
+    ],
+    organizer: "Lightspeed Venture Partners",
+  },
+  {
+    id: "new-enterprise-associates",
+    name: "New Enterprise Associates (NEA)",
+    logoUrl: "https://cdn.fellows.best/logos/nea-logo.jpg",
+    shareImageUrl: "https://cdn.fellows.best/banners/nea-banner.jpg",
+    description:
+      "One of the world’s largest multi-stage venture capital firms, investing across technology and healthcare since 1977.",
+    fullDescription:
+      "New Enterprise Associates (NEA) is a global, multi-stage venture capital firm founded in 1977. NEA backs companies from seed through growth and IPO, with a particular focus on technology and healthcare. The firm operates multiple offices (including Menlo Park, New York, London and Timonium/Chevy Chase), manages over $25 billion in assets, and has a long track record of supporting transformational companies across sectors and stages.",
+    openDate: null,
+    closeDate: null,
+    tags: [
+      "venture-capital",
+      "multi-stage",
+      "seed",
+      "early-stage",
+      "growth",
+      "late-stage",
+      "technology",
+      "healthcare",
+      "global",
+    ],
+    category: "grant",
+    region: "Global",
+    country: "United States",
+    eligibility:
+      "Startups from seed through growth stage (pre-seed → IPO) in technology and healthcare sectors; NEA invests across stages and sectors and evaluates opportunities based on team, traction, and technical/market fit.",
+    applyLink: "https://www.nea.com",
+    benefits: [
+      "Multi-stage capital (seed → growth → IPO) and follow-on capability",
+      "Access to a large global network of investors, operators and portfolio companies",
+      "Deep sector experience in technology and healthcare",
+      "Long track record and significant capital reserves (enables large follow-on investments)",
+      "Local presence across major startup markets (US, UK, Maryland area)",
+    ],
+    organizer: "New Enterprise Associates (NEA)",
+  },
+  {
+    id: "spark-capital",
+    name: "Spark Capital",
+    logoUrl: "https://cdn.fellows.best/logos/spark-capital-logo.jpg",
+    shareImageUrl: "https://cdn.fellows.best/banners/spark-capital-banner.png",
+    description:
+      "Multi-stage venture capital firm investing in products and founders across consumer, enterprise, infra, gaming, fintech and AI.",
+    fullDescription:
+      "Spark Capital is a multi-stage VC firm founded in 2005 with offices in San Francisco, New York and Boston. The firm invests across stages (early/seed → growth) and sectors including consumer internet, enterprise software, infrastructure, gaming, fintech, crypto and AI. Spark has led or participated in early rounds for many well-known companies and maintains separate early and growth investing teams to support founders through scale.",
+    openDate: null,
+    closeDate: null,
+    tags: [
+      "venture-capital",
+      "multi-stage",
+      "seed",
+      "growth",
+      "consumer",
+      "enterprise",
+      "fintech",
+      "gaming",
+      "infrastructure",
+      "AI",
+    ],
+    category: "grant",
+    region: "Global",
+    country: "United States",
+    eligibility:
+      "Founders at seed through growth stages seeking institutional venture capital; Spark invests across sectors with dedicated early and growth teams.",
+    applyLink: "https://www.sparkcapital.com",
+    benefits: [
+      "Multi-stage capital (seed → growth) and follow-on capability",
+      "Dedicated early and growth teams with deep operator/investor experience",
+      "Access to Spark’s portfolio network and board-level support",
+      "Track record of investments in notable outcomes (e.g., Slack, Discord, Oculus, Cruise, Anthropic)",
+    ],
+    organizer: "Spark Capital",
+  },
 ];
 
 export function getOpportunityById(id: string): Opportunity | undefined {
   return fellowshipOpportunities.find((opp) => opp.id === id);
-}
-
-export function getUpcomingDeadlines(count: number = 5): Opportunity[] {
-  const now = new Date();
-  return fellowshipOpportunities
-    .filter((opp) => opp.closeDate && new Date(opp.closeDate) > now)
-    .sort(
-      (a, b) =>
-        new Date(a.closeDate!).getTime() - new Date(b.closeDate!).getTime()
-    )
-    .slice(0, count);
 }
 
 export function getDaysUntilDeadline(closeDate: string): number {
@@ -1503,33 +1713,6 @@ export function getDeadlineUrgency(
   if (days <= 7) return "urgent";
   if (days <= 30) return "warning";
   return "safe";
-}
-
-export function normalizeRegion(region: string): string[] {
-  const parts = region
-    .split(/[–—,&()]/)
-    .map((part) => part.trim())
-    .filter(Boolean);
-
-  const normalizedRegions = parts.map((part) => {
-    if (part.toLowerCase().includes("latin america")) return "Latin America";
-    if (part.toLowerCase().includes("caribbean")) return "Caribbean";
-    return part;
-  });
-
-  return Array.from(new Set(normalizedRegions));
-}
-
-export function matchRegion(
-  opportunityRegion: string,
-  filterRegion: string
-): boolean {
-  const normalizedOpportunityRegions = normalizeRegion(opportunityRegion);
-  return normalizedOpportunityRegions.some(
-    (region) =>
-      region.toLowerCase().includes(filterRegion.toLowerCase()) ||
-      filterRegion.toLowerCase().includes(region.toLowerCase())
-  );
 }
 
 export function filterOpportunities(
@@ -1584,47 +1767,3 @@ export function filterOpportunities(
     );
   });
 }
-
-export const SYSTEM_PROMPT = `You are a fellowship matching assistant. Your primary goal is to find the most relevant opportunities based on the user's location, background, and interests. Analyze the user's situation and return a JSON response matching this EXACT format:
-
-{
-  "recommendations": [
-    {
-      "id": "exact-id-from-opportunities",
-      "matchScore": number between 0-100,
-      "reason": "One sentence explaining why this is a good match"
-    }
-  ]
-}
-
-CRITICAL REQUIREMENTS:
-1. Response MUST be valid JSON
-2. ONLY use fellowship IDs from the provided opportunities
-3. matchScore must be number 0-100
-4. Include max 3 best matches (score > 70)
-5. Sort by matchScore descending
-6. NO additional text or explanation outside JSON
-7. NO markdown or formatting
-8. If no good matches found, return empty recommendations array
-
-MATCHING PRIORITIES (in order):
-1. Location Match: Strongly prioritize opportunities in the user's mentioned location/region
-   - If user mentions a city/region, prioritize opportunities there
-   - Only suggest international opportunities if explicitly relevant to user's goals
-   - Reduce match score by 30-50 points for location mismatches
-
-2. Eligibility Match:
-   - Ensure user meets basic eligibility criteria mentioned
-   - If eligibility unclear, prioritize more inclusive opportunities
-   - Reduce match score if eligibility requirements might not be met
-
-3. Interest/Background Match:
-   - Match opportunity category with user's mentioned interests/background
-   - Consider the opportunity description and how it aligns with user's goals
-   - Reduce match score for weak interest alignment
-
-4. General Guidelines:
-   - Be conservative with match scores - only give high scores (>85) for very strong matches
-   - Include specific reasons why each match is relevant to the user's situation
-   - If user provides limited information, focus on matching what is known
-   - Better to return fewer, more relevant matches than many weak matches`;

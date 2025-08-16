@@ -4,6 +4,7 @@ import { Calendar, MapPin, ExternalLink } from "lucide-react";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+
 import {
   Opportunity,
   getDaysUntilDeadline,
@@ -115,16 +116,21 @@ export function OpportunityCard({
                   {getDeadlineText(daysUntil)}
                 </div>
               </div>
-              
+
               {opportunity.funding && !isCarousel && (
                 <div className="mt-2 pt-2 border-t border-border/50">
                   <div className="flex items-center justify-between text-xs">
                     <span className="font-medium text-green-600">
-                      {opportunity.funding.isApproximate ? "~" : ""}${opportunity.funding.amount.toLocaleString()}
+                      {opportunity.funding.isApproximate ? "~" : ""}$
+                      {opportunity.funding.amount.toLocaleString()}
                     </span>
                     {opportunity.funding.equityPercentage > 0 && (
                       <span className="font-medium text-orange-600">
-                        {opportunity.funding.isApproximate && opportunity.funding.equityPercentage % 1 !== 0 ? "~" : ""}{opportunity.funding.equityPercentage}% equity
+                        {opportunity.funding.isApproximate &&
+                        opportunity.funding.equityPercentage % 1 !== 0
+                          ? "~"
+                          : ""}
+                        {opportunity.funding.equityPercentage}% equity
                       </span>
                     )}
                   </div>
@@ -133,7 +139,7 @@ export function OpportunityCard({
             </div>
           </div>
         </CardContent>
-        <CardFooter className="p-4 pt-0">
+        <CardFooter className="p-4 pt-0 space-y-2">
           <Button asChild size="sm" className="w-full">
             <Link href={getOpportunityUrl()}>View Details</Link>
           </Button>
@@ -211,9 +217,15 @@ export function OpportunityCard({
 
             <div className="mt-auto">
               <div className="flex flex-wrap gap-1 sm:gap-2">
-                <Badge variant="outline" className="rounded-lg text-xs">{opportunity.category}</Badge>
+                <Badge variant="outline" className="rounded-lg text-xs">
+                  {opportunity.category}
+                </Badge>
                 {opportunity.tags.slice(0, isCarousel ? 1 : 2).map((tag) => (
-                  <Badge key={tag} variant="secondary" className="text-xs rounded-lg">
+                  <Badge
+                    key={tag}
+                    variant="secondary"
+                    className="text-xs rounded-lg"
+                  >
                     {tag}
                   </Badge>
                 ))}
@@ -229,12 +241,14 @@ export function OpportunityCard({
       </CardContent>
       <CardFooter className="px-4 sm:px-6 py-3 sm:py-4 bg-muted/50 flex items-center justify-between">
         {isCarousel ? (
-          <Button asChild className="w-full">
-            <Link href={getOpportunityUrl()}>View Details</Link>
-          </Button>
+          <div className="w-full space-y-2">
+            <Button asChild className="w-full">
+              <Link href={getOpportunityUrl()}>View Details</Link>
+            </Button>
+          </div>
         ) : (
           <>
-            <Button asChild variant="outline">
+            <Button asChild variant="outline" size="sm">
               <Link href={getOpportunityUrl()}>
                 <span className="hidden sm:inline">View Details</span>
                 <span className="sm:hidden">Details</span>

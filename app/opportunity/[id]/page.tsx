@@ -17,6 +17,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { CalendarButton } from "@/components/global/calendar-button";
 import { ShareButton } from "@/components/global/share-button";
+
 import {
   getOpportunityById,
   getDaysUntilDeadline,
@@ -129,7 +130,7 @@ export default async function OpportunityPage({
       )}
 
       {opportunity.shareImageUrl ? (
-        <div className="relative w-full mb-12 sm:mb-16">
+        <div className="relative w-full mb-12 sm:mb-16 bg-white border border-gray-200 rounded-2xl">
           <div className="relative w-full h-32 sm:h-48 md:h-64 rounded-2xl overflow-hidden">
             <Image
               src={opportunity.shareImageUrl}
