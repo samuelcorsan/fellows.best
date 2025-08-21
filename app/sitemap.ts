@@ -26,12 +26,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ];
 
-  const activeOpportunities = fellowshipOpportunities.filter((opportunity) => {
-    if (!opportunity.closeDate) return true;
-    return new Date(opportunity.closeDate) >= new Date(currentDate);
-  });
-
-  const opportunityRoutes: MetadataRoute.Sitemap = activeOpportunities.map(
+  const opportunityRoutes: MetadataRoute.Sitemap = fellowshipOpportunities.map(
     (opportunity) => ({
       url: `${baseUrl}/opportunity/${opportunity.id}`,
       lastModified: opportunity.openDate

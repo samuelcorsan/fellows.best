@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import Script from "next/script";
 import {
   MapPin,
   ExternalLink,
@@ -49,14 +50,18 @@ export async function generateMetadata({
 
   const ogImageUrl =
     opportunity.shareImageUrl || `/api/og?id=${opportunity.id}`;
+  const canonicalUrl = `https://fellows.best/opportunity/${opportunity.id}`;
 
   return {
     title: `${opportunity.name} - ${opportunity.organizer} | fellows.best`,
     description: opportunity.description,
+    alternates: {
+      canonical: canonicalUrl,
+    },
     openGraph: {
       title: `${opportunity.name} - ${opportunity.organizer}`,
       description: opportunity.description,
-      url: `/opportunity/${opportunity.id}`,
+      url: canonicalUrl,
       siteName: "fellows.best",
       images: [
         {
@@ -119,258 +124,296 @@ export default async function OpportunityPage({
   const { url: backUrl, text: backText } = getBackNavigation();
 
   return (
-    <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      {!opportunity.shareImageUrl && (
-        <Button asChild variant="ghost" className="mb-6">
-          <Link href={backUrl}>
-            <ArrowLeft className="mr-2 h-4 w-4" />
-            {backText}
-          </Link>
-        </Button>
-      )}
-
-      {opportunity.shareImageUrl ? (
-        <div className="relative w-full mb-12 sm:mb-16 bg-white border border-gray-200 rounded-2xl">
-          <div className="relative w-full h-32 sm:h-48 md:h-64 rounded-2xl overflow-hidden">
-            <Image
-              src={opportunity.shareImageUrl}
-              alt={`${opportunity.name} banner`}
-              fill
-              className="object-cover"
-            />
-            <div className="absolute inset-0 bg-black/10" />
-          </div>
-
-          <div className="absolute -bottom-8 sm:-bottom-6 left-1/2 sm:left-8 transform -translate-x-1/2 sm:translate-x-0">
-            <div className="relative">
-              <Image
-                src={opportunity.logoUrl}
-                alt={`${opportunity.name} logo`}
-                width={100}
-                height={100}
-                className="rounded-xl object-cover w-20 h-20 sm:w-[100px] sm:h-[100px] border-4 border-white shadow-2xl bg-white"
-              />
-            </div>
-          </div>
-
-          <div className="absolute top-4 left-4 sm:top-6 sm:left-8 z-20">
-            <Button
-              asChild
-              size="icon"
-              className="bg-white text-black hover:bg-gray-100 shadow-md rounded-xl w-10 h-10"
-            >
-              <Link href={backUrl}>
-                <ArrowLeft className="h-4 w-4" />
-              </Link>
-            </Button>
-          </div>
-        </div>
-      ) : null}
-
-      <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6 mb-8">
-        <div className="flex flex-col sm:flex-row sm:items-start gap-4 sm:gap-6 flex-1">
-          {!opportunity.shareImageUrl && (
-            <div className="relative">
-              <Image
-                src={opportunity.logoUrl}
-                alt={`${opportunity.name} logo`}
-                width={100}
-                height={100}
-                priority
-                className="rounded-xl object-cover w-20 h-20 sm:w-[100px] sm:h-[100px] mx-auto sm:mx-0 flex-shrink-0 border-4 border-white shadow-lg"
-              />
-            </div>
-          )}
-          <div className="flex-1 text-center sm:text-left">
-            <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mb-2">
-              <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold">
-                {opportunity.name}
-              </h1>
-              {opportunity.closeDate &&
-                getDaysUntilDeadline(opportunity.closeDate) < 0 && (
-                  <Badge
-                    className="text-sm mx-auto sm:mx-0 w-fit px-4 py-1 rounded-lg self-center"
-                    variant="destructive"
-                  >
-                    Closed
-                  </Badge>
-                )}
-            </div>
-            <p className="text-lg sm:text-xl text-muted-foreground mb-4">
-              {opportunity.organizer}
-            </p>
-            <div className="flex flex-wrap gap-2 justify-center sm:justify-start">
-              <Badge variant="outline" className="text-sm rounded-lg">
-                {opportunity.category}
-              </Badge>
-              {opportunity.tags.map((tag) => (
-                <Badge
-                  key={tag}
-                  variant="secondary"
-                  className="text-sm rounded-lg"
-                >
-                  {tag}
-                </Badge>
-              ))}
-            </div>
-          </div>
-        </div>
-        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 lg:shrink-0">
-          <Button asChild size="lg" className="w-full sm:w-auto">
-            <a
-              href={opportunity.applyLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center justify-center"
-            >
-              Apply Now
-              <ExternalLink className="ml-2 h-4 w-4" />
-            </a>
+    <>
+      <Script
+        id="opportunity-structured-data"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Scholarship",
+            name: opportunity.name,
+            description: opportunity.description,
+            provider: {
+              "@type": "Organization",
+              name: opportunity.organizer,
+              url: opportunity.applyLink,
+            },
+            url: `https://fellows.best/opportunity/${opportunity.id}`,
+            applicationDeadline: opportunity.closeDate,
+            datePosted: opportunity.openDate,
+            category: opportunity.category,
+            eligibilityCriteria: opportunity.eligibility,
+            value: opportunity.funding
+              ? {
+                  "@type": "MonetaryAmount",
+                  value: opportunity.funding.amount,
+                  currency: opportunity.funding.currency,
+                }
+              : undefined,
+            areaServed: {
+              "@type": "Place",
+              name: opportunity.region,
+            },
+            termsOfService: opportunity.applyLink,
+          }),
+        }}
+      />
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        {!opportunity.shareImageUrl && (
+          <Button asChild variant="ghost" className="mb-6">
+            <Link href={backUrl}>
+              <ArrowLeft className="mr-2 h-4 w-4" />
+              {backText}
+            </Link>
           </Button>
-          <ShareButton opportunity={opportunity} />
-        </div>
-      </div>
+        )}
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <div className="lg:col-span-2 space-y-8">
-          <Card>
-            <CardHeader>
-              <CardTitle>About this Opportunity</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-muted-foreground leading-relaxed text-lg">
-                {opportunity.fullDescription}
+        {opportunity.shareImageUrl ? (
+          <div className="relative w-full mb-12 sm:mb-16 bg-white border border-gray-200 rounded-2xl">
+            <div className="relative w-full h-32 sm:h-48 md:h-64 rounded-2xl overflow-hidden">
+              <Image
+                src={opportunity.shareImageUrl}
+                alt={`${opportunity.name} banner`}
+                fill
+                className="object-cover"
+              />
+              <div className="absolute inset-0 bg-black/10" />
+            </div>
+
+            <div className="absolute -bottom-8 sm:-bottom-6 left-1/2 sm:left-8 transform -translate-x-1/2 sm:translate-x-0">
+              <div className="relative">
+                <Image
+                  src={opportunity.logoUrl}
+                  alt={`${opportunity.name} logo`}
+                  width={100}
+                  height={100}
+                  className="rounded-xl object-cover w-20 h-20 sm:w-[100px] sm:h-[100px] border-4 border-white shadow-2xl bg-white"
+                />
+              </div>
+            </div>
+
+            <div className="absolute top-4 left-4 sm:top-6 sm:left-8 z-20">
+              <Button
+                asChild
+                size="icon"
+                className="bg-white text-black hover:bg-gray-100 shadow-md rounded-xl w-10 h-10"
+              >
+                <Link href={backUrl}>
+                  <ArrowLeft className="h-4 w-4" />
+                </Link>
+              </Button>
+            </div>
+          </div>
+        ) : null}
+
+        <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6 mb-8">
+          <div className="flex flex-col sm:flex-row sm:items-start gap-4 sm:gap-6 flex-1">
+            {!opportunity.shareImageUrl && (
+              <div className="relative">
+                <Image
+                  src={opportunity.logoUrl}
+                  alt={`${opportunity.name} logo`}
+                  width={100}
+                  height={100}
+                  priority
+                  className="rounded-xl object-cover w-20 h-20 sm:w-[100px] sm:h-[100px] mx-auto sm:mx-0 flex-shrink-0 border-4 border-white shadow-lg"
+                />
+              </div>
+            )}
+            <div className="flex-1 text-center sm:text-left">
+              <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mb-2">
+                <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold">
+                  {opportunity.name}
+                </h1>
+                {opportunity.closeDate &&
+                  getDaysUntilDeadline(opportunity.closeDate) < 0 && (
+                    <Badge
+                      className="text-sm mx-auto sm:mx-0 w-fit px-4 py-1 rounded-lg self-center"
+                      variant="destructive"
+                    >
+                      Closed
+                    </Badge>
+                  )}
+              </div>
+              <p className="text-lg sm:text-xl text-muted-foreground mb-4">
+                {opportunity.organizer}
               </p>
-            </CardContent>
-          </Card>
+              <div className="flex flex-wrap gap-2 justify-center sm:justify-start">
+                <Badge variant="outline" className="text-sm rounded-lg">
+                  {opportunity.category}
+                </Badge>
+                {opportunity.tags.map((tag) => (
+                  <Badge
+                    key={tag}
+                    variant="secondary"
+                    className="text-sm rounded-lg"
+                  >
+                    {tag}
+                  </Badge>
+                ))}
+              </div>
+            </div>
+          </div>
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 lg:shrink-0">
+            <Button asChild size="lg" className="w-full sm:w-auto">
+              <a
+                href={opportunity.applyLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center"
+              >
+                Apply Now
+                <ExternalLink className="ml-2 h-4 w-4" />
+              </a>
+            </Button>
+            <ShareButton opportunity={opportunity} />
+          </div>
+        </div>
 
-          {opportunity.benefits.length > 0 && (
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="lg:col-span-2 space-y-8">
+            <Card>
+              <CardHeader>
+                <CardTitle>About this Opportunity</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-muted-foreground leading-relaxed text-lg">
+                  {opportunity.fullDescription}
+                </p>
+              </CardContent>
+            </Card>
+
+            {opportunity.benefits.length > 0 && (
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center">
+                    <Award className="mr-2 h-5 w-5" />
+                    What You&apos;ll Get
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <ul className="space-y-3">
+                    {opportunity.benefits.map((benefit, index) => (
+                      <li key={index} className="flex items-start">
+                        <div className="h-2 w-2 rounded-full bg-primary mt-2 mr-3 flex-shrink-0"></div>
+                        <span className="text-muted-foreground">{benefit}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </CardContent>
+              </Card>
+            )}
+
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center">
-                  <Award className="mr-2 h-5 w-5" />
-                  What You&apos;ll Get
+                  <Users className="mr-2 h-5 w-5" />
+                  Eligibility Requirements
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <ul className="space-y-3">
-                  {opportunity.benefits.map((benefit, index) => (
-                    <li key={index} className="flex items-start">
-                      <div className="h-2 w-2 rounded-full bg-primary mt-2 mr-3 flex-shrink-0"></div>
-                      <span className="text-muted-foreground">{benefit}</span>
-                    </li>
-                  ))}
-                </ul>
+                <p className="text-muted-foreground leading-relaxed">
+                  {opportunity.eligibility}
+                </p>
               </CardContent>
             </Card>
-          )}
+          </div>
 
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center">
-                <Users className="mr-2 h-5 w-5" />
-                Eligibility Requirements
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-muted-foreground leading-relaxed">
-                {opportunity.eligibility}
-              </p>
-            </CardContent>
-          </Card>
-        </div>
-
-        <div className="space-y-6">
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center">
-                <Clock className="mr-2 h-5 w-5" />
-                Deadline
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              {opportunity.closeDate ? (
-                <div
-                  className={`p-4 rounded-lg border text-center ${urgencyStyles[urgency]}`}
-                >
-                  <div className="text-2xl font-bold">
-                    {daysUntil !== null && daysUntil >= 0
-                      ? `${daysUntil} days left`
-                      : "Closed"}
-                  </div>
-                  <div className="text-sm opacity-75">
-                    Closes{" "}
-                    {new Date(opportunity.closeDate).toLocaleDateString()}
-                  </div>
-                </div>
-              ) : (
-                <div
-                  className={`p-4 rounded-lg border text-center ${urgencyStyles.safe}`}
-                >
-                  <div className="text-2xl font-bold">Rolling Application</div>
-                  <div className="text-sm opacity-75">Apply anytime</div>
-                </div>
-              )}
-
-              <Separator />
-
-              <div className="space-y-2 text-sm">
-                <div className="flex items-center justify-between">
-                  <span className="text-muted-foreground">Opens:</span>
-                  <span>
-                    {opportunity.openDate
-                      ? new Date(opportunity.openDate).toLocaleDateString()
-                      : "N/A"}
-                  </span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-muted-foreground">Region:</span>
-                  <span className="flex items-center">
-                    <MapPin className="mr-1 h-3 w-3" />
-                    {opportunity.region}
-                  </span>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {opportunity.applicationVideo && (
-            <Card className="overflow-hidden">
-              <CardHeader>
-                <CardTitle className="flex items-center text-base">
-                  <Play className="mr-2 h-4 w-4" />
-                  Application Tips
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="relative aspect-video rounded-lg overflow-hidden">
-                  <iframe
-                    width="560"
-                    height="315"
-                    src={opportunity.applicationVideo}
-                    title="YouTube video player"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    referrerPolicy="strict-origin-when-cross-origin"
-                    allowFullScreen
-                    className="absolute inset-0 w-full h-full"
-                  />
-                </div>
-              </CardContent>
-            </Card>
-          )}
-
-          {opportunity.closeDate && (
+          <div className="space-y-6">
             <Card>
               <CardHeader>
-                <CardTitle>Add to Calendar</CardTitle>
+                <CardTitle className="flex items-center">
+                  <Clock className="mr-2 h-5 w-5" />
+                  Deadline
+                </CardTitle>
               </CardHeader>
-              <CardContent>
-                <CalendarButton opportunity={opportunity} />
+              <CardContent className="space-y-4">
+                {opportunity.closeDate ? (
+                  <div
+                    className={`p-4 rounded-lg border text-center ${urgencyStyles[urgency]}`}
+                  >
+                    <div className="text-2xl font-bold">
+                      {daysUntil !== null && daysUntil >= 0
+                        ? `${daysUntil} days left`
+                        : "Closed"}
+                    </div>
+                    <div className="text-sm opacity-75">
+                      Closes{" "}
+                      {new Date(opportunity.closeDate).toLocaleDateString()}
+                    </div>
+                  </div>
+                ) : (
+                  <div
+                    className={`p-4 rounded-lg border text-center ${urgencyStyles.safe}`}
+                  >
+                    <div className="text-2xl font-bold">
+                      Rolling Application
+                    </div>
+                    <div className="text-sm opacity-75">Apply anytime</div>
+                  </div>
+                )}
+
+                <Separator />
+
+                <div className="space-y-2 text-sm">
+                  <div className="flex items-center justify-between">
+                    <span className="text-muted-foreground">Opens:</span>
+                    <span>
+                      {opportunity.openDate
+                        ? new Date(opportunity.openDate).toLocaleDateString()
+                        : "N/A"}
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-muted-foreground">Region:</span>
+                    <span className="flex items-center">
+                      <MapPin className="mr-1 h-3 w-3" />
+                      {opportunity.region}
+                    </span>
+                  </div>
+                </div>
               </CardContent>
             </Card>
-          )}
+
+            {opportunity.applicationVideo && (
+              <Card className="overflow-hidden">
+                <CardHeader>
+                  <CardTitle className="flex items-center text-base">
+                    <Play className="mr-2 h-4 w-4" />
+                    Application Tips
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="relative aspect-video rounded-lg overflow-hidden">
+                    <iframe
+                      width="560"
+                      height="315"
+                      src={opportunity.applicationVideo}
+                      title="YouTube video player"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      referrerPolicy="strict-origin-when-cross-origin"
+                      allowFullScreen
+                      className="absolute inset-0 w-full h-full"
+                    />
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+
+            {opportunity.closeDate && (
+              <Card>
+                <CardHeader>
+                  <CardTitle>Add to Calendar</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <CalendarButton opportunity={opportunity} />
+                </CardContent>
+              </Card>
+            )}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

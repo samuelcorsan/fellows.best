@@ -5,7 +5,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
-      disallow: ["/_next", "/api/*"],
+      disallow: ["/api/", "/settings/"],
     },
     sitemap: "https://fellows.best/sitemap.xml",
   };
