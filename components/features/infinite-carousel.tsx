@@ -1,3 +1,5 @@
+"use client";
+
 import { Opportunity } from "@/lib/data";
 import { OpportunityCard } from "./opportunity-card";
 import { cn } from "@/lib/utils";
@@ -43,7 +45,10 @@ export function InfiniteCarousel({
         }}
       >
         {openOpportunities.map((opportunity, idx) => (
-          <div key={`${opportunity.id}-${idx}`} className="w-[280px] sm:w-[320px] lg:w-[350px] shrink-0">
+          <div
+            key={`${opportunity.id}-${idx}`}
+            className="w-[280px] sm:w-[320px] lg:w-[350px] shrink-0"
+          >
             <OpportunityCard
               opportunity={opportunity}
               className="w-full"
@@ -53,7 +58,10 @@ export function InfiniteCarousel({
           </div>
         ))}
         {openOpportunities.map((opportunity, idx) => (
-          <div key={`${opportunity.id}-${idx}-clone`} className="w-[280px] sm:w-[320px] lg:w-[350px] shrink-0">
+          <div
+            key={`${opportunity.id}-${idx}-clone`}
+            className="w-[280px] sm:w-[320px] lg:w-[350px] shrink-0"
+          >
             <OpportunityCard
               opportunity={opportunity}
               className="w-full"

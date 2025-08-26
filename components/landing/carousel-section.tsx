@@ -7,7 +7,10 @@ interface CarouselSectionProps {
   distributedCarousel2: typeof fellowshipOpportunities;
 }
 
-export const CarouselSection = memo(function CarouselSection({ distributedCarousel1, distributedCarousel2 }: CarouselSectionProps) {
+export const CarouselSection = memo(function CarouselSection({
+  distributedCarousel1,
+  distributedCarousel2,
+}: CarouselSectionProps) {
   return (
     <div className="space-y-2 sm:space-y-4">
       <InfiniteCarousel

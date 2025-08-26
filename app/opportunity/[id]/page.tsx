@@ -1,6 +1,4 @@
 import { notFound } from "next/navigation";
-import { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import Script from "next/script";
 import {
@@ -18,6 +16,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { CalendarButton } from "@/components/global/calendar-button";
 import { ShareButton } from "@/components/global/share-button";
+import { OpportunityImages } from "@/components/features/opportunity-images";
 
 import {
   getOpportunityById,
@@ -34,54 +33,6 @@ interface OpportunityPageProps {
   }>;
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}): Promise<Metadata> {
-  const { id } = await params;
-  const opportunity = await getOpportunityById(id);
-
-  if (!opportunity) {
-    return {
-      title: "Opportunity Not Found",
-    };
-  }
-
-  const ogImageUrl =
-    opportunity.shareImageUrl || `/api/og?id=${opportunity.id}`;
-  const canonicalUrl = `https://fellows.best/opportunity/${opportunity.id}`;
-
-  return {
-    title: `${opportunity.name} - ${opportunity.organizer} | fellows.best`,
-    description: opportunity.description,
-    alternates: {
-      canonical: canonicalUrl,
-    },
-    openGraph: {
-      title: `${opportunity.name} - ${opportunity.organizer}`,
-      description: opportunity.description,
-      url: canonicalUrl,
-      siteName: "fellows.best",
-      images: [
-        {
-          url: ogImageUrl,
-          width: 1200,
-          height: 630,
-          alt: `${opportunity.name} opportunity details`,
-        },
-      ],
-      type: "website",
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: `${opportunity.name} - ${opportunity.organizer}`,
-      description: opportunity.description,
-      images: [ogImageUrl],
-    },
-  };
-}
-
 export default async function OpportunityPage({
   params,
   searchParams,
@@ -94,12 +45,14 @@ export default async function OpportunityPage({
     notFound();
   }
 
-  const daysUntil = opportunity.closeDate
-    ? getDaysUntilDeadline(opportunity.closeDate)
-    : null;
-  const urgency = opportunity.closeDate
-    ? getDeadlineUrgency(opportunity.closeDate)
-    : "safe";
+  const daysUntil =
+    opportunity.closeDate && opportunity.closeDate !== "closed"
+      ? getDaysUntilDeadline(opportunity.closeDate)
+      : null;
+  const urgency =
+    opportunity.closeDate && opportunity.closeDate !== "closed"
+      ? getDeadlineUrgency(opportunity.closeDate)
+      : "safe";
 
   const urgencyStyles = {
     safe: "border-green-200 bg-green-50 text-green-700 dark:border-green-800 dark:bg-green-950 dark:text-green-300",
@@ -169,72 +122,25 @@ export default async function OpportunityPage({
           </Button>
         )}
 
-        {opportunity.shareImageUrl ? (
-          <div className="relative w-full mb-12 sm:mb-16 bg-white border border-gray-200 rounded-2xl">
-            <div className="relative w-full h-32 sm:h-48 md:h-64 rounded-2xl overflow-hidden">
-              <Image
-                src={opportunity.shareImageUrl}
-                alt={`${opportunity.name} banner`}
-                fill
-                className="object-cover"
-              />
-              <div className="absolute inset-0 bg-black/10" />
-            </div>
-
-            <div className="absolute -bottom-8 sm:-bottom-6 left-1/2 sm:left-8 transform -translate-x-1/2 sm:translate-x-0">
-              <div className="relative">
-                <Image
-                  src={opportunity.logoUrl}
-                  alt={`${opportunity.name} logo`}
-                  width={100}
-                  height={100}
-                  className="rounded-xl object-cover w-20 h-20 sm:w-[100px] sm:h-[100px] border-4 border-white shadow-2xl bg-white"
-                />
-              </div>
-            </div>
-
-            <div className="absolute top-4 left-4 sm:top-6 sm:left-8 z-20">
-              <Button
-                asChild
-                size="icon"
-                className="bg-white text-black hover:bg-gray-100 shadow-md rounded-xl w-10 h-10"
-              >
-                <Link href={backUrl}>
-                  <ArrowLeft className="h-4 w-4" />
-                </Link>
-              </Button>
-            </div>
-          </div>
-        ) : null}
+        <OpportunityImages opportunity={opportunity} backUrl={backUrl} />
 
         <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6 mb-8">
           <div className="flex flex-col sm:flex-row sm:items-start gap-4 sm:gap-6 flex-1">
-            {!opportunity.shareImageUrl && (
-              <div className="relative">
-                <Image
-                  src={opportunity.logoUrl}
-                  alt={`${opportunity.name} logo`}
-                  width={100}
-                  height={100}
-                  priority
-                  className="rounded-xl object-cover w-20 h-20 sm:w-[100px] sm:h-[100px] mx-auto sm:mx-0 flex-shrink-0 border-4 border-white shadow-lg"
-                />
-              </div>
-            )}
             <div className="flex-1 text-center sm:text-left">
               <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mb-2">
                 <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold">
                   {opportunity.name}
                 </h1>
-                {opportunity.closeDate &&
-                  getDaysUntilDeadline(opportunity.closeDate) < 0 && (
-                    <Badge
-                      className="text-sm mx-auto sm:mx-0 w-fit px-4 py-1 rounded-lg self-center"
-                      variant="destructive"
-                    >
-                      Closed
-                    </Badge>
-                  )}
+                {opportunity.closeDate === "closed" ||
+                (opportunity.closeDate &&
+                  getDaysUntilDeadline(opportunity.closeDate) < 0) ? (
+                  <Badge
+                    className="text-sm mx-auto sm:mx-0 w-fit px-4 py-1 rounded-lg self-center"
+                    variant="destructive"
+                  >
+                    Closed
+                  </Badge>
+                ) : null}
               </div>
               <p className="text-lg sm:text-xl text-muted-foreground mb-4">
                 {opportunity.organizer}
@@ -329,7 +235,16 @@ export default async function OpportunityPage({
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
-                {opportunity.closeDate ? (
+                {opportunity.closeDate === "closed" ? (
+                  <div
+                    className={`p-4 rounded-lg border text-center ${urgencyStyles.urgent}`}
+                  >
+                    <div className="text-2xl font-bold">Closed</div>
+                    <div className="text-sm opacity-75">
+                      This opportunity is no longer accepting applications
+                    </div>
+                  </div>
+                ) : opportunity.closeDate ? (
                   <div
                     className={`p-4 rounded-lg border text-center ${urgencyStyles[urgency]}`}
                   >
@@ -401,7 +316,7 @@ export default async function OpportunityPage({
               </Card>
             )}
 
-            {opportunity.closeDate && (
+            {opportunity.closeDate && opportunity.closeDate !== "closed" && (
               <Card>
                 <CardHeader>
                   <CardTitle>Add to Calendar</CardTitle>

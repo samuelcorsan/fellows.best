@@ -6,7 +6,7 @@ export interface Opportunity {
   description: string;
   fullDescription: string;
   openDate: string | null;
-  closeDate: string | null;
+  closeDate: string | null | "closed";
   tags: string[];
   category:
     | "accelerator"
@@ -791,7 +791,7 @@ export const fellowshipOpportunities: Opportunity[] = [
     description:
       "Deep tech accelerator investing $500,000 for ~15% equity:contentReference[oaicite:0]{index=0}.",
     fullDescription:
-      "Boost VC runs a 3-month accelerator program in Silicon Valley (its ‘Tribes’) focused on sci-fi and frontier technologies. It leads pre-seed rounds with $500,000 checks (typically ~15% equity):contentReference[oaicite:1]{index=1}. Founders get mentorship, weekly dinners and a Demo Day, with optional housing and office space provided in San Mateo during the program:contentReference[oaicite:2]{index=2}:contentReference[oaicite:3]{index=3}.",
+      "Boost VC runs a 3-month accelerator program in Silicon Valley (its 'Tribes') focused on sci-fi and frontier technologies. It leads pre-seed rounds with $500,000 checks (typically ~15% equity):contentReference[oaicite:1]{index=1}. Founders get mentorship, weekly dinners and a Demo Day, with optional housing and office space provided in San Mateo during the program:contentReference[oaicite:2]{index=2}:contentReference[oaicite:3]{index=3}.",
     openDate: null,
     closeDate: null,
     tags: [
@@ -960,7 +960,7 @@ export const fellowshipOpportunities: Opportunity[] = [
     fullDescription:
       "The Edge City Fellowship is a month-long in-person program empowering high-agency builders (under 25) to accelerate human flourishing across frontier tech, science & society. Fellows receive a full ride to one of Edge City's popup villages (e.g. Edge Esmeralda in Healdsburg, CA, May 24 – June 21 2025; Edge City LatAm in Argentina later in the year), access to a global mentorship network, and opportunities for follow-on funding via Long Journey VC and internal grant programs.",
     openDate: null,
-    closeDate: null,
+    closeDate: "closed",
     tags: [
       "housing-included",
       "mentorship",
@@ -974,6 +974,7 @@ export const fellowshipOpportunities: Opportunity[] = [
     eligibility:
       "Curious, kind, high-agency builders under 25 with a strong proof-of-work portfolio; no formal education requirements.",
     applyLink:
+      //TODO: look for 2026 opportunity on 2026-01-01
       "https://edgecity.notion.site/The-Edge-City-Fellowship-fc96ca95efca43d289388a45cd98c631",
     benefits: [
       "Full ride to a month-long popup village (housing & ticket)",
@@ -1541,7 +1542,7 @@ export const fellowshipOpportunities: Opportunity[] = [
     benefits: [
       "Seed-stage capital and follow-on funding (ability to scale checks substantially over time)",
       "Global operator network and hands-on support from investing & operations teams",
-      "Access to Hummingbird’s portfolio network and resources across multiple hubs",
+      "Access to Hummingbird's portfolio network and resources across multiple hubs",
       "Experienced investment team with founding partners and partners focused on founder support",
     ],
     organizer: "Hummingbird VC (Hummingbird Ventures)",
@@ -1625,7 +1626,7 @@ export const fellowshipOpportunities: Opportunity[] = [
     logoUrl: "https://cdn.fellows.best/logos/nea-logo.jpg",
     shareImageUrl: "https://cdn.fellows.best/banners/nea-banner.jpg",
     description:
-      "One of the world’s largest multi-stage venture capital firms, investing across technology and healthcare since 1977.",
+      "One of the world's largest multi-stage venture capital firms, investing across technology and healthcare since 1977.",
     fullDescription:
       "New Enterprise Associates (NEA) is a global, multi-stage venture capital firm founded in 1977. NEA backs companies from seed through growth and IPO, with a particular focus on technology and healthcare. The firm operates multiple offices (including Menlo Park, New York, London and Timonium/Chevy Chase), manages over $25 billion in assets, and has a long track record of supporting transformational companies across sectors and stages.",
     openDate: null,
@@ -1688,7 +1689,7 @@ export const fellowshipOpportunities: Opportunity[] = [
     benefits: [
       "Multi-stage capital (seed → growth) and follow-on capability",
       "Dedicated early and growth teams with deep operator/investor experience",
-      "Access to Spark’s portfolio network and board-level support",
+      "Access to Spark's portfolio network and board-level support",
       "Track record of investments in notable outcomes (e.g., Slack, Discord, Oculus, Cruise, Anthropic)",
     ],
     organizer: "Spark Capital",
@@ -1812,6 +1813,12 @@ export const fellowshipOpportunities: Opportunity[] = [
 
 export function getOpportunityById(id: string): Opportunity | undefined {
   return fellowshipOpportunities.find((opp) => opp.id === id);
+}
+
+export function getActiveOpportunities(): Opportunity[] {
+  return fellowshipOpportunities.filter(
+    (opportunity) => opportunity.closeDate !== "closed"
+  );
 }
 
 export function getDaysUntilDeadline(closeDate: string): number {

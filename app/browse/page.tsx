@@ -1,6 +1,13 @@
 "use client";
 
-import { useState, useMemo, useEffect, useRef, useCallback, Suspense } from "react";
+import {
+  useState,
+  useMemo,
+  useEffect,
+  useRef,
+  useCallback,
+  Suspense,
+} from "react";
 import { useSearchParams } from "next/navigation";
 import {
   ArrowUpDown,
@@ -22,7 +29,7 @@ import { SearchInput } from "@/components/global/search-input";
 import { FilterPanel, FilterOptions } from "@/components/filters/filter-panel";
 import { OpportunityCard } from "@/components/features/opportunity-card";
 import { Timeline, TimelineRef } from "@/components/features/timeline";
-import { fellowshipOpportunities, filterOpportunities } from "@/lib/data";
+import { getActiveOpportunities, filterOpportunities } from "@/lib/data";
 import { useDebounce } from "@/hooks/use-debounce";
 import { authClient } from "@/lib/auth-client";
 import { SignInDialog } from "@/components/global/sign-in-dialog";
@@ -68,7 +75,7 @@ function BrowsePageContent() {
     const currentDate = new Date();
     const searchQuery = debouncedSearchQuery.toLowerCase();
 
-    let filtered = fellowshipOpportunities.filter((opportunity) => {
+    let filtered = getActiveOpportunities().filter((opportunity) => {
       const isOpen =
         !opportunity.closeDate || new Date(opportunity.closeDate) > currentDate;
       if (!isOpen) return false;
@@ -326,9 +333,7 @@ function BrowsePageFallback() {
           Discover fellowships, grants, and more
         </p>
       </div>
-      <div className="text-center py-8">
-        Loading...
-      </div>
+      <div className="text-center py-8">Loading...</div>
     </div>
   );
 }

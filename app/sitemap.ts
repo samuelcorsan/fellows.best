@@ -1,5 +1,5 @@
 import { MetadataRoute } from "next";
-import { fellowshipOpportunities } from "@/lib/data";
+import { getActiveOpportunities } from "@/lib/data";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = "https://fellows.best";
@@ -26,7 +26,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ];
 
-  const opportunityRoutes: MetadataRoute.Sitemap = fellowshipOpportunities.map(
+  const opportunityRoutes: MetadataRoute.Sitemap = getActiveOpportunities().map(
     (opportunity) => ({
       url: `${baseUrl}/opportunity/${opportunity.id}`,
       lastModified: opportunity.openDate
