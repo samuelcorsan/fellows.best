@@ -21,7 +21,7 @@ export function OpportunityImages({
 }: OpportunityImagesProps) {
   return (
     <>
-      <div className="relative w-full mb-12 sm:mb-16 bg-white border border-gray-200 rounded-2xl">
+      <div className="relative w-full mb-12 sm:mb-16 bg-white rounded-2xl">
         <div className="relative w-full h-32 sm:h-48 md:h-64 rounded-2xl overflow-hidden">
           {opportunity.shareImageUrl ? (
             <Image

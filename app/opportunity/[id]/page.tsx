@@ -17,6 +17,7 @@ import { Separator } from "@/components/ui/separator";
 import { CalendarButton } from "@/components/global/calendar-button";
 import { ShareButton } from "@/components/global/share-button";
 import { OpportunityImages } from "@/components/features/opportunity-images";
+import { BadgeList } from "@/components/ui/badge-list";
 
 import {
   getOpportunityById,
@@ -149,15 +150,13 @@ export default async function OpportunityPage({
                 <Badge variant="outline" className="text-sm rounded-lg">
                   {opportunity.category}
                 </Badge>
-                {opportunity.tags.map((tag) => (
-                  <Badge
-                    key={tag}
-                    variant="secondary"
-                    className="text-sm rounded-lg"
-                  >
-                    {tag}
-                  </Badge>
-                ))}
+                <BadgeList
+                  badges={opportunity.tags}
+                  variant="secondary"
+                  maxVisible={4}
+                  className="justify-center sm:justify-start"
+                  badgeClassName="text-xs rounded-lg h-6 px-2.5 py-0.5"
+                />
               </div>
             </div>
           </div>

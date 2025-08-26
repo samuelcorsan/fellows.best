@@ -10,6 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Slider } from "@/components/ui/slider";
 import { authClient } from "@/lib/auth-client";
+import { SignInDialog } from "@/components/global/sign-in-dialog";
 
 export interface FilterOptions {
   categories: string[];
@@ -123,6 +124,7 @@ export function FilterPanel({
   onToggle,
 }: FilterPanelProps) {
   const [expandedRegions, setExpandedRegions] = useState<string[]>([]);
+  const [isSignInOpen, setIsSignInOpen] = useState(false);
   const { data: session } = authClient.useSession();
 
   const toggleRegionExpanded = (region: string) => {
@@ -225,9 +227,10 @@ export function FilterPanel({
               <h3 className="font-semibold mb-2">
                 Discover Your Perfect Fellowship
               </h3>
-              <p className="text-muted-foreground">
+              <p className="text-muted-foreground mb-4">
                 Sign in to unlock powerful filtering options
               </p>
+              <Button onClick={() => setIsSignInOpen(true)}>Get Started</Button>
             </div>
           </div>
         )}
@@ -423,6 +426,8 @@ export function FilterPanel({
           </CardContent>
         </Card>
       </div>
+
+      <SignInDialog isOpen={isSignInOpen} onOpenChange={setIsSignInOpen} />
     </>
   );
 }

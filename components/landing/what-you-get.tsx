@@ -1,3 +1,5 @@
+"use client";
+
 import { Search, Filter, Calendar, Bell, Users, Clock } from "lucide-react";
 
 export function WhatYouGetSection() {
@@ -199,8 +201,8 @@ export function WhatYouGetSection() {
               </div>
               <h3 className="text-xl mb-2">Personal Tracking</h3>
               <p className="text-xs text-muted-foreground leading-relaxed">
-                Save fellowships you've attended in your profile, ask alumni
-                for recommendations to join, and build your fellowship network.
+                Save fellowships you've attended in your profile, ask alumni for
+                recommendations to join, and build your fellowship network.
               </p>
             </div>
           </div>

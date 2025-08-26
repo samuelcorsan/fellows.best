@@ -6,6 +6,7 @@ import { Calendar, MapPin, ExternalLink } from "lucide-react";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { BadgeList } from "@/components/ui/badge-list";
 
 import {
   Opportunity,
@@ -111,6 +112,14 @@ export function OpportunityCard({
                   <Badge variant="secondary" className="text-xs rounded-lg">
                     {opportunity.category}
                   </Badge>
+                  <BadgeList
+                    badges={opportunity.tags}
+                    variant="secondary"
+                    maxVisible={2}
+                    className="text-xs"
+                    badgeClassName="text-xs rounded-lg h-6 px-2.5 py-0.5"
+                    simple={true}
+                  />
                 </div>
                 <div
                   className={`px-2 py-1 rounded-full text-xs font-medium border ${urgencyStyles[urgency]}`}
@@ -222,20 +231,14 @@ export function OpportunityCard({
                 <Badge variant="outline" className="rounded-lg text-xs">
                   {opportunity.category}
                 </Badge>
-                {opportunity.tags.slice(0, isCarousel ? 1 : 2).map((tag) => (
-                  <Badge
-                    key={tag}
-                    variant="secondary"
-                    className="text-xs rounded-lg"
-                  >
-                    {tag}
-                  </Badge>
-                ))}
-                {opportunity.tags.length > (isCarousel ? 1 : 2) && (
-                  <Badge variant="secondary" className="text-xs rounded-lg">
-                    +{opportunity.tags.length - (isCarousel ? 1 : 2)} more
-                  </Badge>
-                )}
+                <BadgeList
+                  badges={opportunity.tags}
+                  variant="secondary"
+                  maxVisible={isCarousel ? 1 : 2}
+                  className="text-xs"
+                  badgeClassName="text-xs rounded-lg h-6 px-2.5 py-0.5"
+                  simple={true}
+                />
               </div>
             </div>
           </div>

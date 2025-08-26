@@ -512,7 +512,7 @@ export const fellowshipOpportunities: Opportunity[] = [
     name: "Conviction Embed",
     logoUrl: "https://cdn.fellows.best/logos/conviction-embed-2025-logo.png",
     shareImageUrl:
-      "https://cdn.fellows.best/banners/openai-converge-2024-banner.jpg",
+      "https://cdn.fellows.best/banners/conviction-embed-banner.png",
     description:
       "Hands-on embedded partner program offering a $150K uncapped SAFE (MFN).",
     fullDescription:
@@ -788,10 +788,9 @@ export const fellowshipOpportunities: Opportunity[] = [
     name: "Boost VC",
     logoUrl: "https://cdn.fellows.best/logos/boost-vc-2025-logo.png",
     shareImageUrl: "https://cdn.fellows.best/banners/boost-vc-2025-banner.jpg",
-    description:
-      "Deep tech accelerator investing $500,000 for ~15% equity:contentReference[oaicite:0]{index=0}.",
+    description: "Deep tech accelerator investing $500,000 for ~15% equity.",
     fullDescription:
-      "Boost VC runs a 3-month accelerator program in Silicon Valley (its 'Tribes') focused on sci-fi and frontier technologies. It leads pre-seed rounds with $500,000 checks (typically ~15% equity):contentReference[oaicite:1]{index=1}. Founders get mentorship, weekly dinners and a Demo Day, with optional housing and office space provided in San Mateo during the program:contentReference[oaicite:2]{index=2}:contentReference[oaicite:3]{index=3}.",
+      "Boost VC runs a 3-month accelerator program in Silicon Valley (its 'Tribes') focused on sci-fi and frontier technologies. It leads pre-seed rounds with $500,000 checks (typically ~15% equity). Founders get mentorship, weekly dinners and a Demo Day, with optional housing and office space provided in San Mateo during the program.",
     openDate: null,
     closeDate: null,
     tags: [
@@ -805,7 +804,7 @@ export const fellowshipOpportunities: Opportunity[] = [
     region: "North America",
     country: "United States",
     eligibility:
-      "Early-stage sci-fi tech founders; full-time commitment required and readiness to relocate to the Bay Area:contentReference[oaicite:4]{index=4}:contentReference[oaicite:5]{index=5}.",
+      "Early-stage sci-fi tech founders; full-time commitment required and readiness to relocate to the Bay Area.",
     applyLink: "https://www.boost.vc",
     benefits: [
       "$500,000 seed investment (pre-seed)",
@@ -1773,8 +1772,9 @@ export const fellowshipOpportunities: Opportunity[] = [
   {
     id: "battery-ventures",
     name: "Battery Ventures",
-    logoUrl: "https://www.battery.com/favicon.ico",
-    shareImageUrl: "https://www.battery.com/share.jpg",
+    logoUrl: "https://cdn.worldvectorlogo.com/logos/battery-ventures.svg",
+    shareImageUrl:
+      "https://mms.businesswire.com/media/20200212005779/es/772923/5/Battery-AW-RGB-Core.jpg?download=1",
     description:
       "Global, technology-focused investment firm backing companies from early stage through buyouts.",
     fullDescription:
@@ -1808,6 +1808,88 @@ export const fellowshipOpportunities: Opportunity[] = [
       "Ability to lead follow-on and later-stage financings from the same firm",
     ],
     organizer: "Battery Ventures",
+  },
+  {
+    id: "odf",
+    name: "ODF",
+    logoUrl:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRyNH4CZWbd7o1Dxje24daV1nQ8o2CcE8GP6g&s",
+    shareImageUrl: "https://cdn.fellows.best/banners/odf-banner.png",
+    description:
+      "A one-week, in-person founder onboarding experience and year-round community that helps people start and scale venture-backable companies.",
+    fullDescription:
+      "ODF is an intense, one-week in-person onboarding sprint (hosted in San Francisco) plus a lifetime community of founders and builders. The program focuses on idea exploration, co-founder and team formation, early product/customer work, and fundraising preparation. ODF is non-dilutive and runs a pay-what-you-can model (suggested contribution) while providing >$800k in perks (AWS, Stripe Atlas, Mercury, Carta, etc.), workshops, and ongoing community support. ODF alumni have collectively raised over $2B and include companies such as Levels, Cal.com, Finch, and Loyal.",
+    openDate: null,
+    closeDate: null,
+    tags: [
+      "accelerator",
+      "founder-program",
+      "onboarding-week",
+      "in-person",
+      "san-francisco",
+      "non-dilutive",
+      "early-stage",
+      "pre-seed",
+      "community",
+      "co-founder-matching",
+    ],
+    category: "fellowship",
+    region: "Global (primarily US-focused)",
+    country: "United States",
+    eligibility:
+      "Founders (or soon-to-be founders) with a track record of shipping work who are 100% committed (or soon committing) to starting a company. Not a fit if you’ve already raised beyond pre-seed / reached product-market fit, are building a non-venture-scale business, have a primary customer base outside the US, or already have a full team.",
+    applyLink: "https://forms.joinodf.com/",
+    benefits: [
+      "One-week onboarding sprint in San Francisco with 80–100 high-momentum founders",
+      "Lifetime access to a 3,000+ member community and ongoing events",
+      ">$800k in partner perks (AWS, Stripe Atlas, Mercury, Carta, etc.)",
+      "Non-dilutive, pay-what-you-can model (suggested contribution covers venue & food)",
+      "Workshops, how-tos (fundraising, product, hiring), and active alumni network",
+    ],
+    organizer: "ODF (nZero Labs, Inc.)",
+  },
+  {
+    id: "general-catalyst",
+    name: "General Catalyst",
+    logoUrl:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQDDtB71dB4rW3erjCV6W7C7Atjq3A2_XIUrw&s",
+    shareImageUrl:
+      "https://i.cdn.newsbytesapp.com/images/l97220240620121144.jpeg",
+    description:
+      "Global investment and transformation firm partnering with founders from seed through growth to build resilient, AI-enabled companies.",
+    fullDescription:
+      "General Catalyst is a global investment and transformation company founded in 2000 that backs entrepreneurs across stages—from seed and early-stage to growth and later-stage—focusing on applied AI, health, fintech, industrials, climate & energy, and defense & intelligence. The firm combines capital with operational support and industry-specific expertise, and has expanded its global presence with offices across the U.S. and Europe.",
+    openDate: null,
+    closeDate: null,
+    tags: [
+      "venture-capital",
+      "multi-stage",
+      "seed",
+      "early-stage",
+      "growth",
+      "late-stage",
+      "applied-ai",
+      "health",
+      "fintech",
+      "industrial-tech",
+      "climate",
+      "defense",
+      "global",
+    ],
+    category: "grant",
+    region: "Global",
+    country: "United States",
+    eligibility:
+      "Founders and companies building transformative, technology-enabled businesses at seed through growth stages in areas such as applied AI, healthcare, fintech, industrials, climate & energy, defense & intelligence; General Catalyst evaluates companies across geographies and stages.",
+    applyLink: "https://www.generalcatalyst.com/contact",
+    benefits: [
+      "Multi-stage capital from seed through growth and later-stage financings",
+      "Large, global investment platform with specialist teams (AI, Health, Fintech, Industrials, Climate, Defense)",
+      "Dedicated portfolio support and transformation resources",
+      "Deep domain expertise and track record of supporting category-defining companies",
+      "Global offices and the ability to support cross-border growth",
+    ],
+    organizer: "General Catalyst",
   },
 ];
 
@@ -1848,7 +1930,6 @@ export function filterOpportunities(
   }
 ): Opportunity[] {
   return opportunities.filter((opp) => {
-    // If no filters are selected in a category, don't filter by that category
     const categoryMatch =
       filters.categories.length === 0 ||
       filters.categories.includes(opp.category);

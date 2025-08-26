@@ -1,5 +1,3 @@
-"use client";
-
 import { carousel1Data, carousel2Data } from "@/lib/carousel-data";
 import { HeroSection } from "@/components/landing/hero-section";
 import { CarouselSection } from "@/components/landing/carousel-section";
