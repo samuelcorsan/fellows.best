@@ -21,6 +21,10 @@ export interface Opportunity {
   applyLink: string;
   benefits: string[];
   organizer: string;
+  duration?: {
+    value: number;
+    unit: "weeks" | "months" | "years";
+  };
   funding?: {
     amount: number;
     currency: string;
@@ -64,6 +68,10 @@ export const fellowshipOpportunities: Opportunity[] = [
       "Follow-on support from Antler's global network",
     ],
     organizer: "Antler",
+    duration: {
+      value: 6,
+      unit: "weeks",
+    },
     funding: {
       amount: 225000,
       currency: "USD",
@@ -104,6 +112,10 @@ export const fellowshipOpportunities: Opportunity[] = [
       "$120K in partner perks (e.g. cloud credits, etc.)",
     ],
     organizer: "Techstars",
+    duration: {
+      value: 3,
+      unit: "months",
+    },
     funding: {
       amount: 220000,
       currency: "USD",
@@ -145,6 +157,10 @@ export const fellowshipOpportunities: Opportunity[] = [
       "Promotion to global markets (significant international cohort)",
     ],
     organizer: "500 Global",
+    duration: {
+      value: 4,
+      unit: "months",
+    },
     funding: {
       amount: 150000,
       currency: "USD",
@@ -184,6 +200,10 @@ export const fellowshipOpportunities: Opportunity[] = [
       "1:1 partner mentorship and networking",
     ],
     organizer: "South Park Commons",
+    duration: {
+      value: 1,
+      unit: "years",
+    },
     funding: {
       amount: 400000,
       currency: "USD",
@@ -217,6 +237,10 @@ export const fellowshipOpportunities: Opportunity[] = [
       "Access to private investor network for follow-on rounds",
     ],
     organizer: "HF0 (Residency)",
+    duration: {
+      value: 12,
+      unit: "weeks",
+    },
     funding: {
       amount: 1000000,
       currency: "USD",
@@ -250,6 +274,10 @@ export const fellowshipOpportunities: Opportunity[] = [
       "Dedicated mentorship and Demo Day",
     ],
     organizer: "NEO (Global)",
+    duration: {
+      value: 3,
+      unit: "months",
+    },
     funding: {
       amount: 600000,
       currency: "USD",
@@ -289,6 +317,10 @@ export const fellowshipOpportunities: Opportunity[] = [
       "Intensive mentoring by former startup founders at Pear VC",
     ],
     organizer: "Pear VC",
+    duration: {
+      value: 12,
+      unit: "weeks",
+    },
     funding: {
       amount: 1125000,
       currency: "USD",
@@ -362,6 +394,10 @@ export const fellowshipOpportunities: Opportunity[] = [
       "Personal coaching from experienced startup investors",
     ],
     organizer: "LAUNCH",
+    duration: {
+      value: 14,
+      unit: "weeks",
+    },
     funding: {
       amount: 125000,
       currency: "USD",
@@ -401,6 +437,10 @@ export const fellowshipOpportunities: Opportunity[] = [
       "Annual founder retreat and network access",
     ],
     organizer: "BTV Capital (The Mint)",
+    duration: {
+      value: 10,
+      unit: "weeks",
+    },
     funding: {
       amount: 500000,
       currency: "USD",
@@ -439,6 +479,10 @@ export const fellowshipOpportunities: Opportunity[] = [
       "Demo Day with major investors",
     ],
     organizer: "AngelPad",
+    duration: {
+      value: 10,
+      unit: "weeks",
+    },
     funding: {
       amount: 120000,
       currency: "USD",
@@ -479,6 +523,10 @@ export const fellowshipOpportunities: Opportunity[] = [
       "Demo Day exposure",
     ],
     organizer: "Betaworks",
+    duration: {
+      value: 12,
+      unit: "weeks",
+    },
   },
   {
     id: "greylock-edge-2025",
@@ -506,6 +554,10 @@ export const fellowshipOpportunities: Opportunity[] = [
       "Access to Greylock's network (AI experts, customers)",
     ],
     organizer: "Greylock",
+    duration: {
+      value: 3,
+      unit: "months",
+    },
   },
   {
     id: "conviction-embed-2025",
@@ -533,6 +585,10 @@ export const fellowshipOpportunities: Opportunity[] = [
       "Access to Conviction's network",
     ],
     organizer: "Conviction",
+    duration: {
+      value: 13,
+      unit: "weeks",
+    },
   },
   {
     id: "openai-converge-2024",
@@ -560,6 +616,10 @@ export const fellowshipOpportunities: Opportunity[] = [
       "Networking with AI startup peers and investors",
     ],
     organizer: "OpenAI Startup Fund",
+    duration: {
+      value: 6,
+      unit: "weeks",
+    },
   },
   {
     id: "startup-wise-guys-2025",
@@ -594,6 +654,10 @@ export const fellowshipOpportunities: Opportunity[] = [
       "Access to Startup Wise Guys investor network",
     ],
     organizer: "Startup Wise Guys",
+    duration: {
+      value: 5,
+      unit: "months",
+    },
   },
   {
     id: "apx-2025",
@@ -620,6 +684,10 @@ export const fellowshipOpportunities: Opportunity[] = [
       "Up to €500,000 total funding potential",
     ],
     organizer: "APX (Porsche & Axel Springer)",
+    duration: {
+      value: 14,
+      unit: "weeks",
+    },
   },
   {
     id: "seedcamp-2025",
@@ -782,6 +850,10 @@ export const fellowshipOpportunities: Opportunity[] = [
       "Network of 20,000+ Founder Institute alumni",
     ],
     organizer: "Founder Institute",
+    duration: {
+      value: 16,
+      unit: "weeks",
+    },
   },
   {
     id: "boost-vc-2025",
@@ -813,6 +885,10 @@ export const fellowshipOpportunities: Opportunity[] = [
       "Weekly dinners, mentorship, and Demo Day",
     ],
     organizer: "Boost VC",
+    duration: {
+      value: 3,
+      unit: "months",
+    },
     funding: {
       amount: 500000,
       currency: "USD",
@@ -1104,6 +1180,10 @@ export const fellowshipOpportunities: Opportunity[] = [
       "Access to YC network and Demo Day",
     ],
     organizer: "Y Combinator",
+    duration: {
+      value: 3,
+      unit: "months",
+    },
     funding: {
       amount: 500000,
       currency: "USD",
@@ -1139,6 +1219,10 @@ export const fellowshipOpportunities: Opportunity[] = [
       "Optional $10K investment at a $1B valuation cap",
     ],
     organizer: "Z Fellows",
+    duration: {
+      value: 1,
+      unit: "weeks",
+    },
     funding: {
       amount: 10000,
       currency: "USD",
@@ -1174,6 +1258,10 @@ export const fellowshipOpportunities: Opportunity[] = [
       "Community events, workshops, and demo day to pitch to investors",
     ],
     organizer: "Andreessen Horowitz (a16z Crypto)",
+    duration: {
+      value: 10,
+      unit: "weeks",
+    },
   },
   {
     id: "ewor-fellowship",
@@ -1204,6 +1292,10 @@ export const fellowshipOpportunities: Opportunity[] = [
       "Community of elite founders and ongoing network beyond the fellowship",
     ],
     organizer: "EWOR",
+    duration: {
+      value: 1,
+      unit: "years",
+    },
   },
   {
     id: "thiel-fellowship-2026",
@@ -1234,6 +1326,10 @@ export const fellowshipOpportunities: Opportunity[] = [
       "Prestige and visibility through association with the Thiel Foundation",
     ],
     organizer: "Thiel Foundation",
+    duration: {
+      value: 2,
+      unit: "years",
+    },
   },
   {
     id: "global-good-fund-fellowship-2026",
@@ -1272,6 +1368,10 @@ export const fellowshipOpportunities: Opportunity[] = [
       "Global cohort community and ongoing support",
     ],
     organizer: "Global Good Fund",
+    duration: {
+      value: 12,
+      unit: "months",
+    },
   },
   {
     id: "localhost-japan",
@@ -1308,6 +1408,10 @@ export const fellowshipOpportunities: Opportunity[] = [
       "Ongoing backing beyond initial support",
     ],
     organizer: "LocalHost Ventures",
+    duration: {
+      value: 6,
+      unit: "months",
+    },
   },
   {
     id: "localhost-india",
@@ -1344,6 +1448,10 @@ export const fellowshipOpportunities: Opportunity[] = [
       "Ongoing backing beyond initial support",
     ],
     organizer: "LocalHost Ventures",
+    duration: {
+      value: 6,
+      unit: "months",
+    },
   },
   {
     id: "localhost-romania",
@@ -1837,7 +1945,7 @@ export const fellowshipOpportunities: Opportunity[] = [
     region: "Global (primarily US-focused)",
     country: "United States",
     eligibility:
-      "Founders (or soon-to-be founders) with a track record of shipping work who are 100% committed (or soon committing) to starting a company. Not a fit if you’ve already raised beyond pre-seed / reached product-market fit, are building a non-venture-scale business, have a primary customer base outside the US, or already have a full team.",
+      "Founders (or soon-to-be founders) with a track record of shipping work who are 100% committed (or soon committing) to starting a company. Not a fit if you've already raised beyond pre-seed / reached product-market fit, are building a non-venture-scale business, have a primary customer base outside the US, or already have a full team.",
     applyLink: "https://forms.joinodf.com/",
     benefits: [
       "One-week onboarding sprint in San Francisco with 80–100 high-momentum founders",
@@ -1927,6 +2035,7 @@ export function filterOpportunities(
     tags: string[];
     fundingAmount?: { min: number; max: number };
     equityPercentage?: { min: number; max: number };
+    duration?: { min: number; max: number; unit: "weeks" | "months" | "years" };
   }
 ): Opportunity[] {
   return opportunities.filter((opp) => {
@@ -1965,8 +2074,63 @@ export function filterOpportunities(
         opp.funding.equityPercentage >= filters.equityPercentage.min &&
         opp.funding.equityPercentage <= filters.equityPercentage.max);
 
+    const isDefaultDurationRange =
+      !filters.duration ||
+      (filters.duration.min === 0 &&
+        ((filters.duration.unit === "weeks" && filters.duration.max === 52) ||
+          (filters.duration.unit === "months" && filters.duration.max === 12) ||
+          (filters.duration.unit === "years" && filters.duration.max === 5)));
+
+    const durationMatch =
+      isDefaultDurationRange ||
+      (opp.duration &&
+        filters.duration &&
+        (() => {
+          let oppValueInFilterUnit = opp.duration.value;
+          if (
+            opp.duration.unit === "weeks" &&
+            filters.duration.unit === "months"
+          ) {
+            oppValueInFilterUnit = opp.duration.value / 4.33;
+          } else if (
+            opp.duration.unit === "weeks" &&
+            filters.duration.unit === "years"
+          ) {
+            oppValueInFilterUnit = opp.duration.value / 52;
+          } else if (
+            opp.duration.unit === "months" &&
+            filters.duration.unit === "weeks"
+          ) {
+            oppValueInFilterUnit = opp.duration.value * 4.33;
+          } else if (
+            opp.duration.unit === "months" &&
+            filters.duration.unit === "years"
+          ) {
+            oppValueInFilterUnit = opp.duration.value / 12;
+          } else if (
+            opp.duration.unit === "years" &&
+            filters.duration.unit === "weeks"
+          ) {
+            oppValueInFilterUnit = opp.duration.value * 52;
+          } else if (
+            opp.duration.unit === "years" &&
+            filters.duration.unit === "months"
+          ) {
+            oppValueInFilterUnit = opp.duration.value * 12;
+          }
+          return (
+            oppValueInFilterUnit >= filters.duration.min &&
+            oppValueInFilterUnit <= filters.duration.max
+          );
+        })());
+
     return (
-      categoryMatch && regionMatch && tagMatch && fundingMatch && equityMatch
+      categoryMatch &&
+      regionMatch &&
+      tagMatch &&
+      fundingMatch &&
+      equityMatch &&
+      durationMatch
     );
   });
 }

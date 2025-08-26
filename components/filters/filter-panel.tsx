@@ -24,6 +24,11 @@ export interface FilterOptions {
     min: number;
     max: number;
   };
+  duration: {
+    min: number;
+    max: number;
+    unit: "weeks" | "months" | "years";
+  };
 }
 
 interface FilterPanelProps {
@@ -185,6 +190,7 @@ export function FilterPanel({
       tags: [],
       fundingAmount: { min: 0, max: 2000000 },
       equityPercentage: { min: 0, max: 20 },
+      duration: { min: 0, max: 52, unit: "weeks" },
     });
   };
 
@@ -196,6 +202,12 @@ export function FilterPanel({
       ? 1
       : 0) +
     (filters.equityPercentage.min > 0 || filters.equityPercentage.max < 20
+      ? 1
+      : 0) +
+    (filters.duration.min > 0 ||
+    (filters.duration.unit === "weeks" && filters.duration.max < 52) ||
+    (filters.duration.unit === "months" && filters.duration.max < 12) ||
+    (filters.duration.unit === "years" && filters.duration.max < 5)
       ? 1
       : 0);
 
@@ -292,6 +304,76 @@ export function FilterPanel({
                 <div className="flex items-center justify-between text-sm text-muted-foreground">
                   <span>{filters.equityPercentage.min}%</span>
                   <span>{filters.equityPercentage.max}%</span>
+                </div>
+              </div>
+            </div>
+
+            <Separator />
+
+            <div>
+              <Label className="text-sm font-medium mb-3 block">
+                Duration ({filters.duration.unit})
+              </Label>
+              <div className="space-y-4">
+                <Slider
+                  value={[filters.duration.min, filters.duration.max]}
+                  onValueChange={(values) =>
+                    onFiltersChange({
+                      ...filters,
+                      duration: {
+                        ...filters.duration,
+                        min: values[0],
+                        max: values[1],
+                      },
+                    })
+                  }
+                  max={
+                    filters.duration.unit === "weeks"
+                      ? 52
+                      : filters.duration.unit === "months"
+                        ? 12
+                        : 5
+                  }
+                  min={0}
+                  step={filters.duration.unit === "weeks" ? 1 : 0.5}
+                  className="w-full"
+                />
+                <div className="flex items-center justify-between text-sm text-muted-foreground">
+                  <span>
+                    {filters.duration.min} {filters.duration.unit}
+                  </span>
+                  <span>
+                    {filters.duration.max} {filters.duration.unit}
+                  </span>
+                </div>
+                <div className="grid grid-cols-3 gap-2">
+                  {(["weeks", "months", "years"] as const).map((unit) => (
+                    <Button
+                      key={unit}
+                      variant={
+                        filters.duration.unit === unit ? "default" : "outline"
+                      }
+                      size="sm"
+                      className="w-full"
+                      onClick={() =>
+                        onFiltersChange({
+                          ...filters,
+                          duration: {
+                            min: 0,
+                            max:
+                              unit === "weeks"
+                                ? 52
+                                : unit === "months"
+                                  ? 12
+                                  : 5,
+                            unit,
+                          },
+                        })
+                      }
+                    >
+                      {unit}
+                    </Button>
+                  ))}
                 </div>
               </div>
             </div>

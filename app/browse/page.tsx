@@ -45,6 +45,7 @@ function BrowsePageContent() {
     tags: [],
     fundingAmount: { min: 0, max: 2000000 },
     equityPercentage: { min: 0, max: 20 },
+    duration: { min: 0, max: 52, unit: "weeks" },
   });
 
   const handleFiltersChange = useCallback((newFilters: FilterOptions) => {
@@ -141,6 +142,7 @@ function BrowsePageContent() {
       tags: [],
       fundingAmount: { min: 0, max: 2000000 },
       equityPercentage: { min: 0, max: 20 },
+      duration: { min: 0, max: 52, unit: "weeks" },
     });
   }, [handleFiltersChange]);
 
