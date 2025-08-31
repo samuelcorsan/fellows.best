@@ -48,6 +48,15 @@ const nextConfig: NextConfig = {
           },
         ],
       },
+      {
+        source: "/:path*\\.(jpg|jpeg|png|gif|webp|svg|ico)",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=2592000",
+          },
+        ],
+      },
     ];
   },
 };
