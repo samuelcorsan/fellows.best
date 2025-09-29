@@ -15,13 +15,13 @@ export const metadata: Metadata = {
   metadataBase: new URL(
     process.env.NEXT_PUBLIC_APP_URL || "https://fellows.best"
   ),
-  title: "fellows.best - Discover Your Next Fellowship Opportunity",
+  title: "The biggest tech fellowship list",
   description:
     "Discover fellowships, grants, accelerators, and competitions. Track deadlines, get reminders, and never miss an opportunity.",
   keywords:
     "fellowships, grants, accelerators, hackathons, competitions, deadlines, opportunities",
   openGraph: {
-    title: "fellows.best - Discover Your Next Fellowship Opportunity",
+    title: "The biggest tech fellowship list",
     description:
       "Discover fellowships, grants, accelerators, and competitions. Track deadlines, get reminders, and never miss an opportunity.",
     url: "/",
@@ -32,13 +32,13 @@ export const metadata: Metadata = {
         url: "https://cdn.fellows.best/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "fellows.best - Discover Your Next Fellowship Opportunity",
+        alt: "fellows.best - The biggest tech fellowship list",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "fellows.best - Discover Your Next Fellowship Opportunity",
+    title: "fellows.best - The biggest tech fellowship list",
     description:
       "Discover fellowships, grants, accelerators, and competitions. Track deadlines, get reminders, and never miss an opportunity.",
     images: ["https://cdn.fellows.best/og-image.jpg"],
