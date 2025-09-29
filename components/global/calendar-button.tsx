@@ -1,6 +1,5 @@
 "use client";
 
-import { Calendar } from "lucide-react";
 import Image from "next/image";
 import { Opportunity } from "@/lib/data";
 import { cn } from "@/lib/utils";

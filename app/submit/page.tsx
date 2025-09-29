@@ -132,9 +132,15 @@ export default function SubmitPage() {
 
     setIsSubmittingUrl(true);
     try {
-      // TODO: Submit form to database
-      
-      toast.success("URL submitted successfully! We'll review it and add it to our database.");
+      const res = await fetch("/api/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ type: "url", url: urlOnly.trim() }),
+      });
+      if (!res.ok) throw new Error("Request failed");
+      toast.success(
+        "URL submitted successfully! We'll review it and add it to our database."
+      );
       setUrlOnly("");
     } catch (error) {
       console.error("URL Submission error:", error);
@@ -173,9 +179,18 @@ export default function SubmitPage() {
 
     if (formData.applyLink) {
       try {
-        new URL(formData.applyLink);
+        const parsed = new URL(formData.applyLink.trim());
+        const protocolOk =
+          parsed.protocol === "http:" || parsed.protocol === "https:";
+        const hostOk =
+          Boolean(parsed.hostname) && parsed.hostname.includes(".");
+        if (!protocolOk || !hostOk) {
+          newErrors.applyLink =
+            "Enter a valid http(s) URL (e.g., https://example.com)";
+        }
       } catch {
-        newErrors.applyLink = "Please enter a valid URL";
+        newErrors.applyLink =
+          "Enter a valid http(s) URL (e.g., https://example.com)";
       }
     }
 
@@ -191,10 +206,17 @@ export default function SubmitPage() {
     setIsSubmitting(true);
 
     try {
-      // TODO: Submit form to database
-      
-      toast.success("Opportunity submitted successfully! We'll review it and add it to our database.");
-      
+      const res = await fetch("/api/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+      if (!res.ok) throw new Error("Request failed");
+
+      toast.success(
+        "Opportunity submitted successfully! We'll review it and add it to our database."
+      );
+
       setFormData({
         name: "",
         organizer: "",
