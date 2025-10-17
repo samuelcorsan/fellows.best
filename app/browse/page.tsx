@@ -39,6 +39,7 @@ function BrowsePageContent() {
   const searchParams = useSearchParams();
   const [isSignInOpen, setIsSignInOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [showOpenOnly, setShowOpenOnly] = useState(true);
   const [filters, setFilters] = useState<FilterOptions>({
     categories: [],
     regions: [],
@@ -77,9 +78,11 @@ function BrowsePageContent() {
     const searchQuery = debouncedSearchQuery.toLowerCase();
 
     let filtered = getActiveOpportunities().filter((opportunity) => {
-      const isOpen =
-        !opportunity.closeDate || new Date(opportunity.closeDate) > currentDate;
-      if (!isOpen) return false;
+      if (showOpenOnly) {
+        const isOpen =
+          !opportunity.closeDate || new Date(opportunity.closeDate) > currentDate;
+        if (!isOpen) return false;
+      }
 
       if (searchQuery) {
         const matchesSearch =
@@ -116,7 +119,7 @@ function BrowsePageContent() {
     }
 
     return filtered;
-  }, [debouncedSearchQuery, filters, sortBy, session]);
+  }, [debouncedSearchQuery, filters, sortBy, session, showOpenOnly]);
 
   const handleItemClick = useCallback(
     (opportunity: any) => {
@@ -136,6 +139,7 @@ function BrowsePageContent() {
 
   const handleClearFilters = useCallback(() => {
     setSearchQuery("");
+    setShowOpenOnly(true);
     handleFiltersChange({
       categories: [],
       regions: [],
@@ -180,6 +184,18 @@ function BrowsePageContent() {
                 </div>
               </div>
               <div className="flex gap-2">
+                <Select
+                  value={showOpenOnly ? "open" : "all"}
+                  onValueChange={(value) => setShowOpenOnly(value === "open")}
+                >
+                  <SelectTrigger className="w-32">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="open">Open only</SelectItem>
+                    <SelectItem value="all">All</SelectItem>
+                  </SelectContent>
+                </Select>
                 <Select
                   value={sortBy}
                   onValueChange={(value: any) => setSortBy(value)}
