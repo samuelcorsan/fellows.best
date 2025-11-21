@@ -23,7 +23,6 @@ export function Footer() {
             </p>
           </div>
 
-
           <div>
             <h3 className="font-semibold mb-3 text-sm">Categories</h3>
             <ul className="space-y-1">
@@ -98,7 +97,7 @@ export function Footer() {
               </li>
               <li>
                 <Link
-                  href="https://github.com/samuelcorsan/ddfellows"
+                  href="https://github.com/samuelcorsan/fellows.best"
                   target="_blank"
                   className="text-muted-foreground hover:text-foreground transition-colors text-sm flex items-center"
                 >
@@ -112,8 +111,7 @@ export function Footer() {
                   target="_blank"
                   className="text-muted-foreground hover:text-foreground transition-colors text-sm flex items-center"
                 >
-                  <span className="text-xs mr-2 font-bold">𝕏</span>
-                  X (Twitter)
+                  <span className="text-xs mr-2 font-bold">𝕏</span>X (Twitter)
                 </Link>
               </li>
             </ul>
@@ -121,7 +119,9 @@ export function Footer() {
         </div>
 
         <div className="border-t mt-6 pt-4 text-left">
-          <p className="text-sm text-muted-foreground">&copy; 2025 fellows.best. All rights reserved.</p>
+          <p className="text-sm text-muted-foreground">
+            &copy; 2025 fellows.best. All rights reserved.
+          </p>
         </div>
       </div>
     </footer>
