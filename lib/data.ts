@@ -1999,6 +1999,54 @@ export const fellowshipOpportunities: Opportunity[] = [
     ],
     organizer: "General Catalyst",
   },
+  {
+    id: "exponential-fellowship-2025",
+    name: "The Exponential Fellowship",
+    logoUrl:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjD8sfxbGjxbSQycmHu7GD_pkbNYx6I-Fx-w&s",
+    shareImageUrl:
+      "https://wp.getmanfred.com/wp-content/uploads/2025/04/Group-188-_1_-1-1024x501.webp",
+    description:
+      "A paid fellowship that places exceptional young Spanish builders at fast-growing U.S. startups — visa, flights and insurance handled, with full U.S. pay and access to mentorship and community.",
+    fullDescription:
+      "The Exponential Fellowship (Go Exponential) fast-tracks early-career Spanish builders by placing selected Fellows at high-growth startups in Silicon Valley and New York. The program covers the J-1 visa process (and typically flights and insurance), provides paid placements with U.S.-level compensation, and includes exclusive events, mentorship, and access to an international founder/investor network. Fellowship length depends on visa category and experience (typically 12–18 months). Applicants should have strong ties to Spain and a demonstrated ability to build (technical backgrounds and product/engineering experience are recommended).",
+    openDate: null,
+    closeDate: null,
+    tags: [
+      "visa-covered",
+      "paid",
+      "mentorship",
+      "international",
+      "tech",
+      "in-person",
+      "early-career",
+      "12-18 months",
+    ],
+    category: "fellowship",
+    region: "North America",
+    country: "United States",
+    eligibility:
+      "Young builders with strong ties to Spain (born 1998 or later is a typical guideline), willing to relocate to the U.S. for a minimum of ~12 months; technical/product experience and a track record of building are strongly recommended.",
+    applyLink: "https://goexponential.org/apply",
+    benefits: [
+      "J-1 US visa assistance (visa, typically insurance and flights covered)",
+      "Paid U.S. placements — fellows typically earn U.S. salaries (reported range: $80,000–$150,000)",
+      "12–18 month placement (depending on experience / visa type)",
+      "Access to mentorship, founders, investors, and exclusive community events",
+      "Network of host startups in Silicon Valley and New York",
+    ],
+    organizer: "The Exponential (Go Exponential)",
+    duration: {
+      value: 12,
+      unit: "months",
+    },
+    funding: {
+      amount: 80000,
+      currency: "USD",
+      equityPercentage: 0,
+      fundingType: "equity-free",
+    },
+  },
 ];
 
 export function getOpportunityById(id: string): Opportunity | undefined {
