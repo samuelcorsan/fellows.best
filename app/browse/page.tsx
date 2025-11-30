@@ -29,7 +29,7 @@ import { SearchInput } from "@/components/global/search-input";
 import { FilterPanel, FilterOptions } from "@/components/filters/filter-panel";
 import { OpportunityCard } from "@/components/features/opportunity-card";
 import { Timeline, TimelineRef } from "@/components/features/timeline";
-import { getActiveOpportunities, filterOpportunities } from "@/lib/data";
+import { filterOpportunities, type Opportunity } from "@/lib/data";
 import { useDebounce } from "@/hooks/use-debounce";
 import { authClient } from "@/lib/auth-client";
 import { SignInDialog } from "@/components/global/sign-in-dialog";
@@ -40,6 +40,8 @@ function BrowsePageContent() {
   const [isSignInOpen, setIsSignInOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [showOpenOnly, setShowOpenOnly] = useState(true);
+  const [opportunities, setOpportunities] = useState<Opportunity[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [filters, setFilters] = useState<FilterOptions>({
     categories: [],
     regions: [],
@@ -73,14 +75,54 @@ function BrowsePageContent() {
   const timelineRef = useRef<TimelineRef>(null);
   const debouncedSearchQuery = useDebounce(searchQuery, 300);
 
+  useEffect(() => {
+    async function fetchOpportunities() {
+      try {
+        const response = await fetch("/api/opportunities");
+        if (response.ok) {
+          const data = await response.json();
+          if (Array.isArray(data)) {
+            const active = data.filter(
+              (opp: Opportunity) => opp.closeDate !== "closed"
+            );
+            console.log(
+              `Loaded ${active.length} active opportunities from API`
+            );
+            setOpportunities(active);
+          } else {
+            console.error("API returned non-array data:", data);
+            setOpportunities([]);
+          }
+        } else {
+          const errorData = await response.json().catch(() => ({}));
+          console.error(
+            "API error:",
+            response.status,
+            response.statusText,
+            errorData
+          );
+          setOpportunities([]);
+        }
+      } catch (error) {
+        console.error("Error fetching opportunities:", error);
+        setOpportunities([]);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    fetchOpportunities();
+  }, []);
+
   const filteredAndSortedOpportunities = useMemo(() => {
+    if (isLoading) return [];
     const currentDate = new Date();
     const searchQuery = debouncedSearchQuery.toLowerCase();
 
-    let filtered = getActiveOpportunities().filter((opportunity) => {
+    let filtered = opportunities.filter((opportunity) => {
       if (showOpenOnly) {
         const isOpen =
-          !opportunity.closeDate || new Date(opportunity.closeDate) > currentDate;
+          !opportunity.closeDate ||
+          new Date(opportunity.closeDate) > currentDate;
         if (!isOpen) return false;
       }
 
@@ -119,7 +161,15 @@ function BrowsePageContent() {
     }
 
     return filtered;
-  }, [debouncedSearchQuery, filters, sortBy, session, showOpenOnly]);
+  }, [
+    debouncedSearchQuery,
+    filters,
+    sortBy,
+    session,
+    showOpenOnly,
+    opportunities,
+    isLoading,
+  ]);
 
   const handleItemClick = useCallback(
     (opportunity: any) => {
@@ -259,7 +309,13 @@ function BrowsePageContent() {
               )}
             </div>
 
-            {filteredAndSortedOpportunities.length === 0 ? (
+            {isLoading ? (
+              <div className="text-center py-16">
+                <p className="text-muted-foreground">
+                  Loading opportunities...
+                </p>
+              </div>
+            ) : filteredAndSortedOpportunities.length === 0 ? (
               <div className="text-center py-16">
                 <div className="text-6xl mb-4">🔍</div>
                 <h3 className="text-xl font-semibold mb-2">

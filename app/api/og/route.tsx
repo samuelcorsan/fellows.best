@@ -36,7 +36,7 @@ export async function GET(req: NextRequest) {
       );
     }
 
-    const opportunity = getOpportunityById(id);
+    const opportunity = await getOpportunityById(id);
 
     if (!opportunity) {
       return new ImageResponse(

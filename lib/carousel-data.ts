@@ -1,8 +1,13 @@
 import { getActiveOpportunities } from "@/lib/data";
 import { distributeEvenly } from "@/lib/landing-utils";
 
-const distributed = distributeEvenly(getActiveOpportunities());
-const midpoint = Math.floor(distributed.length / 2);
+export async function getCarouselData() {
+  const opportunities = await getActiveOpportunities();
+  const distributed = distributeEvenly(opportunities);
+  const midpoint = Math.floor(distributed.length / 2);
 
-export const carousel1Data = distributed.slice(0, midpoint);
-export const carousel2Data = distributed.slice(midpoint);
+  return {
+    carousel1Data: distributed.slice(0, midpoint),
+    carousel2Data: distributed.slice(midpoint),
+  };
+}

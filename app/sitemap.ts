@@ -1,7 +1,7 @@
 import { MetadataRoute } from "next";
 import { getActiveOpportunities } from "@/lib/data";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = "https://fellows.best";
   const currentDate = new Date().toISOString().split("T")[0];
 
@@ -26,7 +26,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ];
 
-  const opportunityRoutes: MetadataRoute.Sitemap = getActiveOpportunities().map(
+  const activeOpportunities = await getActiveOpportunities();
+  const opportunityRoutes: MetadataRoute.Sitemap = activeOpportunities.map(
     (opportunity) => ({
       url: `${baseUrl}/opportunity/${opportunity.id}`,
       lastModified: opportunity.openDate

@@ -1,15 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Script from "next/script";
-import {
-  MapPin,
-  ExternalLink,
-  ArrowLeft,
-  Clock,
-  Users,
-  Award,
-  Play,
-} from "lucide-react";
+import { MapPin, ExternalLink, Clock, Users, Award, Play } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -75,7 +67,7 @@ export default async function OpportunityPage({
     }
   };
 
-  const { url: backUrl, text: backText } = getBackNavigation();
+  const { url: backUrl } = getBackNavigation();
 
   return (
     <>
@@ -114,15 +106,6 @@ export default async function OpportunityPage({
         }}
       />
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {!opportunity.shareImageUrl && (
-          <Button asChild variant="ghost" className="mb-6">
-            <Link href={backUrl}>
-              <ArrowLeft className="mr-2 h-4 w-4" />
-              {backText}
-            </Link>
-          </Button>
-        )}
-
         <OpportunityImages opportunity={opportunity} backUrl={backUrl} />
 
         <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6 mb-8">

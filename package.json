@@ -6,11 +6,13 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "upload-fellows": "tsx scripts/upload-fellows.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
     "@next/swc-wasm-nodejs": "13.5.1",
+    "@perplexity-ai/perplexity_ai": "^0.16.0",
     "@radix-ui/react-accordion": "^1.2.0",
     "@radix-ui/react-alert-dialog": "^1.1.1",
     "@radix-ui/react-aspect-ratio": "^1.1.0",
@@ -43,6 +45,7 @@
     "@types/react": "18.2.22",
     "@types/react-dom": "18.2.7",
     "@vercel/analytics": "^1.5.0",
+    "@vercel/blob": "^2.0.0",
     "@vercel/kv": "^1.0.1",
     "@vercel/og": "^0.6.8",
     "@vercel/speed-insights": "^1.2.0",
@@ -85,5 +88,9 @@
     "typescript": "5.2.2",
     "vaul": "^0.9.9",
     "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "chalk": "^5.6.2",
+    "tsx": "^4.20.6"
   }
 }
