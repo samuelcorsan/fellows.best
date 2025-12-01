@@ -1,5 +1,6 @@
 import { getCarouselData } from "@/lib/carousel-data";
 import { HeroSection } from "@/components/landing/hero-section";
+import { HowItWorksSection } from "@/components/landing/how-it-works-section";
 import { CarouselSection } from "@/components/landing/carousel-section";
 import { ViewAllOpportunitiesSection } from "@/components/landing/view-all-opportunities-section";
 import { WhatYouGetSection } from "@/components/landing/what-you-get";
@@ -17,6 +18,7 @@ export default async function Home() {
       />
       <ViewAllOpportunitiesSection />
       <WhatYouGetSection />
+      <HowItWorksSection />
       <ContributeSection />
     </div>
   );

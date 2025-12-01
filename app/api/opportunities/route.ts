@@ -4,11 +4,6 @@ import { loadFellowsFromBlob } from "@/lib/data";
 export async function GET() {
   try {
     const opportunities = await loadFellowsFromBlob();
-    console.log(`Loaded ${opportunities.length} opportunities`);
-
-    if (opportunities.length === 0) {
-      console.warn("No opportunities found in blob storage");
-    }
 
     return NextResponse.json(opportunities, {
       status: 200,
