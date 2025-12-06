@@ -1,29 +1,26 @@
 # fellows.best
 
-A centralized platform to discover, track, and receive reminders for fellowships, grants, accelerators, and competitions. fellows.best aggregates opportunities from diverse sources, visualizes upcoming deadlines, and helps you stay organized so you never miss an application window.
+A centralized platform to discover, track, and receive reminders for fellowships, grants, accelerators, and competitions.
 
-## Features
+## Overview
 
-- **Opportunity Aggregation**: Browse fellowships, grants, accelerators, hackathons, residencies, and funding opportunities in one place.
-- **Filtering & Search**: Filter listings by region, category, deadline status (rolling or fixed date), keywords, and tags (e.g., entrepreneurship, social impact, virtual).
-- **Timeline View**: Visualize upcoming deadlines over weeks and months to plan ahead.
-- **Reminders & Alerts**: Create an account to save interests and set up email (or in-app) reminders well ahead of deadlines.
-- **Opportunity Details**: Each listing shows title, description, deadline, region/scope, tags, and “Apply Now” link to the official site.
-- **Submit New Opportunity**: Community-driven submission form for organizers or users to add missing listings.
-- **User Dashboard**: Track saved opportunities, application progress, and receive tailored suggestions.
-- **Responsive Design**: Accessible on desktop and mobile.
-- **Admin Panel**: Moderate submissions, approve/edit listings, manage categories/tags.
+fellows.best aggregates opportunities from diverse sources, visualizes upcoming deadlines, and helps you stay organized so you never miss an application window.
+
+## Key Features
+
+- **Worldwide Scanning System**: AI-powered system automatically scans multiple countries worldwide to discover and aggregate currently open fellowships, accelerators, and startup programs
+- **Browse & Search**: Filter opportunities by region, category, deadline status, and tags
+- **Timeline View**: Visualize upcoming deadlines across weeks and months
+- **Community Submissions**: Submit new opportunities to help grow the database
 
 ## Tech Stack
 
-- **Frontend**: Next.js, React, TypeScript, TailwindCSS, shadcn/ui
-- **Backend**: Next.js API routes
-- **Database**: PostgreSQL for storing users, settings and more
+- **Frontend**: Next.js 15, React, TypeScript, TailwindCSS, shadcn/ui
+- **Backend**: Next.js
 - **Authentication**: Better Auth
 - **Deployment**: Vercel
 
-## Contact
+## Links
 
-- **Project Maintainer**: disamdev ([disam.dev](https://disam.dev))
-- **Repository**: [https://github.com/samuelcorsan/ddfellows](https://github.com/samuelcorsan/fellows.best)
-- **Website**: [https://fellows.best](https://fellows.best)
+- **Website**: [fellows.best](https://fellows.best)
+- **Maintainer**: [disam.dev](https://disam.dev)
