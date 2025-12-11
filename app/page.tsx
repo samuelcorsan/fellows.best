@@ -16,9 +16,9 @@ export default async function Home() {
         distributedCarousel1={carousel1Data}
         distributedCarousel2={carousel2Data}
       />
-      <ScrapingSection />
       <ViewAllOpportunitiesSection />
       <WhatYouGetSection />
+      <ScrapingSection />
       <ContributeSection />
     </div>
   );
