@@ -34,6 +34,7 @@ const countries = [
 ];
 
 const BLOB_KEY_LATEST = "fellows.json";
+const BLOB_KEY_FALLBACK = "original-fellows.json";
 const BLOB_PREFIX = "fellows_";
 
 function generateId(name: string): string {
@@ -92,6 +93,21 @@ async function loadExistingFellows(): Promise<any[]> {
       const latestBlob = await head(BLOB_KEY_LATEST);
       if (latestBlob) {
         const response = await fetch(latestBlob.url);
+        if (response.ok) {
+          const text = await response.text();
+          const parsed = JSON.parse(text);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            return parsed;
+          }
+        }
+      }
+    } catch (e) {}
+
+    // Try fallback to original-fellows.json
+    try {
+      const fallbackBlob = await head(BLOB_KEY_FALLBACK);
+      if (fallbackBlob) {
+        const response = await fetch(fallbackBlob.url);
         if (response.ok) {
           const text = await response.text();
           const parsed = JSON.parse(text);

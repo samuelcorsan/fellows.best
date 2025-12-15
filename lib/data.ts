@@ -1,6 +1,7 @@
 import { head, list } from "@vercel/blob";
 
 const BLOB_KEY_LATEST = "fellows.json";
+const BLOB_KEY_FALLBACK = "original-fellows.json";
 const BLOB_PREFIX = "fellows_";
 
 export interface Opportunity {
@@ -75,10 +76,45 @@ export async function loadFellowsFromBlob(): Promise<Opportunity[]> {
         "Error loading latest blob:",
         e instanceof Error ? e.message : String(e)
       );
-      // Latest file doesn't exist, try to find latest dated file
+      // Latest file doesn't exist, try fallback
     }
 
-    // If latest file doesn't exist, find the most recent dated file
+    // If latest file doesn't exist, try fallback to original-fellows.json
+    try {
+      const fallbackBlob = await head(BLOB_KEY_FALLBACK);
+      if (fallbackBlob) {
+        console.log(`Found fallback blob: ${fallbackBlob.url}`);
+        const response = await fetch(fallbackBlob.url);
+        if (response.ok) {
+          const text = await response.text();
+          const parsed = JSON.parse(text);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            console.log(
+              `Loaded ${parsed.length} opportunities from fallback blob`
+            );
+            return parsed;
+          } else {
+            console.warn(
+              "Fallback blob exists but contains no valid opportunities"
+            );
+          }
+        } else {
+          console.warn(
+            `Failed to fetch fallback blob: ${response.status} ${response.statusText}`
+          );
+        }
+      } else {
+        console.log("No fallback blob found, searching for dated files");
+      }
+    } catch (e) {
+      console.log(
+        "Error loading fallback blob:",
+        e instanceof Error ? e.message : String(e)
+      );
+      // Fallback file doesn't exist, try to find latest dated file
+    }
+
+    // If latest file and fallback don't exist, find the most recent dated file
     try {
       const { blobs } = await list({ prefix: BLOB_PREFIX });
       if (blobs && blobs.length > 0) {
