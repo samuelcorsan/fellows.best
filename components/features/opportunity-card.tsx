@@ -51,6 +51,7 @@ interface OpportunityCardProps {
   className?: string;
   isCarousel?: boolean;
   from?: string;
+  skipImageLoad?: boolean;
 }
 
 export function OpportunityCard({
@@ -59,6 +60,7 @@ export function OpportunityCard({
   className,
   isCarousel = false,
   from,
+  skipImageLoad = false,
 }: OpportunityCardProps) {
   const daysUntil = opportunity.closeDate
     ? getDaysUntilDeadline(opportunity.closeDate)
@@ -90,16 +92,21 @@ export function OpportunityCard({
       >
         <CardContent className="p-4 flex-grow">
           <div className="flex items-start space-x-3">
-            <Image
-              src={opportunity.logoUrl}
-              alt={`${opportunity.name} logo`}
-              width={40}
-              height={40}
-              className="rounded-lg object-cover"
-              loading="lazy"
-              placeholder="blur"
-              blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAoACgDASIAAhEBAxEB/8QAFwABAQEBAAAAAAAAAAAAAAAABgAHA//EACUQAAIBAwMEAgMBAAAAAAAAAAECAwAEEQUSITFBUWFxBhMiMpH/xAAXAQADAQAAAAAAAAAAAAAAAAABAgME/8QAHhEAAgICAwEBAAAAAAAAAAAAAAECEQMhEjFBUWH/2gAMAwEAAhEDEQA/AO5ooor0HFFFFFAFFFFABRRRQAUUUUAf/9k="
-            />
+            {skipImageLoad ? (
+              <div className="w-10 h-10 rounded-lg bg-muted flex-shrink-0" />
+            ) : (
+              <Image
+                src={opportunity.logoUrl}
+                alt={`${opportunity.name} logo`}
+                width={40}
+                height={40}
+                className="rounded-lg object-cover"
+                loading="lazy"
+                placeholder="blur"
+                sizes="40px"
+                blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAoACgDASIAAhEBAxEB/8QAFwABAQEBAAAAAAAAAAAAAAAABgAHA//EACUQAAIBAwMEAgMBAAAAAAAAAAECAwAEEQUSITFBUWFxBhMiMpH/xAAXAQADAQAAAAAAAAAAAAAAAAABAgME/8QAHhEAAgICAwEBAAAAAAAAAAAAAAECEQMhEjFBUWH/2gAMAwEAAhEDEQA/AO5ooor0HFFFFFAFFFFABRRRQAUUUUAf/9k="
+              />
+            )}
             <div className="flex-1 min-w-0">
               <h3 className="font-semibold text-sm truncate">
                 {opportunity.name}
@@ -169,16 +176,21 @@ export function OpportunityCard({
     >
       <CardContent className="p-4 sm:p-6 flex-grow flex flex-col">
         <div className="flex items-start space-x-3 sm:space-x-4 flex-grow">
-          <Image
-            src={opportunity.logoUrl}
-            alt={`${opportunity.name} logo`}
-            width={50}
-            height={50}
-            className="w-[50px] h-[50px] sm:w-[60px] sm:h-[60px] rounded-lg object-cover flex-shrink-0"
-            loading="lazy"
-            placeholder="blur"
-            blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAoACgDASIAAhEBAxEB/8QAFwABAQEBAAAAAAAAAAAAAAAABgAHA//EACUQAAIBAwMEAgMBAAAAAAAAAAECAwAEEQUSITFBUWFxBhMiMpH/xAAXAQADAQAAAAAAAAAAAAAAAAABAgME/8QAHhEAAgICAwEBAAAAAAAAAAAAAAECEQMhEjFBUWH/2gAMAwEAAhEDEQA/AO5ooor0HFFFFFAFFFFABRRRQAUUUUAf/9k="
-          />
+          {skipImageLoad ? (
+            <div className="w-[50px] h-[50px] sm:w-[60px] sm:h-[60px] rounded-lg bg-muted flex-shrink-0" />
+          ) : (
+            <Image
+              src={opportunity.logoUrl}
+              alt={`${opportunity.name} logo`}
+              width={50}
+              height={50}
+              className="w-[50px] h-[50px] sm:w-[60px] sm:h-[60px] rounded-lg object-cover flex-shrink-0"
+              loading="lazy"
+              placeholder="blur"
+              sizes="(max-width: 640px) 50px, 60px"
+              blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAoACgDASIAAhEBAxEB/8QAFwABAQEBAAAAAAAAAAAAAAAABgAHA//EACUQAAIBAwMEAgMBAAAAAAAAAAECAwAEEQUSITFBUWFxBhMiMpH/xAAXAQADAQAAAAAAAAAAAAAAAAABAgME/8QAHhEAAgICAwEBAAAAAAAAAAAAAAECEQMhEjFBUWH/2gAMAwEAAhEDEQA/AO5ooor0HFFFFFAFFFFABRRRQAUUUUAf/9k="
+            />
+          )}
           <div className="flex-1 min-w-0 flex flex-col h-full">
             <div className="flex items-start justify-between mb-2">
               <div className="flex-1 min-w-0">

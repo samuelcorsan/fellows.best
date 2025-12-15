@@ -173,6 +173,7 @@ export function CalendarButton({ opportunity }: CalendarButtonProps) {
                 width={option.name === "Yahoo" ? 64 : 48}
                 height={48}
                 priority
+                sizes="(max-width: 640px) 48px, 64px"
               />
             </div>
             <span

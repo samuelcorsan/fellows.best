@@ -30,6 +30,7 @@ export function OpportunityImages({
               fill
               className="object-cover"
               priority
+              sizes="100vw"
             />
             <div className="absolute inset-0 bg-black/10" />
             <div className="absolute -bottom-8 sm:-bottom-6 left-1/2 sm:left-8 transform -translate-x-1/2 sm:translate-x-0">
@@ -40,6 +41,7 @@ export function OpportunityImages({
                   width={80}
                   height={80}
                   className="rounded-xl object-cover w-16 h-16 sm:w-20 sm:h-20 border-4 border-white shadow-2xl bg-white"
+                  sizes="(max-width: 640px) 64px, 80px"
                 />
               </div>
             </div>
@@ -55,6 +57,7 @@ export function OpportunityImages({
                   height={120}
                   priority
                   className="rounded-2xl object-cover w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 border-4 border-white dark:border-slate-700 shadow-xl bg-white dark:bg-slate-800"
+                  sizes="(max-width: 640px) 96px, (max-width: 768px) 112px, 128px"
                 />
               </div>
               <div className="flex-1 text-center sm:text-left">

@@ -67,6 +67,7 @@ export function InfiniteCarousel({
               className="w-full"
               isCarousel
               from={from}
+              skipImageLoad={true}
               aria-hidden="true"
             />
           </div>
