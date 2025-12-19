@@ -32,13 +32,9 @@ export default async function OpportunityPage({
 }: OpportunityPageProps) {
   const { id } = await params;
   const resolvedSearchParams = await searchParams;
-  const baseUrl =
-    process.env.NEXT_PUBLIC_SITE_URL ||
-    (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000");
-
   let opportunity: Opportunity | null = null;
   try {
-    const response = await fetch(`${baseUrl}/api/opportunities?id=${id}`, {
+    const response = await fetch(`/api/opportunities?id=${id}`, {
       cache: "no-store",
     });
 

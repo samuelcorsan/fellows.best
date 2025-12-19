@@ -33,9 +33,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   let activeOpportunities: Opportunity[] = [];
 
   try {
-    const response = await fetch(`${baseUrl}/api/opportunities`, {
-      cache: "no-store",
-    });
+    const response = await fetch(`/api/opportunities`, { cache: "no-store" });
 
     if (response.ok) {
       activeOpportunities = ((await response.json()) as Opportunity[]).filter(

@@ -36,16 +36,11 @@ export async function GET(req: NextRequest) {
       );
     }
 
-    const baseUrl =
-      process.env.NEXT_PUBLIC_SITE_URL ||
-      (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000");
-
     let opportunity: Opportunity | undefined;
 
     try {
-      const response = await fetch(`${baseUrl}/api/opportunities?id=${id}`, {
-        cache: "no-store",
-      });
+      const apiUrl = new URL(`/api/opportunities?id=${id}`, req.url);
+      const response = await fetch(apiUrl, { cache: "no-store" });
 
       if (response.ok) {
         opportunity = (await response.json()) as Opportunity | undefined;

@@ -7,13 +7,10 @@ export async function generateMetadata({
   params: Promise<{ id: string }>;
 }): Promise<Metadata> {
   const { id } = await params;
-  const baseUrl =
-    process.env.NEXT_PUBLIC_SITE_URL ||
-    (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000");
   let opportunity: Opportunity | undefined;
 
   try {
-    const response = await fetch(`${baseUrl}/api/opportunities?id=${id}`, {
+    const response = await fetch(`/api/opportunities?id=${id}`, {
       cache: "no-store",
     });
 
