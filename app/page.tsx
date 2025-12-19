@@ -8,7 +8,8 @@ import { ContributeSection } from "@/components/landing/contribute-section";
 
 export default async function Home() {
   const { carousel1Data, carousel2Data } = await getCarouselData();
-
+  console.log(carousel1Data, carousel2Data);
+  
   return (
     <div className="space-y-8 py-12">
       <HeroSection />
