@@ -1,5 +1,5 @@
 import { distributeEvenly } from "@/lib/landing-utils";
-import { getActiveOpportunities } from "@/app/api/opportunities/route";
+import { getActiveOpportunities } from "@/lib/opportunities.server";
 
 export async function getCarouselData() {
   const opportunities = await getActiveOpportunities();

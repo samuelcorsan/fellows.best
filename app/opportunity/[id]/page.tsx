@@ -12,7 +12,7 @@ import { OpportunityImages } from "@/components/features/opportunity-images";
 import { BadgeList } from "@/components/ui/badge-list";
 
 import { getDaysUntilDeadline, getDeadlineUrgency } from "@/lib/data";
-import { getOpportunityById } from "@/app/api/opportunities/route";
+import { getOpportunityById } from "@/lib/opportunities.server";
 
 interface OpportunityPageProps {
   params: Promise<{

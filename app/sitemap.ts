@@ -1,12 +1,8 @@
 import { MetadataRoute } from "next";
-import { getActiveOpportunities } from "@/app/api/opportunities/route";
+import { getActiveOpportunities } from "@/lib/opportunities.server";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = process.env.NEXT_PUBLIC_APP_BASE_URL;
-  if (!baseUrl) {
-    throw new Error("NEXT_PUBLIC_APP_BASE_URL is not set");
-  }
-  
+  const baseUrl = "https://fellows.best";
   const currentDate = new Date().toISOString().split("T")[0];
 
   const staticRoutes: MetadataRoute.Sitemap = [

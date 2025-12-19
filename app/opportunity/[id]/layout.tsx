@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { getOpportunityById } from "@/app/api/opportunities/route";
+import { getOpportunityById } from "@/lib/opportunities.server";
 
 export async function generateMetadata({
   params,

@@ -1,6 +1,6 @@
 import { ImageResponse } from "@vercel/og";
 import { NextRequest } from "next/server";
-import { getOpportunityById } from "@/app/api/opportunities/route";
+import { getOpportunityById } from "@/lib/opportunities.server";
 
 export const runtime = "nodejs";
 
