@@ -10,7 +10,11 @@ export async function generateMetadata({
   let opportunity: Opportunity | undefined;
 
   try {
-    const response = await fetch(`/api/opportunities?id=${id}`, {
+    const apiUrl = new URL(
+      `/api/opportunities?id=${id}`,
+      `https://${process.env.NEXT_PUBLIC_APP_BASE_URL}`
+    );
+    const response = await fetch(apiUrl, {
       cache: "no-store",
     });
 

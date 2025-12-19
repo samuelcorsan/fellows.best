@@ -4,7 +4,8 @@ import type { Opportunity } from "@/lib/data";
 export async function getCarouselData() {
   let opportunities: Opportunity[] = [];
   try {
-    const response = await fetch(`/api/opportunities`, { cache: "no-store" });
+    const apiUrl = new URL("/api/opportunities", `https://${process.env.NEXT_PUBLIC_APP_BASE_URL}`);
+    const response = await fetch(apiUrl, { cache: "no-store" });
 
     if (response.ok) {
       opportunities = ((await response.json()) as Opportunity[]).filter(

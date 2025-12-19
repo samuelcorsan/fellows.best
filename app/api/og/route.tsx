@@ -39,7 +39,10 @@ export async function GET(req: NextRequest) {
     let opportunity: Opportunity | undefined;
 
     try {
-      const apiUrl = new URL(`/api/opportunities?id=${id}`, req.url);
+      const apiUrl = new URL(
+        `/api/opportunities?id=${id}`,
+        `https://${process.env.NEXT_PUBLIC_APP_BASE_URL}`
+      );
       const response = await fetch(apiUrl, { cache: "no-store" });
 
       if (response.ok) {
