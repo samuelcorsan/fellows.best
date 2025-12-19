@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { Suspense, useEffect, useMemo, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { toast } from "sonner";
 import {
@@ -76,7 +76,7 @@ function formatDateForInput(value: Opportunity["openDate"]) {
   return value.split("T")[0];
 }
 
-export default function AdminNewPage() {
+function AdminNewContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const editingId = searchParams.get("id");
@@ -499,5 +499,20 @@ export default function AdminNewPage() {
         </CardContent>
       </Card>
     </div>
+  );
+}
+
+export default function AdminNewPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex h-48 items-center justify-center text-muted-foreground gap-2">
+          <Loader2 className="h-5 w-5 animate-spin" />
+          Loading form...
+        </div>
+      }
+    >
+      <AdminNewContent />
+    </Suspense>
   );
 }
