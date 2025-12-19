@@ -48,7 +48,7 @@ function getClient(): Promise<MongoClient> {
 export async function getOpportunitiesCollection() {
   const client = await getClient();
   const db = dbName ? client.db(dbName) : client.db();
-  return db.collection<Document>(collectionName);
+  return db.collection<Document>(collectionName!);
 }
 
 function normalizeDate(
