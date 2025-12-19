@@ -1,4 +1,10 @@
-import { MongoClient, ObjectId, type Document } from "mongodb";
+import {
+  MongoClient,
+  ObjectId,
+  ServerApiVersion,
+  type Document,
+  type MongoClientOptions,
+} from "mongodb";
 import { NextResponse, type NextRequest } from "next/server";
 import type { Opportunity } from "@/lib/data";
 
@@ -14,7 +20,19 @@ let clientPromise: Promise<MongoClient> | null = null;
 
 function getClient(): Promise<MongoClient> {
   if (!clientPromise) {
-    const client = new MongoClient(uri!);
+    const mongoOptions: MongoClientOptions = {
+      // Enable TLS when requested; helps when the provider requires TLS.
+      tls: process.env.MONGODB_TLS === "true" ? true : undefined,
+      // Allow opting into insecure certs only if explicitly set (not recommended).
+      tlsAllowInvalidCertificates:
+        process.env.MONGODB_TLS_INSECURE === "true" ? true : undefined,
+      // Optional server API version pinning (e.g., "1" for Atlas/Serverless).
+      serverApi: process.env.MONGODB_SERVER_API
+        ? { version: process.env.MONGODB_SERVER_API as ServerApiVersion }
+        : undefined,
+    };
+
+    const client = new MongoClient(uri!, mongoOptions);
     clientPromise = client.connect();
   }
   return clientPromise;
