@@ -1,6 +1,6 @@
 import { ImageResponse } from "@vercel/og";
 import { NextRequest } from "next/server";
-import { getOpportunityById } from "@/lib/opportunities.server";
+import type { Opportunity } from "@/lib/data";
 
 export const runtime = "nodejs";
 
@@ -36,7 +36,39 @@ export async function GET(req: NextRequest) {
       );
     }
 
-    const opportunity = await getOpportunityById(id);
+    const baseUrl =
+      process.env.NEXT_PUBLIC_SITE_URL ||
+      (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000");
+    const response = await fetch(`${baseUrl}/api/opportunities?id=${id}`, {
+      cache: "no-store",
+    });
+
+    if (!response.ok) {
+      return new ImageResponse(
+        (
+          <div
+            style={{
+              background: "linear-gradient(to bottom right, #1F2937, #111827)",
+              width: "100%",
+              height: "100%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              color: "white",
+              fontSize: 48,
+            }}
+          >
+            Opportunity not found
+          </div>
+        ),
+        {
+          width: 1200,
+          height: 630,
+        }
+      );
+    }
+
+    const opportunity = (await response.json()) as Opportunity | undefined;
 
     if (!opportunity) {
       return new ImageResponse(

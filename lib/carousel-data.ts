@@ -1,8 +1,19 @@
 import { distributeEvenly } from "@/lib/landing-utils";
-import { getActiveOpportunities } from "@/lib/opportunities.server";
+import type { Opportunity } from "@/lib/data";
 
 export async function getCarouselData() {
-  const opportunities = await getActiveOpportunities();
+  const baseUrl =
+    process.env.NEXT_PUBLIC_SITE_URL ||
+    (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000");
+  const response = await fetch(`${baseUrl}/api/opportunities`, {
+    cache: "no-store",
+  });
+
+  const opportunities: Opportunity[] = response.ok
+    ? ((await response.json()) as Opportunity[]).filter(
+        (opp) => opp.closeDate !== "closed"
+      )
+    : [];
   const distributed = distributeEvenly(opportunities);
   const midpoint = Math.floor(distributed.length / 2);
 

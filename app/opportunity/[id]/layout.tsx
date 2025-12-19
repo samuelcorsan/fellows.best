@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { getOpportunityById } from "@/lib/opportunities.server";
+import type { Opportunity } from "@/lib/data";
 
 export async function generateMetadata({
   params,
@@ -7,7 +7,21 @@ export async function generateMetadata({
   params: Promise<{ id: string }>;
 }): Promise<Metadata> {
   const { id } = await params;
-  const opportunity = await getOpportunityById(id);
+  const baseUrl =
+    process.env.NEXT_PUBLIC_SITE_URL ||
+    (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000");
+  const response = await fetch(`${baseUrl}/api/opportunities?id=${id}`, {
+    cache: "no-store",
+  });
+
+  if (!response.ok) {
+    return {
+      title: "Opportunity Not Found - fellows.best",
+      description: "The requested opportunity could not be found.",
+    };
+  }
+
+  const opportunity = (await response.json()) as Opportunity | undefined;
 
   if (!opportunity) {
     return {

@@ -11,8 +11,11 @@ import { ShareButton } from "@/components/global/share-button";
 import { OpportunityImages } from "@/components/features/opportunity-images";
 import { BadgeList } from "@/components/ui/badge-list";
 
-import { getDaysUntilDeadline, getDeadlineUrgency } from "@/lib/data";
-import { getOpportunityById } from "@/lib/opportunities.server";
+import {
+  getDaysUntilDeadline,
+  getDeadlineUrgency,
+  type Opportunity,
+} from "@/lib/data";
 
 interface OpportunityPageProps {
   params: Promise<{
@@ -29,7 +32,18 @@ export default async function OpportunityPage({
 }: OpportunityPageProps) {
   const { id } = await params;
   const resolvedSearchParams = await searchParams;
-  const opportunity = await getOpportunityById(id);
+  const baseUrl =
+    process.env.NEXT_PUBLIC_SITE_URL ||
+    (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000");
+  const response = await fetch(`${baseUrl}/api/opportunities?id=${id}`, {
+    cache: "no-store",
+  });
+
+  if (!response.ok) {
+    notFound();
+  }
+
+  const opportunity = (await response.json()) as Opportunity;
 
   if (!opportunity) {
     notFound();

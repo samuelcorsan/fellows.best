@@ -1,8 +1,12 @@
 import { MetadataRoute } from "next";
-import { getActiveOpportunities } from "@/lib/opportunities.server";
+import type { Opportunity } from "@/lib/data";
+
+export const dynamic = "force-dynamic";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = "https://fellows.best";
+  const baseUrl =
+    process.env.NEXT_PUBLIC_SITE_URL ||
+    (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "https://fellows.best");
   const currentDate = new Date().toISOString().split("T")[0];
 
   const staticRoutes: MetadataRoute.Sitemap = [
@@ -26,7 +30,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ];
 
-  const activeOpportunities = await getActiveOpportunities();
+  const response = await fetch(`${baseUrl}/api/opportunities`, {
+    cache: "no-store",
+  });
+
+  const activeOpportunities: Opportunity[] = response.ok
+    ? ((await response.json()) as Opportunity[]).filter(
+        (opportunity) => opportunity.closeDate !== "closed"
+      )
+    : [];
   const opportunityRoutes: MetadataRoute.Sitemap = activeOpportunities.map(
     (opportunity) => ({
       url: `${baseUrl}/opportunity/${opportunity.id}`,
