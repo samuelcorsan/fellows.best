@@ -3,6 +3,13 @@ import type { Opportunity } from "@/lib/data";
 
 export const dynamic = "force-dynamic";
 
+function getBaseUrl() {
+  const raw = process.env.NEXT_PUBLIC_APP_BASE_URL;
+  if (raw?.startsWith("http://") || raw?.startsWith("https://")) return raw;
+  if (raw) return `https://${raw}`;
+  return "http://localhost:3000";
+}
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl =
     process.env.NEXT_PUBLIC_SITE_URL ||
@@ -35,7 +42,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   try {
     const apiUrl = new URL(
       "/api/opportunities",
-      `https://${process.env.NEXT_PUBLIC_APP_BASE_URL}`
+      getBaseUrl()
     );
     const response = await fetch(apiUrl, { cache: "no-store" });
 

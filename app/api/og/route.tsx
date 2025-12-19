@@ -6,6 +6,13 @@ export const runtime = "nodejs";
 
 export const fetchCache = "force-no-store";
 
+function getBaseUrl() {
+  const raw = process.env.NEXT_PUBLIC_APP_BASE_URL;
+  if (raw?.startsWith("http://") || raw?.startsWith("https://")) return raw;
+  if (raw) return `https://${raw}`;
+  return "http://localhost:3000";
+}
+
 export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
@@ -41,7 +48,7 @@ export async function GET(req: NextRequest) {
     try {
       const apiUrl = new URL(
         `/api/opportunities?id=${id}`,
-        `https://${process.env.NEXT_PUBLIC_APP_BASE_URL}`
+        getBaseUrl()
       );
       const response = await fetch(apiUrl, { cache: "no-store" });
 

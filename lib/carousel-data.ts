@@ -1,10 +1,17 @@
 import { distributeEvenly } from "@/lib/landing-utils";
 import type { Opportunity } from "@/lib/data";
 
+function getBaseUrl() {
+  const raw = process.env.NEXT_PUBLIC_APP_BASE_URL;
+  if (raw?.startsWith("http://") || raw?.startsWith("https://")) return raw;
+  if (raw) return `https://${raw}`;
+  return "http://localhost:3000";
+}
+
 export async function getCarouselData() {
   let opportunities: Opportunity[] = [];
   try {
-    const apiUrl = new URL("/api/opportunities", `https://${process.env.NEXT_PUBLIC_APP_BASE_URL}`);
+    const apiUrl = new URL("/api/opportunities", getBaseUrl());
     const response = await fetch(apiUrl, { cache: "no-store" });
 
     if (response.ok) {

@@ -17,6 +17,13 @@ import {
   type Opportunity,
 } from "@/lib/data";
 
+function getBaseUrl() {
+  const raw = process.env.NEXT_PUBLIC_APP_BASE_URL;
+  if (raw?.startsWith("http://") || raw?.startsWith("https://")) return raw;
+  if (raw) return `https://${raw}`;
+  return "http://localhost:3000";
+}
+
 interface OpportunityPageProps {
   params: Promise<{
     id: string;
@@ -36,7 +43,7 @@ export default async function OpportunityPage({
   try {
     const apiUrl = new URL(
       `/api/opportunities?id=${id}`,
-      `https://${process.env.NEXT_PUBLIC_APP_BASE_URL}`
+      getBaseUrl()
     );
     const response = await fetch(apiUrl, {
       cache: "no-store",
