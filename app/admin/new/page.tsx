@@ -86,6 +86,7 @@ function AdminNewContent() {
   const [bannerFile, setBannerFile] = useState<File | null>(null);
   const [loadingExisting, setLoadingExisting] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [jsonText, setJsonText] = useState("");
 
   const parsedTags = useMemo(
     () =>
@@ -143,35 +144,52 @@ function AdminNewContent() {
     loadExisting();
   }, [editingId]);
 
+  const loadJsonToForm = (data: Record<string, unknown>) => {
+    setForm({
+      name: String(data.name ?? ""),
+      organizer: String(data.organizer ?? ""),
+      description: String(data.description ?? ""),
+      fullDescription: String(data.fullDescription ?? data.description ?? ""),
+      openDate: formatDateForInput(data.openDate as string | null),
+      closeDate: formatDateForInput(data.closeDate as string | null),
+      category: (data.category as Opportunity["category"]) ?? "",
+      region: String(data.region ?? ""),
+      country: String(data.country ?? ""),
+      eligibility: String(data.eligibility ?? ""),
+      applyLink: String(data.applyLink ?? ""),
+      tags: Array.isArray(data.tags)
+        ? (data.tags as string[]).join(", ")
+        : "",
+      benefits: Array.isArray(data.benefits)
+        ? (data.benefits as string[]).join("\n")
+        : "",
+    });
+  };
+
   const handleJsonUpload = async (file: File) => {
     try {
       const text = await file.text();
       const data = JSON.parse(text) as Record<string, unknown>;
-      setForm({
-        name: String(data.name ?? ""),
-        organizer: String(data.organizer ?? ""),
-        description: String(data.description ?? ""),
-        fullDescription: String(
-          data.fullDescription ?? data.description ?? ""
-        ),
-        openDate: formatDateForInput(data.openDate as string | null),
-        closeDate: formatDateForInput(data.closeDate as string | null),
-        category: (data.category as Opportunity["category"]) ?? "",
-        region: String(data.region ?? ""),
-        country: String(data.country ?? ""),
-        eligibility: String(data.eligibility ?? ""),
-        applyLink: String(data.applyLink ?? ""),
-        tags: Array.isArray(data.tags)
-          ? (data.tags as string[]).join(", ")
-          : "",
-        benefits: Array.isArray(data.benefits)
-          ? (data.benefits as string[]).join("\n")
-          : "",
-      });
+      loadJsonToForm(data);
       toast.success("JSON loaded into form");
     } catch (error) {
       console.error(error);
       toast.error("Invalid JSON file");
+    }
+  };
+
+  const handleJsonPaste = () => {
+    if (!jsonText.trim()) {
+      toast.error("Paste JSON first");
+      return;
+    }
+    try {
+      const data = JSON.parse(jsonText) as Record<string, unknown>;
+      loadJsonToForm(data);
+      toast.success("JSON loaded into form");
+    } catch (error) {
+      console.error(error);
+      toast.error("Invalid JSON content");
     }
   };
 
@@ -267,16 +285,38 @@ function AdminNewContent() {
           <p className="text-sm text-muted-foreground">
             Provide a JSON file with opportunity fields to prefill the form.
           </p>
-          <Input
-            type="file"
-            accept="application/json"
-            onChange={(e) => {
-              const file = e.target.files?.[0];
-              if (file) {
-                handleJsonUpload(file);
-              }
-            }}
-          />
+          <div className="space-y-2">
+            <Label htmlFor="jsonPaste">Paste JSON</Label>
+            <Textarea
+              id="jsonPaste"
+              value={jsonText}
+              onChange={(e) => setJsonText(e.target.value)}
+              rows={6}
+              placeholder='{"name":"Example","organizer":"Org",...}'
+            />
+            <div className="flex gap-2">
+              <Button type="button" variant="secondary" onClick={handleJsonPaste}>
+                Load from paste
+              </Button>
+              <Button type="button" variant="ghost" onClick={() => setJsonText("")}>
+                Clear
+              </Button>
+            </div>
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="jsonFile">Or upload JSON file</Label>
+            <Input
+              id="jsonFile"
+              type="file"
+              accept="application/json"
+              onChange={(e) => {
+                const file = e.target.files?.[0];
+                if (file) {
+                  handleJsonUpload(file);
+                }
+              }}
+            />
+          </div>
         </CardContent>
       </Card>
 
