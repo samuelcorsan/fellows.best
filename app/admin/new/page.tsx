@@ -1,0 +1,503 @@
+"use client";
+
+import { useEffect, useMemo, useState } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
+import { toast } from "sonner";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Badge } from "@/components/ui/badge";
+import { Loader2, UploadCloud } from "lucide-react";
+import type { Opportunity } from "@/lib/data";
+
+type AdminOpportunity = Opportunity & {
+  mongoId?: string;
+  createdAt?: string;
+  updatedAt?: string;
+};
+
+type FormState = {
+  name: string;
+  organizer: string;
+  description: string;
+  fullDescription: string;
+  openDate: string;
+  closeDate: string;
+  category: Opportunity["category"] | "";
+  region: string;
+  country: string;
+  eligibility: string;
+  applyLink: string;
+  tags: string;
+  benefits: string;
+};
+
+const categories: Opportunity["category"][] = [
+  "fellowship",
+  "accelerator",
+  "grant",
+  "residency",
+  "competition",
+  "research",
+];
+
+const emptyForm: FormState = {
+  name: "",
+  organizer: "",
+  description: "",
+  fullDescription: "",
+  openDate: "",
+  closeDate: "",
+  category: "",
+  region: "",
+  country: "",
+  eligibility: "",
+  applyLink: "",
+  tags: "",
+  benefits: "",
+};
+
+function formatDateForInput(value: Opportunity["openDate"]) {
+  if (!value || value === "closed") return "";
+  return value.split("T")[0];
+}
+
+export default function AdminNewPage() {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const editingId = searchParams.get("id");
+
+  const [form, setForm] = useState<FormState>(emptyForm);
+  const [logoFile, setLogoFile] = useState<File | null>(null);
+  const [bannerFile, setBannerFile] = useState<File | null>(null);
+  const [loadingExisting, setLoadingExisting] = useState(false);
+  const [saving, setSaving] = useState(false);
+
+  const parsedTags = useMemo(
+    () =>
+      form.tags
+        .split(",")
+        .map((tag) => tag.trim())
+        .filter(Boolean),
+    [form.tags]
+  );
+
+  const parsedBenefits = useMemo(
+    () =>
+      form.benefits
+        .split("\n")
+        .map((benefit) => benefit.trim())
+        .filter(Boolean),
+    [form.benefits]
+  );
+
+  useEffect(() => {
+    const id = editingId;
+    if (!id) return;
+    const loadExisting = async () => {
+      setLoadingExisting(true);
+      try {
+        const res = await fetch(`/api/admin/opportunities?id=${encodeURIComponent(id)}`, {
+          cache: "no-store",
+        });
+        if (!res.ok) {
+          throw new Error("Failed to load opportunity");
+        }
+        const data = (await res.json()) as AdminOpportunity;
+        setForm({
+          name: data.name || "",
+          organizer: data.organizer || "",
+          description: data.description || "",
+          fullDescription: data.fullDescription || "",
+          openDate: formatDateForInput(data.openDate),
+          closeDate: formatDateForInput(data.closeDate),
+          category: data.category || "",
+          region: data.region || "",
+          country: data.country || "",
+          eligibility: data.eligibility || "",
+          applyLink: data.applyLink || "",
+          tags: data.tags?.join(", ") || "",
+          benefits: data.benefits?.join("\n") || "",
+        });
+      } catch (error) {
+        console.error(error);
+        toast.error("Could not load opportunity");
+      } finally {
+        setLoadingExisting(false);
+      }
+    };
+    loadExisting();
+  }, [editingId]);
+
+  const handleJsonUpload = async (file: File) => {
+    try {
+      const text = await file.text();
+      const data = JSON.parse(text) as Record<string, unknown>;
+      setForm({
+        name: String(data.name ?? ""),
+        organizer: String(data.organizer ?? ""),
+        description: String(data.description ?? ""),
+        fullDescription: String(
+          data.fullDescription ?? data.description ?? ""
+        ),
+        openDate: formatDateForInput(data.openDate as string | null),
+        closeDate: formatDateForInput(data.closeDate as string | null),
+        category: (data.category as Opportunity["category"]) ?? "",
+        region: String(data.region ?? ""),
+        country: String(data.country ?? ""),
+        eligibility: String(data.eligibility ?? ""),
+        applyLink: String(data.applyLink ?? ""),
+        tags: Array.isArray(data.tags)
+          ? (data.tags as string[]).join(", ")
+          : "",
+        benefits: Array.isArray(data.benefits)
+          ? (data.benefits as string[]).join("\n")
+          : "",
+      });
+      toast.success("JSON loaded into form");
+    } catch (error) {
+      console.error(error);
+      toast.error("Invalid JSON file");
+    }
+  };
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (!editingId && !logoFile) {
+      toast.error("Logo is required when creating a new opportunity");
+      return;
+    }
+
+    if (!form.name.trim()) {
+      toast.error("Name is required");
+      return;
+    }
+
+    if (!form.category) {
+      toast.error("Category is required");
+      return;
+    }
+
+    setSaving(true);
+
+    try {
+      const payload = {
+        ...form,
+        tags: parsedTags,
+        benefits: parsedBenefits,
+        id: editingId ?? undefined,
+      };
+
+      const formData = new FormData();
+      formData.append("payload", JSON.stringify(payload));
+      if (logoFile) formData.append("logo", logoFile);
+      if (bannerFile) formData.append("banner", bannerFile);
+
+      const endpoint = editingId
+        ? `/api/admin/opportunities/${editingId}`
+        : "/api/admin/opportunities";
+      const method = editingId ? "PUT" : "POST";
+
+      const response = await fetch(endpoint, {
+        method,
+        body: formData,
+      });
+
+      if (!response.ok) {
+        const errorBody = await response.json().catch(() => ({}));
+        throw new Error(errorBody.error || "Failed to save opportunity");
+      }
+
+      toast.success(editingId ? "Opportunity updated" : "Opportunity created");
+      router.push("/admin");
+    } catch (error) {
+      console.error(error);
+      toast.error(
+        error instanceof Error ? error.message : "Something went wrong"
+      );
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const submitLabel = editingId ? "Update opportunity" : "Create opportunity";
+
+  return (
+    <div className="container mx-auto px-4 py-10 space-y-6">
+      <div className="flex items-center justify-between gap-3">
+        <div className="flex items-center gap-3">
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() => router.push("/admin")}
+          >
+            Back to list
+          </Button>
+          <div>
+            <h1 className="text-3xl font-bold">
+              {editingId ? "Edit opportunity" : "Add opportunity"}
+            </h1>
+            <p className="text-muted-foreground">
+              Logo is mandatory. Banner is optional. Upload a JSON to auto-fill.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Upload JSON</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-3">
+          <p className="text-sm text-muted-foreground">
+            Provide a JSON file with opportunity fields to prefill the form.
+          </p>
+          <Input
+            type="file"
+            accept="application/json"
+            onChange={(e) => {
+              const file = e.target.files?.[0];
+              if (file) {
+                handleJsonUpload(file);
+              }
+            }}
+          />
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Opportunity details</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="name">Name *</Label>
+                <Input
+                  id="name"
+                  value={form.name}
+                  onChange={(e) => setForm({ ...form, name: e.target.value })}
+                  placeholder="e.g., YC Fellowship"
+                  required
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="organizer">Organizer *</Label>
+                <Input
+                  id="organizer"
+                  value={form.organizer}
+                  onChange={(e) =>
+                    setForm({ ...form, organizer: e.target.value })
+                  }
+                  placeholder="Organization running the program"
+                  required
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="category">Category *</Label>
+                <Select
+                  value={form.category}
+                  onValueChange={(value) =>
+                    setForm({ ...form, category: value as FormState["category"] })
+                  }
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Choose a category" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {categories.map((category) => (
+                      <SelectItem key={category} value={category}>
+                        {category}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="region">Region *</Label>
+                <Input
+                  id="region"
+                  value={form.region}
+                  onChange={(e) => setForm({ ...form, region: e.target.value })}
+                  placeholder="Global, US, Europe, LATAM..."
+                  required
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="openDate">Open date</Label>
+                <Input
+                  id="openDate"
+                  type="date"
+                  value={form.openDate}
+                  onChange={(e) =>
+                    setForm({ ...form, openDate: e.target.value })
+                  }
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="closeDate">Close date</Label>
+                <Input
+                  id="closeDate"
+                  type="date"
+                  value={form.closeDate}
+                  onChange={(e) =>
+                    setForm({ ...form, closeDate: e.target.value })
+                  }
+                />
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="description">Short description *</Label>
+              <Textarea
+                id="description"
+                value={form.description}
+                onChange={(e) =>
+                  setForm({ ...form, description: e.target.value })
+                }
+                placeholder="One or two sentences summarizing the opportunity"
+                rows={2}
+                required
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="fullDescription">Full description *</Label>
+              <Textarea
+                id="fullDescription"
+                value={form.fullDescription}
+                onChange={(e) =>
+                  setForm({ ...form, fullDescription: e.target.value })
+                }
+                placeholder="Everything applicants should know"
+                rows={4}
+                required
+              />
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="eligibility">Eligibility *</Label>
+                <Textarea
+                  id="eligibility"
+                  value={form.eligibility}
+                  onChange={(e) =>
+                    setForm({ ...form, eligibility: e.target.value })
+                  }
+                  placeholder="Who can apply?"
+                  rows={3}
+                  required
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="applyLink">Apply link *</Label>
+                <Input
+                  id="applyLink"
+                  type="url"
+                  value={form.applyLink}
+                  onChange={(e) =>
+                    setForm({ ...form, applyLink: e.target.value })
+                  }
+                  placeholder="https://example.com/apply"
+                  required
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="country">Country (optional)</Label>
+                <Input
+                  id="country"
+                  value={form.country}
+                  onChange={(e) => setForm({ ...form, country: e.target.value })}
+                  placeholder="United States, Remote, ..."
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="tags">Tags (comma separated)</Label>
+                <Input
+                  id="tags"
+                  value={form.tags}
+                  onChange={(e) => setForm({ ...form, tags: e.target.value })}
+                  placeholder="remote, equity-free, research"
+                />
+                <div className="flex flex-wrap gap-2 mt-1">
+                  {parsedTags.map((tag) => (
+                    <Badge key={tag} variant="secondary">
+                      {tag}
+                    </Badge>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="benefits">Benefits (one per line)</Label>
+              <Textarea
+                id="benefits"
+                value={form.benefits}
+                onChange={(e) =>
+                  setForm({ ...form, benefits: e.target.value })
+                }
+                placeholder="Stipend, mentorship, demo day..."
+                rows={3}
+              />
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label>Logo (required for new, keeps existing if empty)</Label>
+                <Input
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => setLogoFile(e.target.files?.[0] ?? null)}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label>Banner (optional)</Label>
+                <Input
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => setBannerFile(e.target.files?.[0] ?? null)}
+                />
+              </div>
+            </div>
+
+            <div className="flex items-center gap-3">
+              <Button type="submit" disabled={saving || loadingExisting}>
+                {(saving || loadingExisting) && (
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                )}
+                <UploadCloud className="mr-2 h-4 w-4" />
+                {submitLabel}
+              </Button>
+            </div>
+          </form>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
