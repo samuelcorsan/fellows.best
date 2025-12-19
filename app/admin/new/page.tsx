@@ -144,7 +144,25 @@ function AdminNewContent() {
     loadExisting();
   }, [editingId]);
 
-  const loadJsonToForm = (data: Record<string, unknown>) => {
+  const loadJsonToForm = (raw: Record<string, unknown>) => {
+    // Allow nested shapes like { opportunity: {...} } or { data: {...} }
+    const data =
+      (raw.opportunity as Record<string, unknown>) ||
+      (raw.data as Record<string, unknown>) ||
+      raw;
+
+    const normalizeTags = (value: unknown) => {
+      if (Array.isArray(value)) return (value as unknown[]).map(String).join(", ");
+      if (typeof value === "string") return value;
+      return "";
+    };
+
+    const normalizeBenefits = (value: unknown) => {
+      if (Array.isArray(value)) return (value as unknown[]).map(String).join("\n");
+      if (typeof value === "string") return value;
+      return "";
+    };
+
     setForm({
       name: String(data.name ?? ""),
       organizer: String(data.organizer ?? ""),
@@ -157,12 +175,8 @@ function AdminNewContent() {
       country: String(data.country ?? ""),
       eligibility: String(data.eligibility ?? ""),
       applyLink: String(data.applyLink ?? ""),
-      tags: Array.isArray(data.tags)
-        ? (data.tags as string[]).join(", ")
-        : "",
-      benefits: Array.isArray(data.benefits)
-        ? (data.benefits as string[]).join("\n")
-        : "",
+      tags: normalizeTags(data.tags),
+      benefits: normalizeBenefits(data.benefits),
     });
   };
 
