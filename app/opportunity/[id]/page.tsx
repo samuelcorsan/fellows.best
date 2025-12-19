@@ -11,11 +11,8 @@ import { ShareButton } from "@/components/global/share-button";
 import { OpportunityImages } from "@/components/features/opportunity-images";
 import { BadgeList } from "@/components/ui/badge-list";
 
-import {
-  getOpportunityById,
-  getDaysUntilDeadline,
-  getDeadlineUrgency,
-} from "@/lib/data";
+import { getDaysUntilDeadline, getDeadlineUrgency } from "@/lib/data";
+import { getOpportunityById } from "@/app/api/opportunities/route";
 
 interface OpportunityPageProps {
   params: Promise<{

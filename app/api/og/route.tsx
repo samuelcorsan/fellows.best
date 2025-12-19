@@ -1,8 +1,8 @@
 import { ImageResponse } from "@vercel/og";
-import { getOpportunityById } from "@/lib/data";
 import { NextRequest } from "next/server";
+import { getOpportunityById } from "@/app/api/opportunities/route";
 
-export const runtime = "edge";
+export const runtime = "nodejs";
 
 export const fetchCache = "force-no-store";
 
