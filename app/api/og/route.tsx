@@ -39,11 +39,22 @@ export async function GET(req: NextRequest) {
     const baseUrl =
       process.env.NEXT_PUBLIC_SITE_URL ||
       (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000");
-    const response = await fetch(`${baseUrl}/api/opportunities?id=${id}`, {
-      cache: "no-store",
-    });
 
-    if (!response.ok) {
+    let opportunity: Opportunity | undefined;
+
+    try {
+      const response = await fetch(`${baseUrl}/api/opportunities?id=${id}`, {
+        cache: "no-store",
+      });
+
+      if (response.ok) {
+        opportunity = (await response.json()) as Opportunity | undefined;
+      }
+    } catch (error) {
+      console.error("Error fetching opportunity for OG", error);
+    }
+
+    if (!opportunity) {
       return new ImageResponse(
         (
           <div
@@ -67,8 +78,6 @@ export async function GET(req: NextRequest) {
         }
       );
     }
-
-    const opportunity = (await response.json()) as Opportunity | undefined;
 
     if (!opportunity) {
       return new ImageResponse(

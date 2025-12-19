@@ -30,15 +30,21 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ];
 
-  const response = await fetch(`${baseUrl}/api/opportunities`, {
-    cache: "no-store",
-  });
+  let activeOpportunities: Opportunity[] = [];
 
-  const activeOpportunities: Opportunity[] = response.ok
-    ? ((await response.json()) as Opportunity[]).filter(
+  try {
+    const response = await fetch(`${baseUrl}/api/opportunities`, {
+      cache: "no-store",
+    });
+
+    if (response.ok) {
+      activeOpportunities = ((await response.json()) as Opportunity[]).filter(
         (opportunity) => opportunity.closeDate !== "closed"
-      )
-    : [];
+      );
+    }
+  } catch (error) {
+    console.error("Error fetching opportunities for sitemap", error);
+  }
   const opportunityRoutes: MetadataRoute.Sitemap = activeOpportunities.map(
     (opportunity) => ({
       url: `${baseUrl}/opportunity/${opportunity.id}`,

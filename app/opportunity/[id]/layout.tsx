@@ -10,18 +10,19 @@ export async function generateMetadata({
   const baseUrl =
     process.env.NEXT_PUBLIC_SITE_URL ||
     (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000");
-  const response = await fetch(`${baseUrl}/api/opportunities?id=${id}`, {
-    cache: "no-store",
-  });
+  let opportunity: Opportunity | undefined;
 
-  if (!response.ok) {
-    return {
-      title: "Opportunity Not Found - fellows.best",
-      description: "The requested opportunity could not be found.",
-    };
+  try {
+    const response = await fetch(`${baseUrl}/api/opportunities?id=${id}`, {
+      cache: "no-store",
+    });
+
+    if (response.ok) {
+      opportunity = (await response.json()) as Opportunity | undefined;
+    }
+  } catch (error) {
+    console.error("Error fetching opportunity metadata", error);
   }
-
-  const opportunity = (await response.json()) as Opportunity | undefined;
 
   if (!opportunity) {
     return {

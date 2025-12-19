@@ -35,15 +35,22 @@ export default async function OpportunityPage({
   const baseUrl =
     process.env.NEXT_PUBLIC_SITE_URL ||
     (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000");
-  const response = await fetch(`${baseUrl}/api/opportunities?id=${id}`, {
-    cache: "no-store",
-  });
 
-  if (!response.ok) {
+  let opportunity: Opportunity | null = null;
+  try {
+    const response = await fetch(`${baseUrl}/api/opportunities?id=${id}`, {
+      cache: "no-store",
+    });
+
+    if (!response.ok) {
+      notFound();
+    }
+
+    opportunity = (await response.json()) as Opportunity;
+  } catch (error) {
+    console.error("Error fetching opportunity page data", error);
     notFound();
   }
-
-  const opportunity = (await response.json()) as Opportunity;
 
   if (!opportunity) {
     notFound();
