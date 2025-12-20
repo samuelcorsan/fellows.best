@@ -23,7 +23,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { Input } from "@/components/ui/input";
-import { Loader2, Pencil, Plus, RefreshCw, Trash2 } from "lucide-react";
+import { Loader2, Pencil, Plus, RefreshCw, Trash2, ExternalLink } from "lucide-react";
 import type { Opportunity } from "@/lib/data";
 
 type AdminOpportunity = Opportunity & {
@@ -143,8 +143,17 @@ export default function AdminPage() {
               {opportunities.map((opportunity) => (
                 <Card
                   key={opportunity.id}
-                  className="hover:shadow-md transition-all duration-200 hover:-translate-y-1 flex flex-col"
+                  className="hover:shadow-md transition-all duration-200 hover:-translate-y-1 flex flex-col relative"
                 >
+                  <Link
+                    href={`/opportunity/${opportunity.id}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="absolute top-3 right-3 z-10 p-1.5 rounded-md hover:bg-muted transition-colors"
+                    title="View fellowship page"
+                  >
+                    <ExternalLink className="h-4 w-4 text-muted-foreground hover:text-foreground" />
+                  </Link>
                   <CardContent className="p-4 flex-1 flex flex-col">
                     <div className="flex items-start gap-3">
                       <div className="relative h-14 w-14 overflow-hidden rounded-lg bg-muted flex-shrink-0">
