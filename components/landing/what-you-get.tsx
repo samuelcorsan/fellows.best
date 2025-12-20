@@ -1,289 +1,307 @@
 "use client";
 
-import { Search, Filter, Calendar, Bell, Users, Clock } from "lucide-react";
+import { useRef, useEffect } from "react";
+import {
+  Search,
+  Filter,
+  Calendar,
+  Bell,
+  Users,
+  Clock,
+} from "lucide-react";
+
+const cards = [
+  {
+    icon: Search,
+    title: "Opportunity Aggregation",
+    subtitle: "Browse fellowships, grants, accelerators, hackathons, and funding opportunities from diverse sources all in one centralized platform.",
+    category: "Discovery",
+  },
+  {
+    icon: Filter,
+    title: "Advanced Search",
+    subtitle: "Filter opportunities by region, category, deadline status, keywords, and tags to find exactly what matches your interests and profile.",
+    category: "Filtering",
+  },
+  {
+    icon: Calendar,
+    title: "Deadline Visualization",
+    subtitle: "Visualize upcoming deadlines over weeks and months in an interactive timeline view to plan your applications strategically.",
+    category: "Timeline",
+  },
+  {
+    icon: Bell,
+    title: "Smart Alerts",
+    subtitle: "Save opportunity deadlines directly to your calendar and never miss an application window with integrated calendar exports.",
+    category: "Reminders",
+  },
+  {
+    icon: Users,
+    title: "Personal Tracking",
+    subtitle: "Save fellowships you've attended in your profile, ask alumni for recommendations to join, and build your fellowship network.",
+    category: "Dashboard",
+    badge: "Soon",
+  },
+  {
+    icon: Clock,
+    title: "Community Driven",
+    subtitle: "Submit new opportunities through our community-driven platform. Help others discover amazing fellowships and funding opportunities.",
+    category: "Community",
+  },
+];
+
+const cardStyles = `
+  #cards-container {
+    --bg-color: rgb(20, 20, 20);
+    --card-color: rgb(23, 23, 23);
+  }
+
+  #cards-container #cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    max-width: 1120px;
+    width: calc(100% - 20px);
+  }
+
+  #cards-container #cards:hover > .card::after {
+    opacity: 1;
+  }
+
+  #cards-container .card {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    height: 200px;
+    flex-direction: column;
+    position: relative;
+    width: 360px;
+  }
+
+  #cards-container .card:hover::before {
+    opacity: 1;
+  }
+
+  #cards-container .card::before,
+  #cards-container .card::after {
+    border-radius: inherit;
+    content: "";
+    height: 100%;
+    left: 0px;
+    opacity: 0;
+    position: absolute;
+    top: 0px;
+    transition: opacity 500ms;
+    width: 100%;
+  }
+
+  #cards-container .card::before {
+    background: radial-gradient(
+      800px circle at var(--mouse-x) var(--mouse-y),
+      rgba(255, 255, 255, 0.06),
+      transparent 40%
+    );
+    z-index: 3;
+  }
+
+  #cards-container .card::after {
+    background: radial-gradient(
+      600px circle at var(--mouse-x) var(--mouse-y),
+      rgba(255, 255, 255, 0.4),
+      transparent 40%
+    );
+    z-index: 1;
+  }
+
+  #cards-container .card > .card-content {
+    background-color: var(--card-color);
+    border-radius: inherit;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    inset: 1px;
+    padding: 32px;
+    position: absolute;
+    z-index: 2;
+    justify-content: center;
+    align-items: stretch;
+  }
+
+  #cards-container .card-info-wrapper {
+    align-items: flex-start;
+    display: flex;
+    flex-grow: 1;
+    justify-content: flex-start;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  #cards-container .card-info {
+    width: 100%;
+  }
+
+  #cards-container .card-info-title {
+    flex: 1;
+    width: 100%;
+  }
+
+  #cards-container .card-info-title .category-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  #cards-container .card-info-title .category-label > svg {
+    width: 20px;
+    height: 20px;
+    color: hsl(var(--primary));
+    flex-shrink: 0;
+  }
+
+  #cards-container .card-info-title .category-label > span:first-of-type {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: hsl(var(--primary));
+  }
+
+  #cards-container .card-info-title .category-label .ml-auto {
+    margin-left: auto;
+  }
+
+  #cards-container .card-info-title > h3 {
+    font-size: 1.25rem;
+    line-height: 1.3;
+    color: rgb(240, 240, 240);
+    font-family: "Rubik", sans-serif;
+    font-weight: 400;
+    margin: 0px;
+    margin-bottom: 8px;
+  }
+
+  #cards-container .card-info-title > h4 {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.75rem;
+    margin-top: 0px;
+    font-family: "Rubik", sans-serif;
+    font-weight: 400;
+    line-height: 1.5;
+  }
+
+  @media (max-width: 1200px) {
+    #cards-container #cards {
+      max-width: 1120px;
+      padding: 10px 0px;
+    }
+
+    #cards-container .card {
+      flex-shrink: 1;
+      width: calc(50% - 4px);
+    }
+  }
+
+  @media (max-width: 500px) {
+    #cards-container .card {
+      height: 160px;
+    }
+
+    #cards-container .card > .card-content {
+      padding: 12px;
+    }
+
+    #cards-container .card-info-title .category-label > svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    #cards-container .card-info-title > h3 {
+      font-size: 1em;
+    }
+
+    #cards-container .card-info-title > h4 {
+      font-size: 0.7em;
+    }
+  }
+
+  @media (max-width: 320px) {
+    #cards-container .card {
+      width: 100%;
+    }
+  }
+`;
 
 export function WhatYouGetSection() {
+  const cardsRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!cardsRef.current) return;
+
+      const cardElements = Array.from(
+        cardsRef.current.getElementsByClassName("card")
+      );
+      for (const card of cardElements) {
+        const rect = (card as HTMLElement).getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        (card as HTMLElement).style.setProperty("--mouse-x", `${x}px`);
+        (card as HTMLElement).style.setProperty("--mouse-y", `${y}px`);
+      }
+    };
+
+    const cardsElement = cardsRef.current;
+    if (cardsElement) {
+      cardsElement.addEventListener("mousemove", handleMouseMove);
+      return () => {
+        cardsElement.removeEventListener("mousemove", handleMouseMove);
+      };
+    }
+  }, []);
+
   return (
-    <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
-      <div className="text-center mb-16">
-        <h2 className="text-2xl md:text-3xl font-medium mb-4">What You Get</h2>
-        <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-          Everything you need to discover and track fellowship opportunities
-        </p>
-      </div>
-
-      <div className="max-w-6xl mx-auto mb-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 border border-border rounded-lg overflow-hidden relative">
-          <div
-            className="group relative px-8 py-10 bg-card hover:bg-card/80 transition-all duration-300 overflow-hidden border-r border-b border-border lg:border-b-0"
-            onMouseMove={(e) => {
-              const rect = e.currentTarget.getBoundingClientRect();
-              const x = e.clientX - rect.left;
-              const y = e.clientY - rect.top;
-              e.currentTarget.style.setProperty("--mouse-x", `${x}px`);
-              e.currentTarget.style.setProperty("--mouse-y", `${y}px`);
-            }}
-          >
-            <div
-              className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 hidden dark:block"
-              style={{
-                background: `radial-gradient(400px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), rgba(255,255,255,0.1), transparent 70%)`,
-              }}
-            />
-            <div
-              className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 dark:hidden"
-              style={{
-                background: `radial-gradient(400px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), rgba(0,0,0,0.05), transparent 70%)`,
-              }}
-            />
-            <div className="relative">
-              <div className="flex items-center mb-5">
-                <Search className="h-5 w-5 text-primary mr-3" />
-                <span className="text-sm font-medium text-primary">
-                  Discovery
-                </span>
-              </div>
-              <h3 className="text-xl mb-2">Opportunity Aggregation</h3>
-              <p className="text-xs text-muted-foreground leading-relaxed">
-                Browse fellowships, grants, accelerators, hackathons, and
-                funding opportunities from diverse sources all in one
-                centralized platform.
-              </p>
-            </div>
-          </div>
-
-          <div
-            className="group relative px-8 py-10 bg-card hover:bg-card/80 transition-all duration-300 overflow-hidden border-r border-b border-border md:border-r-0 lg:border-r lg:border-b-0"
-            onMouseMove={(e) => {
-              const rect = e.currentTarget.getBoundingClientRect();
-              const x = e.clientX - rect.left;
-              const y = e.clientY - rect.top;
-              e.currentTarget.style.setProperty("--mouse-x", `${x}px`);
-              e.currentTarget.style.setProperty("--mouse-y", `${y}px`);
-            }}
-          >
-            <div
-              className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 hidden dark:block"
-              style={{
-                background: `radial-gradient(400px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), rgba(255,255,255,0.1), transparent 70%)`,
-              }}
-            />
-            <div
-              className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 dark:hidden"
-              style={{
-                background: `radial-gradient(400px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), rgba(0,0,0,0.05), transparent 70%)`,
-              }}
-            />
-            <div className="relative">
-              <div className="flex items-center mb-5">
-                <Filter className="h-5 w-5 text-primary mr-3" />
-                <span className="text-sm font-medium text-primary">
-                  Filtering
-                </span>
-              </div>
-              <h3 className="text-xl mb-2">Advanced Search</h3>
-              <p className="text-xs text-muted-foreground leading-relaxed">
-                Filter opportunities by region, category, deadline status,
-                keywords, and tags to find exactly what matches your interests
-                and profile.
-              </p>
-            </div>
-          </div>
-
-          <div
-            className="group relative px-8 py-10 bg-card hover:bg-card/80 transition-all duration-300 overflow-hidden border-b border-border md:border-r lg:border-r-0 lg:border-b-0"
-            onMouseMove={(e) => {
-              const rect = e.currentTarget.getBoundingClientRect();
-              const x = e.clientX - rect.left;
-              const y = e.clientY - rect.top;
-              e.currentTarget.style.setProperty("--mouse-x", `${x}px`);
-              e.currentTarget.style.setProperty("--mouse-y", `${y}px`);
-            }}
-          >
-            <div
-              className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 hidden dark:block"
-              style={{
-                background: `radial-gradient(400px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), rgba(255,255,255,0.1), transparent 70%)`,
-              }}
-            />
-            <div
-              className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 dark:hidden"
-              style={{
-                background: `radial-gradient(400px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), rgba(0,0,0,0.05), transparent 70%)`,
-              }}
-            />
-            <div className="relative">
-              <div className="flex items-center mb-5">
-                <Calendar className="h-5 w-5 text-primary mr-3" />
-                <span className="text-sm font-medium text-primary">
-                  Timeline
-                </span>
-              </div>
-              <h3 className="text-xl mb-2">Deadline Visualization</h3>
-              <p className="text-xs text-muted-foreground leading-relaxed">
-                Visualize upcoming deadlines over weeks and months in an
-                interactive timeline view to plan your applications
-                strategically.
-              </p>
-            </div>
-          </div>
-
-          <div
-            className="group relative px-8 py-10 bg-card hover:bg-card/80 transition-all duration-300 overflow-hidden border-r border-b border-border md:border-b-0 lg:border-b"
-            onMouseMove={(e) => {
-              const rect = e.currentTarget.getBoundingClientRect();
-              const x = e.clientX - rect.left;
-              const y = e.clientY - rect.top;
-              e.currentTarget.style.setProperty("--mouse-x", `${x}px`);
-              e.currentTarget.style.setProperty("--mouse-y", `${y}px`);
-            }}
-          >
-            <div
-              className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 hidden dark:block"
-              style={{
-                background: `radial-gradient(400px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), rgba(255,255,255,0.1), transparent 70%)`,
-              }}
-            />
-            <div
-              className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 dark:hidden"
-              style={{
-                background: `radial-gradient(400px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), rgba(0,0,0,0.05), transparent 70%)`,
-              }}
-            />
-            <div className="relative">
-              <div className="flex items-center mb-5">
-                <Bell className="h-5 w-5 text-primary mr-3" />
-                <span className="text-sm font-medium text-primary">
-                  Reminders
-                </span>
-              </div>
-              <h3 className="text-xl mb-2">Smart Alerts</h3>
-              <p className="text-xs text-muted-foreground leading-relaxed">
-                Save opportunity deadlines directly to your calendar and never
-                miss an application window with integrated calendar exports.
-              </p>
-            </div>
-          </div>
-
-          <div
-            className="group relative px-8 py-10 bg-card hover:bg-card/80 transition-all duration-300 overflow-hidden border-r border-b border-border md:border-r-0 md:border-b-0 lg:border-r lg:border-b"
-            onMouseMove={(e) => {
-              const rect = e.currentTarget.getBoundingClientRect();
-              const x = e.clientX - rect.left;
-              const y = e.clientY - rect.top;
-              e.currentTarget.style.setProperty("--mouse-x", `${x}px`);
-              e.currentTarget.style.setProperty("--mouse-y", `${y}px`);
-            }}
-          >
-            <div
-              className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 hidden dark:block"
-              style={{
-                background: `radial-gradient(400px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), rgba(255,255,255,0.1), transparent 70%)`,
-              }}
-            />
-            <div
-              className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 dark:hidden"
-              style={{
-                background: `radial-gradient(400px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), rgba(0,0,0,0.05), transparent 70%)`,
-              }}
-            />
-            <div className="relative">
-              <div className="flex items-center justify-between mb-5">
-                <div className="flex items-center">
-                  <Users className="h-5 w-5 text-primary mr-3" />
-                  <span className="text-sm font-medium text-primary">
-                    Dashboard
-                  </span>
-                </div>
-                <span className="text-xs bg-muted text-muted-foreground px-3 py-1 rounded-lg font-medium">
-                  Soon
-                </span>
-              </div>
-              <h3 className="text-xl mb-2">Personal Tracking</h3>
-              <p className="text-xs text-muted-foreground leading-relaxed">
-                Save fellowships you've attended in your profile, ask alumni for
-                recommendations to join, and build your fellowship network.
-              </p>
-            </div>
-          </div>
-
-          <div
-            className="group relative px-8 py-10 bg-card hover:bg-card/80 transition-all duration-300 overflow-hidden"
-            onMouseMove={(e) => {
-              const rect = e.currentTarget.getBoundingClientRect();
-              const x = e.clientX - rect.left;
-              const y = e.clientY - rect.top;
-              e.currentTarget.style.setProperty("--mouse-x", `${x}px`);
-              e.currentTarget.style.setProperty("--mouse-y", `${y}px`);
-            }}
-          >
-            <div
-              className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 hidden dark:block"
-              style={{
-                background: `radial-gradient(400px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), rgba(255,255,255,0.1), transparent 70%)`,
-              }}
-            />
-            <div
-              className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 dark:hidden"
-              style={{
-                background: `radial-gradient(400px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), rgba(0,0,0,0.05), transparent 70%)`,
-              }}
-            />
-            <div className="relative">
-              <div className="flex items-center mb-5">
-                <Clock className="h-5 w-5 text-primary mr-3" />
-                <span className="text-sm font-medium text-primary">
-                  Community
-                </span>
-              </div>
-              <h3 className="text-xl mb-2">Community Driven</h3>
-              <p className="text-xs text-muted-foreground leading-relaxed">
-                Submit new opportunities through our community-driven platform.
-                Help others discover amazing fellowships and funding
-                opportunities.
-              </p>
-            </div>
-          </div>
-
-          <div
-            className="absolute hidden md:block w-full h-px bg-border"
-            style={{ left: "0", top: "50%", transform: "translateY(-50%)" }}
-          ></div>
-          <div
-            className="absolute hidden lg:block w-3 h-px bg-black dark:bg-white"
-            style={{
-              left: "33.333%",
-              top: "50%",
-              transform: "translate(-50%, -50%)",
-            }}
-          ></div>
-          <div
-            className="absolute hidden lg:block w-px h-3 bg-black dark:bg-white"
-            style={{
-              left: "33.333%",
-              top: "50%",
-              transform: "translate(-50%, -50%)",
-            }}
-          ></div>
-
-          <div
-            className="absolute hidden lg:block w-3 h-px bg-black dark:bg-white"
-            style={{
-              left: "66.666%",
-              top: "50%",
-              transform: "translate(-50%, -50%)",
-            }}
-          ></div>
-          <div
-            className="absolute hidden lg:block w-px h-3 bg-black dark:bg-white"
-            style={{
-              left: "66.666%",
-              top: "50%",
-              transform: "translate(-50%, -50%)",
-            }}
-          ></div>
+    <>
+      <style dangerouslySetInnerHTML={{ __html: cardStyles }} />
+      <section id="cards-container" className="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="text-center mb-16">
+          <h2 className="text-2xl md:text-3xl font-medium mb-4">What You Get</h2>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            Everything you need to discover and track fellowship opportunities
+          </p>
         </div>
-      </div>
-    </section>
+
+        <div className="flex justify-center">
+          <div id="cards" ref={cardsRef} className="flex flex-wrap gap-2">
+            {cards.map((card, index) => {
+              const Icon = card.icon;
+              return (
+                <div key={index} className="card">
+                  <div className="card-content">
+                    <div className="card-info-wrapper">
+                      <div className="card-info">
+                        <div className="card-info-title">
+                          <div className="category-label">
+                            <Icon />
+                            <span>{card.category}</span>
+                            {card.badge && (
+                              <span className="text-xs bg-muted text-muted-foreground px-2 py-0.5 rounded ml-auto">
+                                {card.badge}
+                              </span>
+                            )}
+                          </div>
+                          <h3>{card.title}</h3>
+                          <h4>{card.subtitle}</h4>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+    </>
   );
 }
