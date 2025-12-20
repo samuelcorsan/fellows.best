@@ -146,6 +146,7 @@ function AdminNewContent() {
 
   const loadJsonToForm = (raw: Record<string, unknown>) => {
     try {
+      console.log("loadJsonToForm called with:", raw);
       // Allow nested shapes like { opportunity: {...} } or { data: {...} }
       // Otherwise use the raw object directly
       let data: Record<string, unknown>;
@@ -156,6 +157,7 @@ function AdminNewContent() {
         raw.opportunity !== null
       ) {
         data = raw.opportunity as Record<string, unknown>;
+        console.log("Using nested 'opportunity' property");
       } else if (
         raw.data &&
         typeof raw.data === "object" &&
@@ -163,9 +165,12 @@ function AdminNewContent() {
         raw.data !== null
       ) {
         data = raw.data as Record<string, unknown>;
+        console.log("Using nested 'data' property");
       } else {
         data = raw;
+        console.log("Using raw object directly");
       }
+      console.log("Final data object:", data);
 
       const normalizeTags = (value: unknown) => {
         if (Array.isArray(value)) return (value as unknown[]).map(String).join(", ");
@@ -211,7 +216,7 @@ function AdminNewContent() {
         return "";
       };
 
-      setForm({
+      const newFormState = {
         name: String(data.name ?? ""),
         organizer: String(data.organizer ?? ""),
         description: String(data.description ?? ""),
@@ -225,7 +230,9 @@ function AdminNewContent() {
         applyLink: String(data.applyLink ?? ""),
         tags: normalizeTags(data.tags),
         benefits: normalizeBenefits(data.benefits),
-      });
+      };
+      console.log("Setting form state to:", newFormState);
+      setForm(newFormState);
     } catch (error) {
       console.error("Error loading JSON to form:", error);
       toast.error("Failed to load JSON data");
