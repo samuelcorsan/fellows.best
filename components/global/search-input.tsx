@@ -10,9 +10,10 @@ interface SearchInputProps {
   onChange: (value: string) => void;
   placeholder?: string;
   onSubmit?: () => void;
+  size?: "default" | "lg";
 }
 
-export function SearchInput({ value, onChange, placeholder = "Search for opportunities...", onSubmit }: SearchInputProps) {
+export function SearchInput({ value, onChange, placeholder = "Search for opportunities...", onSubmit, size = "default" }: SearchInputProps) {
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' && value.trim() && onSubmit) {
       e.preventDefault();
@@ -44,7 +45,7 @@ export function SearchInput({ value, onChange, placeholder = "Search for opportu
         value={value}
         onChange={(e) => onChange(e.target.value)}
         onKeyDown={handleKeyDown}
-        className="pl-10 pr-28"
+        className={`pl-10 pr-28 ${size === "lg" ? "h-12 text-base" : ""}`}
       />
       <div className="absolute right-2 top-1/2 transform -translate-y-1/2 flex items-center gap-1">
         {!value && (

@@ -38,6 +38,7 @@ export function HeroSection() {
                 onChange={setSearchQuery}
                 placeholder="Search for opportunities..."
                 onSubmit={handleSearch}
+                size="lg"
               />
             </div>
           </form>
