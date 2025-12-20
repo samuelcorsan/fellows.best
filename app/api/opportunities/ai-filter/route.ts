@@ -3,7 +3,7 @@ import Groq from "groq-sdk";
 import type { Opportunity } from "@/lib/data";
 
 const MAX_REQUEST_SIZE = 2 * 1024 * 1024;
-const GROQ_API_TIMEOUT = 5000;
+const GROQ_API_TIMEOUT = 8500;
 const MAX_OPPORTUNITIES = 1000;
 
 const TRUNCATE_LIMITS = {
