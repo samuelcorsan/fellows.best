@@ -145,65 +145,105 @@ function AdminNewContent() {
   }, [editingId]);
 
   const loadJsonToForm = (raw: Record<string, unknown>) => {
-    // Allow nested shapes like { opportunity: {...} } or { data: {...} }
-    // Otherwise use the raw object directly
-    let data: Record<string, unknown>;
-    if (
-      raw.opportunity &&
-      typeof raw.opportunity === "object" &&
-      !Array.isArray(raw.opportunity) &&
-      raw.opportunity !== null
-    ) {
-      data = raw.opportunity as Record<string, unknown>;
-    } else if (
-      raw.data &&
-      typeof raw.data === "object" &&
-      !Array.isArray(raw.data) &&
-      raw.data !== null
-    ) {
-      data = raw.data as Record<string, unknown>;
-    } else {
-      data = raw;
+    try {
+      // Allow nested shapes like { opportunity: {...} } or { data: {...} }
+      // Otherwise use the raw object directly
+      let data: Record<string, unknown>;
+      if (
+        raw.opportunity &&
+        typeof raw.opportunity === "object" &&
+        !Array.isArray(raw.opportunity) &&
+        raw.opportunity !== null
+      ) {
+        data = raw.opportunity as Record<string, unknown>;
+      } else if (
+        raw.data &&
+        typeof raw.data === "object" &&
+        !Array.isArray(raw.data) &&
+        raw.data !== null
+      ) {
+        data = raw.data as Record<string, unknown>;
+      } else {
+        data = raw;
+      }
+
+      const normalizeTags = (value: unknown) => {
+        if (Array.isArray(value)) return (value as unknown[]).map(String).join(", ");
+        if (typeof value === "string") return value;
+        return "";
+      };
+
+      const normalizeBenefits = (value: unknown) => {
+        if (Array.isArray(value)) return (value as unknown[]).map(String).join("\n");
+        if (typeof value === "string") return value;
+        return "";
+      };
+
+      const normalizeDate = (value: unknown): string => {
+        if (!value || value === "closed" || value === null) return "";
+        if (typeof value === "string") {
+          // Handle ISO date strings
+          if (value.includes("T")) {
+            return value.split("T")[0];
+          }
+          // Handle date-only strings (YYYY-MM-DD)
+          if (/^\d{4}-\d{2}-\d{2}$/.test(value)) {
+            return value;
+          }
+        }
+        return "";
+      };
+
+      const normalizeCategory = (value: unknown): Opportunity["category"] | "" => {
+        if (typeof value === "string") {
+          const validCategories: Opportunity["category"][] = [
+            "fellowship",
+            "accelerator",
+            "grant",
+            "residency",
+            "competition",
+            "research",
+          ];
+          if (validCategories.includes(value as Opportunity["category"])) {
+            return value as Opportunity["category"];
+          }
+        }
+        return "";
+      };
+
+      setForm({
+        name: String(data.name ?? ""),
+        organizer: String(data.organizer ?? ""),
+        description: String(data.description ?? ""),
+        fullDescription: String(data.fullDescription ?? data.description ?? ""),
+        openDate: normalizeDate(data.openDate),
+        closeDate: normalizeDate(data.closeDate),
+        category: normalizeCategory(data.category),
+        region: String(data.region ?? ""),
+        country: String(data.country ?? ""),
+        eligibility: String(data.eligibility ?? ""),
+        applyLink: String(data.applyLink ?? ""),
+        tags: normalizeTags(data.tags),
+        benefits: normalizeBenefits(data.benefits),
+      });
+    } catch (error) {
+      console.error("Error loading JSON to form:", error);
+      toast.error("Failed to load JSON data");
+      throw error;
     }
-
-    const normalizeTags = (value: unknown) => {
-      if (Array.isArray(value)) return (value as unknown[]).map(String).join(", ");
-      if (typeof value === "string") return value;
-      return "";
-    };
-
-    const normalizeBenefits = (value: unknown) => {
-      if (Array.isArray(value)) return (value as unknown[]).map(String).join("\n");
-      if (typeof value === "string") return value;
-      return "";
-    };
-
-    setForm({
-      name: String(data.name ?? ""),
-      organizer: String(data.organizer ?? ""),
-      description: String(data.description ?? ""),
-      fullDescription: String(data.fullDescription ?? data.description ?? ""),
-      openDate: formatDateForInput((data.openDate as string | null) ?? null),
-      closeDate: formatDateForInput((data.closeDate as string | null) ?? null),
-      category: (data.category as Opportunity["category"]) ?? "",
-      region: String(data.region ?? ""),
-      country: String(data.country ?? ""),
-      eligibility: String(data.eligibility ?? ""),
-      applyLink: String(data.applyLink ?? ""),
-      tags: normalizeTags(data.tags),
-      benefits: normalizeBenefits(data.benefits),
-    });
   };
 
   const handleJsonUpload = async (file: File) => {
     try {
       const text = await file.text();
+      console.log("Parsing JSON from file:", text.substring(0, 200));
       const data = JSON.parse(text) as Record<string, unknown>;
+      console.log("Parsed JSON data:", data);
       loadJsonToForm(data);
       toast.success("JSON loaded into form");
     } catch (error) {
-      console.error(error);
-      toast.error("Invalid JSON file");
+      console.error("Error parsing JSON file:", error);
+      toast.error(`Invalid JSON file: ${error instanceof Error ? error.message : "Unknown error"}`);
     }
   };
 
@@ -213,12 +253,15 @@ function AdminNewContent() {
       return;
     }
     try {
+      console.log("Parsing JSON from paste:", jsonText.substring(0, 200));
       const data = JSON.parse(jsonText) as Record<string, unknown>;
+      console.log("Parsed JSON data:", data);
       loadJsonToForm(data);
+      setJsonText(""); // Clear the textarea after successful load
       toast.success("JSON loaded into form");
     } catch (error) {
-      console.error(error);
-      toast.error("Invalid JSON content");
+      console.error("Error parsing JSON paste:", error);
+      toast.error(`Invalid JSON content: ${error instanceof Error ? error.message : "Unknown error"}`);
     }
   };
 
