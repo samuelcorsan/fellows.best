@@ -8,7 +8,6 @@ export function ScrapingSection() {
     <section className="container mx-auto px-4 sm:px-6 lg:px-8 py-24 overflow-hidden">
       <div className="flex flex-col lg:flex-row items-center gap-16">
         
-        {/* Text Content */}
         <div className="flex-1 space-y-6">
           <div className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-primary text-primary-foreground hover:bg-primary/80">
             Automated Discovery
@@ -44,11 +43,9 @@ export function ScrapingSection() {
           </div>
         </div>
 
-        {/* Animation Container */}
         <div className="flex-1 w-full max-w-lg relative">
           <div className="relative aspect-square md:aspect-[4/3] bg-muted/30 rounded-2xl border border-border overflow-hidden">
             
-            {/* Background Grid Pattern */}
             <div className="absolute inset-0" 
               style={{
                 backgroundImage: `radial-gradient(circle at 1px 1px, var(--border) 1px, transparent 0)`,
@@ -57,7 +54,6 @@ export function ScrapingSection() {
               }}
             />
 
-            {/* Scanning Line */}
             <motion.div
               className="absolute left-0 right-0 h-[2px] bg-primary z-20 shadow-[0_0_20px_rgba(var(--primary),0.5)]"
               animate={{
@@ -71,7 +67,6 @@ export function ScrapingSection() {
               }}
             />
 
-            {/* Website Items Column */}
             <div 
               className="absolute left-8 top-8 bottom-8 w-48 flex flex-col gap-4 overflow-hidden"
               style={{
@@ -109,7 +104,6 @@ export function ScrapingSection() {
               ))}
             </div>
 
-            {/* Extracted Opportunity Card */}
             <div className="absolute right-8 top-1/2 -translate-y-1/2 w-48">
               <motion.div
                 className="bg-card border border-primary/20 rounded-xl p-4 shadow-xl z-10"
@@ -142,7 +136,6 @@ export function ScrapingSection() {
                 </div>
               </motion.div>
 
-              {/* Connecting Line (Beam) */}
               <motion.div
                 className="absolute right-full top-1/2 w-16 h-[2px] bg-primary origin-right"
                 initial={{ scaleX: 0, opacity: 0 }}
@@ -159,7 +152,6 @@ export function ScrapingSection() {
               />
             </div>
 
-            {/* Success Counter/Badge */}
             <motion.div 
               className="absolute bottom-4 right-4 bg-background/80 backdrop-blur border border-border rounded-full px-3 py-1 text-xs font-mono flex items-center gap-2"
               animate={{
