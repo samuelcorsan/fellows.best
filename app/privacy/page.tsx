@@ -64,6 +64,16 @@ export default function PrivacyPage() {
             <li>
               <strong>Better Auth:</strong> For secure authentication services.
             </li>
+            <li>
+              <strong>MongoDB:</strong> For fellowship storage and data
+              management. Fellowships data is securely stored and managed
+              through MongoDB&apos;s database platform.
+            </li>
+            <li>
+              <strong>Groq:</strong> For AI-powered searching of opportunities.
+              We use Groq&apos;s AI services to provide intelligent search and
+              filtering capabilities for fellowship opportunities.
+            </li>
           </ul>
         </section>
 

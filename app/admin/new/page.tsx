@@ -146,10 +146,25 @@ function AdminNewContent() {
 
   const loadJsonToForm = (raw: Record<string, unknown>) => {
     // Allow nested shapes like { opportunity: {...} } or { data: {...} }
-    const data =
-      (raw.opportunity as Record<string, unknown>) ||
-      (raw.data as Record<string, unknown>) ||
-      raw;
+    // Otherwise use the raw object directly
+    let data: Record<string, unknown>;
+    if (
+      raw.opportunity &&
+      typeof raw.opportunity === "object" &&
+      !Array.isArray(raw.opportunity) &&
+      raw.opportunity !== null
+    ) {
+      data = raw.opportunity as Record<string, unknown>;
+    } else if (
+      raw.data &&
+      typeof raw.data === "object" &&
+      !Array.isArray(raw.data) &&
+      raw.data !== null
+    ) {
+      data = raw.data as Record<string, unknown>;
+    } else {
+      data = raw;
+    }
 
     const normalizeTags = (value: unknown) => {
       if (Array.isArray(value)) return (value as unknown[]).map(String).join(", ");
@@ -168,8 +183,8 @@ function AdminNewContent() {
       organizer: String(data.organizer ?? ""),
       description: String(data.description ?? ""),
       fullDescription: String(data.fullDescription ?? data.description ?? ""),
-      openDate: formatDateForInput(data.openDate as string | null),
-      closeDate: formatDateForInput(data.closeDate as string | null),
+      openDate: formatDateForInput((data.openDate as string | null) ?? null),
+      closeDate: formatDateForInput((data.closeDate as string | null) ?? null),
       category: (data.category as Opportunity["category"]) ?? "",
       region: String(data.region ?? ""),
       country: String(data.country ?? ""),
