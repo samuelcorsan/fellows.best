@@ -21,7 +21,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
-import { Loader2, UploadCloud } from "lucide-react";
+import { ArrowLeft, Loader2, Upload, UploadCloud } from "lucide-react";
 import type { Opportunity } from "@/lib/data";
 
 type AdminOpportunity = Opportunity & {
@@ -87,6 +87,9 @@ function AdminNewContent() {
   const [loadingExisting, setLoadingExisting] = useState(false);
   const [saving, setSaving] = useState(false);
   const [jsonText, setJsonText] = useState("");
+  const [jsonLoaded, setJsonLoaded] = useState(false);
+  const [logoDragOver, setLogoDragOver] = useState(false);
+  const [bannerDragOver, setBannerDragOver] = useState(false);
 
   const parsedTags = useMemo(
     () =>
@@ -134,8 +137,8 @@ function AdminNewContent() {
           tags: data.tags?.join(", ") || "",
           benefits: data.benefits?.join("\n") || "",
         });
+        setJsonLoaded(true);
       } catch (error) {
-        console.error(error);
         toast.error("Could not load opportunity");
       } finally {
         setLoadingExisting(false);
@@ -146,7 +149,6 @@ function AdminNewContent() {
 
   const loadJsonToForm = (raw: Record<string, unknown>) => {
     try {
-      console.log("loadJsonToForm called with:", raw);
       // Allow nested shapes like { opportunity: {...} } or { data: {...} }
       // Otherwise use the raw object directly
       let data: Record<string, unknown>;
@@ -157,7 +159,6 @@ function AdminNewContent() {
         raw.opportunity !== null
       ) {
         data = raw.opportunity as Record<string, unknown>;
-        console.log("Using nested 'opportunity' property");
       } else if (
         raw.data &&
         typeof raw.data === "object" &&
@@ -165,12 +166,9 @@ function AdminNewContent() {
         raw.data !== null
       ) {
         data = raw.data as Record<string, unknown>;
-        console.log("Using nested 'data' property");
       } else {
         data = raw;
-        console.log("Using raw object directly");
       }
-      console.log("Final data object:", data);
 
       const normalizeTags = (value: unknown) => {
         if (Array.isArray(value)) return (value as unknown[]).map(String).join(", ");
@@ -216,7 +214,7 @@ function AdminNewContent() {
         return "";
       };
 
-      const newFormState = {
+      setForm({
         name: String(data.name ?? ""),
         organizer: String(data.organizer ?? ""),
         description: String(data.description ?? ""),
@@ -230,27 +228,11 @@ function AdminNewContent() {
         applyLink: String(data.applyLink ?? ""),
         tags: normalizeTags(data.tags),
         benefits: normalizeBenefits(data.benefits),
-      };
-      console.log("Setting form state to:", newFormState);
-      setForm(newFormState);
+      });
+      setJsonLoaded(true);
     } catch (error) {
-      console.error("Error loading JSON to form:", error);
       toast.error("Failed to load JSON data");
       throw error;
-    }
-  };
-
-  const handleJsonUpload = async (file: File) => {
-    try {
-      const text = await file.text();
-      console.log("Parsing JSON from file:", text.substring(0, 200));
-      const data = JSON.parse(text) as Record<string, unknown>;
-      console.log("Parsed JSON data:", data);
-      loadJsonToForm(data);
-      toast.success("JSON loaded into form");
-    } catch (error) {
-      console.error("Error parsing JSON file:", error);
-      toast.error(`Invalid JSON file: ${error instanceof Error ? error.message : "Unknown error"}`);
     }
   };
 
@@ -260,15 +242,12 @@ function AdminNewContent() {
       return;
     }
     try {
-      console.log("Parsing JSON from paste:", jsonText.substring(0, 200));
       const data = JSON.parse(jsonText) as Record<string, unknown>;
-      console.log("Parsed JSON data:", data);
       loadJsonToForm(data);
-      setJsonText(""); // Clear the textarea after successful load
-      toast.success("JSON loaded into form");
+      setJsonText("");
+      toast.success("JSON loaded successfully");
     } catch (error) {
-      console.error("Error parsing JSON paste:", error);
-      toast.error(`Invalid JSON content: ${error instanceof Error ? error.message : "Unknown error"}`);
+      toast.error(`Invalid JSON: ${error instanceof Error ? error.message : "Unknown error"}`);
     }
   };
 
@@ -323,7 +302,6 @@ function AdminNewContent() {
       toast.success(editingId ? "Opportunity updated" : "Opportunity created");
       router.push("/admin");
     } catch (error) {
-      console.error(error);
       toast.error(
         error instanceof Error ? error.message : "Something went wrong"
       );
@@ -333,6 +311,33 @@ function AdminNewContent() {
   };
 
   const submitLabel = editingId ? "Update opportunity" : "Create opportunity";
+  const showJsonInput = !editingId && !jsonLoaded;
+  const showForm = editingId || jsonLoaded;
+
+  const handleFileDrop = (
+    e: React.DragEvent<HTMLDivElement>,
+    setFile: (file: File | null) => void,
+    setDragOver: (over: boolean) => void
+  ) => {
+    e.preventDefault();
+    setDragOver(false);
+    const file = e.dataTransfer.files[0];
+    if (file && file.type.startsWith("image/")) {
+      setFile(file);
+    } else {
+      toast.error("Please drop an image file");
+    }
+  };
+
+  const handleFileSelect = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    setFile: (file: File | null) => void
+  ) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setFile(file);
+    }
+  };
 
   return (
     <div className="container mx-auto px-4 py-10 space-y-6">
@@ -341,65 +346,53 @@ function AdminNewContent() {
           <Button
             type="button"
             variant="outline"
+            size="icon"
             onClick={() => router.push("/admin")}
           >
-            Back to list
+            <ArrowLeft className="h-4 w-4" />
           </Button>
           <div>
             <h1 className="text-3xl font-bold">
               {editingId ? "Edit opportunity" : "Add opportunity"}
             </h1>
-            <p className="text-muted-foreground">
-              Logo is mandatory. Banner is optional. Upload a JSON to auto-fill.
-            </p>
+            {!showJsonInput && (
+              <p className="text-muted-foreground">
+                Review and edit the opportunity details, then upload logo and submit
+              </p>
+            )}
           </div>
         </div>
       </div>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Upload JSON</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-3">
+      {showJsonInput && (
+        <div className="space-y-4">
           <p className="text-sm text-muted-foreground">
-            Provide a JSON file with opportunity fields to prefill the form.
+            Paste a JSON object with opportunity fields to prefill the form.
           </p>
-          <div className="space-y-2">
+          <div className="space-y-3">
             <Label htmlFor="jsonPaste">Paste JSON</Label>
             <Textarea
               id="jsonPaste"
               value={jsonText}
               onChange={(e) => setJsonText(e.target.value)}
-              rows={6}
-              placeholder='{"name":"Example","organizer":"Org",...}'
+              rows={12}
+              placeholder='{"name":"Example","organizer":"Org","description":"...",...}'
+              className="font-mono text-sm"
             />
             <div className="flex gap-2">
-              <Button type="button" variant="secondary" onClick={handleJsonPaste}>
-                Load from paste
+              <Button type="button" onClick={handleJsonPaste} disabled={!jsonText.trim()}>
+                Load JSON
               </Button>
               <Button type="button" variant="ghost" onClick={() => setJsonText("")}>
                 Clear
               </Button>
             </div>
           </div>
-          <div className="space-y-2">
-            <Label htmlFor="jsonFile">Or upload JSON file</Label>
-            <Input
-              id="jsonFile"
-              type="file"
-              accept="application/json"
-              onChange={(e) => {
-                const file = e.target.files?.[0];
-                if (file) {
-                  handleJsonUpload(file);
-                }
-              }}
-            />
-          </div>
-        </CardContent>
-      </Card>
+        </div>
+      )}
 
-      <Card>
+      {showForm && (
+        <Card>
         <CardHeader>
           <CardTitle>Opportunity details</CardTitle>
         </CardHeader>
@@ -589,19 +582,85 @@ function AdminNewContent() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label>Logo (required for new, keeps existing if empty)</Label>
-                <Input
-                  type="file"
-                  accept="image/*"
-                  onChange={(e) => setLogoFile(e.target.files?.[0] ?? null)}
-                />
+                <div
+                  className={`border-2 border-dashed rounded-lg p-6 text-center transition-colors cursor-pointer ${
+                    logoDragOver
+                      ? "border-primary bg-primary/5"
+                      : "border-muted-foreground/25 hover:border-muted-foreground/50"
+                  }`}
+                  onDragOver={(e) => {
+                    e.preventDefault();
+                    setLogoDragOver(true);
+                  }}
+                  onDragLeave={() => setLogoDragOver(false)}
+                  onDrop={(e) => handleFileDrop(e, setLogoFile, setLogoDragOver)}
+                  onClick={() => document.getElementById("logo-input")?.click()}
+                >
+                  <input
+                    id="logo-input"
+                    type="file"
+                    accept="image/*"
+                    className="hidden"
+                    onChange={(e) => handleFileSelect(e, setLogoFile)}
+                  />
+                  {logoFile ? (
+                    <div className="space-y-2">
+                      <Upload className="h-8 w-8 mx-auto text-primary" />
+                      <p className="text-sm font-medium">{logoFile.name}</p>
+                      <p className="text-xs text-muted-foreground">
+                        Click or drag to replace
+                      </p>
+                    </div>
+                  ) : (
+                    <div className="space-y-2">
+                      <Upload className="h-8 w-8 mx-auto text-muted-foreground" />
+                      <p className="text-sm text-muted-foreground">
+                        Click or drag to upload logo
+                      </p>
+                    </div>
+                  )}
+                </div>
               </div>
               <div className="space-y-2">
                 <Label>Banner (optional)</Label>
-                <Input
-                  type="file"
-                  accept="image/*"
-                  onChange={(e) => setBannerFile(e.target.files?.[0] ?? null)}
-                />
+                <div
+                  className={`border-2 border-dashed rounded-lg p-6 text-center transition-colors cursor-pointer ${
+                    bannerDragOver
+                      ? "border-primary bg-primary/5"
+                      : "border-muted-foreground/25 hover:border-muted-foreground/50"
+                  }`}
+                  onDragOver={(e) => {
+                    e.preventDefault();
+                    setBannerDragOver(true);
+                  }}
+                  onDragLeave={() => setBannerDragOver(false)}
+                  onDrop={(e) => handleFileDrop(e, setBannerFile, setBannerDragOver)}
+                  onClick={() => document.getElementById("banner-input")?.click()}
+                >
+                  <input
+                    id="banner-input"
+                    type="file"
+                    accept="image/*"
+                    className="hidden"
+                    onChange={(e) => handleFileSelect(e, setBannerFile)}
+                  />
+                  {bannerFile ? (
+                    <div className="space-y-2">
+                      <Upload className="h-8 w-8 mx-auto text-primary" />
+                      <p className="text-sm font-medium">{bannerFile.name}</p>
+                      <p className="text-xs text-muted-foreground">
+                        Click or drag to replace
+                      </p>
+                    </div>
+                  ) : (
+                    <div className="space-y-2">
+                      <Upload className="h-8 w-8 mx-auto text-muted-foreground" />
+                      <p className="text-sm text-muted-foreground">
+                        Click or drag to upload banner
+                      </p>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
 
@@ -617,6 +676,7 @@ function AdminNewContent() {
           </form>
         </CardContent>
       </Card>
+      )}
     </div>
   );
 }

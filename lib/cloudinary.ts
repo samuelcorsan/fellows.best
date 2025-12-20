@@ -9,16 +9,16 @@ type CloudinaryConfig = {
 let cloudinaryConfigured = false;
 
 function parseCloudinaryConfig(): CloudinaryConfig {
-  const url = process.env.CLOUDFLARE_URL;
+  const url = process.env.CLOUDINARY_URL;
 
   if (!url) {
-    throw new Error("CLOUDFLARE_URL is not set");
+    throw new Error("CLOUDINARY_URL is not set");
   }
 
   const urlMatch = url.match(/cloudinary:\/\/([^:]+):([^@]+)@(.+)/);
 
   if (!urlMatch) {
-    throw new Error("Invalid CLOUDFLARE_URL format");
+    throw new Error("Invalid CLOUDINARY_URL format");
   }
 
   const apiKey = urlMatch[1];
@@ -26,7 +26,7 @@ function parseCloudinaryConfig(): CloudinaryConfig {
   const cloudName = urlMatch[3];
 
   if (!cloudName || !apiKey || !apiSecret) {
-    throw new Error("CLOUDFLARE_URL is missing required parts");
+    throw new Error("CLOUDINARY_URL is missing required parts");
   }
 
   return { cloudName, apiKey, apiSecret };
