@@ -1,8 +1,22 @@
-import Link from "next/link";
-import { ArrowRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
+"use client";
+
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { SearchInput } from "@/components/global/search-input";
 
 export function HeroSection() {
+  const [searchQuery, setSearchQuery] = useState("");
+  const router = useRouter();
+
+  const handleSearch = (e?: React.FormEvent) => {
+    e?.preventDefault();
+    if (searchQuery.trim()) {
+      router.push(`/browse?q=${encodeURIComponent(searchQuery.trim())}`);
+    } else {
+      router.push("/browse");
+    }
+  };
+
   return (
     <section className="relative overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16 relative">
@@ -16,14 +30,17 @@ export function HeroSection() {
             Track deadlines, get reminders, and turn opportunities into
             achievements.
           </h2>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Button asChild size="lg" className="text-lg px-8 py-3">
-              <Link href="/browse">
-                Discover New Opportunities
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Link>
-            </Button>
-          </div>
+          <form onSubmit={handleSearch} className="flex flex-col sm:flex-row gap-4 justify-center items-center max-w-2xl mx-auto">
+            <div className="flex-1 w-full relative">
+              <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 via-pink-500/20 to-purple-500/20 blur-xl rounded-lg -z-10" />
+              <SearchInput
+                value={searchQuery}
+                onChange={setSearchQuery}
+                placeholder="Search for opportunities..."
+                onSubmit={handleSearch}
+              />
+            </div>
+          </form>
         </div>
       </div>
     </section>
