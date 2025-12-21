@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import {
   buildIdFilter,
   getOpportunitiesCollection,
@@ -65,9 +66,10 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
         ? parsedPayload.id.trim()
         : existing.id || paramId;
 
+    const now = new Date().toISOString();
     const updates: Record<string, unknown> = {
       ...normalizedPayload,
-      updatedAt: new Date().toISOString(),
+      updatedAt: now,
     };
 
     if (logoFile instanceof File && logoFile.size > 0) {
@@ -101,6 +103,8 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
         { status: 500 }
       );
     }
+
+    revalidatePath(`/opportunity/${id}`);
 
     return NextResponse.json(mapOpportunityDocument(updated));
   } catch (error) {

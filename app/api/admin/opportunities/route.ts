@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import {
   buildIdFilter,
   generateId,
@@ -110,6 +111,8 @@ export async function POST(request: NextRequest) {
 
     const insertResult = await collection.insertOne(document);
     const savedDocument = { ...document, _id: insertResult.insertedId };
+
+    revalidatePath(`/opportunity/${id}`);
 
     return NextResponse.json(mapOpportunityDocument(savedDocument), {
       status: 201,
