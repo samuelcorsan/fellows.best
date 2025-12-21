@@ -1,7 +1,7 @@
-import { randomUUID } from "crypto";
 import { NextRequest, NextResponse } from "next/server";
 import {
   buildIdFilter,
+  generateId,
   getOpportunitiesCollection,
   mapOpportunityDocument,
   normalizeOpportunityPayload,
@@ -78,7 +78,7 @@ export async function POST(request: NextRequest) {
     const id =
       typeof parsedPayload.id === "string" && parsedPayload.id.trim().length > 0
         ? parsedPayload.id.trim()
-        : randomUUID();
+        : generateId(normalizedPayload.name);
 
     const [logoUrl, shareImageUrl] = await Promise.all([
       uploadFileToCloudinary(logoFile, `fellows/${id}/logo`),

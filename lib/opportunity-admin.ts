@@ -29,16 +29,7 @@ let clientPromise: Promise<MongoClient> | null = null;
 
 function getClient(): Promise<MongoClient> {
   if (!clientPromise) {
-    const mongoOptions: MongoClientOptions = {
-      tls: process.env.MONGODB_TLS === "true" ? true : undefined,
-      tlsAllowInvalidCertificates:
-        process.env.MONGODB_TLS_INSECURE === "true" ? true : undefined,
-      serverApi: process.env.MONGODB_SERVER_API
-        ? { version: process.env.MONGODB_SERVER_API as ServerApiVersion }
-        : undefined,
-    };
-
-    const client = new MongoClient(uri!, mongoOptions);
+    const client = new MongoClient(uri!);
     clientPromise = client.connect();
   }
 
@@ -201,6 +192,14 @@ export function mapOpportunityDocument(doc: Document): AdminOpportunity {
   };
 
   return opportunity;
+}
+
+export function generateId(name: string): string {
+  return name
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .substring(0, 50);
 }
 
 export function buildIdFilter(id: string) {

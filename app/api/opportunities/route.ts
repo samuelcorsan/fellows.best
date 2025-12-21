@@ -20,19 +20,7 @@ let clientPromise: Promise<MongoClient> | null = null;
 
 function getClient(): Promise<MongoClient> {
   if (!clientPromise) {
-    const mongoOptions: MongoClientOptions = {
-      // Enable TLS when requested; helps when the provider requires TLS.
-      tls: process.env.MONGODB_TLS === "true" ? true : undefined,
-      // Allow opting into insecure certs only if explicitly set (not recommended).
-      tlsAllowInvalidCertificates:
-        process.env.MONGODB_TLS_INSECURE === "true" ? true : undefined,
-      // Optional server API version pinning (e.g., "1" for Atlas/Serverless).
-      serverApi: process.env.MONGODB_SERVER_API
-        ? { version: process.env.MONGODB_SERVER_API as ServerApiVersion }
-        : undefined,
-    };
-
-    const client = new MongoClient(uri!, mongoOptions);
+    const client = new MongoClient(uri!);
     clientPromise = client.connect();
   }
   return clientPromise;
