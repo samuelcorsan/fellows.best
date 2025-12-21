@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(
     process.env.NEXT_PUBLIC_APP_URL || "https://fellows.best"
   ),
-  title: "The Biggest Tech Fellowship List - Track Deadlines & Apply | fellows.best",
+  title: "The Biggest Tech Fellowship List | fellows.best",
   description:
     "Discover 100+ fellowships, grants, accelerators, and competitions. Track deadlines, get reminders, and never miss an opportunity. Free to use.",
   keywords:
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     canonical: "https://fellows.best",
   },
   openGraph: {
-    title: "The Biggest Tech Fellowship List - Track Deadlines & Apply",
+    title: "The Biggest Tech Fellowship List | fellows.best",
     description:
       "Discover 100+ fellowships, grants, accelerators, and competitions. Track deadlines, get reminders, and never miss an opportunity.",
     url: "https://fellows.best",
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "The Biggest Tech Fellowship List - Track Deadlines & Apply",
+    title: "The Biggest Tech Fellowship List | fellows.best",
     description:
       "Discover 100+ fellowships, grants, accelerators, and competitions. Track deadlines, get reminders, and never miss an opportunity.",
     images: ["https://cdn.fellows.best/og-image.jpg"],

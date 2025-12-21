@@ -4,7 +4,6 @@ import { useRef, useEffect } from "react";
 import {
   Search,
   Filter,
-  Calendar,
   Bell,
   Users,
   Clock,
@@ -16,24 +15,30 @@ const cards = [
     title: "Opportunity Aggregation",
     subtitle: "Browse fellowships, grants, accelerators, hackathons, and funding opportunities from diverse sources all in one centralized platform.",
     category: "Discovery",
+    span: "col-span-2 row-span-2", // Large card
+    image: "https://res.cloudinary.com/disamtech/image/upload/v1766317468/fellows/mockups/yviwphvmvcem7ewrkrpf.png",
   },
   {
     icon: Filter,
     title: "Advanced Search",
     subtitle: "Filter opportunities by region, category, deadline status, keywords, and tags to find exactly what matches your interests and profile.",
     category: "Filtering",
+    span: "col-span-2 row-span-2", // Large card at top right
+    image: "https://res.cloudinary.com/disamtech/image/upload/v1766319991/fellows/mockups/n58tm0uiflksugnbevgs.png",
   },
   {
-    icon: Calendar,
-    title: "Deadline Visualization",
-    subtitle: "Visualize upcoming deadlines over weeks and months in an interactive timeline view to plan your applications strategically.",
-    category: "Timeline",
+    icon: Clock,
+    title: "Community Driven",
+    subtitle: "Submit new opportunities through our community-driven platform. Help others discover amazing fellowships and funding opportunities.",
+    category: "Community",
+    span: "col-span-2 row-span-1", // Wide card on left
   },
   {
     icon: Bell,
     title: "Smart Alerts",
     subtitle: "Save opportunity deadlines directly to your calendar and never miss an application window with integrated calendar exports.",
     category: "Reminders",
+    span: "col-span-1 row-span-1", // Small card on right
   },
   {
     icon: Users,
@@ -41,12 +46,7 @@ const cards = [
     subtitle: "Save fellowships you've attended in your profile, ask alumni for recommendations to join, and build your fellowship network.",
     category: "Dashboard",
     badge: "Soon",
-  },
-  {
-    icon: Clock,
-    title: "Community Driven",
-    subtitle: "Submit new opportunities through our community-driven platform. Help others discover amazing fellowships and funding opportunities.",
-    category: "Community",
+    span: "col-span-1 row-span-1", // Small card on right
   },
 ];
 
@@ -57,11 +57,12 @@ const cardStyles = `
   }
 
   #cards-container #cards {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: 200px;
+    gap: 12px;
     max-width: 1120px;
-    width: calc(100% - 20px);
+    width: 100%;
   }
 
   #cards-container #cards:hover > .card::after {
@@ -73,10 +74,27 @@ const cardStyles = `
     border-radius: 10px;
     cursor: pointer;
     display: flex;
-    height: 200px;
     flex-direction: column;
     position: relative;
-    width: 360px;
+    width: 100%;
+    height: 100%;
+  }
+
+  /* Bento grid spans */
+  #cards-container .card.col-span-2 {
+    grid-column: span 2 !important;
+  }
+
+  #cards-container .card.row-span-2 {
+    grid-row: span 2 !important;
+  }
+
+  #cards-container .card.col-span-1 {
+    grid-column: span 1;
+  }
+
+  #cards-container .card.row-span-1 {
+    grid-row: span 1;
   }
 
   #cards-container .card:hover::before {
@@ -122,10 +140,12 @@ const cardStyles = `
     flex-grow: 1;
     inset: 1px;
     padding: 32px;
+    padding-top: 32px;
     position: absolute;
     z-index: 2;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: stretch;
+    overflow: hidden;
   }
 
   #cards-container .card-info-wrapper {
@@ -189,21 +209,139 @@ const cardStyles = `
     line-height: 1.5;
   }
 
-  @media (max-width: 1200px) {
+  #cards-container .card-image {
+    width: 100%;
+    height: auto;
+    margin-top: 16px;
+    border-radius: 8px;
+    object-fit: cover;
+    max-height: 400px;
+    transform: scale(1.6) translateY(40px) translateX(-10px);
+    transform-origin: center center;
+    object-position: center;
+  }
+
+  #cards-container .card-image-search {
+    transform: scale(1.1) translateY(-10px) translateX(-10px);
+  }
+
+  /* Tablet and smaller desktop */
+  @media (max-width: 1024px) {
     #cards-container #cards {
-      max-width: 1120px;
-      padding: 10px 0px;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
     }
 
-    #cards-container .card {
-      flex-shrink: 1;
-      width: calc(50% - 4px);
+    #cards-container .card.col-span-2 {
+      grid-column: span 2;
+    }
+
+    #cards-container .card.row-span-2 {
+      grid-row: span 2;
     }
   }
 
-  @media (max-width: 500px) {
+  /* Mobile landscape and small tablets */
+  @media (max-width: 768px) {
+    #cards-container #cards {
+      grid-template-columns: repeat(2, 1fr);
+      grid-auto-rows: 220px;
+      gap: 8px;
+    }
+
+    #cards-container .card.col-span-2 {
+      grid-column: span 2;
+    }
+
+    #cards-container .card.row-span-2 {
+      grid-row: span 1;
+    }
+
+    #cards-container .card > .card-content {
+      padding: 20px;
+    }
+
+    #cards-container .card-info-title > h3 {
+      font-size: 1.1rem;
+    }
+
+    #cards-container .card-info-title > h4 {
+      font-size: 0.7rem;
+    }
+
+    #cards-container .card-image {
+      margin-top: 12px;
+      max-height: 250px;
+      transform: scale(1.05);
+    }
+
+    #cards-container .card-image-search {
+      transform: scale(1.0) translateY(-5px);
+    }
+  }
+
+  /* Mobile portrait */
+  @media (max-width: 640px) {
+    #cards-container #cards {
+      grid-template-columns: 1fr;
+      grid-auto-rows: auto;
+      gap: 8px;
+    }
+
     #cards-container .card {
-      height: 160px;
+      min-height: 200px;
+    }
+
+    #cards-container .card.col-span-2 {
+      grid-column: span 1;
+    }
+
+    #cards-container .card.row-span-2 {
+      grid-row: span 1;
+    }
+
+    #cards-container .card > .card-content {
+      padding: 16px;
+    }
+
+    #cards-container .card-info-title .category-label {
+      margin-bottom: 8px;
+    }
+
+    #cards-container .card-info-title .category-label > svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    #cards-container .card-info-title .category-label > span:first-of-type {
+      font-size: 0.8rem;
+    }
+
+    #cards-container .card-info-title > h3 {
+      font-size: 1rem;
+      margin-bottom: 6px;
+    }
+
+    #cards-container .card-info-title > h4 {
+      font-size: 0.7rem;
+      line-height: 1.4;
+    }
+
+    #cards-container .card-image {
+      margin-top: 12px;
+      max-height: 220px;
+      transform: scale(1.05);
+    }
+  }
+
+  /* Small mobile */
+  @media (max-width: 480px) {
+    #cards-container #cards {
+      gap: 6px;
+    }
+
+    #cards-container .card {
+      min-height: 190px;
     }
 
     #cards-container .card > .card-content {
@@ -216,17 +354,17 @@ const cardStyles = `
     }
 
     #cards-container .card-info-title > h3 {
-      font-size: 1em;
+      font-size: 0.95rem;
     }
 
     #cards-container .card-info-title > h4 {
-      font-size: 0.7em;
+      font-size: 0.65rem;
     }
-  }
 
-  @media (max-width: 320px) {
-    #cards-container .card {
-      width: 100%;
+    #cards-container .card-image {
+      margin-top: 10px;
+      max-height: 180px;
+      transform: scale(1.03);
     }
   }
 `;
@@ -263,20 +401,20 @@ export function WhatYouGetSection() {
   return (
     <>
       <style dangerouslySetInnerHTML={{ __html: cardStyles }} />
-      <section id="cards-container" className="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="text-center mb-16">
-          <h2 className="text-2xl md:text-3xl font-medium mb-4">What You Get</h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+      <section id="cards-container" className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 md:py-16">
+        <div className="text-center mb-8 sm:mb-12 md:mb-16">
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-medium mb-2 sm:mb-3 md:mb-4 px-4">What You Get</h2>
+          <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto px-4">
             Everything you need to discover and track fellowship opportunities
           </p>
         </div>
 
         <div className="flex justify-center">
-          <div id="cards" ref={cardsRef} className="flex flex-wrap gap-2">
+          <div id="cards" ref={cardsRef}>
             {cards.map((card, index) => {
               const Icon = card.icon;
               return (
-                <div key={index} className="card">
+                <div key={index} className={`card ${card.span}`}>
                   <div className="card-content">
                     <div className="card-info-wrapper">
                       <div className="card-info">
@@ -295,6 +433,13 @@ export function WhatYouGetSection() {
                         </div>
                       </div>
                     </div>
+                    {card.image && (
+                      <img 
+                        src={card.image} 
+                        alt={card.title}
+                        className={`card-image ${card.title === "Advanced Search" ? "card-image-search" : ""}`}
+                      />
+                    )}
                   </div>
                 </div>
               );
@@ -305,3 +450,4 @@ export function WhatYouGetSection() {
     </>
   );
 }
+
