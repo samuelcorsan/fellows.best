@@ -1,4 +1,18 @@
 import Link from "next/link";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Terms of Service - fellows.best",
+  description:
+    "Read the terms of service for fellows.best. Understand your rights and responsibilities when using our platform.",
+  alternates: {
+    canonical: "https://fellows.best/terms",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+};
 
 export default function TermsPage() {
   return (

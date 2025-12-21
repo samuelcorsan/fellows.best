@@ -40,20 +40,28 @@ export async function generateMetadata({
   }
 
   const title = `${opportunity.name} - Deadlines, Requirements & How to Apply`;
+  
+  // Optimize description length (150-160 chars for SEO)
+  let description = opportunity.fullDescription || opportunity.description;
+  if (description.length > 160) {
+    description = description.substring(0, 157) + "...";
+  }
 
   return {
     title,
-    description: opportunity.fullDescription || opportunity.description,
+    description,
     keywords: [...opportunity.tags].join(", "),
     alternates: {
       canonical: `https://fellows.best/opportunity/${id}`,
     },
     openGraph: {
       title: `${opportunity.name} - Deadlines, Requirements & How to Apply`,
-      description: opportunity.description,
+      description: description,
       type: "article",
       url: `https://fellows.best/opportunity/${id}`,
       siteName: "fellows.best",
+      publishedTime: opportunity.openDate || undefined,
+      modifiedTime: new Date().toISOString(),
       images: [
         {
           url: `https://fellows.best/api/og?id=${id}`,
@@ -65,7 +73,7 @@ export async function generateMetadata({
     },
     twitter: {
       title: `${opportunity.name} - Deadlines, Requirements & How to Apply`,
-      description: opportunity.description,
+      description: description,
       card: "summary_large_image",
       images: [`https://fellows.best/api/og?id=${id}`],
       creator: "@disamdev",

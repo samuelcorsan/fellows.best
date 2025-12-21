@@ -94,40 +94,111 @@ export default async function OpportunityPage({
 
   const { url: backUrl } = getBackNavigation();
 
+  const opportunityUrl = `https://fellows.best/opportunity/${opportunity.id}`;
+  const currentDate = new Date().toISOString();
+
+  const scholarshipSchema = {
+    "@context": "https://schema.org",
+    "@type": "Scholarship",
+    name: opportunity.name,
+    description: opportunity.fullDescription || opportunity.description,
+    provider: {
+      "@type": "Organization",
+      name: opportunity.organizer,
+      url: opportunity.applyLink,
+    },
+    url: opportunityUrl,
+    applicationDeadline: opportunity.closeDate && opportunity.closeDate !== "closed" ? opportunity.closeDate : undefined,
+    datePosted: opportunity.openDate,
+    dateModified: currentDate,
+    category: opportunity.category,
+    eligibilityCriteria: opportunity.eligibility,
+    value: opportunity.funding
+      ? {
+          "@type": "MonetaryAmount",
+          value: opportunity.funding.amount,
+          currency: opportunity.funding.currency,
+        }
+      : undefined,
+    areaServed: {
+      "@type": "Place",
+      name: opportunity.region,
+    },
+    termsOfService: opportunity.applyLink,
+  };
+
+  const articleSchema = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: opportunity.name,
+    description: opportunity.description,
+    image: opportunity.logoUrl ? [opportunity.logoUrl] : [],
+    datePublished: opportunity.openDate || currentDate,
+    dateModified: currentDate,
+    author: {
+      "@type": "Organization",
+      name: opportunity.organizer,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "fellows.best",
+      logo: {
+        "@type": "ImageObject",
+        url: "https://cdn.fellows.best/og-image.jpg",
+      },
+    },
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": opportunityUrl,
+    },
+  };
+
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: "https://fellows.best",
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Browse",
+        item: "https://fellows.best/browse",
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: opportunity.name,
+        item: opportunityUrl,
+      },
+    ],
+  };
+
   return (
     <>
       <Script
         id="opportunity-structured-data"
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "Scholarship",
-            name: opportunity.name,
-            description: opportunity.description,
-            provider: {
-              "@type": "Organization",
-              name: opportunity.organizer,
-              url: opportunity.applyLink,
-            },
-            url: `https://fellows.best/opportunity/${opportunity.id}`,
-            applicationDeadline: opportunity.closeDate,
-            datePosted: opportunity.openDate,
-            category: opportunity.category,
-            eligibilityCriteria: opportunity.eligibility,
-            value: opportunity.funding
-              ? {
-                  "@type": "MonetaryAmount",
-                  value: opportunity.funding.amount,
-                  currency: opportunity.funding.currency,
-                }
-              : undefined,
-            areaServed: {
-              "@type": "Place",
-              name: opportunity.region,
-            },
-            termsOfService: opportunity.applyLink,
-          }),
+          __html: JSON.stringify(scholarshipSchema),
+        }}
+      />
+      <Script
+        id="article-structured-data"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(articleSchema),
+        }}
+      />
+      <Script
+        id="breadcrumb-structured-data"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbSchema),
         }}
       />
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">

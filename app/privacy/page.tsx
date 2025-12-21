@@ -1,4 +1,18 @@
 import Link from "next/link";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Privacy Policy - fellows.best",
+  description:
+    "Learn how fellows.best collects, uses, and protects your personal data in accordance with GDPR and privacy laws.",
+  alternates: {
+    canonical: "https://fellows.best/privacy",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+};
 
 export default function PrivacyPage() {
   return (

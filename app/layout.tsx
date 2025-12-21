@@ -15,16 +15,19 @@ export const metadata: Metadata = {
   metadataBase: new URL(
     process.env.NEXT_PUBLIC_APP_URL || "https://fellows.best"
   ),
-  title: "The biggest tech fellowship list",
+  title: "The Biggest Tech Fellowship List - Track Deadlines & Apply | fellows.best",
   description:
-    "Discover fellowships, grants, accelerators, and competitions. Track deadlines, get reminders, and never miss an opportunity.",
+    "Discover 100+ fellowships, grants, accelerators, and competitions. Track deadlines, get reminders, and never miss an opportunity. Free to use.",
   keywords:
     "fellowships, grants, accelerators, hackathons, competitions, deadlines, opportunities",
+  alternates: {
+    canonical: "https://fellows.best",
+  },
   openGraph: {
-    title: "The biggest tech fellowship list",
+    title: "The Biggest Tech Fellowship List - Track Deadlines & Apply",
     description:
-      "Discover fellowships, grants, accelerators, and competitions. Track deadlines, get reminders, and never miss an opportunity.",
-    url: "/",
+      "Discover 100+ fellowships, grants, accelerators, and competitions. Track deadlines, get reminders, and never miss an opportunity.",
+    url: "https://fellows.best",
     siteName: "fellows.best",
     type: "website",
     images: [
@@ -38,9 +41,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "fellows.best - The biggest tech fellowship list",
+    title: "The Biggest Tech Fellowship List - Track Deadlines & Apply",
     description:
-      "Discover fellowships, grants, accelerators, and competitions. Track deadlines, get reminders, and never miss an opportunity.",
+      "Discover 100+ fellowships, grants, accelerators, and competitions. Track deadlines, get reminders, and never miss an opportunity.",
     images: ["https://cdn.fellows.best/og-image.jpg"],
   },
 };
