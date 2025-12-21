@@ -41,10 +41,13 @@ interface FilterPanelProps {
 const categoryOptions = [
   "accelerator",
   "fellowship",
+  "incubator",
+  "venture_capital",
   "grant",
   "residency",
   "competition",
   "research",
+  "developer_program",
 ];
 
 const tagGroups = {

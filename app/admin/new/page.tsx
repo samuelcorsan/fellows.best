@@ -49,10 +49,13 @@ type FormState = {
 const categories: Opportunity["category"][] = [
   "fellowship",
   "accelerator",
+  "incubator",
+  "venture_capital",
   "grant",
   "residency",
   "competition",
   "research",
+  "developer_program",
 ];
 
 const emptyForm: FormState = {
@@ -202,10 +205,13 @@ function AdminNewContent() {
           const validCategories: Opportunity["category"][] = [
             "fellowship",
             "accelerator",
+            "incubator",
+            "venture_capital",
             "grant",
             "residency",
             "competition",
             "research",
+            "developer_program",
           ];
           if (validCategories.includes(value as Opportunity["category"])) {
             return value as Opportunity["category"];

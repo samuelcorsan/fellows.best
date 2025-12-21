@@ -11,10 +11,13 @@ export interface Opportunity {
   category:
     | "accelerator"
     | "fellowship"
+    | "incubator"
+    | "venture_capital"
     | "grant"
     | "residency"
     | "competition"
-    | "research";
+    | "research"
+    | "developer_program";
   region: string;
   country: string | null;
   eligibility: string;
