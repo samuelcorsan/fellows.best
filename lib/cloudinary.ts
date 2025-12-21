@@ -57,6 +57,7 @@ export async function uploadBufferToCloudinary(
       {
         public_id: publicId,
         overwrite: true,
+        invalidate: true,
         resource_type: "image",
       },
       (error, result) => {
