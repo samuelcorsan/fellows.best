@@ -73,7 +73,6 @@ const cardStyles = `
   #cards-container .card {
     background-color: rgba(255, 255, 255, 0.1);
     border-radius: 10px;
-    cursor: pointer;
     display: flex;
     flex-direction: column;
     position: relative;
