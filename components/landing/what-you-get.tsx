@@ -47,6 +47,7 @@ const cards = [
     category: "Dashboard",
     badge: "Soon",
     span: "col-span-1 row-span-1", // Small card on right
+    hideOnMobile: true, // Hide on mobile
   },
 ];
 
@@ -257,12 +258,16 @@ const cardStyles = `
       grid-row: span 1;
     }
 
+    #cards-container .card.hide-mobile {
+      display: none;
+    }
+
     #cards-container .card > .card-content {
       padding: 20px;
     }
 
     #cards-container .card-info-title > h3 {
-      font-size: 1.1rem;
+      font-size: 1.2rem;
     }
 
     #cards-container .card-info-title > h4 {
@@ -300,6 +305,10 @@ const cardStyles = `
       grid-row: span 1;
     }
 
+    #cards-container .card.hide-mobile {
+      display: none;
+    }
+
     #cards-container .card > .card-content {
       padding: 16px;
     }
@@ -318,7 +327,7 @@ const cardStyles = `
     }
 
     #cards-container .card-info-title > h3 {
-      font-size: 1rem;
+      font-size: 1.15rem;
       margin-bottom: 6px;
     }
 
@@ -344,6 +353,10 @@ const cardStyles = `
       min-height: 190px;
     }
 
+    #cards-container .card.hide-mobile {
+      display: none;
+    }
+
     #cards-container .card > .card-content {
       padding: 12px;
     }
@@ -354,7 +367,7 @@ const cardStyles = `
     }
 
     #cards-container .card-info-title > h3 {
-      font-size: 0.95rem;
+      font-size: 1.1rem;
     }
 
     #cards-container .card-info-title > h4 {
@@ -414,7 +427,7 @@ export function WhatYouGetSection() {
             {cards.map((card, index) => {
               const Icon = card.icon;
               return (
-                <div key={index} className={`card ${card.span}`}>
+                <div key={index} className={`card ${card.span} ${card.hideOnMobile ? 'hide-mobile' : ''}`}>
                   <div className="card-content">
                     <div className="card-info-wrapper">
                       <div className="card-info">
