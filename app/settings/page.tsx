@@ -33,10 +33,6 @@ export default function SettingsPage() {
   const [editingField, setEditingField] = useState<string | null>(null);
   const [tempValue, setTempValue] = useState("");
 
-  const [feedbackText, setFeedbackText] = useState("");
-  const [feedbackOpen, setFeedbackOpen] = useState(false);
-  const [feedbackSubmitting, setFeedbackSubmitting] = useState(false);
-
   const [profileData, setProfileData] = useState({
     name: "",
     email: "",
@@ -213,35 +209,6 @@ export default function SettingsPage() {
     } catch (error) {
       console.error("Error deleting account:", error);
       setErrors({ general: "Error deleting account" });
-    }
-  };
-
-  const handleFeedbackSubmit = async () => {
-    if (!feedbackText.trim()) return;
-
-    setFeedbackSubmitting(true);
-
-    try {
-      const response = await fetch("/api/feedback", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ message: feedbackText }),
-      });
-
-      if (response.ok) {
-        setFeedbackText("");
-        setFeedbackOpen(false);
-        toast.success("Thank you for your feedback!");
-      } else {
-        const errorData = await response.json();
-        setErrors({ general: errorData.error || "Failed to send feedback" });
-      }
-    } catch (error) {
-      setErrors({ general: "Failed to send feedback. Please try again." });
-    } finally {
-      setFeedbackSubmitting(false);
     }
   };
 

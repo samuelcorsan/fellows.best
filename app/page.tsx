@@ -5,6 +5,7 @@ import { ScrapingSection } from "@/components/landing/scraping-section";
 import { ViewAllOpportunitiesSection } from "@/components/landing/view-all-opportunities-section";
 import { WhatYouGetSection } from "@/components/landing/what-you-get";
 import { ContributeSection } from "@/components/landing/contribute-section";
+import { FeedbackButton } from "@/components/global/feedback-button";
 import Script from "next/script";
 
 export default async function Home() {
@@ -60,6 +61,7 @@ export default async function Home() {
       <ScrapingSection />
       <ContributeSection />
       </div>
+      <FeedbackButton section="home" variant="floating" />
     </>
   );
 }

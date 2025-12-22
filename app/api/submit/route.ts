@@ -1,5 +1,29 @@
 import { NextRequest, NextResponse } from "next/server";
-import { sendDiscordWebhook } from "@/lib/utils";
+import { MongoClient, type Document } from "mongodb";
+
+const uri = process.env.MONGODB_URI;
+const dbName = process.env.MONGODB_DB;
+const suggestionsCollectionName = "suggestions";
+
+if (!uri) {
+  throw new Error("MONGODB_URI is not set");
+}
+
+let clientPromise: Promise<MongoClient> | null = null;
+
+function getClient(): Promise<MongoClient> {
+  if (!clientPromise) {
+    const client = new MongoClient(uri!);
+    clientPromise = client.connect();
+  }
+  return clientPromise;
+}
+
+async function getSuggestionsCollection() {
+  const client = await getClient();
+  const db = dbName ? client.db(dbName) : client.db();
+  return db.collection<Document>(suggestionsCollectionName);
+}
 
 export async function POST(request: NextRequest) {
   try {
@@ -7,23 +31,20 @@ export async function POST(request: NextRequest) {
 
     const { type } = body as { type?: string };
 
+    const collection = await getSuggestionsCollection();
+
     if (type === "url") {
       const { url } = body as { url?: string };
       if (!url || typeof url !== "string") {
         return NextResponse.json({ error: "Invalid URL" }, { status: 400 });
       }
 
-      await sendDiscordWebhook({
-        content: "New URL submission",
-        embeds: [
-          {
-            title: "URL submitted",
-            description: url,
-            color: 0x5865f2,
-            timestamp: new Date().toISOString(),
-            footer: { text: "fellows.best" },
-          },
-        ],
+      await collection.insertOne({
+        type: "url",
+        url: url.trim(),
+        status: "pending",
+        createdAt: new Date(),
+        updatedAt: new Date(),
       });
 
       return NextResponse.json({ ok: true });
@@ -62,38 +83,23 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const fields = [
-      { name: "Organizer", value: String(organizer) },
-      { name: "Category", value: String(category) },
-      { name: "Region", value: String(region) },
-      { name: "Opens", value: String(openDate), inline: true },
-      { name: "Closes", value: String(closeDate), inline: true },
-      { name: "Apply", value: String(applyLink) },
-    ];
-
-    if (Array.isArray(tags) && tags.length > 0) {
-      fields.push({ name: "Tags", value: tags.map(String).join(", ") });
-    }
-    if (Array.isArray(benefits) && benefits.length > 0) {
-      fields.push({
-        name: "Benefits",
-        value: benefits.map(String).filter(Boolean).join("\n"),
-      });
-    }
-
-    await sendDiscordWebhook({
-      content: "New opportunity submission",
-      embeds: [
-        {
-          title: String(name),
-          description: String(description),
-          url: typeof applyLink === "string" ? applyLink : undefined,
-          color: 0x00b894,
-          fields,
-          timestamp: new Date().toISOString(),
-          footer: { text: "fellows.best" },
-        },
-      ],
+    await collection.insertOne({
+      type: "full",
+      name: String(name).trim(),
+      organizer: String(organizer).trim(),
+      description: String(description).trim(),
+      fullDescription: String(fullDescription).trim(),
+      openDate: String(openDate),
+      closeDate: String(closeDate),
+      category: String(category),
+      region: String(region),
+      eligibility: String(eligibility).trim(),
+      applyLink: String(applyLink).trim(),
+      tags: Array.isArray(tags) ? tags.map(String) : [],
+      benefits: Array.isArray(benefits) ? benefits.map(String).filter(Boolean) : [],
+      status: "pending",
+      createdAt: new Date(),
+      updatedAt: new Date(),
     });
 
     return NextResponse.json({ ok: true });

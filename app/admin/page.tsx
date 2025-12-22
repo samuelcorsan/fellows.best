@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import * as React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { toast } from "sonner";
@@ -23,13 +24,37 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { Input } from "@/components/ui/input";
-import { Loader2, Pencil, Plus, RefreshCw, Trash2, ExternalLink } from "lucide-react";
+import { Loader2, Pencil, Plus, RefreshCw, Trash2, ExternalLink, MessageSquare, ThumbsUp, ThumbsDown } from "lucide-react";
 import type { Opportunity } from "@/lib/data";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 type AdminOpportunity = Opportunity & {
   mongoId?: string;
   createdAt?: string;
   updatedAt?: string;
+};
+
+type FeedbackItem = {
+  id: number;
+  message: string;
+  section: string;
+  opportunity_id: string;
+  issues?: string[] | null;
+  suggestion?: string | null;
+  created_at: string;
+  user: {
+    id: string;
+    name: string;
+    email: string;
+    image: string | null;
+  };
 };
 
 export default function AdminPage() {
@@ -39,6 +64,11 @@ export default function AdminPage() {
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [confirmText, setConfirmText] = useState("");
   const [pendingDeleteId, setPendingDeleteId] = useState<string | null>(null);
+  const [feedbackOpen, setFeedbackOpen] = useState(false);
+  const [feedbackLoading, setFeedbackLoading] = useState(false);
+  const [selectedOpportunityId, setSelectedOpportunityId] = useState<string | null>(null);
+  const [feedback, setFeedback] = useState<FeedbackItem[]>([]);
+  const [suggestionsOpen, setSuggestionsOpen] = useState(false);
 
   const loadOpportunities = async () => {
     setLoading(true);
@@ -96,6 +126,28 @@ export default function AdminPage() {
     }
   };
 
+  const handleOpenFeedback = async (opportunityId: string) => {
+    setSelectedOpportunityId(opportunityId);
+    setFeedbackOpen(true);
+    setFeedbackLoading(true);
+    setFeedback([]);
+
+    try {
+      const response = await fetch(`/api/admin/feedback/${opportunityId}`);
+      if (response.ok) {
+        const data = await response.json();
+        setFeedback(data.feedback || []);
+      } else {
+        toast.error("Failed to load feedback");
+      }
+    } catch (error) {
+      console.error("Error loading feedback:", error);
+      toast.error("Failed to load feedback");
+    } finally {
+      setFeedbackLoading(false);
+    }
+  };
+
   return (
     <div className="container mx-auto px-4 py-10 space-y-6">
       <div className="flex items-center justify-between">
@@ -106,6 +158,10 @@ export default function AdminPage() {
           </p>
         </div>
         <div className="flex items-center gap-2">
+          <Button variant="outline" onClick={() => setSuggestionsOpen(true)}>
+            <MessageSquare className="mr-2 h-4 w-4" />
+            Suggestions
+          </Button>
           <Button variant="outline" onClick={loadOpportunities}>
             <RefreshCw className="mr-2 h-4 w-4" />
             Refresh
@@ -191,6 +247,14 @@ export default function AdminPage() {
                     </div>
                   </CardContent>
                   <div className="px-4 pb-4 flex items-center justify-end gap-2">
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={() => handleOpenFeedback(opportunity.id)}
+                    >
+                      <MessageSquare className="mr-2 h-4 w-4" />
+                      Feedback
+                    </Button>
                     <Link href={`/admin/new?id=${opportunity.id}`}>
                       <Button size="sm" variant="outline">
                         <Pencil className="mr-2 h-4 w-4" />
@@ -249,6 +313,352 @@ export default function AdminPage() {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
+      <Dialog open={feedbackOpen} onOpenChange={setFeedbackOpen}>
+        <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Feedback</DialogTitle>
+            <DialogDescription>
+              Feedback for this opportunity
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4 mt-4">
+            {feedbackLoading ? (
+              <div className="flex items-center justify-center py-8">
+                <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
+              </div>
+            ) : feedback.length === 0 ? (
+              <p className="text-muted-foreground text-center py-8">
+                No feedback yet for this opportunity.
+              </p>
+            ) : (
+              feedback.map((item) => (
+                <div
+                  key={item.id}
+                  className="border rounded-lg p-4 space-y-2"
+                >
+                  <div className="flex items-start gap-3">
+                    <Avatar>
+                      <AvatarImage src={item.user.image || undefined} />
+                      <AvatarFallback>
+                        {item.user.name?.charAt(0).toUpperCase() || "U"}
+                      </AvatarFallback>
+                    </Avatar>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 mb-1">
+                        <p className="font-medium text-sm">{item.user.name}</p>
+                        <span className="text-xs text-muted-foreground">
+                          {item.user.email}
+                        </span>
+                      </div>
+                      {item.issues && Array.isArray(item.issues) && item.issues.length > 0 && (
+                        <div className="mb-2">
+                          <p className="text-xs font-medium text-muted-foreground mb-1">
+                            Issues reported:
+                          </p>
+                          <div className="flex flex-wrap gap-1">
+                            {item.issues.map((issue: string, idx: number) => (
+                              <Badge key={idx} variant="secondary" className="text-xs">
+                                {issue}
+                              </Badge>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                      {item.suggestion && (
+                        <div className="mb-2">
+                          <p className="text-xs font-medium text-muted-foreground mb-1">
+                            Suggestion:
+                          </p>
+                          <p className="text-sm text-muted-foreground whitespace-pre-wrap">
+                            {item.suggestion}
+                          </p>
+                        </div>
+                      )}
+                      <p className="text-sm text-muted-foreground whitespace-pre-wrap">
+                        {item.message}
+                      </p>
+                      <p className="text-xs text-muted-foreground mt-2">
+                        {new Date(item.created_at).toLocaleString()}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      <SuggestionsModal
+        isOpen={suggestionsOpen}
+        onOpenChange={setSuggestionsOpen}
+      />
     </div>
+  );
+}
+
+function SuggestionsModal({
+  isOpen,
+  onOpenChange,
+}: {
+  isOpen: boolean;
+  onOpenChange: (open: boolean) => void;
+}) {
+  const [suggestions, setSuggestions] = useState<any[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [statusFilter, setStatusFilter] = useState<"pending" | "accepted" | "rejected">("pending");
+
+  const loadSuggestions = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch(`/api/admin/suggestions?status=${statusFilter}`);
+      if (response.ok) {
+        const data = await response.json();
+        setSuggestions(data.suggestions || []);
+      } else {
+        toast.error("Failed to load suggestions");
+      }
+    } catch (error) {
+      console.error("Error loading suggestions:", error);
+      toast.error("Failed to load suggestions");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleLike = async (id: string) => {
+    try {
+      const response = await fetch("/api/admin/suggestions", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id, status: "accepted" }),
+      });
+      if (response.ok) {
+        toast.success("Suggestion accepted");
+        loadSuggestions();
+      } else {
+        toast.error("Failed to accept suggestion");
+      }
+    } catch (error) {
+      console.error("Error accepting suggestion:", error);
+      toast.error("Failed to accept suggestion");
+    }
+  };
+
+  const handleDislike = async (id: string) => {
+    try {
+      const response = await fetch("/api/admin/suggestions", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id, status: "rejected" }),
+      });
+      if (response.ok) {
+        // Delete rejected suggestions
+        await fetch(`/api/admin/suggestions?id=${id}`, {
+          method: "DELETE",
+        });
+        toast.success("Suggestion rejected and removed");
+        loadSuggestions();
+      } else {
+        toast.error("Failed to reject suggestion");
+      }
+    } catch (error) {
+      console.error("Error rejecting suggestion:", error);
+      toast.error("Failed to reject suggestion");
+    }
+  };
+
+  React.useEffect(() => {
+    if (isOpen) {
+      loadSuggestions();
+    }
+  }, [isOpen, statusFilter]);
+
+  return (
+    <Dialog open={isOpen} onOpenChange={onOpenChange}>
+      <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+        <DialogHeader>
+          <DialogTitle>Opportunity Suggestions</DialogTitle>
+          <DialogDescription>
+            Review and manage submitted opportunity suggestions
+          </DialogDescription>
+        </DialogHeader>
+        <div className="space-y-4 mt-4">
+          <div className="flex gap-2">
+            <Button
+              variant={statusFilter === "pending" ? "default" : "outline"}
+              size="sm"
+              onClick={() => setStatusFilter("pending")}
+            >
+              Pending
+            </Button>
+            <Button
+              variant={statusFilter === "accepted" ? "default" : "outline"}
+              size="sm"
+              onClick={() => setStatusFilter("accepted")}
+            >
+              Accepted
+            </Button>
+            <Button
+              variant={statusFilter === "rejected" ? "default" : "outline"}
+              size="sm"
+              onClick={() => setStatusFilter("rejected")}
+            >
+              Rejected
+            </Button>
+          </div>
+
+          {loading ? (
+            <div className="flex items-center justify-center py-8">
+              <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
+            </div>
+          ) : suggestions.length === 0 ? (
+            <p className="text-muted-foreground text-center py-8">
+              No {statusFilter} suggestions.
+            </p>
+          ) : (
+            <div className="space-y-4">
+              {suggestions.map((suggestion) => (
+                <Card key={suggestion.id}>
+                  <CardHeader>
+                    <div className="flex items-start justify-between">
+                      <div className="flex-1">
+                        <CardTitle className="text-lg">
+                          {suggestion.type === "url" ? (
+                            <a
+                              href={suggestion.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-blue-600 hover:underline"
+                            >
+                              {suggestion.url}
+                            </a>
+                          ) : (
+                            suggestion.name
+                          )}
+                        </CardTitle>
+                        <p className="text-sm text-muted-foreground mt-1">
+                          {suggestion.type === "url"
+                            ? "URL Submission"
+                            : `${suggestion.organizer} • ${suggestion.category} • ${suggestion.region}`}
+                        </p>
+                        <p className="text-xs text-muted-foreground mt-2">
+                          Submitted: {new Date(suggestion.created_at).toLocaleString()}
+                        </p>
+                      </div>
+                      {statusFilter === "pending" && (
+                        <div className="flex gap-2">
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            onClick={() => handleLike(suggestion.id)}
+                            className="text-green-600 hover:text-green-700"
+                          >
+                            <ThumbsUp className="h-4 w-4" />
+                          </Button>
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            onClick={() => handleDislike(suggestion.id)}
+                            className="text-red-600 hover:text-red-700"
+                          >
+                            <ThumbsDown className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      )}
+                      {statusFilter === "accepted" && (
+                        <Badge variant="secondary" className="bg-green-100 text-green-800">
+                          Accepted
+                        </Badge>
+                      )}
+                    </div>
+                  </CardHeader>
+                  {suggestion.type === "full" && (
+                    <CardContent className="space-y-3">
+                      <div>
+                        <p className="text-sm font-medium mb-1">Description</p>
+                        <p className="text-sm text-muted-foreground">
+                          {suggestion.description}
+                        </p>
+                      </div>
+                      {suggestion.full_description && (
+                        <div>
+                          <p className="text-sm font-medium mb-1">Full Description</p>
+                          <p className="text-sm text-muted-foreground">
+                            {suggestion.full_description}
+                          </p>
+                        </div>
+                      )}
+                      <div className="grid grid-cols-2 gap-4 text-sm">
+                        <div>
+                          <p className="font-medium">Opens:</p>
+                          <p className="text-muted-foreground">
+                            {suggestion.open_date
+                              ? new Date(suggestion.open_date).toLocaleDateString()
+                              : "N/A"}
+                          </p>
+                        </div>
+                        <div>
+                          <p className="font-medium">Closes:</p>
+                          <p className="text-muted-foreground">
+                            {suggestion.close_date
+                              ? new Date(suggestion.close_date).toLocaleDateString()
+                              : "N/A"}
+                          </p>
+                        </div>
+                      </div>
+                      {suggestion.eligibility && (
+                        <div>
+                          <p className="text-sm font-medium mb-1">Eligibility</p>
+                          <p className="text-sm text-muted-foreground">
+                            {suggestion.eligibility}
+                          </p>
+                        </div>
+                      )}
+                      {suggestion.tags && suggestion.tags.length > 0 && (
+                        <div>
+                          <p className="text-sm font-medium mb-1">Tags</p>
+                          <div className="flex flex-wrap gap-2">
+                            {suggestion.tags.map((tag: string, idx: number) => (
+                              <Badge key={idx} variant="secondary">
+                                {tag}
+                              </Badge>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                      {suggestion.benefits && suggestion.benefits.length > 0 && (
+                        <div>
+                          <p className="text-sm font-medium mb-1">Benefits</p>
+                          <ul className="list-disc list-inside text-sm text-muted-foreground space-y-1">
+                            {suggestion.benefits.map((benefit: string, idx: number) => (
+                              <li key={idx}>{benefit}</li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                      {suggestion.apply_link && (
+                        <div>
+                          <p className="text-sm font-medium mb-1">Apply Link</p>
+                          <a
+                            href={suggestion.apply_link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-sm text-blue-600 hover:underline"
+                          >
+                            {suggestion.apply_link}
+                          </a>
+                        </div>
+                      )}
+                    </CardContent>
+                  )}
+                </Card>
+              ))}
+            </div>
+          )}
+        </div>
+      </DialogContent>
+    </Dialog>
   );
 }

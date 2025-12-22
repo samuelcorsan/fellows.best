@@ -31,6 +31,7 @@ import { filterOpportunities, type Opportunity } from "@/lib/data";
 import { useDebounce } from "@/hooks/use-debounce";
 import { authClient } from "@/lib/auth-client";
 import { SignInDialog } from "@/components/global/sign-in-dialog";
+import { FeedbackButton } from "@/components/global/feedback-button";
 import { toast } from "sonner";
 
 function BrowsePageContent() {
@@ -443,6 +444,7 @@ function BrowsePageContent() {
       </div>
 
       <SignInDialog isOpen={isSignInOpen} onOpenChange={setIsSignInOpen} />
+      <FeedbackButton section="browse" variant="floating" />
     </>
   );
 }

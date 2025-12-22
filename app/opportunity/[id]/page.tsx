@@ -10,6 +10,7 @@ import { CalendarButton } from "@/components/global/calendar-button";
 import { ShareButton } from "@/components/global/share-button";
 import { OpportunityImages } from "@/components/features/opportunity-images";
 import { BadgeList } from "@/components/ui/badge-list";
+import { FeedbackButton } from "@/components/global/feedback-button";
 
 import {
   getDaysUntilDeadline,
@@ -407,6 +408,11 @@ export default async function OpportunityPage({
           </div>
         </div>
       </div>
+      <FeedbackButton 
+        section="opportunity" 
+        opportunityId={opportunity.id}
+        variant="floating" 
+      />
     </>
   );
 }
