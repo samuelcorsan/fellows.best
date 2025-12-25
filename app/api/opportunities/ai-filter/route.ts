@@ -2,6 +2,8 @@ import { NextResponse, type NextRequest } from "next/server";
 import Groq from "groq-sdk";
 import type { Opportunity } from "@/lib/data";
 
+const SEARCH_MODE = process.env.NEXT_PUBLIC_SEARCH_MODE || "ai";
+
 const MAX_REQUEST_SIZE = 2 * 1024 * 1024;
 const GROQ_API_TIMEOUT = 8500;
 const MAX_OPPORTUNITIES = 1000;
@@ -27,6 +29,18 @@ function createTimeoutPromise(timeoutMs: number): Promise<never> {
 
 export async function POST(request: NextRequest) {
   try {
+    // If search mode is text, return error indicating text search should be used
+    if (SEARCH_MODE === "text") {
+      return NextResponse.json(
+        {
+          error:
+            "AI search is disabled. Please use /api/search endpoint for text-based search.",
+          mode: "text",
+        },
+        { status: 400 }
+      );
+    }
+
     const contentLength = request.headers.get("content-length");
     if (contentLength && parseInt(contentLength) > MAX_REQUEST_SIZE) {
       return NextResponse.json(
@@ -97,7 +111,10 @@ export async function POST(request: NextRequest) {
       };
 
       if (opp.eligibility) {
-        summary.eligibility = opp.eligibility.substring(0, TRUNCATE_LIMITS.ELIGIBILITY);
+        summary.eligibility = opp.eligibility.substring(
+          0,
+          TRUNCATE_LIMITS.ELIGIBILITY
+        );
       }
 
       if (opp.benefits && opp.benefits.length > 0) {
@@ -148,7 +165,8 @@ Return the IDs of opportunities that match the user's query. Be inclusive and ma
               opportunity_ids: {
                 type: "array",
                 items: { type: "string" },
-                description: "Array of opportunity IDs that match the user's query",
+                description:
+                  "Array of opportunity IDs that match the user's query",
               },
             },
             required: ["opportunity_ids"],

@@ -15,6 +15,7 @@ import {
   List,
   Loader2,
   Sparkles,
+  SearchX,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -34,20 +35,27 @@ import { SignInDialog } from "@/components/global/sign-in-dialog";
 import { FeedbackButton } from "@/components/global/feedback-button";
 import { toast } from "sonner";
 
-function BrowsePageContent() {
+interface BrowsePageContentProps {
+  initialCategory?: string;
+}
+
+function BrowsePageContent({ initialCategory }: BrowsePageContentProps = {}) {
   const { data: session } = authClient.useSession();
   const searchParams = useSearchParams();
   const [isSignInOpen, setIsSignInOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState(
-    searchParams.get("q") || ""
-  );
+  const [searchQuery, setSearchQuery] = useState(searchParams.get("q") || "");
   const [showOpenOnly, setShowOpenOnly] = useState(true);
   const [opportunities, setOpportunities] = useState<Opportunity[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [aiFilteredOpportunities, setAiFilteredOpportunities] = useState<Opportunity[]>([]);
+  const [aiFilteredOpportunities, setAiFilteredOpportunities] = useState<
+    Opportunity[]
+  >([]);
   const [isAiFiltering, setIsAiFiltering] = useState(false);
+  const [hasSearched, setHasSearched] = useState(false);
+  const searchMode =
+    (process.env.NEXT_PUBLIC_SEARCH_MODE || "ai") === "text" ? "text" : "ai";
   const [filters, setFilters] = useState<FilterOptions>({
-    categories: [],
+    categories: initialCategory ? [initialCategory] : [],
     regions: [],
     tags: [],
     fundingAmount: { min: 0, max: 2000000 },
@@ -64,7 +72,7 @@ function BrowsePageContent() {
   );
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [isFilterOpen, setIsFilterOpen] = useState(false);
-  const debouncedSearchQuery = useDebounce(searchQuery, 500);
+  const debouncedSearchQuery = useDebounce(searchQuery, 700);
   const abortControllerRef = useRef<AbortController | null>(null);
 
   useEffect(() => {
@@ -110,12 +118,15 @@ function BrowsePageContent() {
       abortControllerRef.current.abort();
     }
 
-    async function filterWithAI() {
+    async function performSearch() {
       if (!debouncedSearchQuery.trim()) {
         setAiFilteredOpportunities([]);
         setIsAiFiltering(false);
+        setHasSearched(false);
         return;
       }
+
+      setHasSearched(true);
 
       if (opportunities.length === 0) {
         return;
@@ -124,47 +135,59 @@ function BrowsePageContent() {
       const abortController = new AbortController();
       abortControllerRef.current = abortController;
 
-      const currentDate = new Date();
-      const opportunitiesToFilter = showOpenOnly
-        ? opportunities.filter((opp) => {
-            if (opp.closeDate === "closed") return false;
-            const isOpen =
-              !opp.closeDate || new Date(opp.closeDate) > currentDate;
-            return isOpen;
-          })
-        : opportunities;
-
-      if (opportunitiesToFilter.length === 0) {
-        setAiFilteredOpportunities([]);
-        setIsAiFiltering(false);
-        return;
-      }
-
       setIsAiFiltering(true);
-      
-      const timeoutId = setTimeout(() => {
-        if (!abortController.signal.aborted) {
-          abortController.abort();
-          setAiFilteredOpportunities([]);
-          setIsAiFiltering(false);
-          toast.info("No results found");
-        }
-      }, 5000);
 
       try {
-        const response = await fetch("/api/opportunities/ai-filter", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            query: debouncedSearchQuery,
-            opportunities: opportunitiesToFilter,
-          }),
-          signal: abortController.signal,
-        });
+        let response: Response;
 
-        clearTimeout(timeoutId);
+        if (searchMode === "text") {
+          // Use text search endpoint
+          const searchUrl = new URL("/api/search", window.location.origin);
+          searchUrl.searchParams.set("q", debouncedSearchQuery.trim());
+
+          response = await fetch(searchUrl.toString(), {
+            signal: abortController.signal,
+          });
+        } else {
+          // Use AI filter endpoint
+          const currentDate = new Date();
+          const opportunitiesToFilter = showOpenOnly
+            ? opportunities.filter((opp) => {
+                if (opp.closeDate === "closed") return false;
+                const isOpen =
+                  !opp.closeDate || new Date(opp.closeDate) > currentDate;
+                return isOpen;
+              })
+            : opportunities;
+
+          if (opportunitiesToFilter.length === 0) {
+            setAiFilteredOpportunities([]);
+            setIsAiFiltering(false);
+            return;
+          }
+
+          const timeoutId = setTimeout(() => {
+            if (!abortController.signal.aborted) {
+              abortController.abort();
+              setAiFilteredOpportunities([]);
+              setIsAiFiltering(false);
+            }
+          }, 5000);
+
+          response = await fetch("/api/opportunities/ai-filter", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              query: debouncedSearchQuery,
+              opportunities: opportunitiesToFilter,
+            }),
+            signal: abortController.signal,
+          });
+
+          clearTimeout(timeoutId);
+        }
 
         if (abortController.signal.aborted) {
           return;
@@ -173,29 +196,22 @@ function BrowsePageContent() {
         if (response.ok) {
           const data = await response.json();
           if (Array.isArray(data)) {
-            if (data.length === 0) {
-              toast.info("No results found");
-            }
             setAiFilteredOpportunities(data);
           } else {
-            console.error("AI filter returned non-array data:", data);
+            console.error("Search returned non-array data:", data);
             setAiFilteredOpportunities([]);
-            toast.info("No results found");
           }
         } else {
           const errorData = await response.json().catch(() => ({}));
-          console.error("AI filter error:", response.status, errorData);
+          console.error("Search error:", response.status, errorData);
           setAiFilteredOpportunities([]);
-          toast.info("No results found");
         }
       } catch (error) {
-        clearTimeout(timeoutId);
         if (error instanceof Error && error.name === "AbortError") {
           return;
         }
-        console.error("Error filtering with AI:", error);
+        console.error("Error performing search:", error);
         setAiFilteredOpportunities([]);
-        toast.info("No results found");
       } finally {
         if (!abortController.signal.aborted) {
           setIsAiFiltering(false);
@@ -203,14 +219,14 @@ function BrowsePageContent() {
       }
     }
 
-    filterWithAI();
+    performSearch();
 
     return () => {
       if (abortControllerRef.current) {
         abortControllerRef.current.abort();
       }
     };
-  }, [debouncedSearchQuery, opportunities, showOpenOnly]);
+  }, [debouncedSearchQuery, opportunities, showOpenOnly, searchMode]);
 
   const filteredAndSortedOpportunities = useMemo(() => {
     if (isLoading) return [];
@@ -218,11 +234,20 @@ function BrowsePageContent() {
 
     let filtered: Opportunity[];
 
-    if (debouncedSearchQuery.trim() && aiFilteredOpportunities.length > 0) {
-      filtered = aiFilteredOpportunities;
-    } else if (debouncedSearchQuery.trim() && isAiFiltering) {
-      return [];
+    // If there's a search query, only show search results
+    if (debouncedSearchQuery.trim()) {
+      if (isAiFiltering) {
+        // Still searching, show nothing
+        return [];
+      } else if (hasSearched) {
+        // Search completed, show results (even if empty)
+        filtered = aiFilteredOpportunities;
+      } else {
+        // Search hasn't started yet, show nothing
+        return [];
+      }
     } else {
+      // No search query, show all opportunities
       filtered = opportunities.filter((opportunity) => {
         if (showOpenOnly) {
           const isOpen =
@@ -278,14 +303,12 @@ function BrowsePageContent() {
     isLoading,
     aiFilteredOpportunities,
     isAiFiltering,
+    hasSearched,
   ]);
 
-  const handleItemClick = useCallback(
-    (opportunity: any) => {
-      window.location.href = `/opportunity/${opportunity.id}?from=browse`;
-    },
-    []
-  );
+  const handleItemClick = useCallback((opportunity: any) => {
+    window.location.href = `/opportunity/${opportunity.id}?from=browse`;
+  }, []);
 
   const handleClearFilters = useCallback(() => {
     setSearchQuery("");
@@ -331,6 +354,7 @@ function BrowsePageContent() {
                     value={searchQuery}
                     onChange={setSearchQuery}
                     placeholder="Search for opportunities..."
+                    showAiBadge={searchMode === "ai"}
                   />
                 </div>
               </div>
@@ -380,28 +404,44 @@ function BrowsePageContent() {
               </div>
             </div>
 
-
             {isLoading ? (
               <div className="text-center py-16">
                 <Loader2 className="h-8 w-8 animate-spin text-muted-foreground mx-auto mb-4" />
-                <p className="text-muted-foreground">Loading opportunities...</p>
+                <p className="text-muted-foreground">
+                  Loading opportunities...
+                </p>
               </div>
             ) : debouncedSearchQuery.trim() && isAiFiltering ? (
               <div className="text-center py-24">
-                <div className="relative inline-block mb-6">
-                  <Sparkles className="h-16 w-16 animate-pulse text-purple-500 mx-auto" />
-                  <Loader2 className="h-12 w-12 animate-spin text-purple-500 absolute top-2 left-2" />
-                </div>
-                <p className="text-lg text-muted-foreground font-medium">Filtering with AI...</p>
+                {searchMode === "ai" ? (
+                  <>
+                    <div className="relative inline-block mb-6">
+                      <Sparkles className="h-16 w-16 animate-pulse text-purple-500 mx-auto" />
+                      <Loader2 className="h-12 w-12 animate-spin text-purple-500 absolute top-2 left-2" />
+                    </div>
+                    <p className="text-lg text-muted-foreground font-medium">
+                      Filtering with AI...
+                    </p>
+                  </>
+                ) : (
+                  <>
+                    <Loader2 className="h-12 w-12 animate-spin text-muted-foreground mx-auto mb-4" />
+                    <p className="text-lg text-muted-foreground font-medium">
+                      Searching...
+                    </p>
+                  </>
+                )}
               </div>
             ) : filteredAndSortedOpportunities.length === 0 ? (
               <div className="text-center py-16">
-                <div className="text-6xl mb-4">🔍</div>
+                <SearchX className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
                 <h3 className="text-xl font-semibold mb-2">
                   No opportunities found
                 </h3>
                 <p className="text-muted-foreground mb-4">
-                  Try adjusting your search criteria or filters
+                  {debouncedSearchQuery.trim()
+                    ? "No results match your search query. Try different keywords or adjust your filters."
+                    : "Try adjusting your search criteria or filters"}
                 </p>
                 <Button onClick={handleClearFilters}>Clear all filters</Button>
               </div>
@@ -472,3 +512,5 @@ export default function BrowsePage() {
     </Suspense>
   );
 }
+
+export { BrowsePageContent };
