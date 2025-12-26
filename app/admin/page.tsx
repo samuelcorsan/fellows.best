@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import * as React from "react";
 import { useSearchParams } from "next/navigation";
 import Image from "next/image";
@@ -58,7 +58,7 @@ type FeedbackItem = {
   };
 };
 
-export default function AdminPage() {
+function AdminPageContent() {
   const searchParams = useSearchParams();
   const token = searchParams.get("token");
   const [opportunities, setOpportunities] = useState<AdminOpportunity[]>([]);
@@ -95,7 +95,7 @@ export default function AdminPage() {
 
   useEffect(() => {
     loadOpportunities();
-  }, []);
+  }, [token]);
 
   const openDeleteDialog = (id: string) => {
     setPendingDeleteId(id);
@@ -399,6 +399,7 @@ export default function AdminPage() {
       <SuggestionsModal
         isOpen={suggestionsOpen}
         onOpenChange={setSuggestionsOpen}
+        token={token}
       />
     </div>
   );
@@ -407,12 +408,12 @@ export default function AdminPage() {
 function SuggestionsModal({
   isOpen,
   onOpenChange,
+  token,
 }: {
   isOpen: boolean;
   onOpenChange: (open: boolean) => void;
+  token: string | null;
 }) {
-  const searchParams = useSearchParams();
-  const token = searchParams.get("token");
   const [suggestions, setSuggestions] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [statusFilter, setStatusFilter] = useState<"pending" | "accepted" | "rejected">("pending");
@@ -672,5 +673,19 @@ function SuggestionsModal({
         </div>
       </DialogContent>
     </Dialog>
+  );
+}
+
+export default function AdminPage() {
+  return (
+    <Suspense fallback={
+      <div className="container mx-auto px-4 py-10">
+        <div className="flex items-center justify-center py-20">
+          <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+        </div>
+      </div>
+    }>
+      <AdminPageContent />
+    </Suspense>
   );
 }
