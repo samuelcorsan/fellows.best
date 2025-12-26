@@ -17,7 +17,6 @@ fellows.best aggregates opportunities from diverse sources, visualizes upcoming 
 
 - **Frontend**: Next.js 15, React, TypeScript, TailwindCSS, shadcn/ui
 - **Backend**: Next.js
-- **Authentication**: Better Auth
 - **Deployment**: Vercel
 
 ## Links

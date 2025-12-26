@@ -14,8 +14,6 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
-import { authClient } from "@/lib/auth-client";
-import { SignInDialog } from "@/components/global/sign-in-dialog";
 import { toast } from "sonner";
 
 interface FeedbackButtonProps {
@@ -31,9 +29,7 @@ export function FeedbackButton({
   variant = "floating",
   className,
 }: FeedbackButtonProps) {
-  const { data: session } = authClient.useSession();
   const [isOpen, setIsOpen] = useState(false);
-  const [isSignInOpen, setIsSignInOpen] = useState(false);
   const [message, setMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   
@@ -52,10 +48,6 @@ export function FeedbackButton({
   ];
 
   const handleClick = () => {
-    if (!session) {
-      setIsSignInOpen(true);
-      return;
-    }
     setIsOpen(true);
     // Reset state when opening
     if (isOpportunity) {
@@ -334,7 +326,6 @@ export function FeedbackButton({
             )}
           </DialogContent>
         </Dialog>
-        <SignInDialog isOpen={isSignInOpen} onOpenChange={setIsSignInOpen} />
       </>
     );
   }
@@ -491,7 +482,6 @@ export function FeedbackButton({
             )}
           </DialogContent>
         </Dialog>
-        <SignInDialog isOpen={isSignInOpen} onOpenChange={setIsSignInOpen} />
       </>
     );
   }
@@ -644,7 +634,6 @@ export function FeedbackButton({
           )}
         </DialogContent>
       </Dialog>
-      <SignInDialog isOpen={isSignInOpen} onOpenChange={setIsSignInOpen} />
     </>
   );
 }

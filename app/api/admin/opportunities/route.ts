@@ -10,6 +10,16 @@ import {
 import { uploadFileToCloudinary } from "@/lib/cloudinary";
 
 export async function GET(request: NextRequest) {
+  const adminToken = process.env.ADMIN_TOKEN;
+  if (!adminToken) {
+    return NextResponse.json({ error: "Admin token not configured" }, { status: 500 });
+  }
+  const { searchParams } = new URL(request.url);
+  const token = searchParams.get("token");
+  if (token !== adminToken) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+  
   try {
     const { searchParams } = new URL(request.url);
     const id = searchParams.get("id");
@@ -36,6 +46,16 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
+  const adminToken = process.env.ADMIN_TOKEN;
+  if (!adminToken) {
+    return NextResponse.json({ error: "Admin token not configured" }, { status: 500 });
+  }
+  const { searchParams } = new URL(request.url);
+  const token = searchParams.get("token");
+  if (token !== adminToken) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+  
   try {
     const formData = await request.formData();
     const payload = formData.get("payload");

@@ -1,36 +1,34 @@
-import { betterFetch } from "@better-fetch/fetch";
-import type { auth } from "@/lib/auth";
 import { NextRequest, NextResponse } from "next/server";
 
-type Session = typeof auth.$Infer.Session;
-
 export async function middleware(request: NextRequest) {
-  const { data: session } = await betterFetch<Session>(
-    "/api/auth/get-session",
-    {
-      baseURL: request.nextUrl.origin,
-      headers: {
-        cookie: request.headers.get("cookie") || "",
-      },
+  const adminToken = process.env.ADMIN_TOKEN;
+  
+  const isAdminRoute = request.nextUrl.pathname.startsWith("/admin");
+  const isAdminApiRoute = request.nextUrl.pathname.startsWith("/api/admin");
+
+  // Check token for admin routes
+  if (isAdminRoute || isAdminApiRoute) {
+    // Require ADMIN_TOKEN to be set
+    if (!adminToken) {
+      if (isAdminApiRoute) {
+        return NextResponse.json({ error: "Admin token not configured" }, { status: 500 });
+      }
+      return NextResponse.redirect(new URL("/", request.url));
     }
-  );
+    
+    const token = request.nextUrl.searchParams.get("token");
 
-  const adminId = process.env.ADMIN_USER_ID;
-  const isApi = request.nextUrl.pathname.startsWith("/api/");
+    // Check if token is valid
+    if (token === adminToken) {
+      return NextResponse.next();
+    }
 
-  // Block unauthenticated
-  if (!session) {
-    if (isApi) {
+    // For API routes, return 401
+    if (isAdminApiRoute) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
-    return NextResponse.redirect(new URL("/", request.url));
-  }
 
-  // Block non-admin
-  if (adminId && session.user?.id !== adminId) {
-    if (isApi) {
-      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
-    }
+    // For page routes, redirect to home
     return NextResponse.redirect(new URL("/", request.url));
   }
 
@@ -38,5 +36,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/settings", "/admin/:path*", "/api/admin/:path*"],
+  matcher: ["/admin/:path*", "/api/admin/:path*"],
 };

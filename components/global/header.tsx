@@ -10,25 +10,12 @@ import {
   Calendar,
   List,
   Plus,
-  User,
   Moon,
   Sun,
-  LogOut,
   Home,
-  Settings,
+  Github,
 } from "lucide-react";
 import { useTheme } from "next-themes";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { authClient } from "@/lib/auth-client";
-import { SignInDialog } from "./sign-in-dialog";
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -56,75 +43,14 @@ export function Header() {
       document.body.style.overflow = "";
     };
   }, [isMenuOpen]);
-  const [isSignInOpen, setIsSignInOpen] = useState(false);
   const { theme, setTheme } = useTheme();
-  const { data: session, isPending } = authClient.useSession();
   const pathname = usePathname();
-
-  const handleSignOut = async () => {
-    try {
-      await authClient.signOut();
-    } catch (error) {
-      console.error("Failed to sign out:", error);
-    }
-  };
 
   const navigation = [
     { name: "Home", href: "/", icon: Home },
     { name: "Browse", href: "/browse", icon: List },
     { name: "Submit", href: "/submit", icon: Plus },
   ];
-
-  const UserMenu = () => {
-    if (isPending || !session) {
-      return <Button onClick={() => setIsSignInOpen(true)}>Get Started</Button>;
-    }
-
-    return (
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button variant="ghost" className="relative h-10 w-10 rounded-full">
-            <Avatar className="h-10 w-10">
-              <AvatarImage
-                src={session.user.image || ""}
-                alt={session.user.name || ""}
-              />
-              <AvatarFallback>
-                {session.user.name?.[0]?.toUpperCase()}
-              </AvatarFallback>
-            </Avatar>
-            <span className="sr-only">User menu</span>
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent className="w-56" align="end" forceMount>
-          <DropdownMenuLabel className="font-normal">
-            <div className="flex flex-col space-y-1">
-              <p className="text-sm font-medium leading-none">
-                {session.user.name}
-              </p>
-              <p className="text-xs leading-none text-muted-foreground">
-                {session.user.email}
-              </p>
-            </div>
-          </DropdownMenuLabel>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem asChild>
-            <Link href="/settings" className="cursor-pointer">
-              <Settings className="mr-2 h-4 w-4" />
-              Settings
-            </Link>
-          </DropdownMenuItem>
-          <DropdownMenuItem
-            onClick={handleSignOut}
-            className="cursor-pointer text-red-600 focus:text-red-600"
-          >
-            <LogOut className="mr-2 h-4 w-4" />
-            Sign out
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
-    );
-  };
 
   return (
     <>
@@ -178,7 +104,16 @@ export function Header() {
                 <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
                 <span className="sr-only">Toggle theme</span>
               </Button>
-              <UserMenu />
+              <Button asChild>
+                <Link
+                  href="https://github.com/samuelcorsan/fellows.best"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Github className="mr-2 h-4 w-4" />
+                  Contribute
+                </Link>
+              </Button>
             </div>
 
             <div className="flex items-center space-x-2 md:hidden">
@@ -239,60 +174,18 @@ export function Header() {
 
                   <div className="mt-8 pt-8 border-t">
                     <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-4">
-                      Account
+                      Contribute
                     </p>
-                    {isPending || !session ? (
-                      <button
-                        onClick={() => {
-                          setIsSignInOpen(true);
-                          setIsMenuOpen(false);
-                        }}
-                        className="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg transition-all duration-200 text-foreground hover:bg-muted w-full text-left"
-                      >
-                        <User className="h-5 w-5 flex-shrink-0" />
-                        <span>Get Started</span>
-                      </button>
-                    ) : (
-                      <div className="space-y-1">
-                        <div className="flex items-center gap-3 px-4 py-3 mb-3">
-                          <Avatar className="h-8 w-8">
-                            <AvatarImage
-                              src={session.user.image || ""}
-                              alt={session.user.name || ""}
-                            />
-                            <AvatarFallback className="text-xs">
-                              {session.user.name?.[0]?.toUpperCase()}
-                            </AvatarFallback>
-                          </Avatar>
-                          <div className="flex-1 min-w-0">
-                            <p className="text-sm font-medium text-foreground truncate">
-                              {session.user.name}
-                            </p>
-                            <p className="text-xs text-muted-foreground truncate">
-                              {session.user.email}
-                            </p>
-                          </div>
-                        </div>
-                        <Link
-                          href="/settings"
-                          onClick={() => setIsMenuOpen(false)}
-                          className="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg transition-all duration-200 text-foreground hover:bg-muted"
-                        >
-                          <Settings className="h-5 w-5 flex-shrink-0" />
-                          <span>Settings</span>
-                        </Link>
-                        <button
-                          onClick={() => {
-                            handleSignOut();
-                            setIsMenuOpen(false);
-                          }}
-                          className="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg transition-all duration-200 text-red-600 hover:bg-red-50 dark:hover:bg-red-950/20 w-full text-left"
-                        >
-                          <LogOut className="h-5 w-5 flex-shrink-0" />
-                          <span>Sign Out</span>
-                        </button>
-                      </div>
-                    )}
+                    <Link
+                      href="https://github.com/samuelcorsan/fellows.best"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => setIsMenuOpen(false)}
+                      className="flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg transition-all duration-200 text-foreground hover:bg-muted w-full text-left"
+                    >
+                      <Github className="h-5 w-5 flex-shrink-0" />
+                      <span>Contribute</span>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -300,8 +193,6 @@ export function Header() {
           )}
         </div>
       </header>
-
-      <SignInDialog isOpen={isSignInOpen} onOpenChange={setIsSignInOpen} />
     </>
   );
 }

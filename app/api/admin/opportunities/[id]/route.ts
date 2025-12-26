@@ -13,6 +13,16 @@ type RouteParams = {
 };
 
 export async function PUT(request: NextRequest, { params }: RouteParams) {
+  const adminToken = process.env.ADMIN_TOKEN;
+  if (!adminToken) {
+    return NextResponse.json({ error: "Admin token not configured" }, { status: 500 });
+  }
+  const { searchParams } = new URL(request.url);
+  const token = searchParams.get("token");
+  if (token !== adminToken) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+  
   const { id: paramId } = await params;
   console.error("[admin:PUT] updating", paramId);
 
@@ -119,7 +129,17 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
   }
 }
 
-export async function DELETE(_request: NextRequest, { params }: RouteParams) {
+export async function DELETE(request: NextRequest, { params }: RouteParams) {
+  const adminToken = process.env.ADMIN_TOKEN;
+  if (!adminToken) {
+    return NextResponse.json({ error: "Admin token not configured" }, { status: 500 });
+  }
+  const { searchParams } = new URL(request.url);
+  const token = searchParams.get("token");
+  if (token !== adminToken) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+  
   const { id } = await params;
 
   try {

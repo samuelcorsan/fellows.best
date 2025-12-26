@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import * as React from "react";
+import { useSearchParams } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { toast } from "sonner";
@@ -58,6 +59,8 @@ type FeedbackItem = {
 };
 
 export default function AdminPage() {
+  const searchParams = useSearchParams();
+  const token = searchParams.get("token");
   const [opportunities, setOpportunities] = useState<AdminOpportunity[]>([]);
   const [loading, setLoading] = useState(false);
   const [deletingId, setDeletingId] = useState<string | null>(null);
@@ -73,7 +76,8 @@ export default function AdminPage() {
   const loadOpportunities = async () => {
     setLoading(true);
     try {
-      const response = await fetch("/api/admin/opportunities", {
+      const url = token ? `/api/admin/opportunities?token=${token}` : "/api/admin/opportunities";
+      const response = await fetch(url, {
         cache: "no-store",
       });
       if (!response.ok) {
@@ -103,7 +107,8 @@ export default function AdminPage() {
     if (!pendingDeleteId) return;
     setDeletingId(pendingDeleteId);
     try {
-      const response = await fetch(`/api/admin/opportunities/${pendingDeleteId}`, {
+      const url = token ? `/api/admin/opportunities/${pendingDeleteId}?token=${token}` : `/api/admin/opportunities/${pendingDeleteId}`;
+      const response = await fetch(url, {
         method: "DELETE",
       });
       if (!response.ok) {
@@ -133,7 +138,8 @@ export default function AdminPage() {
     setFeedback([]);
 
     try {
-      const response = await fetch(`/api/admin/feedback/${opportunityId}`);
+      const url = token ? `/api/admin/feedback/${opportunityId}?token=${token}` : `/api/admin/feedback/${opportunityId}`;
+      const response = await fetch(url);
       if (response.ok) {
         const data = await response.json();
         setFeedback(data.feedback || []);
@@ -166,7 +172,7 @@ export default function AdminPage() {
             <RefreshCw className="mr-2 h-4 w-4" />
             Refresh
           </Button>
-          <Link href="/admin/new">
+          <Link href={token ? `/admin/new?token=${token}` : "/admin/new"}>
             <Button>
               <Plus className="mr-2 h-4 w-4" />
               Add opportunity
@@ -255,7 +261,7 @@ export default function AdminPage() {
                       <MessageSquare className="mr-2 h-4 w-4" />
                       Feedback
                     </Button>
-                    <Link href={`/admin/new?id=${opportunity.id}`}>
+                    <Link href={token ? `/admin/new?id=${opportunity.id}&token=${token}` : `/admin/new?id=${opportunity.id}`}>
                       <Button size="sm" variant="outline">
                         <Pencil className="mr-2 h-4 w-4" />
                         Edit
@@ -405,6 +411,8 @@ function SuggestionsModal({
   isOpen: boolean;
   onOpenChange: (open: boolean) => void;
 }) {
+  const searchParams = useSearchParams();
+  const token = searchParams.get("token");
   const [suggestions, setSuggestions] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [statusFilter, setStatusFilter] = useState<"pending" | "accepted" | "rejected">("pending");
@@ -412,7 +420,8 @@ function SuggestionsModal({
   const loadSuggestions = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`/api/admin/suggestions?status=${statusFilter}`);
+      const url = token ? `/api/admin/suggestions?status=${statusFilter}&token=${token}` : `/api/admin/suggestions?status=${statusFilter}`;
+      const response = await fetch(url);
       if (response.ok) {
         const data = await response.json();
         setSuggestions(data.suggestions || []);
@@ -429,7 +438,8 @@ function SuggestionsModal({
 
   const handleLike = async (id: string) => {
     try {
-      const response = await fetch("/api/admin/suggestions", {
+      const url = token ? `/api/admin/suggestions?token=${token}` : "/api/admin/suggestions";
+      const response = await fetch(url, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id, status: "accepted" }),
@@ -448,14 +458,16 @@ function SuggestionsModal({
 
   const handleDislike = async (id: string) => {
     try {
-      const response = await fetch("/api/admin/suggestions", {
+      const url = token ? `/api/admin/suggestions?token=${token}` : "/api/admin/suggestions";
+      const response = await fetch(url, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id, status: "rejected" }),
       });
       if (response.ok) {
         // Delete rejected suggestions
-        await fetch(`/api/admin/suggestions?id=${id}`, {
+        const deleteUrl = token ? `/api/admin/suggestions?id=${id}&token=${token}` : `/api/admin/suggestions?id=${id}`;
+        await fetch(deleteUrl, {
           method: "DELETE",
         });
         toast.success("Suggestion rejected and removed");

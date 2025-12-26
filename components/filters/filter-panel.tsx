@@ -9,8 +9,8 @@ import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Slider } from "@/components/ui/slider";
-import { authClient } from "@/lib/auth-client";
-import { SignInDialog } from "@/components/global/sign-in-dialog";
+import { Github } from "lucide-react";
+import Link from "next/link";
 
 export interface FilterOptions {
   categories: string[];
@@ -132,8 +132,6 @@ export function FilterPanel({
   onToggle,
 }: FilterPanelProps) {
   const [expandedRegions, setExpandedRegions] = useState<string[]>([]);
-  const [isSignInOpen, setIsSignInOpen] = useState(false);
-  const { data: session } = authClient.useSession();
 
   const toggleRegionExpanded = (region: string) => {
     setExpandedRegions((prev) =>
@@ -236,19 +234,6 @@ export function FilterPanel({
       </div>
 
       <div className={`lg:block ${isOpen ? "block" : "hidden"} relative`}>
-        {!session && (
-          <div className="absolute inset-0 bg-background/60 backdrop-blur-[2px] z-10 flex items-start justify-center pt-20">
-            <div className="text-center p-4">
-              <h3 className="font-semibold mb-2">
-                Discover Your Perfect Fellowship
-              </h3>
-              <p className="text-muted-foreground mb-4">
-                Sign in to unlock powerful filtering options
-              </p>
-              <Button onClick={() => setIsSignInOpen(true)}>Get Started</Button>
-            </div>
-          </div>
-        )}
         <Card>
           <CardHeader>
             <div className="flex items-center justify-between">
@@ -512,7 +497,18 @@ export function FilterPanel({
         </Card>
       </div>
 
-      <SignInDialog isOpen={isSignInOpen} onOpenChange={setIsSignInOpen} />
+      <div className="mt-6 text-center">
+        <Button asChild variant="outline">
+          <Link
+            href="https://github.com/samuelcorsan/fellows.best"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Github className="mr-2 h-4 w-4" />
+            Contribute
+          </Link>
+        </Button>
+      </div>
     </>
   );
 }

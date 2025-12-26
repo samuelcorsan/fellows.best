@@ -30,8 +30,6 @@ import { FilterPanel, FilterOptions } from "@/components/filters/filter-panel";
 import { OpportunityCard } from "@/components/features/opportunity-card";
 import { filterOpportunities, type Opportunity } from "@/lib/data";
 import { useDebounce } from "@/hooks/use-debounce";
-import { authClient } from "@/lib/auth-client";
-import { SignInDialog } from "@/components/global/sign-in-dialog";
 import { FeedbackButton } from "@/components/global/feedback-button";
 import { toast } from "sonner";
 
@@ -40,9 +38,7 @@ interface BrowsePageContentProps {
 }
 
 function BrowsePageContent({ initialCategory }: BrowsePageContentProps = {}) {
-  const { data: session } = authClient.useSession();
   const searchParams = useSearchParams();
-  const [isSignInOpen, setIsSignInOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState(searchParams.get("q") || "");
   const [showOpenOnly, setShowOpenOnly] = useState(true);
   const [opportunities, setOpportunities] = useState<Opportunity[]>([]);
@@ -288,16 +284,11 @@ function BrowsePageContent({ initialCategory }: BrowsePageContentProps = {}) {
       }
     });
 
-    if (!session) {
-      filtered = filtered.slice(0, 6);
-    }
-
     return filtered;
   }, [
     debouncedSearchQuery,
     filters,
     sortBy,
-    session,
     showOpenOnly,
     opportunities,
     isLoading,
@@ -463,27 +454,12 @@ function BrowsePageContent({ initialCategory }: BrowsePageContentProps = {}) {
                     />
                   ))}
                 </div>
-                {!session && (
-                  <div className="mt-8 text-center p-6 border rounded-lg bg-muted/50">
-                    <h3 className="text-xl font-semibold mb-2">
-                      Want to see more opportunities?
-                    </h3>
-                    <p className="text-muted-foreground mb-4">
-                      Sign in to access all available fellowships and
-                      opportunities
-                    </p>
-                    <Button onClick={() => setIsSignInOpen(true)}>
-                      Sign in to view more
-                    </Button>
-                  </div>
-                )}
               </>
             )}
           </div>
         </div>
       </div>
 
-      <SignInDialog isOpen={isSignInOpen} onOpenChange={setIsSignInOpen} />
       <FeedbackButton section="browse" variant="floating" />
     </>
   );

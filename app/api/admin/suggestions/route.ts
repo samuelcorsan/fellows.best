@@ -1,4 +1,3 @@
-import { auth } from "@/lib/auth";
 import { MongoClient, ObjectId, type Document } from "mongodb";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -27,15 +26,17 @@ async function getSuggestionsCollection() {
 }
 
 export async function GET(request: NextRequest) {
+  const adminToken = process.env.ADMIN_TOKEN;
+  if (!adminToken) {
+    return NextResponse.json({ error: "Admin token not configured" }, { status: 500 });
+  }
+  const { searchParams } = new URL(request.url);
+  const token = searchParams.get("token");
+  if (token !== adminToken) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+  
   try {
-    const session = await auth.api.getSession({
-      headers: request.headers,
-    });
-
-    if (!session) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-
     const { searchParams } = new URL(request.url);
     const status = searchParams.get("status") || "pending";
 
@@ -77,15 +78,17 @@ export async function GET(request: NextRequest) {
 }
 
 export async function PUT(request: NextRequest) {
+  const adminToken = process.env.ADMIN_TOKEN;
+  if (!adminToken) {
+    return NextResponse.json({ error: "Admin token not configured" }, { status: 500 });
+  }
+  const { searchParams } = new URL(request.url);
+  const token = searchParams.get("token");
+  if (token !== adminToken) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+  
   try {
-    const session = await auth.api.getSession({
-      headers: request.headers,
-    });
-
-    if (!session) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-
     const { id, status } = await request.json();
 
     if (!id || !status) {
@@ -129,15 +132,17 @@ export async function PUT(request: NextRequest) {
 }
 
 export async function DELETE(request: NextRequest) {
+  const adminToken = process.env.ADMIN_TOKEN;
+  if (!adminToken) {
+    return NextResponse.json({ error: "Admin token not configured" }, { status: 500 });
+  }
+  const { searchParams } = new URL(request.url);
+  const token = searchParams.get("token");
+  if (token !== adminToken) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+  
   try {
-    const session = await auth.api.getSession({
-      headers: request.headers,
-    });
-
-    if (!session) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-
     const { searchParams } = new URL(request.url);
     const id = searchParams.get("id");
 

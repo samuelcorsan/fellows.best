@@ -83,6 +83,7 @@ function AdminNewContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const editingId = searchParams.get("id");
+  const token = searchParams.get("token");
 
   const [form, setForm] = useState<FormState>(emptyForm);
   const [logoFile, setLogoFile] = useState<File | null>(null);
@@ -118,7 +119,8 @@ function AdminNewContent() {
     const loadExisting = async () => {
       setLoadingExisting(true);
       try {
-        const res = await fetch(`/api/admin/opportunities?id=${encodeURIComponent(id)}`, {
+        const url = token ? `/api/admin/opportunities?id=${encodeURIComponent(id)}&token=${token}` : `/api/admin/opportunities?id=${encodeURIComponent(id)}`;
+        const res = await fetch(url, {
           cache: "no-store",
         });
         if (!res.ok) {
@@ -291,8 +293,8 @@ function AdminNewContent() {
       if (bannerFile) formData.append("banner", bannerFile);
 
       const endpoint = editingId
-        ? `/api/admin/opportunities/${editingId}`
-        : "/api/admin/opportunities";
+        ? (token ? `/api/admin/opportunities/${editingId}?token=${token}` : `/api/admin/opportunities/${editingId}`)
+        : (token ? `/api/admin/opportunities?token=${token}` : "/api/admin/opportunities");
       const method = editingId ? "PUT" : "POST";
 
       const response = await fetch(endpoint, {
@@ -306,7 +308,7 @@ function AdminNewContent() {
       }
 
       toast.success(editingId ? "Opportunity updated" : "Opportunity created");
-      router.push("/admin");
+      router.push(token ? `/admin?token=${token}` : "/admin");
     } catch (error) {
       toast.error(
         error instanceof Error ? error.message : "Something went wrong"
@@ -353,7 +355,7 @@ function AdminNewContent() {
             type="button"
             variant="outline"
             size="icon"
-            onClick={() => router.push("/admin")}
+            onClick={() => router.push(token ? `/admin?token=${token}` : "/admin")}
           >
             <ArrowLeft className="h-4 w-4" />
           </Button>

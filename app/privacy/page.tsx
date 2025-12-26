@@ -71,14 +71,6 @@ export default function PrivacyPage() {
               data.
             </li>
             <li>
-              <strong>Neon.tech:</strong> For database services and data storage.
-              Your application data is securely stored and managed through
-              Neon&apos;s PostgreSQL database platform.
-            </li>
-            <li>
-              <strong>Better Auth:</strong> For secure authentication services.
-            </li>
-            <li>
               <strong>MongoDB:</strong> For fellowship storage and data
               management. Fellowships data is securely stored and managed
               through MongoDB&apos;s database platform.
