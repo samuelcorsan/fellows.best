@@ -77,5 +77,61 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     })
   );
 
-  return [...staticRoutes, ...opportunityRoutes];
+  // Category pages
+  const categoryRoutes: MetadataRoute.Sitemap = [
+    "accelerator",
+    "fellowship",
+    "incubator",
+    "venture-capital",
+    "grant",
+    "residency",
+    "competition",
+    "research",
+    "developer-program",
+  ].map((category) => ({
+    url: `${baseUrl}/${category}`,
+    lastModified: new Date(currentDate),
+    changeFrequency: "daily",
+    priority: 0.8,
+  }));
+
+  // Guide pages - generate dynamically based on opportunities
+  let guideRoutes: MetadataRoute.Sitemap = [];
+  try {
+    const { generateGuideConfigs } = await import("@/lib/guide-generator");
+    const guideConfigs = generateGuideConfigs(activeOpportunities);
+    
+    // Add all generated guides at root level (they're accessible via [category] route)
+    guideRoutes = Object.values(guideConfigs).map((config) => ({
+      url: `${baseUrl}/${config.slug}`,
+      lastModified: new Date(currentDate),
+      changeFrequency: "weekly" as const,
+      priority: 0.7,
+    }));
+  } catch (error) {
+    console.error("Error generating guide routes for sitemap", error);
+  }
+
+  // Comparison pages - generate dynamically
+  let comparisonRoutes: MetadataRoute.Sitemap = [];
+  try {
+    const { generateComparisonConfigs } = await import("@/lib/comparison-generator");
+    const comparisons = generateComparisonConfigs(activeOpportunities);
+    comparisonRoutes = comparisons.map((comp) => ({
+      url: `${baseUrl}/compare/${comp.id1}/${comp.id2}`,
+      lastModified: new Date(currentDate),
+      changeFrequency: "monthly" as const,
+      priority: 0.6,
+    }));
+  } catch (error) {
+    console.error("Error generating comparison routes for sitemap", error);
+  }
+
+  return [
+    ...staticRoutes,
+    ...opportunityRoutes,
+    ...categoryRoutes,
+    ...guideRoutes,
+    ...comparisonRoutes,
+  ];
 }

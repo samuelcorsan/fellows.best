@@ -4,14 +4,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
+import type { Opportunity } from "@/lib/data";
+import { generateAltText } from "@/lib/image-seo";
 
 interface OpportunityImagesProps {
-  opportunity: {
-    id: string;
-    name: string;
-    logoUrl: string;
-    shareImageUrl?: string;
-  };
+  opportunity: Opportunity;
   backUrl: string;
 }
 
@@ -19,6 +16,11 @@ export function OpportunityImages({
   opportunity,
   backUrl,
 }: OpportunityImagesProps) {
+  const logoAltText = generateAltText(opportunity);
+  const bannerAltText = opportunity.shareImageUrl 
+    ? `${opportunity.name} banner image`
+    : logoAltText;
+
   return (
     <div className="relative w-full mb-12 sm:mb-16">
       <div className="relative w-full h-48 sm:h-64 md:h-80 rounded-2xl overflow-hidden shadow-lg">
@@ -26,7 +28,7 @@ export function OpportunityImages({
           <>
             <Image
               src={opportunity.shareImageUrl}
-              alt={`${opportunity.name} banner`}
+              alt={bannerAltText}
               fill
               className="object-cover"
               priority
@@ -40,7 +42,7 @@ export function OpportunityImages({
               <div className="relative flex-shrink-0">
                 <Image
                   src={opportunity.logoUrl}
-                  alt={`${opportunity.name} logo`}
+                  alt={logoAltText}
                   width={120}
                   height={120}
                   priority
@@ -74,7 +76,7 @@ export function OpportunityImages({
           <div className="relative">
             <Image
               src={opportunity.logoUrl}
-              alt={`${opportunity.name} logo`}
+              alt={logoAltText}
               width={80}
               height={80}
               className="rounded-xl object-cover w-16 h-16 sm:w-20 sm:h-20 border-4 border-white shadow-2xl bg-white"
