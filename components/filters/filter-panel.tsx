@@ -382,9 +382,15 @@ export function FilterPanel({
                     />
                     <Label
                       htmlFor={`category-${category}`}
-                      className="text-sm capitalize cursor-pointer"
+                      className="text-sm cursor-pointer"
                     >
-                      {category}
+                      {category
+                        .split("_")
+                        .map(
+                          (word) =>
+                            word.charAt(0).toUpperCase() + word.slice(1)
+                        )
+                        .join(" ")}
                     </Label>
                   </div>
                 ))}
