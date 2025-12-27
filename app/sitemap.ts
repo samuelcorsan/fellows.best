@@ -3,17 +3,8 @@ import type { Opportunity } from "@/lib/data";
 
 export const dynamic = "force-dynamic";
 
-function getBaseUrl() {
-  const raw = process.env.NEXT_PUBLIC_APP_BASE_URL;
-  if (raw?.startsWith("http://") || raw?.startsWith("https://")) return raw;
-  if (raw) return `https://${raw}`;
-  return "http://localhost:3000";
-}
-
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl =
-    process.env.NEXT_PUBLIC_SITE_URL ||
-    (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "https://fellows.best");
+  const baseUrl = process.env.NEXT_PUBLIC_APP_BASE_URL || "https://fellows.best";
   const currentDate = new Date().toISOString().split("T")[0];
 
   const staticRoutes: MetadataRoute.Sitemap = [
@@ -54,7 +45,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   try {
     const apiUrl = new URL(
       "/api/opportunities",
-      getBaseUrl()
+      baseUrl
     );
     const response = await fetch(apiUrl, { cache: "no-store" });
 
