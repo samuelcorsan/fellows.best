@@ -1,5 +1,6 @@
 import { MongoClient, type Document } from "mongodb";
 import { NextRequest, NextResponse } from "next/server";
+import { checkBotId } from "botid/server";
 
 const uri = process.env.MONGODB_URI;
 const dbName = process.env.MONGODB_DB;
@@ -26,6 +27,12 @@ async function getFeedbackCollection() {
 }
 
 export async function POST(request: NextRequest) {
+  const verification = await checkBotId();
+
+  if (verification.isBot) {
+    return NextResponse.json({ error: "Access denied" }, { status: 403 });
+  }
+
   try {
     const { message, section, opportunity_id, issues, suggestion } = await request.json();
 

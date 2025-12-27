@@ -1,4 +1,5 @@
 import { NextConfig } from "next";
+import { withBotId } from 'botid/next/config';
 
 /** @type {import('next').NextConfig} */
 const nextConfig: NextConfig = {
@@ -7,7 +8,7 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "**",
+        hostname: "res.cloudinary.com",
       },
     ],
     formats: ['image/avif', 'image/webp'],
@@ -28,20 +29,12 @@ const nextConfig: NextConfig = {
               "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline' https://va.vercel-scripts.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https:; frame-src 'self' https://www.youtube.com https://youtube.com; frame-ancestors 'none';",
           },
           {
-            key: "X-Frame-Options",
-            value: "DENY",
-          },
-          {
             key: "X-Content-Type-Options",
             value: "nosniff",
           },
           {
             key: "Referrer-Policy",
             value: "strict-origin-when-cross-origin",
-          },
-          {
-            key: "Cross-Origin-Opener-Policy",
-            value: "same-origin",
           },
           {
             key: "Permissions-Policy",
@@ -63,4 +56,4 @@ const nextConfig: NextConfig = {
   },
 };
 
-module.exports = nextConfig;
+module.exports = withBotId(nextConfig);

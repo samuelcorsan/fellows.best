@@ -1,9 +1,7 @@
 import {
   MongoClient,
   ObjectId,
-  ServerApiVersion,
   type Document,
-  type MongoClientOptions,
 } from "mongodb";
 import { NextResponse, type NextRequest } from "next/server";
 import type { Opportunity } from "@/lib/data";

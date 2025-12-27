@@ -1,5 +1,6 @@
 import { MongoClient, type Document } from "mongodb";
 import { NextRequest, NextResponse } from "next/server";
+import { checkBotId } from "botid/server";
 
 const uri = process.env.MONGODB_URI;
 const dbName = process.env.MONGODB_DB;
@@ -33,6 +34,12 @@ export async function GET(
   request: NextRequest,
   { params }: RouteParams
 ) {
+  const verification = await checkBotId();
+
+  if (verification.isBot) {
+    return NextResponse.json({ error: "Access denied" }, { status: 403 });
+  }
+
   const adminToken = process.env.ADMIN_TOKEN;
   if (!adminToken) {
     return NextResponse.json({ error: "Admin token not configured" }, { status: 500 });
