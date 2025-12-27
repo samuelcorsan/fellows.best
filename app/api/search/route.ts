@@ -6,6 +6,7 @@ import {
   type MongoClientOptions,
 } from "mongodb";
 import { NextResponse, type NextRequest } from "next/server";
+import { checkBotId } from "botid/server";
 import type { Opportunity } from "@/lib/data";
 
 const SEARCH_MODE = process.env.NEXT_PUBLIC_SEARCH_MODE || "ai";
@@ -93,6 +94,12 @@ function mapOpportunity(doc: Document): Opportunity {
 }
 
 export async function GET(request: NextRequest) {
+  const verification = await checkBotId();
+
+  if (verification.isBot) {
+    return NextResponse.json({ error: "Access denied" }, { status: 403 });
+  }
+
   try {
     const { searchParams } = new URL(request.url);
     const query = searchParams.get("q");

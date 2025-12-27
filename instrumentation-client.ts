@@ -45,5 +45,10 @@ initBotId({
       path: '/api/feedback',
       method: 'POST',
     },
+    // Search endpoint
+    {
+      path: '/api/search',
+      method: 'GET',
+    },
   ],
 });
