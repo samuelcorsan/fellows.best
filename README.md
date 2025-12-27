@@ -8,7 +8,6 @@ fellows.best aggregates opportunities from diverse sources, visualizes upcoming 
 
 ## Key Features
 
-- **Worldwide Scanning System**: AI-powered system automatically scans multiple countries worldwide to discover and aggregate currently open fellowships, accelerators, and startup programs
 - **Browse & Search**: Filter opportunities by region, category, deadline status, and tags
 - **Timeline View**: Visualize upcoming deadlines across weeks and months
 - **Community Submissions**: Submit new opportunities to help grow the database

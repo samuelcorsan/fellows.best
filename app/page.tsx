@@ -1,7 +1,6 @@
 import { getCarouselData } from "@/lib/carousel-data";
 import { HeroSection } from "@/components/landing/hero-section";
 import { CarouselSection } from "@/components/landing/carousel-section";
-import { ScrapingSection } from "@/components/landing/scraping-section";
 import { ViewAllOpportunitiesSection } from "@/components/landing/view-all-opportunities-section";
 import { WhatYouGetSection } from "@/components/landing/what-you-get";
 import { ContributeSection } from "@/components/landing/contribute-section";
@@ -58,7 +57,6 @@ export default async function Home() {
       />
       <ViewAllOpportunitiesSection />
       <WhatYouGetSection />
-      <ScrapingSection />
       <ContributeSection />
       </div>
       <FeedbackButton section="home" variant="floating" />
