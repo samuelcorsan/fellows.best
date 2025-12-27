@@ -28,7 +28,7 @@ export function Footer() {
             <ul className="space-y-1">
               <li>
                 <Link
-                  href="/browse?category=fellowship"
+                  href="/fellowship"
                   className="text-muted-foreground hover:text-foreground transition-colors text-sm"
                 >
                   Fellowships
@@ -36,7 +36,7 @@ export function Footer() {
               </li>
               <li>
                 <Link
-                  href="/browse?category=accelerator"
+                  href="/accelerator"
                   className="text-muted-foreground hover:text-foreground transition-colors text-sm"
                 >
                   Accelerators
@@ -44,7 +44,7 @@ export function Footer() {
               </li>
               <li>
                 <Link
-                  href="/browse?category=grant"
+                  href="/grant"
                   className="text-muted-foreground hover:text-foreground transition-colors text-sm"
                 >
                   Grants
@@ -52,7 +52,7 @@ export function Footer() {
               </li>
               <li>
                 <Link
-                  href="/browse?category=hackathon"
+                  href="/competition"
                   className="text-muted-foreground hover:text-foreground transition-colors text-sm"
                 >
                   Hackathons
