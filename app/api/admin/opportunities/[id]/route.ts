@@ -8,6 +8,10 @@ import {
 } from "@/lib/opportunity-admin";
 import { uploadFileToCloudinary } from "@/lib/cloudinary";
 
+// Configure route for larger file uploads
+export const runtime = "nodejs";
+export const maxDuration = 60; // 60 seconds for file uploads
+
 type RouteParams = {
   params: Promise<{ id: string }>;
 };
@@ -59,10 +63,40 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
       );
     }
 
-    const collection = await getOpportunitiesCollection();
+    let collection;
+    try {
+      collection = await getOpportunitiesCollection();
+    } catch (dbError) {
+      console.error("Error connecting to database:", dbError);
+      const errorMessage = dbError instanceof Error ? dbError.message : String(dbError);
+      return NextResponse.json(
+        { 
+          error: "Database connection failed",
+          details: errorMessage.includes("MONGODB") 
+            ? "MongoDB configuration is missing or invalid"
+            : errorMessage
+        },
+        { status: 500 }
+      );
+    }
+
     const filters = buildIdFilter(paramId);
 
-    const existing = await collection.findOne(filters);
+    let existing;
+    try {
+      existing = await collection.findOne(filters);
+    } catch (dbError) {
+      console.error("Error finding opportunity:", dbError);
+      const errorMessage = dbError instanceof Error ? dbError.message : String(dbError);
+      return NextResponse.json(
+        { 
+          error: "Database query failed",
+          details: errorMessage
+        },
+        { status: 500 }
+      );
+    }
+
     if (!existing) {
       console.error("[admin:PUT] not found", paramId);
       return NextResponse.json(
@@ -83,28 +117,66 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
     };
 
     if (logoFile instanceof File && logoFile.size > 0) {
-      updates.logoUrl = await uploadFileToCloudinary(
-        logoFile,
-        `fellows/${id}/logo`
-      );
+      try {
+        updates.logoUrl = await uploadFileToCloudinary(
+          logoFile,
+          `fellows/${id}/logo`
+        );
+      } catch (uploadError) {
+        console.error("Error uploading logo to Cloudinary:", uploadError);
+        const errorMessage = uploadError instanceof Error ? uploadError.message : String(uploadError);
+        return NextResponse.json(
+          { 
+            error: "Failed to upload logo",
+            details: errorMessage.includes("CLOUDINARY_URL") 
+              ? "Cloudinary configuration is missing or invalid"
+              : errorMessage
+          },
+          { status: 500 }
+        );
+      }
     } else {
       updates.logoUrl = existing.logoUrl;
     }
 
     if (bannerFile instanceof File && bannerFile.size > 0) {
-      updates.shareImageUrl = await uploadFileToCloudinary(
-        bannerFile,
-        `fellows/${id}/share-image`
-      );
+      try {
+        updates.shareImageUrl = await uploadFileToCloudinary(
+          bannerFile,
+          `fellows/${id}/share-image`
+        );
+      } catch (uploadError) {
+        console.error("Error uploading banner to Cloudinary:", uploadError);
+        // Banner is optional, so we log but continue
+        const errorMessage = uploadError instanceof Error ? uploadError.message : String(uploadError);
+        console.warn("Banner upload failed, continuing without banner:", errorMessage);
+        // Keep existing banner if upload fails
+        if (existing.shareImageUrl) {
+          updates.shareImageUrl = existing.shareImageUrl;
+        }
+      }
     } else if (existing.shareImageUrl) {
       updates.shareImageUrl = existing.shareImageUrl;
     }
 
-    const updated = await collection.findOneAndUpdate(
-      filters,
-      { $set: updates },
-      { returnDocument: "after" }
-    );
+    let updated;
+    try {
+      updated = await collection.findOneAndUpdate(
+        filters,
+        { $set: updates },
+        { returnDocument: "after" }
+      );
+    } catch (dbError) {
+      console.error("Error updating opportunity in database:", dbError);
+      const errorMessage = dbError instanceof Error ? dbError.message : String(dbError);
+      return NextResponse.json(
+        { 
+          error: "Failed to save opportunity to database",
+          details: errorMessage
+        },
+        { status: 500 }
+      );
+    }
 
     if (!updated) {
       console.error("[admin:PUT] update returned no value", { paramId, filters });
@@ -114,15 +186,29 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
       );
     }
 
-    revalidatePath(`/opportunity/${id}`);
+    try {
+      revalidatePath(`/opportunity/${id}`);
+    } catch (revalidateError) {
+      // Revalidation failure shouldn't block the response
+      console.warn("Failed to revalidate path:", revalidateError);
+    }
 
     return NextResponse.json(mapOpportunityDocument(updated));
   } catch (error) {
     console.error("Error updating opportunity:", error);
+    const errorDetails = error instanceof Error 
+      ? {
+          message: error.message,
+          stack: process.env.NODE_ENV === "development" ? error.stack : undefined,
+          name: error.name,
+        }
+      : { message: String(error) };
+    
     return NextResponse.json(
       {
         error: "Failed to update opportunity",
-        details: error instanceof Error ? error.message : String(error),
+        details: errorDetails.message,
+        ...(process.env.NODE_ENV === "development" && { fullError: errorDetails })
       },
       { status: 500 }
     );

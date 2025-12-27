@@ -9,6 +9,9 @@ import {
 } from "@/lib/opportunity-admin";
 import { uploadFileToCloudinary } from "@/lib/cloudinary";
 
+export const runtime = "nodejs";
+export const maxDuration = 20
+
 export async function GET(request: NextRequest) {
   const adminToken = process.env.ADMIN_TOKEN;
   if (!adminToken) {
@@ -101,12 +104,35 @@ export async function POST(request: NextRequest) {
         ? parsedPayload.id.trim()
         : generateId(normalizedPayload.name);
 
-    const [logoUrl, shareImageUrl] = await Promise.all([
-      uploadFileToCloudinary(logoFile, `fellows/${id}/logo`),
-      bannerFile instanceof File && bannerFile.size > 0
-        ? uploadFileToCloudinary(bannerFile, `fellows/${id}/share-image`)
-        : Promise.resolve<string | undefined>(undefined),
-    ]);
+    let logoUrl: string;
+    let shareImageUrl: string | undefined;
+
+    try {
+      logoUrl = await uploadFileToCloudinary(logoFile, `fellows/${id}/logo`);
+    } catch (uploadError) {
+      console.error("Error uploading logo to Cloudinary:", uploadError);
+      const errorMessage = uploadError instanceof Error ? uploadError.message : String(uploadError);
+      return NextResponse.json(
+        { 
+          error: "Failed to upload logo",
+          details: errorMessage.includes("CLOUDINARY_URL") 
+            ? "Cloudinary configuration is missing or invalid"
+            : errorMessage
+        },
+        { status: 500 }
+      );
+    }
+
+    try {
+      if (bannerFile instanceof File && bannerFile.size > 0) {
+        shareImageUrl = await uploadFileToCloudinary(bannerFile, `fellows/${id}/share-image`);
+      }
+    } catch (uploadError) {
+      console.error("Error uploading banner to Cloudinary:", uploadError);
+      // Banner is optional, so we log but continue
+      const errorMessage = uploadError instanceof Error ? uploadError.message : String(uploadError);
+      console.warn("Banner upload failed, continuing without banner:", errorMessage);
+    }
 
     const now = new Date().toISOString();
     const document = {
@@ -118,10 +144,39 @@ export async function POST(request: NextRequest) {
       updatedAt: now,
     };
 
-    const collection = await getOpportunitiesCollection();
+    let collection;
+    try {
+      collection = await getOpportunitiesCollection();
+    } catch (dbError) {
+      console.error("Error connecting to database:", dbError);
+      const errorMessage = dbError instanceof Error ? dbError.message : String(dbError);
+      return NextResponse.json(
+        { 
+          error: "Database connection failed",
+          details: errorMessage.includes("MONGODB") 
+            ? "MongoDB configuration is missing or invalid"
+            : errorMessage
+        },
+        { status: 500 }
+      );
+    }
 
     // Avoid duplicate IDs if an existing document is found
-    const existing = await collection.findOne(buildIdFilter(id));
+    let existing;
+    try {
+      existing = await collection.findOne(buildIdFilter(id));
+    } catch (dbError) {
+      console.error("Error checking for existing opportunity:", dbError);
+      const errorMessage = dbError instanceof Error ? dbError.message : String(dbError);
+      return NextResponse.json(
+        { 
+          error: "Database query failed",
+          details: errorMessage
+        },
+        { status: 500 }
+      );
+    }
+
     if (existing) {
       return NextResponse.json(
         { error: "An opportunity with this id already exists" },
@@ -129,20 +184,48 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const insertResult = await collection.insertOne(document);
+    let insertResult;
+    try {
+      insertResult = await collection.insertOne(document);
+    } catch (dbError) {
+      console.error("Error inserting opportunity:", dbError);
+      const errorMessage = dbError instanceof Error ? dbError.message : String(dbError);
+      return NextResponse.json(
+        { 
+          error: "Failed to save opportunity to database",
+          details: errorMessage
+        },
+        { status: 500 }
+      );
+    }
+
     const savedDocument = { ...document, _id: insertResult.insertedId };
 
-    revalidatePath(`/opportunity/${id}`);
+    try {
+      revalidatePath(`/opportunity/${id}`);
+    } catch (revalidateError) {
+      // Revalidation failure shouldn't block the response
+      console.warn("Failed to revalidate path:", revalidateError);
+    }
 
     return NextResponse.json(mapOpportunityDocument(savedDocument), {
       status: 201,
     });
   } catch (error) {
     console.error("Error creating opportunity:", error);
+    const errorDetails = error instanceof Error 
+      ? {
+          message: error.message,
+          stack: process.env.NODE_ENV === "development" ? error.stack : undefined,
+          name: error.name,
+        }
+      : { message: String(error) };
+    
     return NextResponse.json(
       { 
         error: "Failed to create opportunity",
-        details: error instanceof Error ? error.message : String(error)
+        details: errorDetails.message,
+        ...(process.env.NODE_ENV === "development" && { fullError: errorDetails })
       },
       { status: 500 }
     );
