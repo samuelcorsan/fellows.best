@@ -1,6 +1,5 @@
 import { MongoClient, ObjectId, type Document } from "mongodb";
 import { NextRequest, NextResponse } from "next/server";
-import { checkBotId } from "botid/server";
 
 const uri = process.env.MONGODB_URI;
 const dbName = process.env.MONGODB_DB;
@@ -27,12 +26,6 @@ async function getSuggestionsCollection() {
 }
 
 export async function GET(request: NextRequest) {
-  const verification = await checkBotId();
-
-  if (verification.isBot) {
-    return NextResponse.json({ error: "Access denied" }, { status: 403 });
-  }
-
   const adminToken = process.env.ADMIN_TOKEN;
   if (!adminToken) {
     return NextResponse.json({ error: "Admin token not configured" }, { status: 500 });
@@ -85,12 +78,6 @@ export async function GET(request: NextRequest) {
 }
 
 export async function PUT(request: NextRequest) {
-  const verification = await checkBotId();
-
-  if (verification.isBot) {
-    return NextResponse.json({ error: "Access denied" }, { status: 403 });
-  }
-
   const adminToken = process.env.ADMIN_TOKEN;
   if (!adminToken) {
     return NextResponse.json({ error: "Admin token not configured" }, { status: 500 });
@@ -145,12 +132,6 @@ export async function PUT(request: NextRequest) {
 }
 
 export async function DELETE(request: NextRequest) {
-  const verification = await checkBotId();
-
-  if (verification.isBot) {
-    return NextResponse.json({ error: "Access denied" }, { status: 403 });
-  }
-
   const adminToken = process.env.ADMIN_TOKEN;
   if (!adminToken) {
     return NextResponse.json({ error: "Admin token not configured" }, { status: 500 });
