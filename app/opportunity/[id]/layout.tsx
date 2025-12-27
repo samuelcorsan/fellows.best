@@ -42,10 +42,12 @@ export async function generateMetadata({
   const title = `${opportunity.name} - Deadlines, Requirements & How to Apply`;
   
   // Optimize description length (150-160 chars for SEO)
-  let description = opportunity.fullDescription || opportunity.description;
-  if (description.length > 160) {
-    description = description.substring(0, 157) + "...";
-  }
+  const { generateOpportunityMetaDescription } = await import("@/lib/meta-optimization");
+  const description = generateOpportunityMetaDescription(
+    opportunity.name,
+    opportunity.fullDescription || opportunity.description,
+    opportunity.organizer
+  );
 
   return {
     title,

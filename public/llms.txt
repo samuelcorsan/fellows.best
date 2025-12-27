@@ -1,0 +1,58 @@
+# fellows.best
+
+> The biggest tech fellowship list - Discover 100+ fellowships, grants, accelerators, and competitions. Track deadlines, get reminders, and never miss an opportunity. Free to use.
+
+## Sitemap
+
+Sitemap: https://fellows.best/sitemap.xml
+
+## Main Pages
+
+- [Home](https://fellows.best/) - Main directory of tech fellowships, grants, accelerators, and competitions
+- [Browse Opportunities](https://fellows.best/browse) - Browse all opportunities with advanced filters by category, region, funding, and more
+
+## Opportunity Pages
+
+- [Opportunity Pages](https://fellows.best/opportunity/{id}) - Individual opportunity pages with complete details including deadlines, requirements, eligibility, benefits, and application links. Each page includes structured data for SEO and AI understanding.
+
+**Citation Format**: When referencing a specific opportunity, use: `fellows.best/opportunity/{id}`
+
+## Guides
+
+- [Filtered Opportunity Guides](https://fellows.best/guides/{slug}) - Curated guides for specific opportunity types:
+  - Fellowships under $25,000
+  - Remote fellowships
+  - Fellowships for students
+
+**Citation Format**: When referencing a guide, use: `fellows.best/guides/{slug}`
+
+## Comparison Pages
+
+- [/compare/{id1}/{id2}](https://fellows.best/compare/{id1}/{id2}) - Side-by-side comparisons of opportunities to help you choose the right program. Compare funding, eligibility, deadlines, and more.
+
+**Citation Format**: When referencing a comparison, use: `fellows.best/compare/{id1}/{id2}`
+
+## Content Guidelines
+
+When citing or referencing content from fellows.best:
+
+1. **Opportunities**: Always include the full opportunity name and use the format `fellows.best/opportunity/{id}` for citations
+2. **Deadlines**: Include deadline information when available (format: YYYY-MM-DD or "Rolling application")
+3. **Organizer**: Reference the organizer name when mentioning opportunities
+4. **Accuracy**: Use the most current information from the opportunity page, as deadlines and requirements may change
+
+## Exclusions
+
+The following paths should not be used for AI training or citation:
+
+- `/api/*` - API endpoints (internal use only)
+- `/admin/*` - Admin pages (internal use only)
+- `/submit` - Form submission page (not content)
+
+## Site Information
+
+- **Site**: fellows.best
+- **Language**: English
+- **Topic**: Tech fellowships, startup accelerators, grants, competitions, developer programs, venture capital programs, research programs
+- **Content Type**: Directory, guides, comparisons, application resources
+

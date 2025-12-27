@@ -13,6 +13,7 @@ import {
   getDaysUntilDeadline,
   getDeadlineUrgency,
 } from "@/lib/data";
+import { generateAltText } from "@/lib/image-seo";
 import { cn } from "@/lib/utils";
 
 const getDeadlineText = (days: number | null): string => {
@@ -68,6 +69,7 @@ export function OpportunityCard({
   const urgency = opportunity.closeDate
     ? getDeadlineUrgency(opportunity.closeDate)
     : "safe";
+  const altText = generateAltText(opportunity);
 
   const urgencyStyles = {
     safe: "border-green-200 bg-green-50 text-green-700 dark:border-green-800 dark:bg-green-950 dark:text-green-300",
@@ -97,7 +99,7 @@ export function OpportunityCard({
             ) : (
               <Image
                 src={opportunity.logoUrl}
-                alt={`${opportunity.name} logo`}
+                alt={altText}
                 width={40}
                 height={40}
                 className="rounded-lg object-cover"
@@ -181,7 +183,7 @@ export function OpportunityCard({
           ) : (
             <Image
               src={opportunity.logoUrl}
-              alt={`${opportunity.name} logo`}
+              alt={altText}
               width={50}
               height={50}
               className="w-[50px] h-[50px] sm:w-[60px] sm:h-[60px] rounded-lg object-cover flex-shrink-0"

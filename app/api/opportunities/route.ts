@@ -113,6 +113,9 @@ export async function GET(request: NextRequest) {
 
       return NextResponse.json(mapOpportunity(document), {
         status: 200,
+        headers: {
+          "Cache-Control": "public, s-maxage=300, stale-while-revalidate=600",
+        },
       });
     }
 
@@ -125,6 +128,9 @@ export async function GET(request: NextRequest) {
 
       return NextResponse.json(opportunities, {
         status: 200,
+        headers: {
+          "Cache-Control": "public, s-maxage=300, stale-while-revalidate=600",
+        },
       });
   } catch (error) {
     console.error("Error fetching opportunities:", error);

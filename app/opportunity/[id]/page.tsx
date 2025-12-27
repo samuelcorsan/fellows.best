@@ -17,6 +17,7 @@ import {
   getDeadlineUrgency,
   type Opportunity,
 } from "@/lib/data";
+import { generateAltText } from "@/lib/image-seo";
 
 function getBaseUrl() {
   const raw = process.env.NEXT_PUBLIC_APP_BASE_URL;
@@ -303,6 +304,7 @@ export default async function OpportunityPage({
                 </p>
               </CardContent>
             </Card>
+
           </div>
 
           <div className="space-y-6">
