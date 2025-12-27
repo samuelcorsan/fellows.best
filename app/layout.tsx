@@ -8,6 +8,7 @@ import { ThemeProvider } from "@/providers/theme-provider";
 import { Toaster } from "sonner";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import '../lib/instrumentation-client';
 
 const geist = Geist({ subsets: ["latin"] });
 
