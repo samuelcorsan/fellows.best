@@ -304,7 +304,8 @@ function AdminNewContent() {
 
       if (!response.ok) {
         const errorBody = await response.json().catch(() => ({}));
-        throw new Error(errorBody.error || "Failed to save opportunity");
+        const errorMessage = errorBody.details || errorBody.error || "Failed to save opportunity";
+        throw new Error(errorMessage);
       }
 
       toast.success(editingId ? "Opportunity updated" : "Opportunity created");
