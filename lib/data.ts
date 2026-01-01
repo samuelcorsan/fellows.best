@@ -34,8 +34,50 @@ export interface Opportunity {
     equityPercentage: number;
     fundingType: "equity-based" | "equity-free" | "mixed";
     isApproximate?: boolean;
+    conditions?: string[];
+    additionalFunding?: string;
   };
   applicationVideo?: string;
+  // Extracted comparison data fields
+  eligibilityDetails?: {
+    ageRange?: { min?: number; max?: number };
+    educationLevel?: string[];
+    experienceRequired?: string;
+    locationRestrictions?: string[];
+    citizenshipRequirements?: string[];
+    industryFocus?: string[];
+    stageRequirements?: string[];
+    otherRequirements?: string[];
+  };
+  benefitsDetails?: {
+    financial?: string[];
+    mentorship?: string[];
+    networking?: string[];
+    resources?: string[];
+    equity?: string[];
+    other?: string[];
+  };
+  program?: {
+    structure?: string;
+    timeline?: {
+      applicationDeadline?: string;
+      programStart?: string;
+      programEnd?: string;
+      duration?: string;
+    };
+    location?: {
+      type?: "remote" | "in-person" | "hybrid";
+      specificLocations?: string[];
+    };
+    commitments?: string[];
+    deliverables?: string[];
+  };
+  selection?: {
+    criteria?: string[];
+    process?: string;
+    timeline?: string;
+    typicalCohortSize?: string;
+  };
 }
 
 export function getDaysUntilDeadline(closeDate: string): number {
