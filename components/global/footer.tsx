@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Calendar, Mail, Github } from "lucide-react";
+import { Calendar, Globe, Github } from "lucide-react";
 
 export function Footer() {
   return (
@@ -84,15 +84,16 @@ export function Footer() {
           </div>
 
           <div>
-            <h3 className="font-semibold mb-3 text-sm">Connect</h3>
+            <h3 className="font-semibold mb-3 text-sm">Made by disamdev</h3>
             <ul className="space-y-1">
               <li>
                 <a
-                  href="mailto:samuel@disam.dev"
+                  href="https://disam.dev"
+                  target="_blank"
                   className="text-muted-foreground hover:text-foreground transition-colors text-sm flex items-center"
                 >
-                  <Mail className="h-3 w-3 mr-2" />
-                  samuel@disam.dev
+                  <Globe className="h-3 w-3 mr-2" />
+                  disam.dev
                 </a>
               </li>
               <li>
@@ -120,7 +121,7 @@ export function Footer() {
 
         <div className="border-t mt-6 pt-4 text-left">
           <p className="text-sm text-muted-foreground">
-            &copy; 2025 fellows.best. All rights reserved.
+            &copy; {new Date().getFullYear()} fellows.best. All rights reserved.
           </p>
         </div>
       </div>
