@@ -3,6 +3,7 @@ import { NextRequest } from "next/server";
 import type { Opportunity } from "@/lib/data";
 
 export const runtime = "nodejs";
+export const maxDuration = 10;
 
 export const fetchCache = "force-no-store";
 

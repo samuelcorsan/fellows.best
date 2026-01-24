@@ -8,9 +8,8 @@ import {
 } from "@/lib/opportunity-admin";
 import { uploadFileToCloudinary } from "@/lib/cloudinary";
 
-// Configure route for larger file uploads
 export const runtime = "nodejs";
-export const maxDuration = 60; // 60 seconds for file uploads
+export const maxDuration = 60;
 
 type RouteParams = {
   params: Promise<{ id: string }>;
@@ -72,9 +71,9 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
       return NextResponse.json(
         { 
           error: "Database connection failed",
-          details: errorMessage.includes("MONGODB") 
-            ? "MongoDB configuration is missing or invalid"
-            : errorMessage
+          ...(errorMessage.includes("MONGODB") && {
+            details: "Database configuration is missing or invalid"
+          })
         },
         { status: 500 }
       );
@@ -87,11 +86,9 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
       existing = await collection.findOne(filters);
     } catch (dbError) {
       console.error("Error finding opportunity:", dbError);
-      const errorMessage = dbError instanceof Error ? dbError.message : String(dbError);
       return NextResponse.json(
         { 
-          error: "Database query failed",
-          details: errorMessage
+          error: "Database query failed"
         },
         { status: 500 }
       );
@@ -128,9 +125,9 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
         return NextResponse.json(
           { 
             error: "Failed to upload logo",
-            details: errorMessage.includes("CLOUDINARY_URL") 
-              ? "Cloudinary configuration is missing or invalid"
-              : errorMessage
+            ...(errorMessage.includes("CLOUDINARY_URL") && {
+              details: "Cloudinary configuration is missing or invalid"
+            })
           },
           { status: 500 }
         );
@@ -168,11 +165,9 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
       );
     } catch (dbError) {
       console.error("Error updating opportunity in database:", dbError);
-      const errorMessage = dbError instanceof Error ? dbError.message : String(dbError);
       return NextResponse.json(
         { 
-          error: "Failed to save opportunity to database",
-          details: errorMessage
+          error: "Failed to save opportunity to database"
         },
         { status: 500 }
       );
@@ -196,19 +191,9 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
     return NextResponse.json(mapOpportunityDocument(updated));
   } catch (error) {
     console.error("Error updating opportunity:", error);
-    const errorDetails = error instanceof Error 
-      ? {
-          message: error.message,
-          stack: process.env.NODE_ENV === "development" ? error.stack : undefined,
-          name: error.name,
-        }
-      : { message: String(error) };
-    
     return NextResponse.json(
       {
-        error: "Failed to update opportunity",
-        details: errorDetails.message,
-        ...(process.env.NODE_ENV === "development" && { fullError: errorDetails })
+        error: "Failed to update opportunity"
       },
       { status: 500 }
     );

@@ -9,6 +9,9 @@ import { NextResponse, type NextRequest } from "next/server";
 import { checkBotId } from "botid/server";
 import type { Opportunity } from "@/lib/data";
 
+export const runtime = "nodejs";
+export const maxDuration = 10;
+
 const SEARCH_MODE = process.env.NEXT_PUBLIC_SEARCH_MODE || "ai";
 
 const uri = process.env.MONGODB_URI;
@@ -153,10 +156,8 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    const errorMessage =
-      error instanceof Error ? error.message : "Unknown error";
     return NextResponse.json(
-      { error: "Failed to search opportunities", details: errorMessage },
+      { error: "Failed to search opportunities" },
       { status: 500 }
     );
   }

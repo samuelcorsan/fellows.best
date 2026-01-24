@@ -1,6 +1,9 @@
 import { MongoClient, type Document } from "mongodb";
 import { NextRequest, NextResponse } from "next/server";
 
+export const runtime = "nodejs";
+export const maxDuration = 10;
+
 const uri = process.env.MONGODB_URI;
 const dbName = process.env.MONGODB_DB;
 const feedbackCollectionName = "feedback";

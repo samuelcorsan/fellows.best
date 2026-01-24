@@ -6,6 +6,9 @@ import {
 import { NextResponse, type NextRequest } from "next/server";
 import type { Opportunity } from "@/lib/data";
 
+export const runtime = "nodejs";
+export const maxDuration = 10;
+
 const uri = process.env.MONGODB_URI;
 const dbName = process.env.MONGODB_DB;
 const collectionName = process.env.MONGODB_COLLECTION!;
@@ -134,10 +137,8 @@ export async function GET(request: NextRequest) {
       });
   } catch (error) {
     console.error("Error fetching opportunities:", error);
-    const errorMessage =
-      error instanceof Error ? error.message : "Unknown error";
     return NextResponse.json(
-      { error: "Failed to fetch opportunities", details: errorMessage },
+      { error: "Failed to fetch opportunities" },
       { status: 500 }
     );
   }
