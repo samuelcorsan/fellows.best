@@ -21,7 +21,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, Loader2, Upload, UploadCloud } from "lucide-react";
+import { ArrowLeft, Loader2, Upload, UploadCloud, Search, FileJson } from "lucide-react";
 import type { Opportunity } from "@/lib/data";
 
 type AdminOpportunity = Opportunity & {
@@ -92,8 +92,11 @@ function AdminNewContent() {
   const [saving, setSaving] = useState(false);
   const [jsonText, setJsonText] = useState("");
   const [jsonLoaded, setJsonLoaded] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searching, setSearching] = useState(false);
   const [logoDragOver, setLogoDragOver] = useState(false);
   const [bannerDragOver, setBannerDragOver] = useState(false);
+  const [importMethod, setImportMethod] = useState<"search" | "json">("search");
 
   const parsedTags = useMemo(
     () =>
@@ -244,6 +247,35 @@ function AdminNewContent() {
     }
   };
 
+  const handleSearch = async () => {
+    if (!searchQuery.trim()) {
+      toast.error("Please enter a search query");
+      return;
+    }
+    setSearching(true);
+    try {
+      const url = token ? `/api/admin/opportunities/search?token=${token}` : "/api/admin/opportunities/search";
+      const res = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ query: searchQuery }),
+      });
+      
+      if (!res.ok) {
+        const error = await res.json();
+        throw new Error(error.error || "Search failed");
+      }
+
+      const { data } = await res.json();
+      loadJsonToForm(data);
+      toast.success("Opportunity found and form filled!");
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "Search failed");
+    } finally {
+      setSearching(false);
+    }
+  };
+
   const handleJsonPaste = () => {
     if (!jsonText.trim()) {
       toast.error("Paste JSON first");
@@ -375,29 +407,130 @@ function AdminNewContent() {
       </div>
 
       {showJsonInput && (
-        <div className="space-y-4">
-          <p className="text-sm text-muted-foreground">
-            Paste a JSON object with opportunity fields to prefill the form.
-          </p>
-          <div className="space-y-3">
-            <Label htmlFor="jsonPaste">Paste JSON</Label>
-            <Textarea
-              id="jsonPaste"
-              value={jsonText}
-              onChange={(e) => setJsonText(e.target.value)}
-              rows={12}
-              placeholder='{"name":"Example","organizer":"Org","description":"...",...}'
-              className="font-mono text-sm"
-            />
-            <div className="flex gap-2">
-              <Button type="button" onClick={handleJsonPaste} disabled={!jsonText.trim()}>
-                Load JSON
-              </Button>
-              <Button type="button" variant="ghost" onClick={() => setJsonText("")}>
-                Clear
-              </Button>
+        <div className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div
+              onClick={() => setImportMethod("search")}
+              className={`
+                relative cursor-pointer rounded-xl border-2 p-6 transition-all hover:border-primary/50
+                ${
+                  importMethod === "search"
+                    ? "border-primary bg-primary/5 ring-1 ring-primary/20"
+                    : "border-muted bg-card hover:bg-muted/50"
+                }
+              `}
+            >
+              <div className="flex items-center gap-4">
+                <div
+                  className={`p-3 rounded-lg ${
+                    importMethod === "search"
+                      ? "bg-primary/10 text-primary"
+                      : "bg-muted text-muted-foreground"
+                  }`}
+                >
+                  <Search className="h-6 w-6" />
+                </div>
+                <div>
+                  <h3 className="font-semibold">AI Search & Auto-fill</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Find online and extract data
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div
+              onClick={() => setImportMethod("json")}
+              className={`
+                relative cursor-pointer rounded-xl border-2 p-6 transition-all hover:border-primary/50
+                ${
+                  importMethod === "json"
+                    ? "border-primary bg-primary/5 ring-1 ring-primary/20"
+                    : "border-muted bg-card hover:bg-muted/50"
+                }
+              `}
+            >
+              <div className="flex items-center gap-4">
+                <div
+                  className={`p-3 rounded-lg ${
+                    importMethod === "json"
+                      ? "bg-primary/10 text-primary"
+                      : "bg-muted text-muted-foreground"
+                  }`}
+                >
+                  <FileJson className="h-6 w-6" />
+                </div>
+                <div>
+                  <h3 className="font-semibold">Paste JSON</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Manually enter data object
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
+
+          <Card className="border-muted/50 shadow-none">
+            <CardContent className="pt-6">
+              {importMethod === "search" ? (
+                <div className="space-y-4">
+                  <div className="space-y-2">
+                    <Label>Search Query</Label>
+                    <div className="flex gap-2">
+                      <Input
+                        placeholder="e.g. 'YC Winter 2025 batch details'"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+                      />
+                      <Button
+                        onClick={handleSearch}
+                        disabled={searching || !searchQuery.trim()}
+                      >
+                        {searching && (
+                          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                        )}
+                        Search & Fill
+                      </Button>
+                    </div>
+                    <p className="text-xs text-muted-foreground">
+                      Search the web and extract details automatically.
+                    </p>
+                  </div>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="jsonPaste">JSON Data</Label>
+                    <Textarea
+                      id="jsonPaste"
+                      value={jsonText}
+                      onChange={(e) => setJsonText(e.target.value)}
+                      rows={12}
+                      placeholder='{"name":"Example","organizer":"Org","description":"...",...}'
+                      className="font-mono text-sm"
+                    />
+                  </div>
+                  <div className="flex gap-2">
+                    <Button
+                      type="button"
+                      onClick={handleJsonPaste}
+                      disabled={!jsonText.trim()}
+                    >
+                      Load JSON
+                    </Button>
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      onClick={() => setJsonText("")}
+                    >
+                      Clear
+                    </Button>
+                  </div>
+                </div>
+              )}
+            </CardContent>
+          </Card>
         </div>
       )}
 
