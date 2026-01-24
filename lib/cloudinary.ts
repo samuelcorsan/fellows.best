@@ -59,6 +59,8 @@ export async function uploadBufferToCloudinary(
         overwrite: true,
         invalidate: true,
         resource_type: "image",
+        format: "avif",
+        quality: "auto",
       },
       (error, result) => {
         if (error || !result) {
@@ -68,7 +70,18 @@ export async function uploadBufferToCloudinary(
           return;
         }
 
-        resolve(result.secure_url);
+        // Ensure URL uses AVIF format - generate transformation URL if needed
+        let avifUrl = result.secure_url;
+        if (!avifUrl.includes("/f_avif/") && !avifUrl.endsWith(".avif")) {
+          // Generate URL with AVIF format transformation
+          avifUrl = cloudinary.url(result.public_id, {
+            format: "avif",
+            quality: "auto",
+            secure: true,
+          });
+        }
+
+        resolve(avifUrl);
       }
     );
 

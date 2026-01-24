@@ -54,6 +54,7 @@ export function InfiniteCarousel({
               className="w-full"
               isCarousel
               from={from}
+              priority={idx < 2}
             />
           </div>
         ))}
@@ -67,8 +68,7 @@ export function InfiniteCarousel({
               className="w-full"
               isCarousel
               from={from}
-              skipImageLoad={true}
-              aria-hidden="true"
+              priority={false}
             />
           </div>
         ))}

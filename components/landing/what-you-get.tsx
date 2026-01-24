@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useEffect } from "react";
+import { useTheme } from "next-themes";
 import {
   Search,
   Filter,
@@ -53,6 +54,11 @@ const cards = [
 
 const cardStyles = `
   #cards-container {
+    --bg-color: rgb(250, 250, 250);
+    --card-color: rgb(255, 255, 255);
+  }
+
+  .dark #cards-container {
     --bg-color: rgb(20, 20, 20);
     --card-color: rgb(23, 23, 23);
   }
@@ -71,13 +77,17 @@ const cardStyles = `
   }
 
   #cards-container .card {
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(0, 0, 0, 0.05);
     border-radius: 10px;
     display: flex;
     flex-direction: column;
     position: relative;
     width: 100%;
     height: 100%;
+  }
+
+  .dark #cards-container .card {
+    background-color: rgba(255, 255, 255, 0.1);
   }
 
   /* Bento grid spans */
@@ -117,19 +127,35 @@ const cardStyles = `
   #cards-container .card::before {
     background: radial-gradient(
       800px circle at var(--mouse-x) var(--mouse-y),
-      rgba(255, 255, 255, 0.06),
+      rgba(0, 0, 0, 0.06),
       transparent 40%
     );
     z-index: 3;
   }
 
+  .dark #cards-container .card::before {
+    background: radial-gradient(
+      800px circle at var(--mouse-x) var(--mouse-y),
+      rgba(255, 255, 255, 0.06),
+      transparent 40%
+    );
+  }
+
   #cards-container .card::after {
+    background: radial-gradient(
+      600px circle at var(--mouse-x) var(--mouse-y),
+      rgba(0, 0, 0, 0.1),
+      transparent 40%
+    );
+    z-index: 1;
+  }
+
+  .dark #cards-container .card::after {
     background: radial-gradient(
       600px circle at var(--mouse-x) var(--mouse-y),
       rgba(255, 255, 255, 0.4),
       transparent 40%
     );
-    z-index: 1;
   }
 
   #cards-container .card > .card-content {
@@ -146,6 +172,11 @@ const cardStyles = `
     justify-content: flex-start;
     align-items: stretch;
     overflow: hidden;
+    border: 0.5px solid rgba(0, 0, 0, 0.08);
+  }
+
+  .dark #cards-container .card > .card-content {
+    border: 0.5px solid rgba(255, 255, 255, 0.1);
   }
 
   #cards-container .card-info-wrapper {
@@ -193,20 +224,28 @@ const cardStyles = `
   #cards-container .card-info-title > h3 {
     font-size: 1.25rem;
     line-height: 1.3;
-    color: rgb(240, 240, 240);
+    color: rgb(15, 15, 15);
     font-family: "Rubik", sans-serif;
     font-weight: 400;
     margin: 0px;
     margin-bottom: 8px;
   }
 
+  .dark #cards-container .card-info-title > h3 {
+    color: rgb(240, 240, 240);
+  }
+
   #cards-container .card-info-title > h4 {
-    color: rgba(255, 255, 255, 0.5);
+    color: rgba(0, 0, 0, 0.6);
     font-size: 0.75rem;
     margin-top: 0px;
     font-family: "Rubik", sans-serif;
     font-weight: 400;
     line-height: 1.5;
+  }
+
+  .dark #cards-container .card-info-title > h4 {
+    color: rgba(255, 255, 255, 0.5);
   }
 
   #cards-container .card-image {
@@ -383,6 +422,7 @@ const cardStyles = `
 
 export function WhatYouGetSection() {
   const cardsRef = useRef<HTMLDivElement>(null);
+  const { theme } = useTheme();
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -425,6 +465,14 @@ export function WhatYouGetSection() {
           <div id="cards" ref={cardsRef}>
             {cards.map((card, index) => {
               const Icon = card.icon;
+              let imageUrl = card.image;
+              if (theme === "light") {
+                if (index === 0) {
+                  imageUrl = "https://res.cloudinary.com/disamtech/image/upload/v1769241889/fellows/mockups/j2a8githcazr18k3yojk.png";
+                } else if (index === 1) {
+                  imageUrl = "https://res.cloudinary.com/disamtech/image/upload/v1769242128/fellows/mockups/o8nopbp7ufy0rsv7isns.png";
+                }
+              }
               return (
                 <div key={index} className={`card ${card.span} ${card.hideOnMobile ? 'hide-mobile' : ''}`}>
                   <div className="card-content">
@@ -445,9 +493,9 @@ export function WhatYouGetSection() {
                         </div>
                       </div>
                     </div>
-                    {card.image && (
+                    {imageUrl && (
                       <img 
-                        src={card.image} 
+                        src={imageUrl} 
                         alt={card.title}
                         className={`card-image ${card.title === "Advanced Search" ? "card-image-search" : ""}`}
                       />

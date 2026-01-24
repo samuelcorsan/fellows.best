@@ -24,10 +24,16 @@ export async function getCarouselData() {
   }
 
   const distributed = distributeEvenly(opportunities);
-  const midpoint = Math.floor(distributed.length / 2);
+  
+  // Limit carousel items to improve performance (30 items per carousel = 60 total cards with clones)
+  const maxItemsPerCarousel = 30;
+  const totalItems = Math.min(distributed.length, maxItemsPerCarousel * 2);
+  const limitedDistributed = distributed.slice(0, totalItems);
+  
+  const midpoint = Math.floor(limitedDistributed.length / 2);
 
   return {
-    carousel1Data: distributed.slice(0, midpoint),
-    carousel2Data: distributed.slice(midpoint),
+    carousel1Data: limitedDistributed.slice(0, midpoint),
+    carousel2Data: limitedDistributed.slice(midpoint),
   };
 }

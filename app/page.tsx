@@ -44,12 +44,6 @@ export default async function Home() {
         }}
       />
       <div className="space-y-8 pb-12">
-      <div className="w-full rounded-none bg-gradient-to-r from-black via-neutral-900 to-neutral-800 px-4 py-3 text-red-400">
-        <p className="text-center text-sm font-medium">
-          Heads up: we&apos;re currently experiencing issues loading images. Thanks for
-          your patience while we sort this out.
-        </p>
-      </div>
       <HeroSection />
       <CarouselSection
         distributedCarousel1={carousel1Data}
