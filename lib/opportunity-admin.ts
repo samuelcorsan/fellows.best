@@ -103,7 +103,7 @@ export function normalizeOpportunityPayload(
     .map((field) => field.key);
 
   if (missingFields.length > 0) {
-    throw new Error(`Missing required fields: ${missingFields.join(", ")}`);
+    throw new Error("Missing required fields");
   }
 
   return {

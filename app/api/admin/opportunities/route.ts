@@ -10,7 +10,7 @@ import {
 import { uploadFileToCloudinary } from "@/lib/cloudinary";
 
 export const runtime = "nodejs";
-export const maxDuration = 30;
+export const maxDuration = 20
 
 export async function GET(request: NextRequest) {
   const adminToken = process.env.ADMIN_TOKEN;
@@ -94,7 +94,7 @@ export async function POST(request: NextRequest) {
       normalizedPayload = normalizeOpportunityPayload(parsedPayload);
     } catch (validationError) {
       return NextResponse.json(
-        { error: (validationError as Error).message },
+        { error: "Invalid opportunity data" },
         { status: 400 }
       );
     }
@@ -111,14 +111,8 @@ export async function POST(request: NextRequest) {
       logoUrl = await uploadFileToCloudinary(logoFile, `fellows/${id}/logo`);
     } catch (uploadError) {
       console.error("Error uploading logo to Cloudinary:", uploadError);
-      const errorMessage = uploadError instanceof Error ? uploadError.message : String(uploadError);
       return NextResponse.json(
-        { 
-          error: "Failed to upload logo",
-          ...(errorMessage.includes("CLOUDINARY_URL") && {
-            details: "Cloudinary configuration is missing or invalid"
-          })
-        },
+        { error: "Failed to upload logo" },
         { status: 500 }
       );
     }
@@ -129,9 +123,6 @@ export async function POST(request: NextRequest) {
       }
     } catch (uploadError) {
       console.error("Error uploading banner to Cloudinary:", uploadError);
-      // Banner is optional, so we log but continue
-      const errorMessage = uploadError instanceof Error ? uploadError.message : String(uploadError);
-      console.warn("Banner upload failed, continuing without banner:", errorMessage);
     }
 
     const now = new Date().toISOString();
@@ -149,14 +140,8 @@ export async function POST(request: NextRequest) {
       collection = await getOpportunitiesCollection();
     } catch (dbError) {
       console.error("Error connecting to database:", dbError);
-      const errorMessage = dbError instanceof Error ? dbError.message : String(dbError);
       return NextResponse.json(
-        { 
-          error: "Database connection failed",
-          ...(errorMessage.includes("MONGODB") && {
-            details: "Database configuration is missing or invalid"
-          })
-        },
+        { error: "Database connection failed" },
         { status: 500 }
       );
     }
@@ -168,9 +153,7 @@ export async function POST(request: NextRequest) {
     } catch (dbError) {
       console.error("Error checking for existing opportunity:", dbError);
       return NextResponse.json(
-        { 
-          error: "Database query failed"
-        },
+        { error: "Database query failed" },
         { status: 500 }
       );
     }
@@ -188,9 +171,7 @@ export async function POST(request: NextRequest) {
     } catch (dbError) {
       console.error("Error inserting opportunity:", dbError);
       return NextResponse.json(
-        { 
-          error: "Failed to save opportunity to database"
-        },
+        { error: "Failed to save opportunity to database" },
         { status: 500 }
       );
     }
@@ -210,9 +191,7 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error("Error creating opportunity:", error);
     return NextResponse.json(
-      { 
-        error: "Failed to create opportunity"
-      },
+      { error: "Failed to create opportunity" },
       { status: 500 }
     );
   }

@@ -1,10 +1,9 @@
-
 import { NextRequest, NextResponse } from "next/server";
 import FirecrawlApp from "@mendable/firecrawl-js";
 import Groq from "groq-sdk";
 
 export const runtime = "nodejs";
-export const maxDuration = 30;
+export const maxDuration = 60;
 
 const firecrawl = new FirecrawlApp({
   apiKey: process.env.FIRECRAWL_API_KEY,
@@ -101,7 +100,7 @@ export async function POST(req: NextRequest) {
   } catch (error) {
     console.error("Search/Scrape error:", error);
     return NextResponse.json(
-      { error: "Failed to search or process content" },
+      { error: "Internal server error" },
       { status: 500 }
     );
   }

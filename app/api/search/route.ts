@@ -145,17 +145,6 @@ export async function GET(request: NextRequest) {
     console.error("Error searching opportunities:", error);
 
     // If text index doesn't exist, return helpful error
-    if (error instanceof Error && error.message.includes("text index")) {
-      return NextResponse.json(
-        {
-          error: "Text search index not found",
-          details:
-            "Please run the setup script to create the text index: npm run setup:text-index",
-        },
-        { status: 503 }
-      );
-    }
-
     return NextResponse.json(
       { error: "Failed to search opportunities" },
       { status: 500 }

@@ -8,8 +8,9 @@ import {
 } from "@/lib/opportunity-admin";
 import { uploadFileToCloudinary } from "@/lib/cloudinary";
 
+// Configure route for larger file uploads
 export const runtime = "nodejs";
-export const maxDuration = 60;
+export const maxDuration = 60; // 60 seconds for file uploads
 
 type RouteParams = {
   params: Promise<{ id: string }>;
@@ -57,7 +58,7 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
       normalizedPayload = normalizeOpportunityPayload(parsedPayload);
     } catch (validationError) {
       return NextResponse.json(
-        { error: (validationError as Error).message },
+        { error: "Invalid opportunity data" },
         { status: 400 }
       );
     }
@@ -67,14 +68,8 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
       collection = await getOpportunitiesCollection();
     } catch (dbError) {
       console.error("Error connecting to database:", dbError);
-      const errorMessage = dbError instanceof Error ? dbError.message : String(dbError);
       return NextResponse.json(
-        { 
-          error: "Database connection failed",
-          ...(errorMessage.includes("MONGODB") && {
-            details: "Database configuration is missing or invalid"
-          })
-        },
+        { error: "Database connection failed" },
         { status: 500 }
       );
     }
@@ -87,9 +82,7 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
     } catch (dbError) {
       console.error("Error finding opportunity:", dbError);
       return NextResponse.json(
-        { 
-          error: "Database query failed"
-        },
+        { error: "Database query failed" },
         { status: 500 }
       );
     }
@@ -121,14 +114,8 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
         );
       } catch (uploadError) {
         console.error("Error uploading logo to Cloudinary:", uploadError);
-        const errorMessage = uploadError instanceof Error ? uploadError.message : String(uploadError);
         return NextResponse.json(
-          { 
-            error: "Failed to upload logo",
-            ...(errorMessage.includes("CLOUDINARY_URL") && {
-              details: "Cloudinary configuration is missing or invalid"
-            })
-          },
+          { error: "Failed to upload logo" },
           { status: 500 }
         );
       }
@@ -144,10 +131,6 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
         );
       } catch (uploadError) {
         console.error("Error uploading banner to Cloudinary:", uploadError);
-        // Banner is optional, so we log but continue
-        const errorMessage = uploadError instanceof Error ? uploadError.message : String(uploadError);
-        console.warn("Banner upload failed, continuing without banner:", errorMessage);
-        // Keep existing banner if upload fails
         if (existing.shareImageUrl) {
           updates.shareImageUrl = existing.shareImageUrl;
         }
@@ -166,9 +149,7 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
     } catch (dbError) {
       console.error("Error updating opportunity in database:", dbError);
       return NextResponse.json(
-        { 
-          error: "Failed to save opportunity to database"
-        },
+        { error: "Failed to save opportunity to database" },
         { status: 500 }
       );
     }
@@ -192,9 +173,7 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
   } catch (error) {
     console.error("Error updating opportunity:", error);
     return NextResponse.json(
-      {
-        error: "Failed to update opportunity"
-      },
+      { error: "Failed to update opportunity" },
       { status: 500 }
     );
   }
