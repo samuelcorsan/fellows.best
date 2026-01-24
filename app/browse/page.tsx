@@ -62,6 +62,9 @@ function BrowsePageContent({ initialCategory }: BrowsePageContentProps = {}) {
   const handleFiltersChange = useCallback((newFilters: FilterOptions) => {
     setFilters(newFilters);
     window.scrollTo({ top: 0, behavior: "smooth" });
+    if (contentAreaRef.current) {
+      contentAreaRef.current.scrollTo({ top: 0, behavior: "smooth" });
+    }
   }, []);
   const [sortBy, setSortBy] = useState<"deadline" | "name" | "category">(
     "deadline"
@@ -70,6 +73,7 @@ function BrowsePageContent({ initialCategory }: BrowsePageContentProps = {}) {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const debouncedSearchQuery = useDebounce(searchQuery, 700);
   const abortControllerRef = useRef<AbortController | null>(null);
+  const contentAreaRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     async function fetchOpportunities() {
@@ -317,27 +321,36 @@ function BrowsePageContent({ initialCategory }: BrowsePageContentProps = {}) {
 
   return (
     <>
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="mb-8">
-          <h1 className="text-3xl md:text-4xl font-bold mb-4">
-            Browse Opportunities
-          </h1>
-          <p className="text-xl text-muted-foreground">
-            Discover fellowships, grants, and more
-          </p>
+      <div className="flex flex-col h-full">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-4 flex-shrink-0">
+          <div className="mb-6">
+            <h1 className="text-3xl md:text-4xl font-bold mb-4">
+              Browse Opportunities
+            </h1>
+            <p className="text-xl text-muted-foreground">
+              Discover fellowships, grants, and more
+            </p>
+          </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-          <div className="lg:col-span-1">
-            <FilterPanel
-              filters={filters}
-              onFiltersChange={handleFiltersChange}
-              isOpen={isFilterOpen}
-              onToggle={() => setIsFilterOpen(!isFilterOpen)}
-            />
-          </div>
+        <div className="flex-1 min-h-0">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 h-full">
+            <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 h-full">
+              <div className="lg:col-span-1">
+                <div className="lg:sticky lg:top-4 pb-4">
+                  <FilterPanel
+                    filters={filters}
+                    onFiltersChange={handleFiltersChange}
+                    isOpen={isFilterOpen}
+                    onToggle={() => setIsFilterOpen(!isFilterOpen)}
+                  />
+                </div>
+              </div>
 
-          <div className="lg:col-span-3 space-y-6">
+              <div 
+                ref={contentAreaRef}
+                className="lg:col-span-3 overflow-y-auto space-y-6 pb-8 pr-2"
+              >
             <div className="flex flex-col sm:flex-row gap-4">
               <div className="flex-1 flex gap-2">
                 <div className="flex-1">
@@ -456,6 +469,8 @@ function BrowsePageContent({ initialCategory }: BrowsePageContentProps = {}) {
                 </div>
               </>
             )}
+              </div>
+            </div>
           </div>
         </div>
       </div>

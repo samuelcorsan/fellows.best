@@ -9,8 +9,6 @@ import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Slider } from "@/components/ui/slider";
-import { Github } from "lucide-react";
-import Link from "next/link";
 
 export interface FilterOptions {
   categories: string[];
@@ -234,8 +232,8 @@ export function FilterPanel({
       </div>
 
       <div className={`lg:block ${isOpen ? "block" : "hidden"} relative`}>
-        <Card>
-          <CardHeader>
+        <Card className="lg:max-h-[calc(100vh-8rem)] lg:flex lg:flex-col">
+          <CardHeader className="flex-shrink-0">
             <div className="flex items-center justify-between">
               <CardTitle className="text-lg">Filters</CardTitle>
               {totalActiveFilters > 0 && (
@@ -250,7 +248,7 @@ export function FilterPanel({
               )}
             </div>
           </CardHeader>
-          <CardContent className="space-y-6">
+          <CardContent className="space-y-6 flex-1 lg:overflow-y-auto sidebar-scrollbar lg:min-h-0">
             <div>
               <Label className="text-sm font-medium mb-3 block">
                 Funding Amount (USD)
@@ -501,19 +499,6 @@ export function FilterPanel({
             ))}
           </CardContent>
         </Card>
-      </div>
-
-      <div className="mt-6 text-center">
-        <Button asChild variant="outline">
-          <Link
-            href="https://github.com/samuelcorsan/fellows.best"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Github className="mr-2 h-4 w-4" />
-            Contribute
-          </Link>
-        </Button>
       </div>
     </>
   );
