@@ -25,7 +25,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { Input } from "@/components/ui/input";
-import { Loader2, Pencil, Plus, RefreshCw, Trash2, ExternalLink, MessageSquare, ThumbsUp, ThumbsDown } from "lucide-react";
+import { Loader2, Pencil, Plus, RefreshCw, Trash2, ExternalLink, MessageSquare, ThumbsUp, ThumbsDown, Search, LayoutList, LayoutGrid } from "lucide-react";
 import type { Opportunity } from "@/lib/data";
 import {
   Dialog,
@@ -72,6 +72,14 @@ function AdminPageContent() {
   const [selectedOpportunityId, setSelectedOpportunityId] = useState<string | null>(null);
   const [feedback, setFeedback] = useState<FeedbackItem[]>([]);
   const [suggestionsOpen, setSuggestionsOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [viewMode, setViewMode] = useState<"grid" | "list">("list");
+
+  const filteredOpportunities = opportunities.filter((op) =>
+    op.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    op.organizer.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
 
   const loadOpportunities = async () => {
     setLoading(true);
@@ -156,137 +164,245 @@ function AdminPageContent() {
 
   return (
     <div className="container mx-auto px-4 py-10 space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold">Admin Dashboard</h1>
-          <p className="text-muted-foreground">
-            Manage fellowships. Add or edit using the dedicated create page.
-          </p>
-        </div>
-        <div className="flex items-center gap-2">
-          <Button variant="outline" onClick={() => setSuggestionsOpen(true)}>
-            <MessageSquare className="mr-2 h-4 w-4" />
-            Suggestions
-          </Button>
-          <Button variant="outline" onClick={loadOpportunities}>
-            <RefreshCw className="mr-2 h-4 w-4" />
-            Refresh
-          </Button>
-          <Link href={token ? `/admin/new?token=${token}` : "/admin/new"}>
-            <Button>
-              <Plus className="mr-2 h-4 w-4" />
-              Add opportunity
+      <div className="flex flex-col gap-4 border-b pb-6">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="flex flex-col md:flex-row md:items-center gap-4 flex-1">
+            <h1 className="text-2xl font-bold tracking-tight whitespace-nowrap">Admin Dashboard</h1>
+            <div className="relative w-full max-w-sm">
+              <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+              <Input
+                type="search"
+                placeholder="Search opportunities..."
+                className="pl-8 h-9"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </div>
+          </div>
+          <div className="flex items-center gap-2 shrink-0">
+            <span className="text-sm text-muted-foreground mr-2 hidden md:inline-block">
+              {filteredOpportunities.length} found
+            </span>
+            <div className="h-4 w-px bg-border mx-1 hidden md:block" />
+            <Button variant="outline" size="sm" onClick={() => setSuggestionsOpen(true)} className="h-9">
+              <MessageSquare className="mr-2 h-4 w-4" />
+              Suggestions
             </Button>
-          </Link>
+            <Button variant="ghost" size="icon" onClick={loadOpportunities} title="Refresh" className="h-9 w-9">
+              <RefreshCw className="h-4 w-4" />
+            </Button>
+            <div className="h-4 w-px bg-border mx-1" />
+            <div className="flex items-center gap-1 border rounded-md p-1 bg-muted/50">
+              <Button
+                variant={viewMode === "grid" ? "secondary" : "ghost"}
+                size="sm"
+                className="px-2 h-7"
+                onClick={() => setViewMode("grid")}
+              >
+                <LayoutGrid className="h-4 w-4" />
+              </Button>
+              <Button
+                variant={viewMode === "list" ? "secondary" : "ghost"}
+                size="sm"
+                className="px-2 h-7"
+                onClick={() => setViewMode("list")}
+              >
+                <LayoutList className="h-4 w-4" />
+              </Button>
+            </div>
+            <Link href={token ? `/admin/new?token=${token}` : "/admin/new"}>
+              <Button size="sm" className="h-9">
+                <Plus className="mr-2 h-4 w-4" />
+                Add opportunity
+              </Button>
+            </Link>
+          </div>
         </div>
       </div>
 
-      <Card>
-        <CardHeader>
-          <div className="flex items-center justify-between">
-            <CardTitle>Opportunities</CardTitle>
-            <div className="text-sm text-muted-foreground">
-              {opportunities.length} total
-            </div>
+      <div className="space-y-4">
+        {loading ? (
+          <div className="flex items-center justify-center gap-2 py-10 text-muted-foreground">
+            <Loader2 className="h-5 w-5 animate-spin" />
+            Loading opportunities...
           </div>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          {loading ? (
-            <div className="flex items-center justify-center gap-2 py-10 text-muted-foreground">
-              <Loader2 className="h-5 w-5 animate-spin" />
-              Loading opportunities...
-            </div>
-          ) : opportunities.length === 0 ? (
-            <div className="text-muted-foreground text-sm">
-              No opportunities found.
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-              {opportunities.map((opportunity) => (
-                <Card
-                  key={opportunity.id}
-                  className="hover:shadow-md transition-all duration-200 hover:-translate-y-1 flex flex-col relative"
-                >
-                  <Link
-                    href={`/opportunity/${opportunity.id}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="absolute top-3 right-3 z-10 p-1.5 rounded-md hover:bg-muted transition-colors"
-                    title="View fellowship page"
-                  >
-                    <ExternalLink className="h-4 w-4 text-muted-foreground hover:text-foreground" />
-                  </Link>
-                  <CardContent className="p-4 flex-1 flex flex-col">
-                    <div className="flex items-start gap-3">
-                      <div className="relative h-14 w-14 overflow-hidden rounded-lg bg-muted flex-shrink-0">
-                        <Image
-                          src={opportunity.logoUrl}
-                          alt={opportunity.name}
-                          fill
-                          className="object-contain p-1"
-                          sizes="56px"
-                        />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2 flex-wrap">
-                          <p className="font-semibold leading-tight line-clamp-1">
-                            {opportunity.name}
-                          </p>
-                          <Badge variant="outline">{opportunity.category}</Badge>
+        ) : filteredOpportunities.length === 0 ? (
+          <div className="flex flex-col items-center justify-center py-10 text-center text-muted-foreground">
+            <Search className="h-10 w-10 mb-4 opacity-50" />
+            <p className="text-lg font-medium">No opportunities found</p>
+            <p className="text-sm">Try adjusting your search terms</p>
+          </div>
+        ) : (
+          <div className={viewMode === "grid" 
+            ? "grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4" 
+            : "space-y-2"
+          }>
+            {filteredOpportunities.map((opportunity) => (
+              <div
+                key={opportunity.id}
+                className={`group relative transition-all duration-200 bg-card border rounded-lg ${
+                  viewMode === "grid" 
+                    ? "hover:shadow-md hover:-translate-y-1 flex flex-col" 
+                    : "flex flex-row items-center p-3 hover:bg-muted/30"
+                }`}
+              >
+                {viewMode === "grid" ? (
+                  <>
+                    <Link
+                      href={`/opportunity/${opportunity.id}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="absolute top-3 right-3 z-10 p-1.5 rounded-md hover:bg-muted transition-colors opacity-0 group-hover:opacity-100"
+                      title="View fellowship page"
+                    >
+                      <ExternalLink className="h-4 w-4 text-muted-foreground hover:text-foreground" />
+                    </Link>
+                    <div className="p-4 flex-1 flex flex-col">
+                      <div className="flex items-start gap-3">
+                        <div className="relative h-14 w-14 overflow-hidden rounded-lg bg-muted flex-shrink-0">
+                          <Image
+                            src={opportunity.logoUrl}
+                            alt={opportunity.name}
+                            fill
+                            className="object-contain p-1"
+                            sizes="56px"
+                          />
                         </div>
-                        <p className="text-sm text-muted-foreground line-clamp-2">
-                          {opportunity.description || opportunity.organizer}
-                        </p>
-                        <div className="flex flex-wrap gap-2 mt-2">
-                          {opportunity.tags?.slice(0, 3).map((tag) => (
-                            <Badge key={tag} variant="secondary">
-                              {tag}
-                            </Badge>
-                          ))}
-                          {opportunity.tags?.length > 3 && (
-                            <Badge variant="outline">
-                              +{opportunity.tags.length - 3}
-                            </Badge>
-                          )}
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2 flex-wrap mb-1">
+                            <p className="font-semibold leading-tight line-clamp-1">
+                              {opportunity.name}
+                            </p>
+                            <Badge variant="outline" className="text-xs">{opportunity.category}</Badge>
+                          </div>
+                          <p className="text-sm text-muted-foreground line-clamp-2 mb-2">
+                            {opportunity.description || opportunity.organizer}
+                          </p>
+                          <div className="flex flex-wrap gap-1.5">
+                            {opportunity.tags?.slice(0, 3).map((tag) => (
+                              <Badge key={tag} variant="secondary" className="text-[10px] px-1.5 py-0 h-5">
+                                {tag}
+                              </Badge>
+                            ))}
+                            {opportunity.tags?.length > 3 && (
+                              <Badge variant="outline" className="text-[10px] px-1.5 py-0 h-5">
+                                +{opportunity.tags.length - 3}
+                              </Badge>
+                            )}
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </CardContent>
-                  <div className="px-4 pb-4 flex items-center justify-end gap-2">
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      onClick={() => handleOpenFeedback(opportunity.id)}
-                    >
-                      <MessageSquare className="mr-2 h-4 w-4" />
-                      Feedback
-                    </Button>
-                    <Link href={token ? `/admin/new?id=${opportunity.id}&token=${token}` : `/admin/new?id=${opportunity.id}`}>
-                      <Button size="sm" variant="outline">
-                        <Pencil className="mr-2 h-4 w-4" />
-                        Edit
+                    <div className="px-4 pb-4 flex items-center justify-end gap-2 pt-2 border-t mt-auto bg-muted/10">
+                      <Button
+                        size="sm"
+                        variant="ghost"
+                        className="h-8 text-xs"
+                        onClick={() => handleOpenFeedback(opportunity.id)}
+                      >
+                        <MessageSquare className="mr-1.5 h-3.5 w-3.5" />
+                        Feedback
                       </Button>
-                    </Link>
-                    <Button
-                      size="sm"
-                      variant="destructive"
-                      onClick={() => openDeleteDialog(opportunity.id)}
-                      disabled={deletingId === opportunity.id}
-                    >
-                      {deletingId === opportunity.id ? (
-                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                      ) : (
-                        <Trash2 className="mr-2 h-4 w-4" />
-                      )}
-                      Delete
-                    </Button>
-                  </div>
-                </Card>
-              ))}
-            </div>
-          )}
-        </CardContent>
-      </Card>
+                      <Link href={token ? `/admin/new?id=${opportunity.id}&token=${token}` : `/admin/new?id=${opportunity.id}`}>
+                        <Button size="sm" variant="ghost" className="h-8 text-xs">
+                          <Pencil className="mr-1.5 h-3.5 w-3.5" />
+                          Edit
+                        </Button>
+                      </Link>
+                      <Button
+                        size="sm"
+                        variant="destructive"
+                        className="h-8 text-xs"
+                        onClick={() => openDeleteDialog(opportunity.id)}
+                        disabled={deletingId === opportunity.id}
+                      >
+                        {deletingId === opportunity.id ? (
+                          <Loader2 className="mr-1.5 h-3.5 w-3.5 animate-spin" />
+                        ) : (
+                          <Trash2 className="mr-1.5 h-3.5 w-3.5" />
+                        )}
+                        Delete
+                      </Button>
+                    </div>
+                  </>
+                ) : (
+                  // List View
+                  <>
+                    <div className="relative h-10 w-10 overflow-hidden rounded-md bg-muted flex-shrink-0 mr-4">
+                      <Image
+                        src={opportunity.logoUrl}
+                        alt={opportunity.name}
+                        fill
+                        className="object-contain p-1"
+                        sizes="40px"
+                      />
+                    </div>
+                    <div className="flex-1 min-w-0 grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
+                      <div className="md:col-span-4">
+                        <div className="flex items-center gap-2">
+                          <p className="font-semibold truncate">{opportunity.name}</p>
+                          <Badge variant="outline" className="text-xs shrink-0">{opportunity.category}</Badge>
+                        </div>
+                        <p className="text-sm text-muted-foreground truncate">
+                          {opportunity.organizer}
+                        </p>
+                      </div>
+                      <div className="md:col-span-4 hidden md:block">
+                         <p className="text-sm text-muted-foreground truncate" title={opportunity.description}>
+                           {opportunity.description}
+                         </p>
+                      </div>
+                      <div className="md:col-span-4 flex items-center justify-end gap-3">
+                         {opportunity.createdAt && (
+                           <span className="text-xs text-muted-foreground hidden lg:inline-block mr-2">
+                              {new Date(opportunity.createdAt).toLocaleDateString()}
+                           </span>
+                         )}
+                        <Link
+                          href={`/opportunity/${opportunity.id}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <Button size="icon" variant="ghost" className="h-8 w-8">
+                            <ExternalLink className="h-4 w-4" />
+                          </Button>
+                        </Link>
+                        <Button
+                          size="icon"
+                          variant="ghost"
+                          className="h-8 w-8"
+                          onClick={() => handleOpenFeedback(opportunity.id)}
+                          title="Feedback"
+                        >
+                          <MessageSquare className="h-4 w-4" />
+                        </Button>
+                        <Link href={token ? `/admin/new?id=${opportunity.id}&token=${token}` : `/admin/new?id=${opportunity.id}`}>
+                          <Button size="icon" variant="ghost" className="h-8 w-8">
+                            <Pencil className="h-4 w-4" />
+                          </Button>
+                        </Link>
+                        <Button
+                          size="sm"
+                          variant="destructive"
+                          className="h-8 px-2"
+                          onClick={() => openDeleteDialog(opportunity.id)}
+                          disabled={deletingId === opportunity.id}
+                        >
+                          {deletingId === opportunity.id ? (
+                            <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                          ) : (
+                            <Trash2 className="h-3.5 w-3.5" />
+                          )}
+                        </Button>
+                      </div>
+                    </div>
+                  </>
+                )}
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
 
       <AlertDialog open={confirmOpen} onOpenChange={setConfirmOpen}>
         <AlertDialogContent>
