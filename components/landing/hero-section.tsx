@@ -21,9 +21,9 @@ export function HeroSection() {
 
   return (
     <section className="relative overflow-hidden">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16 relative">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 pt-40 pb-16 relative">
         <div className="text-center max-w-4xl mx-auto">
-          <h1 className="text-3xl md:text-6xl font-bold mb-6 leading-tight">
+          <h1 className="text-3xl md:text-6xl font-semibold mb-6 leading-tight">
             Discover Your Next <br />
             <span className="text-foreground">Fellowship Opportunity</span>
           </h1>
