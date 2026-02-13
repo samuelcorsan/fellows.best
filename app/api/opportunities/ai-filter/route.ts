@@ -1,4 +1,5 @@
 import { NextResponse, type NextRequest } from "next/server";
+import OpenAI from "openai";
 import Groq from "groq-sdk";
 import type { Opportunity } from "@/lib/data";
 
@@ -7,8 +8,11 @@ export const maxDuration = 30;
 
 const SEARCH_MODE = process.env.NEXT_PUBLIC_SEARCH_MODE || "ai";
 
+const LLM_MODEL = "kimi-k2-thinking-turbo";
+const GROQ_FALLBACK_MODEL = "moonshotai/kimi-k2-instruct-0905";
+
 const MAX_REQUEST_SIZE = 2 * 1024 * 1024;
-const GROQ_API_TIMEOUT = 8500;
+const LLM_API_TIMEOUT = 8500;
 const MAX_OPPORTUNITIES = 1000;
 
 const TRUNCATE_LIMITS = {
@@ -18,8 +22,8 @@ const TRUNCATE_LIMITS = {
   MAX_BENEFITS: 5,
 } as const;
 
-if (!process.env.GROQ_API_KEY) {
-  throw new Error("GROQ_API_KEY environment variable is not set");
+if (!process.env.LLM_API_KEY && !process.env.GROQ_API_KEY) {
+  throw new Error("LLM_API_KEY or GROQ_API_KEY environment variable must be set");
 }
 
 function createTimeoutPromise(timeoutMs: number): Promise<never> {
@@ -86,9 +90,15 @@ export async function POST(request: NextRequest) {
       return NextResponse.json([]);
     }
 
-    const groq = new Groq({
-      apiKey: process.env.GROQ_API_KEY,
-    });
+    const openaiClient = process.env.LLM_API_KEY
+      ? new OpenAI({
+          baseURL: "https://internal.llmapi.ai/v1",
+          apiKey: process.env.LLM_API_KEY,
+        })
+      : null;
+    const groqClient = process.env.GROQ_API_KEY
+      ? new Groq({ apiKey: process.env.GROQ_API_KEY })
+      : null;
 
     const opportunitiesSummary = (opportunities as Opportunity[]).map((opp) => {
       const summary: {
@@ -140,16 +150,15 @@ export async function POST(request: NextRequest) {
       return summary;
     });
 
-    const groqPromise = groq.chat.completions.create({
-      model: "moonshotai/kimi-k2-instruct-0905",
+    const chatParams = {
       messages: [
         {
-          role: "system",
+          role: "system" as const,
           content:
             "You are a helpful assistant that filters opportunities based on user queries. Analyze the user's search query and return the IDs of opportunities that match their criteria. Consider all aspects: name, description, category, region, tags, organizer, eligibility, benefits, funding, and duration.",
         },
         {
-          role: "user",
+          role: "user" as const,
           content: `User query: "${query}"
 
 Available opportunities:
@@ -159,7 +168,7 @@ Return the IDs of opportunities that match the user's query. Be inclusive and ma
         },
       ],
       response_format: {
-        type: "json_schema",
+        type: "json_schema" as const,
         json_schema: {
           name: "filtered_opportunities",
           schema: {
@@ -177,12 +186,44 @@ Return the IDs of opportunities that match the user's query. Be inclusive and ma
           },
         },
       },
-    });
+    };
 
-    const response = await Promise.race([
-      groqPromise,
-      createTimeoutPromise(GROQ_API_TIMEOUT),
-    ]);
+    const callWithFallback = async () => {
+      if (openaiClient) {
+        try {
+          return await Promise.race([
+            openaiClient.chat.completions.create({
+              ...chatParams,
+              model: LLM_MODEL,
+            }),
+            createTimeoutPromise(LLM_API_TIMEOUT),
+          ]);
+        } catch {
+          if (groqClient) {
+            return await Promise.race([
+              groqClient.chat.completions.create({
+                ...chatParams,
+                model: GROQ_FALLBACK_MODEL,
+              }),
+              createTimeoutPromise(LLM_API_TIMEOUT),
+            ]);
+          }
+          throw new Error("LLM request failed");
+        }
+      }
+      if (groqClient) {
+        return await Promise.race([
+          groqClient.chat.completions.create({
+            ...chatParams,
+            model: GROQ_FALLBACK_MODEL,
+          }),
+          createTimeoutPromise(LLM_API_TIMEOUT),
+        ]);
+      }
+      throw new Error("No LLM provider configured");
+    };
+
+    const response = await callWithFallback();
 
     const result = JSON.parse(
       response.choices[0].message.content || '{"opportunity_ids": []}'

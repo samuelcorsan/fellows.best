@@ -1,16 +1,21 @@
 import { NextRequest, NextResponse } from "next/server";
 import FirecrawlApp from "@mendable/firecrawl-js";
+import OpenAI from "openai";
 import Groq from "groq-sdk";
 
 export const runtime = "nodejs";
 export const maxDuration = 60;
 
+const LLM_MODEL = "kimi-k2-thinking-turbo";
+const GROQ_FALLBACK_MODEL = "moonshotai/kimi-k2-instruct-0905";
+
 const firecrawl = new FirecrawlApp({
   apiKey: process.env.FIRECRAWL_API_KEY,
 });
 
-const groq = new Groq({
-  apiKey: process.env.GROQ_API_KEY,
+const openai = new OpenAI({
+  baseURL: "https://internal.llmapi.ai/v1",
+  apiKey: process.env.LLM_API_KEY,
 });
 
 export async function POST(req: NextRequest) {
@@ -51,11 +56,10 @@ export async function POST(req: NextRequest) {
        return NextResponse.json({ error: "Failed to scrape content" }, { status: 500 });
     }
 
-    // 2. Process with Groq
-    const completion = await groq.chat.completions.create({
+    const chatParams = {
       messages: [
         {
-          role: "system",
+          role: "system" as const,
           content: `You are an assistant that extracts opportunity details from markdown content into a specific JSON format.
           
           Extract the following fields:
@@ -78,14 +82,31 @@ export async function POST(req: NextRequest) {
           `
         },
         {
-          role: "user",
+          role: "user" as const,
           content: `Extract opportunity details from this markdown:\n\n${markdown}`
         }
       ],
-      model: "moonshotai/Kimi-K2-Instruct-0905",
       temperature: 0.1,
-      response_format: { type: "json_object" }
-    });
+      response_format: { type: "json_object" as const }
+    };
+
+    let completion;
+    try {
+      completion = await openai.chat.completions.create({
+        ...chatParams,
+        model: LLM_MODEL,
+      });
+    } catch (llmError) {
+      if (process.env.GROQ_API_KEY) {
+        const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
+        completion = await groq.chat.completions.create({
+          ...chatParams,
+          model: GROQ_FALLBACK_MODEL,
+        });
+      } else {
+        throw llmError;
+      }
+    }
 
     const jsonContent = completion.choices[0]?.message?.content;
 

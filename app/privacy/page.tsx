@@ -75,11 +75,6 @@ export default function PrivacyPage() {
               management. Fellowships data is securely stored and managed
               through MongoDB&apos;s database platform.
             </li>
-            <li>
-              <strong>Groq:</strong> For AI-powered searching of opportunities.
-              We use Groq&apos;s AI services to provide intelligent search and
-              filtering capabilities for fellowship opportunities.
-            </li>
           </ul>
         </section>
 
