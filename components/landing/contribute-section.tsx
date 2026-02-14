@@ -123,18 +123,18 @@ export function ContributeSection() {
   return (
     <section
       ref={sectionRef}
-      className="container mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 overflow-hidden"
+      className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-24 overflow-hidden"
     >
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center max-w-7xl mx-auto">
-        <div className="order-2 lg:order-1 space-y-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16 xl:gap-24 items-center max-w-7xl mx-auto">
+        <div className="order-2 lg:order-1 space-y-4 sm:space-y-6">
           <div className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-primary/10 text-primary hover:bg-primary/20">
             Open Source
           </div>
-          <h2 className="text-3xl md:text-4xl font-bold tracking-tight">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight">
             Built by the community, <br className="hidden lg:block" />
             for the community.
           </h2>
-          <p className="text-lg text-muted-foreground">
+          <p className="text-base sm:text-lg text-muted-foreground">
             fellows.best is completely open source. We believe in transparency
             and collaboration. Check out our code, report bugs, suggest
             features, or contribute directly to the codebase.
@@ -155,18 +155,18 @@ export function ContributeSection() {
         </div>
 
         <div
-          className={`order-1 lg:order-2 relative mx-auto w-full max-w-[500px] lg:max-w-none perspective-1000 px-4 lg:px-0 transition-all duration-700 ease-out transform ${isInView ? "translate-y-0 opacity-100 scale-100" : "translate-y-10 opacity-0 scale-95"}`}
+          className={`order-1 lg:order-2 relative mx-auto w-full max-w-[500px] lg:max-w-none perspective-1000 px-2 sm:px-4 lg:px-0 transition-all duration-700 ease-out transform ${isInView ? "translate-y-0 opacity-100 scale-100" : "translate-y-10 opacity-0 scale-95"}`}
         >
-          <div className="relative rounded-xl border bg-background shadow-2xl overflow-hidden h-[400px] flex flex-col">
-            <div className="flex items-center gap-2 px-4 py-3 border-b bg-muted/50 shrink-0">
-              <div className="flex gap-1.5">
-                <div className="w-3 h-3 rounded-full bg-red-500/20 border border-red-500/50" />
-                <div className="w-3 h-3 rounded-full bg-yellow-500/20 border border-yellow-500/50" />
-                <div className="w-3 h-3 rounded-full bg-green-500/20 border border-green-500/50" />
+          <div className="relative rounded-xl border bg-background shadow-2xl overflow-hidden h-[320px] sm:h-[360px] md:h-[400px] flex flex-col">
+            <div className="flex items-center gap-2 px-3 sm:px-4 py-2.5 sm:py-3 border-b bg-muted/50 shrink-0 min-w-0">
+              <div className="flex gap-1.5 shrink-0">
+                <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-red-500/20 border border-red-500/50" />
+                <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-yellow-500/20 border border-yellow-500/50" />
+                <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-green-500/20 border border-green-500/50" />
               </div>
-              <div className="flex-1 mx-4">
-                <div className="h-6 rounded-md bg-background border flex items-center px-3 text-xs text-muted-foreground gap-2 truncate">
-                  <Github className="h-3 w-3 shrink-0" />
+              <div className="flex-1 min-w-0 mx-2 sm:mx-4">
+                <div className="h-5 sm:h-6 rounded-md bg-background border flex items-center px-2 sm:px-3 text-[10px] sm:text-xs text-muted-foreground gap-1.5 sm:gap-2 truncate">
+                  <Github className="h-2.5 w-2.5 sm:h-3 sm:w-3 shrink-0" />
                   <span className="truncate">
                     github.com/samuelcorsan/fellows.best
                   </span>
@@ -176,11 +176,11 @@ export function ContributeSection() {
 
             <div className="relative flex-1 bg-card/50 overflow-hidden">
               <div
-                className={`absolute inset-0 p-6 transition-all duration-500 transform ${showSubmitUi ? "-translate-x-full opacity-0" : "translate-x-0 opacity-100"}`}
+                className={`absolute inset-0 p-4 sm:p-6 transition-all duration-500 transform ${showSubmitUi ? "-translate-x-full opacity-0" : "translate-x-0 opacity-100"}`}
               >
-                <div className="flex items-center justify-between mb-6">
-                  <div className="flex items-center gap-3">
-                    <div className="h-10 w-10 rounded-full overflow-hidden border bg-background">
+                <div className="flex items-center justify-between gap-2 mb-4 sm:mb-6">
+                  <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+                    <div className="h-8 w-8 sm:h-10 sm:w-10 rounded-full overflow-hidden border bg-background shrink-0">
                       <img
                         src="https://github.com/samuelcorsan.png"
                         alt="samuelcorsan"
@@ -188,95 +188,97 @@ export function ContributeSection() {
                       />
                     </div>
                     <div className="min-w-0">
-                      <div className="font-semibold text-sm truncate">
+                      <div className="font-semibold text-xs sm:text-sm truncate">
                         fellows.best
                       </div>
-                      <div className="text-xs text-muted-foreground truncate">
+                      <div className="text-[10px] sm:text-xs text-muted-foreground truncate">
                         The open source fellowship platform
                       </div>
                     </div>
                   </div>
-                  <div className="flex gap-2 shrink-0">
-                    <div className="h-8 w-20 bg-muted/50 rounded hidden sm:block" />
+                  <div className="flex gap-1.5 sm:gap-2 shrink-0">
+                    <div className="h-7 w-14 sm:h-8 sm:w-20 bg-muted/50 rounded hidden sm:block" />
                     <div
-                      className={`h-8 px-4 py-2 bg-primary text-primary-foreground text-xs font-medium rounded hidden sm:flex items-center justify-center shadow-sm transition-all ${contributeBtnEffect ? "scale-95 opacity-90" : ""}`}
+                      className={`h-7 sm:h-8 px-3 sm:px-4 py-1.5 sm:py-2 bg-primary text-primary-foreground text-[10px] sm:text-xs font-medium rounded flex items-center justify-center shadow-sm transition-all shrink-0 ${contributeBtnEffect ? "scale-95 opacity-90" : ""}`}
                     >
                       Contribute
                     </div>
                   </div>
                 </div>
 
-                <div className="border rounded-lg overflow-hidden bg-background mb-6">
-                  <div className="px-4 py-3 border-b bg-muted/30 flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <div className="h-5 w-5 rounded-full overflow-hidden">
+                <div className="border rounded-lg overflow-hidden bg-background mb-4 sm:mb-6">
+                  <div className="px-3 sm:px-4 py-2 sm:py-3 border-b bg-muted/30 flex items-center justify-between gap-2">
+                    <div className="flex items-center gap-1.5 sm:gap-2 min-w-0">
+                      <div className="h-4 w-4 sm:h-5 sm:w-5 rounded-full overflow-hidden shrink-0">
                         <img
                           src="https://github.com/samuelcorsan.png"
                           alt="samuelcorsan"
                           className="w-full h-full object-cover"
                         />
                       </div>
-                      <div className="text-xs font-medium">samuelcorsan</div>
+                      <div className="text-[10px] sm:text-xs font-medium truncate">samuelcorsan</div>
                     </div>
-                    <div className="text-xs text-muted-foreground">
+                    <div className="text-[10px] sm:text-xs text-muted-foreground shrink-0">
                       last month
                     </div>
                   </div>
                   {[1, 2, 3].map((i) => (
                     <div
                       key={i}
-                      className="px-4 py-3 border-b last:border-0 flex items-center gap-3"
+                      className="px-3 sm:px-4 py-2 sm:py-3 border-b last:border-0 flex items-center gap-2 sm:gap-3"
                     >
-                      <Code className="h-4 w-4 text-muted-foreground" />
-                      <div className="h-3 w-24 bg-muted/50 rounded" />
-                      <div className="ml-auto h-3 w-12 bg-muted/30 rounded" />
+                      <Code className="h-3 w-3 sm:h-4 sm:w-4 text-muted-foreground shrink-0" />
+                      <div className="h-2.5 sm:h-3 w-16 sm:w-24 bg-muted/50 rounded flex-1 min-w-0" />
+                      <div className="h-2.5 sm:h-3 w-8 sm:w-12 bg-muted/30 rounded shrink-0" />
                     </div>
                   ))}
                 </div>
 
-                <div className="border rounded-lg p-4 bg-background relative overflow-hidden flex-1 min-h-[180px]">
-                  <div className="h-5 w-32 bg-primary/10 rounded mb-3" />
-                  <div className="space-y-2">
-                    <div className="h-2 w-full bg-muted/50 rounded" />
-                    <div className="h-2 w-[80%] bg-muted/50 rounded" />
-                    <div className="h-2 w-[90%] bg-muted/50 rounded" />
+                <div className="border rounded-lg p-3 sm:p-4 bg-background relative overflow-hidden flex-1 min-h-[100px] sm:min-h-[140px]">
+                  <div className="h-4 sm:h-5 w-24 sm:w-32 bg-primary/10 rounded mb-2 sm:mb-3" />
+                  <div className="space-y-1.5 sm:space-y-2">
+                    <div className="h-1.5 sm:h-2 w-full bg-muted/50 rounded" />
+                    <div className="h-1.5 sm:h-2 w-[80%] bg-muted/50 rounded" />
+                    <div className="h-1.5 sm:h-2 w-[90%] bg-muted/50 rounded" />
                   </div>
                 </div>
               </div>
 
               <div
-                className={`absolute inset-0 p-6 transition-all duration-500 transform ${showSubmitUi ? "translate-x-0 opacity-100" : "translate-x-full opacity-0"}`}
+                className={`absolute inset-0 p-4 sm:p-6 transition-all duration-500 transform ${showSubmitUi ? "translate-x-0 opacity-100" : "translate-x-full opacity-0"}`}
               >
-                <div className="space-y-6">
-                  <div className="text-center space-y-1">
-                    <h3 className="text-xl font-bold">Submit an Opportunity</h3>
-                    <p className="text-xs text-muted-foreground">
+                <div className="space-y-4 sm:space-y-6">
+                  <div className="text-center space-y-0.5 sm:space-y-1">
+                    <h3 className="text-lg sm:text-xl font-bold">Submit an Opportunity</h3>
+                    <p className="text-[10px] sm:text-xs text-muted-foreground">
                       Help others discover amazing opportunities
                     </p>
                   </div>
 
-                  <div className="rounded-lg border bg-card text-card-foreground shadow-sm p-4 space-y-3">
-                    <div className="space-y-1">
-                      <h4 className="text-sm font-medium leading-none">
+                  <div className="rounded-lg border bg-card text-card-foreground shadow-sm p-3 sm:p-4 space-y-2 sm:space-y-3">
+                    <div className="space-y-0.5 sm:space-y-1">
+                      <h4 className="text-xs sm:text-sm font-medium leading-none">
                         Short on time?
                       </h4>
-                      <p className="text-xs text-muted-foreground">
+                      <p className="text-[10px] sm:text-xs text-muted-foreground">
                         Paste the URL and we'll handle the rest.
                       </p>
                     </div>
-                    <div className="flex gap-2">
-                      <div className="flex-1 h-9 rounded-md border bg-background px-3 py-1 text-xs shadow-sm flex items-center">
-                        {inputValue || (
-                          <span className="text-muted-foreground">
+                    <div className="flex flex-col sm:flex-row gap-2">
+                      <div className="flex-1 min-w-0 h-8 sm:h-9 rounded-md border bg-background px-2 sm:px-3 py-1 text-[10px] sm:text-xs shadow-sm flex items-center overflow-hidden">
+                        {inputValue ? (
+                          <>
+                            <span className="truncate">{inputValue}</span>
+                            <span className="ml-0.5 animate-pulse shrink-0">|</span>
+                          </>
+                        ) : (
+                          <span className="text-muted-foreground truncate">
                             https://example.com/opportunity
                           </span>
                         )}
-                        {inputValue && (
-                          <span className="ml-0.5 animate-pulse">|</span>
-                        )}
                       </div>
                       <div
-                        className={`h-9 px-4 py-2 bg-primary text-primary-foreground hover:bg-primary/90 inline-flex items-center justify-center whitespace-nowrap rounded-md text-xs font-medium shadow transition-all ${submitBtnEffect ? "scale-95 opacity-90" : ""}`}
+                        className={`h-8 sm:h-9 px-3 sm:px-4 py-1.5 sm:py-2 bg-primary text-primary-foreground hover:bg-primary/90 inline-flex items-center justify-center whitespace-nowrap rounded-md text-[10px] sm:text-xs font-medium shadow transition-all shrink-0 ${submitBtnEffect ? "scale-95 opacity-90" : ""}`}
                       >
                         Submit URL
                       </div>
@@ -287,24 +289,24 @@ export function ContributeSection() {
                     <div className="absolute inset-0 flex items-center">
                       <span className="w-full border-t" />
                     </div>
-                    <div className="relative flex justify-center text-xs uppercase">
+                    <div className="relative flex justify-center text-[10px] sm:text-xs uppercase">
                       <span className="bg-card px-2 text-muted-foreground">
                         Or fill out the full form
                       </span>
                     </div>
                   </div>
 
-                  <div className="space-y-2 opacity-50">
-                    <div className="h-4 w-24 bg-foreground/20 rounded" />
-                    <div className="h-9 w-full border rounded-md bg-background/50" />
+                  <div className="space-y-1.5 sm:space-y-2 opacity-50">
+                    <div className="h-3 sm:h-4 w-20 sm:w-24 bg-foreground/20 rounded" />
+                    <div className="h-8 sm:h-9 w-full border rounded-md bg-background/50" />
                   </div>
                 </div>
 
                 <div
-                  className={`absolute bottom-6 left-1/2 -translate-x-1/2 bg-foreground text-background px-4 py-2 rounded-md shadow-lg flex items-center gap-2 text-xs font-medium transition-all duration-500 ${showSuccess ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"}`}
+                  className={`absolute bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 bg-foreground text-background px-3 sm:px-4 py-1.5 sm:py-2 rounded-md shadow-lg flex items-center gap-1.5 sm:gap-2 text-[10px] sm:text-xs font-medium transition-all duration-500 ${showSuccess ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"}`}
                 >
-                  <CheckCircle2 className="h-4 w-4 text-green-500" />
-                  Opportunity submitted!
+                  <CheckCircle2 className="h-3 w-3 sm:h-4 sm:w-4 text-green-500 shrink-0" />
+                  <span className="truncate">Opportunity submitted!</span>
                 </div>
               </div>
 
