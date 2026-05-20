@@ -38,6 +38,8 @@ export interface Opportunity {
     additionalFunding?: string;
   };
   applicationVideo?: string;
+  votes?: number;
+  hasVoted?: boolean;
   // Extracted comparison data fields
   eligibilityDetails?: {
     ageRange?: { min?: number; max?: number };

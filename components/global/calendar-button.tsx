@@ -158,10 +158,9 @@ export function CalendarButton({ opportunity }: CalendarButtonProps) {
             key={option.name}
             onClick={option.action}
             className={cn(
-              "group relative flex flex-col items-center p-4 rounded-xl min-h-[100px]",
-              "border-2 transition-all duration-300 ease-in-out transform hover:scale-[1.02]",
-              "shadow-sm hover:shadow-md",
-              option.color
+              "group relative flex flex-col items-center p-4 min-h-[100px]",
+              "transition-colors duration-200",
+              option.color.replace(/border-\S+/g, "")
             )}
           >
             <div className="relative mb-3 flex items-center justify-center">

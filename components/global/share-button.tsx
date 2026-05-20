@@ -1,7 +1,6 @@
 "use client";
 
 import { Share2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { Opportunity } from "@/lib/data";
 
 interface ShareButtonProps {
@@ -21,14 +20,15 @@ Working toward my goals and grateful for the amazing community that keeps me mot
   };
 
   return (
-    <Button
-      variant="outline"
-      size="lg"
+    <button
+      type="button"
       onClick={handleShare}
-      className={`flex items-center ${className || ""}`}
+      className={`inline-flex items-center justify-center gap-1.5 h-10 px-4 text-[14px] border border-border bg-card hover:bg-accent transition-colors ${
+        className || ""
+      }`}
     >
-      <Share2 className="h-4 w-4 mr-2" />
+      <Share2 className="h-4 w-4" />
       Share on X
-    </Button>
+    </button>
   );
 }

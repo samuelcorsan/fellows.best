@@ -1,23 +1,14 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Script from "next/script";
-import { MapPin, ExternalLink, Clock, Users, Award, Play } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
+import { ExternalLink, MapPin } from "lucide-react";
 import { CalendarButton } from "@/components/global/calendar-button";
-import { ShareButton } from "@/components/global/share-button";
-import { OpportunityImages } from "@/components/features/opportunity-images";
-import { BadgeList } from "@/components/ui/badge-list";
 import { FeedbackButton } from "@/components/global/feedback-button";
+import { AppliedButton } from "@/components/global/applied-button";
 
-import {
-  getDaysUntilDeadline,
-  getDeadlineUrgency,
-  type Opportunity,
-} from "@/lib/data";
-import { generateAltText } from "@/lib/image-seo";
+import { getDaysUntilDeadline, type Opportunity } from "@/lib/data";
+
+const ACCENT = "#5b6cff";
 
 function getBaseUrl() {
   const raw = process.env.NEXT_PUBLIC_APP_BASE_URL;
@@ -27,75 +18,71 @@ function getBaseUrl() {
 }
 
 interface OpportunityPageProps {
-  params: Promise<{
-    id: string;
-  }>;
-  searchParams: Promise<{
-    from?: string;
-  }>;
+  params: Promise<{ id: string }>;
 }
 
-export default async function OpportunityPage({
-  params,
-  searchParams,
-}: OpportunityPageProps) {
+function deadlineInfo(closeDate: Opportunity["closeDate"]) {
+  if (closeDate === "closed") {
+    return {
+      big: "Closed",
+      sub: "Applications are no longer accepted",
+      tone: "closed" as const,
+    };
+  }
+  if (!closeDate) {
+    return {
+      big: "Rolling",
+      sub: "Apply anytime",
+      tone: "rolling" as const,
+    };
+  }
+  const days = getDaysUntilDeadline(closeDate);
+  if (days < 0) {
+    return {
+      big: "Closed",
+      sub: `Closed on ${new Date(closeDate).toLocaleDateString()}`,
+      tone: "closed" as const,
+    };
+  }
+  const big =
+    days === 0
+      ? "Today"
+      : days === 1
+        ? "1 day left"
+        : days < 30
+          ? `${days} days left`
+          : days < 365
+            ? `${Math.floor(days / 30)} months left`
+            : `${Math.floor(days / 365)} years left`;
+  const sub = `Closes ${new Date(closeDate).toLocaleDateString()}`;
+  const tone: "urgent" | "soon" | "ok" =
+    days < 14 ? "urgent" : days < 60 ? "soon" : "ok";
+  return { big, sub, tone };
+}
+
+export default async function OpportunityPage({ params }: OpportunityPageProps) {
   const { id } = await params;
-  const resolvedSearchParams = await searchParams;
   let opportunity: Opportunity | null = null;
   try {
-    const apiUrl = new URL(
-      `/api/opportunities?id=${id}`,
-      getBaseUrl()
-    );
-    const response = await fetch(apiUrl, {
-      cache: "no-store",
-    });
-
-    if (!response.ok) {
-      notFound();
-    }
-
+    const apiUrl = new URL(`/api/opportunities?id=${id}`, getBaseUrl());
+    const response = await fetch(apiUrl, { cache: "no-store" });
+    if (!response.ok) notFound();
     opportunity = (await response.json()) as Opportunity;
   } catch (error) {
     console.error("Error fetching opportunity page data", error);
     notFound();
   }
+  if (!opportunity) notFound();
 
-  if (!opportunity) {
-    notFound();
-  }
-
-  const daysUntil =
-    opportunity.closeDate && opportunity.closeDate !== "closed"
-      ? getDaysUntilDeadline(opportunity.closeDate)
-      : null;
-  const urgency =
-    opportunity.closeDate && opportunity.closeDate !== "closed"
-      ? getDeadlineUrgency(opportunity.closeDate)
-      : "safe";
-
-  const urgencyStyles = {
-    safe: "border-green-200 bg-green-50 text-green-700 dark:border-green-800 dark:bg-green-950 dark:text-green-300",
-    warning:
-      "border-yellow-200 bg-yellow-50 text-yellow-700 dark:border-yellow-800 dark:bg-yellow-950 dark:text-yellow-300",
-    urgent:
-      "border-red-200 bg-red-50 text-red-700 dark:border-red-800 dark:bg-red-950 dark:text-red-300",
-  };
-
-  const getBackNavigation = () => {
-    switch (resolvedSearchParams.from) {
-      case "timeline":
-        return { url: "/browse?view=timeline", text: "Back to Timeline" };
-      case "home":
-        return { url: "/", text: "Back to Home" };
-      case "browse":
-      default:
-        return { url: "/browse", text: "Back to Browse" };
-    }
-  };
-
-  const { url: backUrl } = getBackNavigation();
-
+  const deadline = deadlineInfo(opportunity.closeDate);
+  const deadlineTone =
+    deadline.tone === "urgent"
+      ? "border-red-500/50 bg-red-500/10 text-red-600 dark:text-red-400"
+      : deadline.tone === "soon"
+        ? "border-amber-500/50 bg-amber-500/10 text-amber-700 dark:text-amber-400"
+        : deadline.tone === "closed"
+          ? "border-border bg-muted text-muted-foreground"
+          : "border-border bg-card text-foreground/80";
   const opportunityUrl = `https://fellows.best/opportunity/${opportunity.id}`;
   const currentDate = new Date().toISOString();
 
@@ -110,7 +97,10 @@ export default async function OpportunityPage({
       url: opportunity.applyLink,
     },
     url: opportunityUrl,
-    applicationDeadline: opportunity.closeDate && opportunity.closeDate !== "closed" ? opportunity.closeDate : undefined,
+    applicationDeadline:
+      opportunity.closeDate && opportunity.closeDate !== "closed"
+        ? opportunity.closeDate
+        : undefined,
     datePosted: opportunity.openDate,
     dateModified: currentDate,
     category: opportunity.category,
@@ -122,10 +112,7 @@ export default async function OpportunityPage({
           currency: opportunity.funding.currency,
         }
       : undefined,
-    areaServed: {
-      "@type": "Place",
-      name: opportunity.region,
-    },
+    areaServed: { "@type": "Place", name: opportunity.region },
     termsOfService: opportunity.applyLink,
   };
 
@@ -137,10 +124,7 @@ export default async function OpportunityPage({
     image: opportunity.logoUrl ? [opportunity.logoUrl] : [],
     datePublished: opportunity.openDate || currentDate,
     dateModified: currentDate,
-    author: {
-      "@type": "Organization",
-      name: opportunity.organizer,
-    },
+    author: { "@type": "Organization", name: opportunity.organizer },
     publisher: {
       "@type": "Organization",
       name: "fellows.best",
@@ -149,10 +133,7 @@ export default async function OpportunityPage({
         url: "https://cdn.fellows.best/og-image.jpg",
       },
     },
-    mainEntityOfPage: {
-      "@type": "WebPage",
-      "@id": opportunityUrl,
-    },
+    mainEntityOfPage: { "@type": "WebPage", "@id": opportunityUrl },
   };
 
   const breadcrumbSchema = {
@@ -168,12 +149,6 @@ export default async function OpportunityPage({
       {
         "@type": "ListItem",
         position: 2,
-        name: "Browse",
-        item: "https://fellows.best/browse",
-      },
-      {
-        "@type": "ListItem",
-        position: 3,
         name: opportunity.name,
         item: opportunityUrl,
       },
@@ -185,235 +160,219 @@ export default async function OpportunityPage({
       <Script
         id="opportunity-structured-data"
         type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(scholarshipSchema),
-        }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(scholarshipSchema) }}
       />
       <Script
         id="article-structured-data"
         type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(articleSchema),
-        }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
       />
       <Script
         id="breadcrumb-structured-data"
         type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(breadcrumbSchema),
-        }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <OpportunityImages opportunity={opportunity} backUrl={backUrl} />
 
-        <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6 mb-8">
-          <div className="flex flex-col sm:flex-row sm:items-start gap-4 sm:gap-6 flex-1">
-            <div className="flex-1 text-center sm:text-left">
-              <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mb-2">
-                <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold">
-                  {opportunity.name}
-                </h1>
-                {opportunity.closeDate === "closed" ||
-                (opportunity.closeDate &&
-                  getDaysUntilDeadline(opportunity.closeDate) < 0) ? (
-                  <Badge
-                    className="text-sm mx-auto sm:mx-0 w-fit px-4 py-1 rounded-lg self-center"
-                    variant="destructive"
-                  >
-                    Closed
-                  </Badge>
-                ) : null}
+      <div className="min-h-screen bg-background text-foreground">
+        <header className="sticky top-0 z-30 backdrop-blur-md bg-background/85 border-b border-border">
+          <div className="max-w-4xl mx-auto px-5 py-3 flex items-center gap-3">
+            <Link href="/" className="shrink-0">
+              <span className="font-semibold tracking-tight text-[17px] hover:underline underline-offset-4 decoration-2">
+                fellows.best
+              </span>
+            </Link>
+          </div>
+        </header>
+
+        <article className="max-w-4xl mx-auto px-5 py-8">
+          <div className="flex flex-col sm:flex-row gap-5 items-start">
+            {opportunity.logoUrl ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={opportunity.logoUrl}
+                alt={opportunity.name}
+                className="w-16 h-16 object-cover bg-muted border border-border shrink-0"
+              />
+            ) : (
+              <div className="w-16 h-16 bg-muted border border-border shrink-0 flex items-center justify-center text-xl font-semibold text-muted-foreground">
+                {opportunity.name.charAt(0).toUpperCase()}
               </div>
-              <p className="text-lg sm:text-xl text-muted-foreground mb-4">
+            )}
+
+            <div className="flex-1 min-w-0">
+              <h1 className="text-2xl sm:text-3xl font-semibold leading-tight">
+                {opportunity.name}
+              </h1>
+              <p className="text-[15px] text-muted-foreground mt-1">
                 {opportunity.organizer}
               </p>
-              <div className="flex flex-wrap gap-2 justify-center sm:justify-start">
-                <Badge variant="outline" className="text-sm rounded-lg">
-                  {opportunity.category}
-                </Badge>
-                <BadgeList
-                  badges={opportunity.tags}
-                  variant="secondary"
-                  maxVisible={4}
-                  className="justify-center sm:justify-start"
-                  badgeClassName="text-xs rounded-lg h-6 px-2.5 py-0.5"
-                />
+              <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-3 text-[13px] text-muted-foreground">
+                <span className="capitalize">
+                  {opportunity.category.replace("_", " ")}
+                </span>
+                <span aria-hidden>·</span>
+                <span className="inline-flex items-center gap-1">
+                  <MapPin className="w-3.5 h-3.5" />
+                  {opportunity.region || "—"}
+                </span>
               </div>
+              {opportunity.tags.length > 0 && (
+                <div className="flex flex-wrap gap-1.5 mt-3">
+                  {opportunity.tags.map((t) => (
+                    <span
+                      key={t}
+                      className="inline-flex items-center text-[11px] uppercase tracking-wide px-2 py-0.5 border border-border bg-card text-foreground/80"
+                    >
+                      {t}
+                    </span>
+                  ))}
+                </div>
+              )}
             </div>
-          </div>
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 lg:shrink-0">
-            <Button asChild size="lg" className="w-full sm:w-auto">
+
+            <div className="flex flex-wrap items-center gap-2 shrink-0 w-full sm:w-auto">
               <a
                 href={opportunity.applyLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center"
+                className="inline-flex items-center justify-center gap-1.5 h-10 px-4 text-white text-[14px] font-medium flex-1 sm:flex-none"
+                style={{ background: ACCENT }}
               >
-                Apply Now
-                <ExternalLink className="ml-2 h-4 w-4" />
+                Apply
+                <ExternalLink className="w-4 h-4" />
               </a>
-            </Button>
-            <ShareButton opportunity={opportunity} />
+              <AppliedButton opportunityId={opportunity.id} />
+            </div>
           </div>
-        </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          <div className="lg:col-span-2 space-y-8">
-            <Card>
-              <CardHeader>
-                <CardTitle>About this Opportunity</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground leading-relaxed text-lg">
-                  {opportunity.fullDescription}
-                </p>
-              </CardContent>
-            </Card>
+          <div
+            className={`mt-8 border ${deadlineTone} px-5 py-5 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-2`}
+          >
+            <div>
+              <div className="text-xs uppercase tracking-wider opacity-70 mb-1">
+                Deadline
+              </div>
+              <div className="text-3xl sm:text-4xl font-semibold leading-none">
+                {deadline.big}
+              </div>
+              <div className="text-sm opacity-80 mt-1.5">{deadline.sub}</div>
+            </div>
+            {opportunity.closeDate &&
+              opportunity.closeDate !== "closed" && (
+                <a
+                  href={opportunity.applyLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm underline underline-offset-4 hover:opacity-80 shrink-0"
+                >
+                  Apply now →
+                </a>
+              )}
+          </div>
+
+          <div className="mt-6 grid grid-cols-2 sm:grid-cols-3 gap-4 py-4 border-y border-border text-[14px]">
+            <div>
+              <div className="text-xs uppercase tracking-wider text-muted-foreground mb-1">
+                Opens
+              </div>
+              <div>
+                {opportunity.openDate
+                  ? new Date(opportunity.openDate).toLocaleDateString()
+                  : "—"}
+              </div>
+            </div>
+            <div>
+              <div className="text-xs uppercase tracking-wider text-muted-foreground mb-1">
+                Region
+              </div>
+              <div className="inline-flex items-center gap-1.5">
+                <MapPin className="w-4 h-4" />
+                {opportunity.region || "—"}
+              </div>
+            </div>
+            <div>
+              <div className="text-xs uppercase tracking-wider text-muted-foreground mb-1">
+                Category
+              </div>
+              <div className="capitalize">
+                {opportunity.category.replace("_", " ")}
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-10 space-y-10">
+            <section>
+              <h2 className="text-xs uppercase tracking-wider text-muted-foreground mb-2">
+                About
+              </h2>
+              <p className="text-[15px] leading-relaxed text-foreground/90 whitespace-pre-line">
+                {opportunity.fullDescription || opportunity.description}
+              </p>
+            </section>
 
             {opportunity.benefits.length > 0 && (
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center">
-                    <Award className="mr-2 h-5 w-5" />
-                    What You&apos;ll Get
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <ul className="space-y-3">
-                    {opportunity.benefits.map((benefit, index) => (
-                      <li key={index} className="flex items-start">
-                        <div className="h-2 w-2 rounded-full bg-primary mt-2 mr-3 flex-shrink-0"></div>
-                        <span className="text-muted-foreground">{benefit}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </CardContent>
-              </Card>
+              <section>
+                <h2 className="text-xs uppercase tracking-wider text-muted-foreground mb-2">
+                  What you&apos;ll get
+                </h2>
+                <ul className="space-y-1.5 text-[15px]">
+                  {opportunity.benefits.map((b, i) => (
+                    <li key={i} className="flex gap-2">
+                      <span className="text-muted-foreground select-none">
+                        —
+                      </span>
+                      <span>{b}</span>
+                    </li>
+                  ))}
+                </ul>
+              </section>
             )}
 
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center">
-                  <Users className="mr-2 h-5 w-5" />
-                  Eligibility Requirements
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground leading-relaxed">
+            {opportunity.eligibility && (
+              <section>
+                <h2 className="text-xs uppercase tracking-wider text-muted-foreground mb-2">
+                  Eligibility
+                </h2>
+                <p className="text-[15px] leading-relaxed text-foreground/90 whitespace-pre-line">
                   {opportunity.eligibility}
                 </p>
-              </CardContent>
-            </Card>
-
-          </div>
-
-          <div className="space-y-6">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center">
-                  <Clock className="mr-2 h-5 w-5" />
-                  Deadline
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                {opportunity.closeDate === "closed" ? (
-                  <div
-                    className={`p-4 rounded-lg border text-center ${urgencyStyles.urgent}`}
-                  >
-                    <div className="text-2xl font-bold">Closed</div>
-                    <div className="text-sm opacity-75">
-                      This opportunity is no longer accepting applications
-                    </div>
-                  </div>
-                ) : opportunity.closeDate ? (
-                  <div
-                    className={`p-4 rounded-lg border text-center ${urgencyStyles[urgency]}`}
-                  >
-                    <div className="text-2xl font-bold">
-                      {daysUntil !== null && daysUntil >= 0
-                        ? `${daysUntil} days left`
-                        : "Closed"}
-                    </div>
-                    <div className="text-sm opacity-75">
-                      Closes{" "}
-                      {new Date(opportunity.closeDate).toLocaleDateString()}
-                    </div>
-                  </div>
-                ) : (
-                  <div
-                    className={`p-4 rounded-lg border text-center ${urgencyStyles.safe}`}
-                  >
-                    <div className="text-2xl font-bold">
-                      Rolling Application
-                    </div>
-                    <div className="text-sm opacity-75">Apply anytime</div>
-                  </div>
-                )}
-
-                <Separator />
-
-                <div className="space-y-2 text-sm">
-                  <div className="flex items-center justify-between">
-                    <span className="text-muted-foreground">Opens:</span>
-                    <span>
-                      {opportunity.openDate
-                        ? new Date(opportunity.openDate).toLocaleDateString()
-                        : "N/A"}
-                    </span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-muted-foreground">Region:</span>
-                    <span className="flex items-center">
-                      <MapPin className="mr-1 h-3 w-3" />
-                      {opportunity.region}
-                    </span>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+              </section>
+            )}
 
             {opportunity.applicationVideo && (
-              <Card className="overflow-hidden">
-                <CardHeader>
-                  <CardTitle className="flex items-center text-base">
-                    <Play className="mr-2 h-4 w-4" />
-                    Application Tips
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="relative aspect-video rounded-lg overflow-hidden">
-                    <iframe
-                      width="560"
-                      height="315"
-                      src={opportunity.applicationVideo}
-                      title="YouTube video player"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                      referrerPolicy="strict-origin-when-cross-origin"
-                      allowFullScreen
-                      className="absolute inset-0 w-full h-full"
-                    />
-                  </div>
-                </CardContent>
-              </Card>
+              <section>
+                <h2 className="text-xs uppercase tracking-wider text-muted-foreground mb-2">
+                  Application tips
+                </h2>
+                <div className="relative aspect-video border border-border overflow-hidden max-w-2xl">
+                  <iframe
+                    src={opportunity.applicationVideo}
+                    title="Application video"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    referrerPolicy="strict-origin-when-cross-origin"
+                    allowFullScreen
+                    className="absolute inset-0 w-full h-full"
+                  />
+                </div>
+              </section>
             )}
 
             {opportunity.closeDate && opportunity.closeDate !== "closed" && (
-              <Card>
-                <CardHeader>
-                  <CardTitle>Add to Calendar</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <CalendarButton opportunity={opportunity} />
-                </CardContent>
-              </Card>
+              <section>
+                <h2 className="text-xs uppercase tracking-wider text-muted-foreground mb-2">
+                  Add to calendar
+                </h2>
+                <CalendarButton opportunity={opportunity} />
+              </section>
             )}
           </div>
-        </div>
+        </article>
       </div>
-      <FeedbackButton 
-        section="opportunity" 
+
+      <FeedbackButton
+        section="opportunity"
         opportunityId={opportunity.id}
-        variant="floating" 
+        variant="floating"
       />
     </>
   );

@@ -1,9 +1,8 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Geist } from "next/font/google";
-import { Header } from "@/components/global/header";
-import { Footer } from "@/components/global/footer";
 import { ThemeProvider } from "@/providers/theme-provider";
+import { QueryProvider } from "@/providers/query-provider";
 
 import { Toaster } from "sonner";
 import { Analytics } from "@vercel/analytics/react";
@@ -64,11 +63,9 @@ export default function RootLayout({
         >
           <SpeedInsights />
           <Analytics />
-          <div className="min-h-screen flex flex-col">
-            <Header />
-            <main className="flex-1">{children}</main>
-            <Footer />
-          </div>
+          <QueryProvider>
+            <main className="min-h-screen">{children}</main>
+          </QueryProvider>
         </ThemeProvider>
         <Toaster richColors theme="dark" />
       </body>

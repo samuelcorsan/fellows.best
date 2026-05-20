@@ -42,7 +42,7 @@ function normalizeDate(
   return String(value);
 }
 
-function mapOpportunity(doc: Document): Opportunity {
+function mapOpportunity(doc: Document, voterId?: string): Opportunity {
   const {
     _id,
     id,
@@ -64,8 +64,11 @@ function mapOpportunity(doc: Document): Opportunity {
     duration,
     funding,
     applicationVideo,
+    votes,
+    voters,
     ...rest
   } = doc as Record<string, unknown>;
+  const voterList = Array.isArray(voters) ? (voters as string[]) : [];
 
   return {
     id: typeof id === "string" && id.length > 0 ? id : _id?.toString() || "",
@@ -89,6 +92,8 @@ function mapOpportunity(doc: Document): Opportunity {
     applicationVideo: applicationVideo
       ? String(applicationVideo)
       : undefined,
+    votes: typeof votes === "number" ? votes : voterList.length,
+    hasVoted: voterId ? voterList.includes(voterId) : false,
     ...rest,
   };
 }
@@ -97,6 +102,7 @@ export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const id = searchParams.get("id");
+    const voterId = searchParams.get("voterId") || undefined;
 
     const collection = await getCollection();
 
@@ -114,11 +120,9 @@ export async function GET(request: NextRequest) {
         );
       }
 
-      return NextResponse.json(mapOpportunity(document), {
+      return NextResponse.json(mapOpportunity(document, voterId), {
         status: 200,
-        headers: {
-          "Cache-Control": "public, s-maxage=300, stale-while-revalidate=600",
-        },
+        headers: { "Cache-Control": "no-store" },
       });
     }
 
@@ -127,13 +131,11 @@ export async function GET(request: NextRequest) {
       .sort({ closeDate: 1 })
       .toArray();
 
-    const opportunities = documents.map(mapOpportunity);
+    const opportunities = documents.map((d) => mapOpportunity(d, voterId));
 
       return NextResponse.json(opportunities, {
         status: 200,
-        headers: {
-          "Cache-Control": "public, s-maxage=300, stale-while-revalidate=600",
-        },
+        headers: { "Cache-Control": "no-store" },
       });
   } catch (error) {
     console.error("Error fetching opportunities:", error);
