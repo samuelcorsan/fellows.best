@@ -21,6 +21,9 @@ export const metadata: Metadata = {
     "fellowships, grants, accelerators, hackathons, competitions, deadlines, opportunities",
   alternates: {
     canonical: "https://fellows.best",
+    types: {
+      "text/markdown": "/index.md",
+    },
   },
   openGraph: {
     title: "The Biggest Tech Fellowship List | fellows.best",

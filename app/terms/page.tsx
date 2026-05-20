@@ -7,6 +7,9 @@ export const metadata: Metadata = {
     "Read the terms of service for fellows.best. Understand your rights and responsibilities when using our platform.",
   alternates: {
     canonical: "https://fellows.best/terms",
+    types: {
+      "text/markdown": "/terms.md",
+    },
   },
   robots: {
     index: true,

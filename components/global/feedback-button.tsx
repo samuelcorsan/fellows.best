@@ -179,7 +179,7 @@ export function FeedbackButton({
       <>
         <Button
           onClick={handleClick}
-          className={`fixed bottom-6 right-6 z-50 h-auto px-4 py-3 rounded-full shadow-lg flex items-center gap-2 ${className || ""}`}
+          className={`fixed bottom-6 right-6 z-50 h-auto px-4 py-3 rounded-none shadow-lg flex items-center gap-2 ${className || ""}`}
           aria-label="Share feedback"
         >
           <FileText className="h-5 w-5" />

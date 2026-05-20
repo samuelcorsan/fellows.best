@@ -7,6 +7,9 @@ export const metadata: Metadata = {
     "Learn how fellows.best collects, uses, and protects your personal data in accordance with GDPR and privacy laws.",
   alternates: {
     canonical: "https://fellows.best/privacy",
+    types: {
+      "text/markdown": "/privacy.md",
+    },
   },
   robots: {
     index: true,

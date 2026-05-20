@@ -321,7 +321,7 @@ export default function Home() {
                 Submit
               </button>
             </DialogTrigger>
-            <DialogContent className="sm:max-w-md rounded-none">
+            <DialogContent className="sm:max-w-md">
               <DialogHeader>
                 <DialogTitle>Submit an opportunity</DialogTitle>
                 <DialogDescription>
@@ -377,7 +377,7 @@ export default function Home() {
 
       <div className="max-w-4xl mx-auto px-5 pt-4 flex items-center justify-end gap-2">
         <Select value={category} onValueChange={setCategory}>
-          <SelectTrigger className="h-9 w-[150px] bg-card rounded-none text-sm">
+          <SelectTrigger className="h-9 w-[150px] bg-card text-sm">
             <SelectValue placeholder="Category" />
           </SelectTrigger>
           <SelectContent>
@@ -389,7 +389,7 @@ export default function Home() {
           </SelectContent>
         </Select>
         <Select value={region} onValueChange={setRegion}>
-          <SelectTrigger className="h-9 w-[130px] bg-card rounded-none text-sm">
+          <SelectTrigger className="h-9 w-[130px] bg-card text-sm">
             <SelectValue placeholder="Region" />
           </SelectTrigger>
           <SelectContent>
@@ -404,7 +404,7 @@ export default function Home() {
           value={status}
           onValueChange={(v) => setStatus(v as "open" | "all")}
         >
-          <SelectTrigger className="h-9 w-[110px] bg-card rounded-none text-sm">
+          <SelectTrigger className="h-9 w-[110px] bg-card text-sm">
             <SelectValue />
           </SelectTrigger>
           <SelectContent>

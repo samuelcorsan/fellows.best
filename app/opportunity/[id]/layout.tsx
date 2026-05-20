@@ -55,6 +55,9 @@ export async function generateMetadata({
     keywords: [...opportunity.tags].join(", "),
     alternates: {
       canonical: `https://fellows.best/opportunity/${id}`,
+      types: {
+        "text/markdown": `/opportunity/${id}.md`,
+      },
     },
     openGraph: {
       title: `${opportunity.name} - Deadlines, Requirements & How to Apply`,

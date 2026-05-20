@@ -126,7 +126,7 @@ export function OpportunityCard({
                   />
                 </div>
                 <div
-                  className={`px-2 py-1 rounded-full text-xs font-medium border ${urgencyStyles[urgency]}`}
+                  className={`px-2 py-1 rounded-none text-xs font-medium border ${urgencyStyles[urgency]}`}
                 >
                   {getDeadlineText(daysUntil)}
                 </div>
@@ -194,7 +194,7 @@ export function OpportunityCard({
                 </p>
               </div>
               <div
-                className={`px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-medium border whitespace-nowrap ml-2 flex-shrink-0 ${urgencyStyles[urgency]}`}
+                className={`px-2 sm:px-3 py-1 rounded-none text-xs sm:text-sm font-medium border whitespace-nowrap ml-2 flex-shrink-0 ${urgencyStyles[urgency]}`}
               >
                 <span className="hidden sm:inline">
                   {getDeadlineText(daysUntil)}

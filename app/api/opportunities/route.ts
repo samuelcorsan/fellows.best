@@ -64,10 +64,11 @@ function mapOpportunity(doc: Document, voterId?: string): Opportunity {
     duration,
     funding,
     applicationVideo,
-    votes,
     voters,
+    votes: _votes,
     ...rest
   } = doc as Record<string, unknown>;
+  void _votes;
   const voterList = Array.isArray(voters) ? (voters as string[]) : [];
 
   return {
@@ -92,7 +93,7 @@ function mapOpportunity(doc: Document, voterId?: string): Opportunity {
     applicationVideo: applicationVideo
       ? String(applicationVideo)
       : undefined,
-    votes: typeof votes === "number" ? votes : voterList.length,
+    votes: voterList.length,
     hasVoted: voterId ? voterList.includes(voterId) : false,
     ...rest,
   };

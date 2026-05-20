@@ -165,7 +165,7 @@ export function Header() {
                           <Icon className="h-5 w-5 flex-shrink-0" />
                           <span>{item.name}</span>
                           {isActive && (
-                            <div className="ml-auto w-2 h-2 bg-primary rounded-full"></div>
+                            <div className="ml-auto w-2 h-2 bg-primary rounded-none"></div>
                           )}
                         </Link>
                       );
