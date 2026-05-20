@@ -21,8 +21,58 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, Loader2, Upload, UploadCloud, Search, FileJson } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import {
+  ArrowLeft,
+  ArrowUp,
+  Braces,
+  Loader2,
+  Upload,
+  UploadCloud,
+} from "lucide-react";
 import type { Opportunity } from "@/lib/data";
+import { cn } from "@/lib/utils";
+
+const EXAMPLE_OPPORTUNITY_JSON = JSON.stringify(
+  {
+    name: "Example Fellowship",
+    organizer: "Example Org",
+    description: "Short summary for listings.",
+    fullDescription: "Longer description with program details.",
+    category: "fellowship",
+    openDate: "2026-01-01",
+    closeDate: "2026-03-31",
+    region: "Global",
+    country: "Global",
+    eligibility: "Students and early-career builders.",
+    applyLink: "https://example.com/apply",
+    tags: ["remote", "equity-free"],
+    benefits: ["Mentorship", "Funding", "Network access"],
+  },
+  null,
+  2
+);
+
+function isDirectUrl(query: string): boolean {
+  const trimmed = query.trim();
+  if (!trimmed) return false;
+  const candidate = /^https?:\/\//i.test(trimmed) ? trimmed : `https://${trimmed}`;
+  try {
+    const url = new URL(candidate);
+    return (
+      (url.protocol === "http:" || url.protocol === "https:") &&
+      url.hostname.includes(".")
+    );
+  } catch {
+    return false;
+  }
+}
 
 type AdminOpportunity = Opportunity & {
   mongoId?: string;
@@ -96,7 +146,7 @@ function AdminNewContent() {
   const [searching, setSearching] = useState(false);
   const [logoDragOver, setLogoDragOver] = useState(false);
   const [bannerDragOver, setBannerDragOver] = useState(false);
-  const [importMethod, setImportMethod] = useState<"search" | "json">("search");
+  const [jsonModalOpen, setJsonModalOpen] = useState(false);
 
   const parsedTags = useMemo(
     () =>
@@ -249,30 +299,47 @@ function AdminNewContent() {
 
   const handleSearch = async () => {
     if (!searchQuery.trim()) {
-      toast.error("Please enter a search query");
+      toast.error("Tell the agent what to find");
       return;
     }
+    const urlMode = isDirectUrl(searchQuery);
     setSearching(true);
     try {
-      const url = token ? `/api/admin/opportunities/search?token=${token}` : "/api/admin/opportunities/search";
-      const res = await fetch(url, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ query: searchQuery }),
-      });
-      
-      if (!res.ok) {
-        const error = await res.json();
-        throw new Error(error.error || "Search failed");
-      }
+      await toast.promise(
+        (async () => {
+          const endpoint = token
+            ? `/api/admin/opportunities/search?token=${token}`
+            : "/api/admin/opportunities/search";
+          const res = await fetch(endpoint, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ query: searchQuery }),
+          });
 
-      const { data } = await res.json();
-      loadJsonToForm(data);
-      toast.success("Opportunity found and form filled!");
-    } catch (error) {
-      toast.error(error instanceof Error ? error.message : "Search failed");
+          if (!res.ok) {
+            const error = await res.json();
+            throw new Error(error.error || "Search failed");
+          }
+
+          const { data } = await res.json();
+          loadJsonToForm(data);
+        })(),
+        {
+          loading: urlMode ? "Scraping URL…" : "Searching the web…",
+          success: "Draft ready — review and upload a logo",
+          error: (error) =>
+            error instanceof Error ? error.message : "Agent could not complete the task",
+        }
+      );
     } finally {
       setSearching(false);
+    }
+  };
+
+  const handleComposerKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === "Enter" && !e.shiftKey && searchQuery.trim() && !searching) {
+      e.preventDefault();
+      void handleSearch();
     }
   };
 
@@ -285,6 +352,7 @@ function AdminNewContent() {
       const data = JSON.parse(jsonText) as Record<string, unknown>;
       loadJsonToForm(data);
       setJsonText("");
+      setJsonModalOpen(false);
       toast.success("JSON loaded successfully");
     } catch (error) {
       toast.error(`Invalid JSON: ${error instanceof Error ? error.message : "Unknown error"}`);
@@ -381,157 +449,158 @@ function AdminNewContent() {
   };
 
   return (
-    <div className="container mx-auto px-4 py-10 space-y-8">
-      <div className="flex items-center justify-between gap-3">
-        <div className="flex items-center gap-4">
-          <Button
-            type="button"
-            variant="ghost"
-            size="icon"
-            className="-ml-3"
-            onClick={() => router.push(token ? `/admin?token=${token}` : "/admin")}
-          >
-            <ArrowLeft className="h-5 w-5" />
-          </Button>
+    <div
+      className={cn(
+        "container mx-auto px-4",
+        showJsonInput ? "relative min-h-[calc(100dvh-4rem)] flex flex-col" : "py-10 space-y-8"
+      )}
+    >
+      <div
+        className={cn(
+          "flex items-center gap-4",
+          showJsonInput ? "absolute top-6 left-4 z-10 md:left-6" : "justify-between"
+        )}
+      >
+        <Button
+          type="button"
+          variant="ghost"
+          size="icon"
+          className={showJsonInput ? "" : "-ml-3"}
+          onClick={() => router.push(token ? `/admin?token=${token}` : "/admin")}
+        >
+          <ArrowLeft className="h-5 w-5" />
+        </Button>
+        {!showJsonInput && (
           <div>
             <h1 className="text-3xl font-bold tracking-tight">
               {editingId ? "Edit Opportunity" : "Add Opportunity"}
             </h1>
-            {!showJsonInput && (
-              <p className="text-muted-foreground">
-                Review and edit the opportunity details, then upload logo and submit
-              </p>
-            )}
+            <p className="text-muted-foreground">
+              {editingId
+                ? "Update fields and media, then save"
+                : "Review the draft, upload logo, and publish"}
+            </p>
           </div>
-        </div>
+        )}
       </div>
 
       {showJsonInput && (
-        <div className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div
-              onClick={() => setImportMethod("search")}
-              className={`
-                relative cursor-pointer rounded-xl border-2 p-6 transition-all hover:border-primary/50
-                ${
-                  importMethod === "search"
-                    ? "border-primary bg-primary/5 ring-1 ring-primary/20"
-                    : "border-muted bg-card hover:bg-muted/50"
-                }
-              `}
-            >
-              <div className="flex items-center gap-4">
-                <div
-                  className={`p-3 rounded-lg ${
-                    importMethod === "search"
-                      ? "bg-primary/10 text-primary"
-                      : "bg-muted text-muted-foreground"
-                  }`}
-                >
-                  <Search className="h-6 w-6" />
-                </div>
-                <div>
-                  <h3 className="font-semibold">AI Search & Auto-fill</h3>
-                  <p className="text-sm text-muted-foreground">
-                    Find online and extract data
-                  </p>
-                </div>
+        <>
+          <div className="flex flex-1 flex-col items-center justify-center px-4 py-20">
+            <div className="w-full max-w-2xl space-y-8">
+              <div className="space-y-3 text-center">
+                <h2 className="text-4xl font-bold tracking-tight">Opportunity agent</h2>
+                <p className="text-base text-muted-foreground leading-relaxed mx-auto max-w-lg">
+                  Paste a URL to scrape the page directly, or describe a program to search the web.
+                </p>
               </div>
-            </div>
 
-            <div
-              onClick={() => setImportMethod("json")}
-              className={`
-                relative cursor-pointer rounded-xl border-2 p-6 transition-all hover:border-primary/50
-                ${
-                  importMethod === "json"
-                    ? "border-primary bg-primary/5 ring-1 ring-primary/20"
-                    : "border-muted bg-card hover:bg-muted/50"
-                }
-              `}
-            >
-              <div className="flex items-center gap-4">
+              <div className="space-y-6">
                 <div
-                  className={`p-3 rounded-lg ${
-                    importMethod === "json"
-                      ? "bg-primary/10 text-primary"
-                      : "bg-muted text-muted-foreground"
-                  }`}
+                  className={cn(
+                    "relative overflow-hidden border transition-shadow",
+                    searching
+                      ? "border-violet-500/35 ring-2 ring-violet-500/15"
+                      : "border-violet-500/25 focus-within:border-violet-500/40 focus-within:ring-2 focus-within:ring-violet-500/15"
+                  )}
                 >
-                  <FileJson className="h-6 w-6" />
+                  <div
+                    className="pointer-events-none absolute inset-0 bg-gradient-to-br from-violet-500/20 via-fuchsia-500/10 to-violet-500/5 dark:from-violet-500/25 dark:via-fuchsia-500/12 dark:to-transparent"
+                    aria-hidden
+                  />
+                  <Textarea
+                    id="opportunityPrompt"
+                    placeholder="https://example.com/program or describe what to find…"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    onKeyDown={handleComposerKeyDown}
+                    rows={3}
+                    disabled={searching}
+                    className="relative [field-sizing:content] min-h-[calc(4rem+3lh)] leading-normal resize-none border-0 bg-transparent px-4 pb-12 pt-4 text-[15px] shadow-none focus-visible:ring-0"
+                  />
+                  <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between gap-2">
+                    <span className="text-[11px] text-muted-foreground">
+                      Enter to run · Shift+Enter for newline
+                    </span>
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="icon"
+                      className="h-9 w-9 shrink-0 hover:bg-transparent"
+                      onClick={() => void handleSearch()}
+                      disabled={searching || !searchQuery.trim()}
+                      aria-label="Run agent"
+                    >
+                      {searching ? (
+                        <Loader2 className="h-4 w-4 animate-spin" />
+                      ) : (
+                        <ArrowUp className="h-4 w-4" />
+                      )}
+                    </Button>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="font-semibold">Paste JSON</h3>
-                  <p className="text-sm text-muted-foreground">
-                    Manually enter data object
-                  </p>
-                </div>
+
+                <p className="text-center text-sm text-muted-foreground">
+                  Already have structured data?{" "}
+                  <button
+                    type="button"
+                    onClick={() => setJsonModalOpen(true)}
+                    className="inline-flex items-center gap-1 font-medium text-violet-600 underline-offset-4 hover:underline dark:text-violet-400"
+                  >
+                    <Braces className="h-3.5 w-3.5" />
+                    Paste JSON manually
+                  </button>
+                </p>
               </div>
             </div>
           </div>
 
-          <Card className="border-muted/50 shadow-none">
-            <CardContent className="pt-6">
-              {importMethod === "search" ? (
-                <div className="space-y-4">
-                  <div className="space-y-2">
-                    <Label>Search Query</Label>
-                    <div className="flex gap-2">
-                      <Input
-                        placeholder="e.g. 'YC Winter 2025 batch details'"
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                        onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-                      />
-                      <Button
-                        onClick={handleSearch}
-                        disabled={searching || !searchQuery.trim()}
-                      >
-                        {searching && (
-                          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                        )}
-                        Search & Fill
-                      </Button>
-                    </div>
-                    <p className="text-xs text-muted-foreground">
-                      Search the web and extract details automatically.
-                    </p>
-                  </div>
+          <Dialog open={jsonModalOpen} onOpenChange={setJsonModalOpen}>
+            <DialogContent className="sm:max-w-2xl gap-0 p-0 overflow-hidden rounded-none sm:rounded-none">
+              <DialogHeader className="px-6 pt-6 pb-4 border-b">
+                <DialogTitle className="text-xl">Import from JSON</DialogTitle>
+              </DialogHeader>
+              <div className="px-6 py-4 space-y-3">
+                <div className="flex justify-end">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setJsonText(EXAMPLE_OPPORTUNITY_JSON)}
+                  >
+                    Insert example JSON
+                  </Button>
                 </div>
-              ) : (
-                <div className="space-y-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="jsonPaste">JSON Data</Label>
-                    <Textarea
-                      id="jsonPaste"
-                      value={jsonText}
-                      onChange={(e) => setJsonText(e.target.value)}
-                      rows={12}
-                      placeholder='{"name":"Example","organizer":"Org","description":"...",...}'
-                      className="font-mono text-sm"
-                    />
-                  </div>
-                  <div className="flex gap-2">
-                    <Button
-                      type="button"
-                      onClick={handleJsonPaste}
-                      disabled={!jsonText.trim()}
-                    >
-                      Load JSON
-                    </Button>
-                    <Button
-                      type="button"
-                      variant="ghost"
-                      onClick={() => setJsonText("")}
-                    >
-                      Clear
-                    </Button>
-                  </div>
+                <Textarea
+                  id="jsonPaste"
+                  value={jsonText}
+                  onChange={(e) => setJsonText(e.target.value)}
+                  rows={14}
+                  placeholder="Paste JSON here…"
+                  className="font-mono text-[13px] leading-relaxed min-h-[280px] resize-y bg-muted/30 rounded-none"
+                />
+              </div>
+              <DialogFooter className="px-6 py-4 border-t bg-muted/20 sm:justify-between">
+                <Button
+                  type="button"
+                  variant="ghost"
+                  onClick={() => setJsonText("")}
+                  disabled={!jsonText.trim()}
+                >
+                  Clear
+                </Button>
+                <div className="flex gap-2">
+                  <Button type="button" variant="outline" onClick={() => setJsonModalOpen(false)}>
+                    Cancel
+                  </Button>
+                  <Button type="button" onClick={handleJsonPaste} disabled={!jsonText.trim()}>
+                    Load into form
+                  </Button>
                 </div>
-              )}
-            </CardContent>
-          </Card>
-        </div>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
+        </>
       )}
 
       {showForm && (
