@@ -139,26 +139,25 @@ async function fetchAll(voterId: string): Promise<Opportunity[]> {
 
 function SkeletonRow() {
   return (
-    <li className="flex gap-4 py-4 animate-pulse">
-      <div className="w-9 flex flex-col items-center pt-1 gap-1">
+    <li className="flex gap-3 sm:gap-4 py-5 sm:py-4 animate-pulse">
+      <div className="w-10 sm:w-9 flex flex-col items-center pt-1 gap-1 shrink-0">
         <div className="w-5 h-5 bg-muted" />
         <div className="h-[12px] w-6 bg-muted/70" />
       </div>
-      <div className="w-10 h-10 bg-muted border border-border shrink-0 mt-0.5" />
-      <div className="flex-1 min-w-0 space-y-2">
-        <div className="flex items-center gap-2">
+      <div className="w-11 h-11 sm:w-10 sm:h-10 bg-muted border border-border shrink-0" />
+      <div className="flex-1 min-w-0 space-y-2.5 sm:space-y-2">
+        <div className="space-y-1.5 sm:space-y-0 sm:flex sm:items-center sm:gap-2">
           <div className="h-[18px] w-40 bg-muted" />
-          <div className="h-[14px] w-20 bg-muted/70" />
+          <div className="h-[14px] w-24 bg-muted/70" />
         </div>
         <div className="space-y-1.5">
-          <div className="h-[14px] w-full bg-muted/70" />
-          <div className="h-[14px] w-4/5 bg-muted/70" />
+          <div className="h-[15px] sm:h-[14px] w-full bg-muted/70" />
+          <div className="h-[15px] sm:h-[14px] w-4/5 bg-muted/70" />
         </div>
-        <div className="flex gap-2 pt-0.5">
+        <div className="flex flex-wrap gap-2 pt-0.5">
           <div className="h-[14px] w-16 bg-muted/60" />
           <div className="h-[14px] w-14 bg-muted/60" />
           <div className="h-[14px] w-20 bg-muted/60" />
-          <div className="h-[14px] w-12 bg-muted/60" />
         </div>
       </div>
     </li>
@@ -285,99 +284,125 @@ export default function Home() {
 
   const isDark = mounted && (resolvedTheme === "dark" || theme === "dark");
 
+  const submitBtnClass =
+    "h-10 border border-border hover:bg-accent flex items-center text-sm transition-colors shrink-0";
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <header className="sticky top-0 z-30 backdrop-blur-md bg-background/85 border-b border-border">
-        <div className="max-w-4xl mx-auto px-5 py-3 flex items-center gap-3">
-          <Link href="/" className="shrink-0">
-            <span className="font-semibold tracking-tight text-[17px] hover:underline underline-offset-4 decoration-2">
-              fellows.best
-            </span>
-          </Link>
-          <span className="text-sm text-muted-foreground hidden md:inline shrink-0">
-            {SLOGAN}
-          </span>
+        <Dialog open={submitOpen} onOpenChange={setSubmitOpen}>
+          <div className="max-w-4xl mx-auto px-4 sm:px-5 py-3 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-3">
+            <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+              <Link href="/" className="shrink-0">
+                <span className="font-semibold tracking-tight text-[17px] hover:underline underline-offset-4 decoration-2">
+                  fellows.best
+                </span>
+              </Link>
+              <span className="text-sm text-muted-foreground hidden md:inline shrink-0">
+                {SLOGAN}
+              </span>
+              <div className="ml-auto flex items-center gap-2 sm:hidden shrink-0">
+                <DialogTrigger asChild>
+                  <button type="button" className={`${submitBtnClass} px-3.5`}>
+                    Submit
+                  </button>
+                </DialogTrigger>
+                <button
+                  type="button"
+                  onClick={() => setTheme(isDark ? "light" : "dark")}
+                  aria-label="toggle theme"
+                  className="w-10 h-10 border border-border hover:bg-accent flex items-center justify-center transition-colors"
+                >
+                  {mounted && isDark ? (
+                    <Sun className="w-4 h-4" />
+                  ) : (
+                    <Moon className="w-4 h-4" />
+                  )}
+                </button>
+              </div>
+            </div>
 
-          <div className="relative ml-auto w-full max-w-[240px]">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-            <input
-              value={q}
-              onChange={(e) => setQ(e.target.value)}
-              placeholder="search…"
-              className="w-full pl-9 pr-3 h-10 border border-border bg-card text-[15px] focus:outline-none focus:ring-2 focus:ring-offset-0"
-              style={{
-                // @ts-expect-error css var
-                "--tw-ring-color": ACCENT,
-              }}
-            />
-          </div>
-
-          <Dialog open={submitOpen} onOpenChange={setSubmitOpen}>
-            <DialogTrigger asChild>
-              <button
-                type="button"
-                className="h-10 px-3 border border-border hover:bg-accent flex items-center text-sm transition-colors shrink-0"
-              >
-                Submit
-              </button>
-            </DialogTrigger>
-            <DialogContent className="sm:max-w-md">
-              <DialogHeader>
-                <DialogTitle>Submit an opportunity</DialogTitle>
-                <DialogDescription>
-                  Paste a URL — we&apos;ll review and add it.
-                </DialogDescription>
-              </DialogHeader>
-              <form
-                onSubmit={handleSubmit}
-                className="flex flex-col sm:flex-row gap-2 mt-2"
-              >
+            <div className="flex items-center gap-2 w-full sm:w-auto sm:ml-auto sm:shrink-0">
+              <div className="relative flex-1 sm:flex-none sm:w-full sm:max-w-[240px]">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                 <input
-                  value={url}
-                  onChange={(e) => setUrl(e.target.value)}
-                  placeholder="https://example.com/opportunity"
-                  className="flex-1 px-3 h-10 border border-border bg-background text-[15px] focus:outline-none focus:ring-2"
+                  value={q}
+                  onChange={(e) => setQ(e.target.value)}
+                  placeholder="search…"
+                  className="w-full pl-9 pr-3 h-10 border border-border bg-card text-[15px] focus:outline-none focus:ring-2 focus:ring-offset-0"
                   style={{
                     // @ts-expect-error css var
                     "--tw-ring-color": ACCENT,
                   }}
-                  disabled={submitting}
-                  autoFocus
                 />
+              </div>
+
+              <div className="hidden sm:flex items-center gap-2 shrink-0">
+                <DialogTrigger asChild>
+                  <button type="button" className={`${submitBtnClass} px-3`}>
+                    Submit
+                  </button>
+                </DialogTrigger>
                 <button
-                  type="submit"
-                  disabled={submitting || !url.trim()}
-                  className="h-10 px-5 text-white text-[15px] font-medium disabled:opacity-50 transition-opacity"
-                  style={{ background: ACCENT }}
+                  type="button"
+                  onClick={() => setTheme(isDark ? "light" : "dark")}
+                  aria-label="toggle theme"
+                  className="w-10 h-10 border border-border hover:bg-accent flex items-center justify-center transition-colors shrink-0"
                 >
-                  {submitting ? "Submitting…" : "Submit"}
+                  {mounted && isDark ? (
+                    <Sun className="w-4 h-4" />
+                  ) : (
+                    <Moon className="w-4 h-4" />
+                  )}
                 </button>
-              </form>
-              {submitMsg && (
-                <p className="text-[13px] text-muted-foreground mt-2">
-                  {submitMsg}
-                </p>
-              )}
-            </DialogContent>
-          </Dialog>
-          <button
-            type="button"
-            onClick={() => setTheme(isDark ? "light" : "dark")}
-            aria-label="toggle theme"
-            className="w-10 h-10 border border-border hover:bg-accent flex items-center justify-center transition-colors shrink-0"
-          >
-            {mounted && isDark ? (
-              <Sun className="w-4 h-4" />
-            ) : (
-              <Moon className="w-4 h-4" />
+              </div>
+            </div>
+          </div>
+
+          <DialogContent className="sm:max-w-md">
+            <DialogHeader>
+              <DialogTitle>Submit an opportunity</DialogTitle>
+              <DialogDescription>
+                Paste a URL — we&apos;ll review and add it.
+              </DialogDescription>
+            </DialogHeader>
+            <form
+              onSubmit={handleSubmit}
+              className="flex flex-col sm:flex-row gap-2 mt-2"
+            >
+              <input
+                value={url}
+                onChange={(e) => setUrl(e.target.value)}
+                placeholder="https://example.com/opportunity"
+                className="flex-1 px-3 h-10 border border-border bg-background text-[15px] focus:outline-none focus:ring-2"
+                style={{
+                  // @ts-expect-error css var
+                  "--tw-ring-color": ACCENT,
+                }}
+                disabled={submitting}
+                autoFocus
+              />
+              <button
+                type="submit"
+                disabled={submitting || !url.trim()}
+                className="h-10 px-5 text-white text-[15px] font-medium disabled:opacity-50 transition-opacity"
+                style={{ background: ACCENT }}
+              >
+                {submitting ? "Submitting…" : "Submit"}
+              </button>
+            </form>
+            {submitMsg && (
+              <p className="text-[13px] text-muted-foreground mt-2">
+                {submitMsg}
+              </p>
             )}
-          </button>
-        </div>
+          </DialogContent>
+        </Dialog>
       </header>
 
-      <div className="max-w-4xl mx-auto px-5 pt-4 flex items-center justify-end gap-2">
+      <div className="max-w-4xl mx-auto px-4 sm:px-5 pt-3 sm:pt-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-end">
         <Select value={category} onValueChange={setCategory}>
-          <SelectTrigger className="h-9 w-[150px] bg-card text-sm">
+          <SelectTrigger className="h-10 sm:h-9 w-full sm:w-[150px] bg-card text-sm">
             <SelectValue placeholder="Category" />
           </SelectTrigger>
           <SelectContent>
@@ -389,7 +414,7 @@ export default function Home() {
           </SelectContent>
         </Select>
         <Select value={region} onValueChange={setRegion}>
-          <SelectTrigger className="h-9 w-[130px] bg-card text-sm">
+          <SelectTrigger className="h-10 sm:h-9 w-full sm:w-[130px] bg-card text-sm">
             <SelectValue placeholder="Region" />
           </SelectTrigger>
           <SelectContent>
@@ -404,7 +429,7 @@ export default function Home() {
           value={status}
           onValueChange={(v) => setStatus(v as "open" | "all")}
         >
-          <SelectTrigger className="h-9 w-[110px] bg-card text-sm">
+          <SelectTrigger className="h-10 sm:h-9 w-full sm:w-[110px] bg-card text-sm">
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
@@ -414,7 +439,7 @@ export default function Home() {
         </Select>
       </div>
 
-      <div className="max-w-4xl mx-auto px-5 py-6">
+      <div className="max-w-4xl mx-auto px-4 sm:px-5 py-4 sm:py-6">
 
         <ul className="divide-y divide-border border-b border-border">
           {isLoading &&
@@ -433,12 +458,12 @@ export default function Home() {
               const count = o.votes ?? 0;
               const isVoted = !!o.hasVoted;
               return (
-                <li key={o.id} className="flex gap-4 py-4 items-start">
+                <li key={o.id} className="flex gap-3 sm:gap-4 py-5 sm:py-4 items-start">
                   <button
                     type="button"
                     onClick={() => handleVote(o.id, count, isVoted)}
                     aria-label={isVoted ? "remove upvote" : "upvote"}
-                    className={`shrink-0 w-9 flex flex-col items-center pt-0.5 select-none transition-colors ${
+                    className={`shrink-0 w-10 sm:w-9 flex flex-col items-center pt-1 sm:pt-0.5 select-none transition-colors ${
                       isVoted
                         ? "text-[color:var(--accent-color)]"
                         : "text-muted-foreground hover:text-foreground"
@@ -461,14 +486,14 @@ export default function Home() {
 
                   <Link
                     href={`/opportunity/${o.id}`}
-                    className="group flex gap-4 items-start flex-1 min-w-0"
+                    className="group flex gap-3 sm:gap-4 items-start flex-1 min-w-0"
                   >
                     {o.logoUrl ? (
                       // eslint-disable-next-line @next/next/no-img-element
                       <img
                         src={o.logoUrl}
                         alt=""
-                        className="w-10 h-10 object-cover bg-muted border border-border shrink-0 mt-0.5"
+                        className="w-11 h-11 sm:w-10 sm:h-10 object-cover bg-muted border border-border shrink-0"
                         loading="lazy"
                         onError={(e) => {
                           (e.target as HTMLImageElement).style.visibility =
@@ -476,51 +501,54 @@ export default function Home() {
                         }}
                       />
                     ) : (
-                      <div className="w-10 h-10 bg-muted border border-border shrink-0 mt-0.5 flex items-center justify-center font-semibold text-muted-foreground">
+                      <div className="w-11 h-11 sm:w-10 sm:h-10 bg-muted border border-border shrink-0 flex items-center justify-center font-semibold text-muted-foreground">
                         {o.name.charAt(0).toUpperCase()}
                       </div>
                     )}
 
-                    <div className="flex-1 min-w-0">
-                      <div className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
+                    <div className="flex-1 min-w-0 space-y-2 sm:space-y-0">
+                      <div className="flex flex-col gap-1.5 sm:flex-row sm:flex-wrap sm:items-baseline sm:gap-x-2 sm:gap-y-0.5">
                         <span className="font-medium text-[17px] leading-snug group-hover:underline decoration-2 underline-offset-2">
                           {o.name}
                         </span>
-                        {host && (
-                          <span className="text-[13px] text-muted-foreground">
-                            {host}
+                        <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
+                          {host && (
+                            <span className="text-[13px] text-muted-foreground">
+                              {host}
+                            </span>
+                          )}
+                          <span
+                            className={`inline-flex items-center text-[11px] uppercase tracking-wide px-1.5 py-0.5 border shrink-0 ${
+                              deadline.urgent
+                                ? "border-red-500/40 bg-red-500/10 text-red-600 dark:text-red-400"
+                                : deadline.label === "closed"
+                                  ? "border-border bg-muted text-muted-foreground"
+                                  : "border-border bg-card text-foreground/80"
+                            }`}
+                          >
+                            {deadline.label}
                           </span>
-                        )}
-                        <span
-                          className={`inline-flex items-center text-[11px] uppercase tracking-wide px-1.5 py-0.5 border ${
-                            deadline.urgent
-                              ? "border-red-500/40 bg-red-500/10 text-red-600 dark:text-red-400"
-                              : deadline.label === "closed"
-                                ? "border-border bg-muted text-muted-foreground"
-                                : "border-border bg-card text-foreground/80"
-                          }`}
-                        >
-                          {deadline.label}
-                        </span>
+                        </div>
                       </div>
-                      <p className="text-[14px] text-muted-foreground mt-1 line-clamp-2">
+                      <p className="text-[15px] sm:text-[14px] text-muted-foreground leading-relaxed line-clamp-2 sm:mt-1">
                         {o.description}
                       </p>
-                      <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-2 text-[13px] text-muted-foreground">
+                      <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1.5 sm:gap-x-3 sm:gap-y-1 sm:mt-2 text-[13px] text-muted-foreground">
                         <span className="capitalize">
                           {o.category.replace("_", " ")}
                         </span>
-                        <span aria-hidden>·</span>
+                        <span aria-hidden className="text-muted-foreground/60">
+                          ·
+                        </span>
                         <span>{o.region || "—"}</span>
-                        <span aria-hidden>·</span>
-                        <span>{o.organizer || "—"}</span>
+                        <span aria-hidden className="text-muted-foreground/60">
+                          ·
+                        </span>
+                        <span className="min-w-0">{o.organizer || "—"}</span>
                         {o.tags.length > 0 && (
-                          <>
-                            <span aria-hidden>·</span>
-                            <span className="truncate">
-                              {o.tags.slice(0, 4).join(", ")}
-                            </span>
-                          </>
+                          <span className="basis-full sm:basis-auto sm:truncate text-[12px] sm:text-[13px] leading-snug pt-0.5 sm:pt-0">
+                            {o.tags.slice(0, 4).join(", ")}
+                          </span>
                         )}
                       </div>
                     </div>
